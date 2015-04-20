@@ -1,7 +1,3 @@
-//
-// Created by cristinaserban on 17.04.2015.
-//
-
 #include "smt_symbol_decl.h"
 
 using namespace std;
