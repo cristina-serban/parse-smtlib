@@ -11,13 +11,33 @@
 #include "smt_attribute.h"
 
 namespace smt {
+    /**
+     * SMT-LIB logic.
+     * Node and (possible) root of the SMT abstract syntax tree.
+     * Represents the contents of a logic file.
+     */
     class SmtLogic : public SmtObject {
     private:
+        std::shared_ptr<Symbol> name;
         std::vector<std::shared_ptr<Attribute>> attributes;
 
     public:
-        SmtLogic() { }
-        SmtLogic(std::vector<std::shared_ptr<Attribute>> &attributes);
+        /**
+         * Constructor without attributes
+         * \param name          Logic name
+         */
+        SmtLogic(std::shared_ptr<Symbol> name) { }
+
+        /**
+         * Constructor with attributes
+         * \param name          Logic name
+         * \param attributes    Logic attributes
+         */
+        SmtLogic(std::shared_ptr<Symbol> name,
+                 std::vector<std::shared_ptr<Attribute>> &attributes);
+
+        std::shared_ptr<Symbol> getName();
+        void setName(std::shared_ptr<Symbol> name);
 
         std::vector<std::shared_ptr<Attribute>> &getAttributes();
     };

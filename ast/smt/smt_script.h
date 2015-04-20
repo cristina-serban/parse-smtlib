@@ -9,16 +9,31 @@
 #include <vector>
 #include "smt_abstract.h"
 #include "smt_command.h"
+#include "smt_basic.h"
 
 namespace smt {
+    /**
+     * SMT-LIB script.
+     * Node and (possible) root of the SMT abstract syntax tree.
+     * Represents the contents of a query file.
+     */
     class SmtScript : public SmtObject {
     private:
         std::vector<std::shared_ptr<Command>> commands;
-    public:
-        SmtScript();
-        SmtScript(std::vector<std::shared_ptr<Command>>& cmds);
 
-        std::vector<std::shared_ptr<Command>>& getCommands();
+    public:
+        /**
+         * Default constructor
+         */
+        SmtScript() { }
+
+        /**
+         * Constructor
+         * \param cmds    Command list
+         */
+        SmtScript(std::vector<std::shared_ptr<Command>> &cmds);
+
+        std::vector<std::shared_ptr<Command>> &getCommands();
     };
 }
 
