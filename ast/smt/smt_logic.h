@@ -26,7 +26,7 @@ namespace smt {
          * Constructor without attributes
          * \param name          Logic name
          */
-        SmtLogic(std::shared_ptr<Symbol> name) { }
+        SmtLogic(std::shared_ptr<Symbol> name);
 
         /**
          * Constructor with attributes

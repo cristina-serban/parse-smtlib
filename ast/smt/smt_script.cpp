@@ -3,8 +3,6 @@
 using namespace std;
 using namespace smt;
 
-SmtScript::SmtScript() { }
-
 SmtScript::SmtScript(vector<shared_ptr<Command>> &commands) {
     for (vector<shared_ptr<Command>>::iterator it = commands.begin();
          it != commands.end(); it++) {
