@@ -5,13 +5,13 @@ using namespace smt;
 
 /* =============================== SortSymbolDeclaration ============================== */
 
-SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<IIdentifier> identifier,
+SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
                                              long cardinality) {
     setIdentifier(identifier);
     setCardinality(cardinality);
 }
 
-SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<IIdentifier> identifier,
+SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
                                              long cardinality,
                                              vector<shared_ptr<Attribute>> &attributes) {
     setIdentifier(identifier);
@@ -22,11 +22,11 @@ SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<IIdentifier> identifier,
     }
 }
 
-shared_ptr<IIdentifier> SortSymbolDeclaration::getIdentifier() {
+shared_ptr<Identifier> SortSymbolDeclaration::getIdentifier() {
     return identifier;
 }
 
-void SortSymbolDeclaration::setIdentifier(shared_ptr<IIdentifier> identifier) {
+void SortSymbolDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
@@ -122,7 +122,7 @@ vector<shared_ptr<Attribute>> &MetaSpecConstFunDeclaration::getAttributes() {
 
 /* ============================== IdentifFunDeclaration =============================== */
 
-IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<IIdentifier> identifier,
+IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<Identifier> identifier,
                                              vector<shared_ptr<Sort>> &signature) {
     setIdentifier(identifier);
 
@@ -131,7 +131,7 @@ IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<IIdentifier> identifier,
     }
 }
 
-IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<IIdentifier> identifier,
+IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<Identifier> identifier,
                                              vector<shared_ptr<Sort>> &signature,
                                              vector<shared_ptr<Attribute>> &attributes) {
     setIdentifier(identifier);
@@ -145,11 +145,11 @@ IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<IIdentifier> identifier,
     }
 }
 
-shared_ptr<IIdentifier> IdentifFunDeclaration::getIdentifier() {
+shared_ptr<Identifier> IdentifFunDeclaration::getIdentifier() {
     return identifier;
 }
 
-void IdentifFunDeclaration::setIdentifier(shared_ptr<IIdentifier> identifier) {
+void IdentifFunDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
@@ -164,7 +164,7 @@ vector<shared_ptr<Attribute>> &IdentifFunDeclaration::getAttributes() {
 /* =============================== ParamFunDeclaration ================================ */
 
 ParamFunDeclaration::ParamFunDeclaration(vector<shared_ptr<Symbol>> &params,
-                                         shared_ptr<IIdentifier> identifier,
+                                         shared_ptr<Identifier> identifier,
                                          vector<shared_ptr<Sort>> &signature) {
     for(vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
         this->params.push_back(*it);
@@ -178,7 +178,7 @@ ParamFunDeclaration::ParamFunDeclaration(vector<shared_ptr<Symbol>> &params,
 }
 
 ParamFunDeclaration::ParamFunDeclaration(vector<shared_ptr<Symbol>> &params,
-                                         shared_ptr<IIdentifier> identifier,
+                                         shared_ptr<Identifier> identifier,
                                          vector<shared_ptr<Sort>> &signature,
                                          vector<shared_ptr<Attribute>> &attributes) {
     for(vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {

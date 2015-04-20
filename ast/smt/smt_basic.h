@@ -14,9 +14,13 @@ namespace smt {
     /* ====================================== Symbol ====================================== */
 
     /**
-     * An SMT-LIB symbol (e.g. "plus", "+", "|quoted symbol|")
+     * An SMT-LIB symbol (e.g. "plus", "+", "|quoted symbol|").
+     * Node of the SMT abstract syntax tree.
+     * Can act as an S-expression, an index.
      */
-    class Symbol : public SmtAstNode {
+    class Symbol : public virtual SmtAstNode,
+                   public ISExpression,
+                   public IIndex {
     private:
         std::string value;
     public:
@@ -33,9 +37,12 @@ namespace smt {
     /* ====================================== Keyword ===================================== */
 
     /**
-     * An SMT-LIB keyword (e.g. ":date", ":<=")
+     * An SMT-LIB keyword (e.g. ":date", ":<=").
+     * Node of the SMT abstract syntax tree.
+     * Can act as an S-expression.
      */
-    class Keyword : public SmtAstNode {
+    class Keyword : public virtual SmtAstNode,
+                    public ISExpression{
     private:
         std::string value;
     public:
@@ -51,7 +58,8 @@ namespace smt {
 
     /* ================================= MetaSpecConstant ================================= */
     /**
-     * An SMT-LIB meta specification constant ("NUMERAL", "DECIMAL" or "STRING")
+     * An SMT-LIB meta specification constant ("NUMERAL", "DECIMAL" or "STRING").
+     * Node of the SMT abstract syntax tree.
      */
     class MetaSpecConstant : public AstNode {
     public:
@@ -78,7 +86,8 @@ namespace smt {
 
     /* =================================== BooleanValue =================================== */
     /**
-     * A boolean value ("true" or "false")
+     * A boolean value ("true" or "false").
+     * Node of the SMT abstract syntax tree.
      */
     class BooleanValue : public AstNode {
     public:

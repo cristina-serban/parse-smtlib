@@ -11,6 +11,7 @@
 #include "smt_abstract.h"
 #include "smt_attribute.h"
 #include "smt_basic.h"
+#include "smt_identifier.h"
 #include "smt_interfaces.h"
 #include "smt_sort.h"
 
@@ -25,7 +26,7 @@ namespace smt {
     class SortSymbolDeclaration : public virtual SmtAstNode,
                                   public IAttributeValue {
     private:
-        std::shared_ptr<IIdentifier> identifier;
+        std::shared_ptr<Identifier> identifier;
         long cardinality;
         std::vector<std::shared_ptr<Attribute>> attributes;
     public:
@@ -34,7 +35,7 @@ namespace smt {
          * \param identifier    Sort symbol identiier
          * \param cardinality   Sort cardinality
          */
-        SortSymbolDeclaration(std::shared_ptr<IIdentifier> identifier,
+        SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
                               long cardinality);
 
         /**
@@ -43,12 +44,12 @@ namespace smt {
          * \param cardinality   Sort cardinality
          * \param attributes    Sort symbol declaration attributes
          */
-        SortSymbolDeclaration(std::shared_ptr<IIdentifier> identifier,
+        SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
                               long cardinality,
                               std::vector<std::shared_ptr<Attribute>> &attributes);
 
-        std::shared_ptr<IIdentifier> getIdentifier();
-        void setIdentifier(std::shared_ptr<IIdentifier> identifier);
+        std::shared_ptr<Identifier> getIdentifier();
+        void setIdentifier(std::shared_ptr<Identifier> identifier);
 
         long getCardinality();
         void setCardinality(long cardinality);
@@ -157,7 +158,7 @@ namespace smt {
      */
     class IdentifFunDeclaration : public FunSymbolDeclaration {
     protected:
-        std::shared_ptr<IIdentifier> identifier;
+        std::shared_ptr<Identifier> identifier;
         std::vector<std::shared_ptr<Sort>> signature;
         std::vector<std::shared_ptr<Attribute>> attributes;
 
@@ -169,7 +170,7 @@ namespace smt {
          * \param identifier    Function identifier
          * \param signature     Function signature
          */
-        IdentifFunDeclaration(std::shared_ptr<IIdentifier> identifier,
+        IdentifFunDeclaration(std::shared_ptr<Identifier> identifier,
                               std::vector<std::shared_ptr<Sort>> &signature);
 
         /**
@@ -178,12 +179,12 @@ namespace smt {
          * \param signature     Function signature
          * \param attributes    Function symbol declaration attributes
          */
-        IdentifFunDeclaration(std::shared_ptr<IIdentifier> identifier,
+        IdentifFunDeclaration(std::shared_ptr<Identifier> identifier,
                               std::vector<std::shared_ptr<Sort>> &signature,
                               std::vector<std::shared_ptr<Attribute>> &attributes);
 
-        std::shared_ptr<IIdentifier> getIdentifier();
-        void setIdentifier(std::shared_ptr<IIdentifier> identifier);
+        std::shared_ptr<Identifier> getIdentifier();
+        void setIdentifier(std::shared_ptr<Identifier> identifier);
 
         std::vector<std::shared_ptr<Sort>> &getSignature();
 
@@ -209,7 +210,7 @@ namespace smt {
          * \param signature     Function signature
          */
         ParamFunDeclaration(std::vector<std::shared_ptr<Symbol>> &params,
-                            std::shared_ptr<IIdentifier> identifier,
+                            std::shared_ptr<Identifier> identifier,
                             std::vector<std::shared_ptr<Sort>> &signature);
 
         /**
@@ -220,7 +221,7 @@ namespace smt {
          * \param attributes    Function symbol declaration attributes
          */
         ParamFunDeclaration(std::vector<std::shared_ptr<Symbol>> &params,
-                            std::shared_ptr<IIdentifier> identifier,
+                            std::shared_ptr<Identifier> identifier,
                             std::vector<std::shared_ptr<Sort>> &signature,
                             std::vector<std::shared_ptr<Attribute>> &attributes);
 

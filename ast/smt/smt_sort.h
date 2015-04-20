@@ -9,6 +9,7 @@
 #include <memory>
 #include <vector>
 #include "smt_basic.h"
+#include "smt_identifier.h"
 
 namespace smt {
     /**
@@ -17,7 +18,7 @@ namespace smt {
      */
     class Sort : public SmtAstNode {
     protected:
-        std::shared_ptr<IIdentifier> identifier;
+        std::shared_ptr<Identifier> identifier;
         std::vector<std::shared_ptr<Sort>> params;
     public:
 
@@ -25,17 +26,17 @@ namespace smt {
          * Constructor for a simple sort
          * \param identifier    Sort name
          */
-        Sort(std::shared_ptr<IIdentifier> identifier);
+        Sort(std::shared_ptr<Identifier> identifier);
 
         /**
          * Constructor for a parametric sort
          * \param identifier    Sort name
          * \param params        Sort parameters
          */
-        Sort(std::shared_ptr<IIdentifier> identifier, std::vector<std::shared_ptr<Sort>> &params);
+        Sort(std::shared_ptr<Identifier> identifier, std::vector<std::shared_ptr<Sort>> &params);
 
-        std::shared_ptr<IIdentifier> getIdentifier();
-        void setIdentifier(std::shared_ptr<IIdentifier> identifier);
+        std::shared_ptr<Identifier> getIdentifier();
+        void setIdentifier(std::shared_ptr<Identifier> identifier);
 
         std::vector<std::shared_ptr<Sort>> &getParams();
 

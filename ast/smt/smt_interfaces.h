@@ -13,10 +13,9 @@ namespace smt {
     class IAttributeValue : public virtual SmtAstNode { };
     class ISExpression :    public virtual SmtAstNode { };
     class IQualIdentifier : public virtual SmtAstNode { };
-    class IIdentifier :     public virtual SmtAstNode,
-                            public virtual IQualIdentifier { };
     class IIndex :          public virtual SmtAstNode { };
-    class ISpecConstant :   public virtual SmtAstNode { };
+    class ISpecConstant :   public virtual SmtAstNode,
+                            public ISExpression { };
 
 }
 
