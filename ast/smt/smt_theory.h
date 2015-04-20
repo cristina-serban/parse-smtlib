@@ -1,7 +1,7 @@
 /**
  * \file smt_theory.h
- * \brief Definition of an SMT-LIB theory
- * */
+ * \brief Definition of an SMT-LIB theory.
+ */
 
 #ifndef PARSE_SMTLIB_SMT_THEORY_H
 #define PARSE_SMTLIB_SMT_THEORY_H
