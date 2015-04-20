@@ -1,7 +1,7 @@
-//
-// Created by cristinaserban on 16.04.2015.
-//
-
+/**
+ * \file smt_interfaces.h
+ * \brief Interfaces that need to be implemented by some of the SMT-LIB AST nodes
+ */
 #include "smt_abstract.h"
 
 #ifndef PARSE_SMTLIB_SMT_INTERFACES_H

@@ -1,4 +1,5 @@
-/** \file smt_symbol_decl.h
+/**
+ * \file smt_symbol_decl.h
  *  \brief Definition of classes representing sort and function symbol declarations.
  */
 

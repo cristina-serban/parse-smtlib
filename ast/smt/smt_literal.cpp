@@ -1,11 +1,9 @@
-//
-// Created by cristinaserban on 17.04.2015.
-//
-
 #include "smt_literal.h"
 
 using namespace smt;
 using namespace std;
+
+/* ====================================== Literal ===================================== */
 
 template <class T>
 T& Literal<T>::getValue() {
@@ -17,14 +15,20 @@ void Literal<T>::setValue(T& value) {
     this->value = value;
 }
 
+/* ================================== NumeralLiteral ================================== */
+
 NumeralLiteral::NumeralLiteral(long value) {
-    this->value = value;
+    setValue(value);
 }
+
+/* ================================== DecimalLiteral ================================== */
 
 DecimalLiteral::DecimalLiteral(double value) {
-    this->value = value;
+    setValue(value);
 }
 
+/* ================================== StringLiteral =================================== */
+
 StringLiteral::StringLiteral(string value) {
-    this->value = value;
+    setValue(value);
 }

@@ -1,6 +1,7 @@
-//
-// Created by cristinaserban on 16.04.2015.
-//
+/**
+ * \file smt_script
+ * \brief Definition of an SMT-LIB script
+ */
 
 #ifndef PARSE_SMTLIB_SMT_SCRIPT_H
 #define PARSE_SMTLIB_SMT_SCRIPT_H

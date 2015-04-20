@@ -1,6 +1,7 @@
-//
-// Created by cristinaserban on 16.04.2015.
-//
+/**
+ * \file smt_command.h
+ * \brief Commands that appear in a query file.
+ */
 
 #ifndef PARSE_SMTLIB_SMT_COMMAND_H
 #define PARSE_SMTLIB_SMT_COMMAND_H

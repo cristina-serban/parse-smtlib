@@ -1,6 +1,7 @@
-//
-// Created by cristinaserban on 16.04.2015.
-//
+/**
+ * \file ast_node.h
+ * \brief General AST node.
+ */
 
 #ifndef PARSE_SMTLIB_ASTNODE_H
 #define PARSE_SMTLIB_ASTNODE_H

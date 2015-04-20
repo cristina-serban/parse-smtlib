@@ -1,6 +1,7 @@
-//
-// Created by cristinaserban on 16.04.2015.
-//
+/**
+ * \file smt_abstract.h
+ * \brief Abstract SMT-LIB data structures.
+ */
 
 #ifndef PARSE_SMTLIB_SMT_ABSTRACT_H
 #define PARSE_SMTLIB_SMT_ABSTRACT_H

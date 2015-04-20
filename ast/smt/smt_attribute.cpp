@@ -3,6 +3,10 @@
 using namespace smt;
 using namespace std;
 
+Attribute::Attribute(shared_ptr<Keyword> keyword) {
+    setKeyword(keyword);
+}
+
 Attribute::Attribute(shared_ptr<Keyword> keyword,
                      shared_ptr<IAttributeValue> value) {
     setKeyword(keyword);

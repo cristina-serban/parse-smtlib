@@ -1,6 +1,7 @@
-//
-// Created by cristinaserban on 16.04.2015.
-//
+/**
+ * \file smt_logic
+ * \brief Definition of an SMT-LIB logic
+ */
 
 #ifndef PARSE_SMTLIB_SMT_LOGIC_H
 #define PARSE_SMTLIB_SMT_LOGIC_H

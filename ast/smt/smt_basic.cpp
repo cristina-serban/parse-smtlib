@@ -3,6 +3,8 @@
 using namespace smt;
 using namespace std;
 
+/* ====================================== Symbol ====================================== */
+
 Symbol::Symbol(string value) {
     this->value = value;
 }
@@ -15,6 +17,7 @@ void Symbol::setValue(string value) {
     this->value = value;
 }
 
+/* ====================================== Keyword ===================================== */
 
 Keyword::Keyword(string value) {
     this->value = value;
@@ -28,6 +31,7 @@ void Keyword::setValue(string value) {
     this->value = value;
 }
 
+/* ================================= MetaSpecConstant ================================= */
 
 MetaSpecConstant::MetaSpecConstant(MetaSpecConstant::Type type) {
     this->type = type;
@@ -41,6 +45,7 @@ void MetaSpecConstant::setType(MetaSpecConstant::Type type) {
     this->type = type;
 }
 
+/* =================================== BooleanValue =================================== */
 
 BooleanValue::BooleanValue(BooleanValue::Type type) {
     this->type = type;
