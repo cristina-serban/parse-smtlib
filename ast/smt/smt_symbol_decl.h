@@ -1,6 +1,6 @@
 /**
  * \file smt_symbol_decl.h
- *  \brief Definition of classes representing sort and function symbol declarations.
+ * \brief SMT-LIB sort and function symbol declarations.
  */
 
 #ifndef PARSE_SMTLIB_SMT_SYMBOL_DECL_H
@@ -20,7 +20,7 @@ namespace smt {
 
     /**
      * Declaration of a sort symbol.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as an attribute value.
      */
     class SortSymbolDeclaration : public virtual SmtAstNode,
@@ -61,7 +61,7 @@ namespace smt {
 
     /**
      * Abstract class for a function symbol declaration.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as an attribute value.
      */
     class FunSymbolDeclaration : public virtual SmtAstNode,
@@ -71,7 +71,7 @@ namespace smt {
 
     /**
      * Specification constant function symbol declaration.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as an attribute value.
      */
     class SpecConstFunDeclaration : public FunSymbolDeclaration {
@@ -112,7 +112,7 @@ namespace smt {
 
     /**
      * Meta specification constant function symbol declaration.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as an attribute value.
      */
     class MetaSpecConstFunDeclaration : public FunSymbolDeclaration {
@@ -153,7 +153,7 @@ namespace smt {
 
     /**
      * Identifier function symbol declaration.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as an attribute value.
      */
     class IdentifFunDeclaration : public FunSymbolDeclaration {
@@ -195,7 +195,7 @@ namespace smt {
 
     /**
     * Parametric function symbol declaration.
-    * Node of the SMT abstract syntax tree.
+    * Node of the SMT-LIB abstract syntax tree.
     * Can act as an attribute value.
     */
     class ParamFunDeclaration : public IdentifFunDeclaration {
@@ -228,6 +228,5 @@ namespace smt {
         std::vector<std::shared_ptr<Symbol>> &getParams();
     };
 };
-
 
 #endif //PARSE_SMTLIB_SMT_SYMBOL_DECL_H

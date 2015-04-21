@@ -1,6 +1,6 @@
 /**
  * \file smt_command.h
- * \brief Commands that appear in a query file.
+ * \brief SMT-LIB commands that appear in a query file.
  */
 
 #ifndef PARSE_SMTLIB_SMT_COMMAND_H
@@ -13,6 +13,5 @@ namespace smt {
 
     };
 }
-
 
 #endif //PARSE_SMTLIB_SMT_COMMAND_H

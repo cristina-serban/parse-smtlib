@@ -1,8 +1,7 @@
 /**
  * \file smt_attribute.h
- * \brief Definition of an SMT-LIB attribute.
+ * \brief SMT-LIB attribute.
  */
-
 
 #ifndef PARSE_SMTLIB_SMT_ATTR_H
 #define PARSE_SMTLIB_SMT_ATTR_H

@@ -1,6 +1,6 @@
 /**
  * \file smt_sort.h
- * \brief Defiition of a sort.
+ * \brief SMT-LIB sort.
  */
 
 #ifndef PARSE_SMTLIB_SMT_SORT_H
@@ -14,7 +14,7 @@
 namespace smt {
     /**
      * An SMT-LIB sort.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      */
     class Sort : public SmtAstNode {
     protected:
@@ -46,6 +46,5 @@ namespace smt {
         bool isParametric();
     };
 }
-
 
 #endif //PARSE_SMTLIB_SMT_SORT_H

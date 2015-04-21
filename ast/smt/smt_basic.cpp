@@ -59,3 +59,25 @@ void BooleanValue::setType(BooleanValue::Type type) {
     this->type = type;
 }
 
+/* =================================== PropLiteral ==================================== */
+
+PropLiteral::PropLiteral(std::shared_ptr<Symbol> symbol, bool negated) {
+    setSymbol(symbol);
+    setNegated(negated);
+}
+
+std::shared_ptr<Symbol> PropLiteral::getSymbol() {
+    return symbol;
+}
+
+void PropLiteral::setSymbol(std::shared_ptr<Symbol> symbol) {
+    this->symbol = symbol;
+}
+
+bool PropLiteral::isNegated() {
+    return negated;
+}
+
+void PropLiteral::setNegated(bool negated) {
+    this->negated = negated;
+}

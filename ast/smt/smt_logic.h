@@ -1,6 +1,6 @@
 /**
  * \file smt_logic
- * \brief Definition of an SMT-LIB logic
+ * \brief SMT-LIB logic.
  */
 
 #ifndef PARSE_SMTLIB_SMT_LOGIC_H

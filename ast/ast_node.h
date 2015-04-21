@@ -15,5 +15,4 @@ namespace smt {
     };
 }
 
-
 #endif //PARSE_SMTLIB_ASTNODE_H

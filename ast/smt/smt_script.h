@@ -1,6 +1,6 @@
 /**
  * \file smt_script
- * \brief Definition of an SMT-LIB script
+ * \brief SMT-LIB script.
  */
 
 #ifndef PARSE_SMTLIB_SMT_SCRIPT_H
@@ -37,6 +37,5 @@ namespace smt {
         std::vector<std::shared_ptr<Command>> &getCommands();
     };
 }
-
 
 #endif //PARSE_SMTLIB_SMT_SCRIPT_H

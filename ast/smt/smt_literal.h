@@ -1,6 +1,6 @@
 /**
  * \file smt_literal.h
- * \brief Definitions of SMT-LIB literals
+ * \brief SMT-LIB literals.
  */
 
 #ifndef PARSE_SMTLIB_SMT_LITERAL_H
@@ -16,7 +16,7 @@ namespace smt {
 
     /**
      * Literal containing a generic value
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      */
     template <class T>
     class Literal : public virtual SmtAstNode {
@@ -33,7 +33,7 @@ namespace smt {
 
     /**
      * Numeric literal.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as an index or a specification constant.
      */
     class NumeralLiteral : public Literal<long>,
@@ -47,7 +47,7 @@ namespace smt {
 
     /**
      * Decimal literal.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as a specification constant.
      */
     class DecimalLiteral : public Literal<double>,
@@ -60,7 +60,7 @@ namespace smt {
 
     /**
      * String literal.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      * Can act as a specification constant.
      */
     class StringLiteral : public Literal<std::string>,

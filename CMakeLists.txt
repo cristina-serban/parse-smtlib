@@ -16,4 +16,4 @@ set(SOURCE_FILES
     ast/smt/smt_theory.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} ast/smt/smt_logic.cpp ast/smt/smt_logic.h ast/smt/smt_interfaces.h ast/smt/smt_script.cpp ast/smt/smt_script.h ast/smt/smt_command.cpp ast/smt/smt_command.h ast/smt/smt_symbol_decl.cpp ast/smt/smt_symbol_decl.h ast/smt/smt_sort.cpp ast/smt/smt_sort.h ast/smt/smt_literal.cpp ast/smt/smt_literal.h ast/smt/smt_s_expr.cpp ast/smt/smt_s_expr.h ast/smt/smt_identifier.cpp ast/smt/smt_identifier.h)
+add_executable(parse-smtlib ${SOURCE_FILES} ast/smt/smt_logic.cpp ast/smt/smt_logic.h ast/smt/smt_interfaces.h ast/smt/smt_script.cpp ast/smt/smt_script.h ast/smt/smt_command.cpp ast/smt/smt_command.h ast/smt/smt_symbol_decl.cpp ast/smt/smt_symbol_decl.h ast/smt/smt_sort.cpp ast/smt/smt_sort.h ast/smt/smt_literal.cpp ast/smt/smt_literal.h ast/smt/smt_s_expr.cpp ast/smt/smt_s_expr.h ast/smt/smt_identifier.cpp ast/smt/smt_identifier.h ast/smt/smt_fun.cpp ast/smt/smt_fun.h ast/smt/smt_var.cpp ast/smt/smt_var.h ast/smt/smt_term.cpp ast/smt/smt_term.h)

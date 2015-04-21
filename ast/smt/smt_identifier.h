@@ -1,6 +1,6 @@
 /**
  * \file smt_identif.h
- * \brief Definition of identifiers.
+ * \brief SMT-LIB identifiers.
  */
 
 #ifndef PARSE_SMTLIB_SMT_IDENTIFIER_H
@@ -10,9 +10,10 @@
 #include <vector>
 #include "smt_basic.h"
 #include "smt_interfaces.h"
-#include "smt_sort.h"
 
 namespace smt {
+    class Sort;  // To avoid circular inclusion of header files
+
     /* ==================================== Identifier ==================================== */
     /**
      * Identifier (e.g. "Real", "|John Brown|", "_ BitVec 32").
@@ -72,6 +73,5 @@ namespace smt {
         void setSort(std::shared_ptr<Sort> sort);
     };
 }
-
 
 #endif //PARSE_SMTLIB_SMT_IDENTIFIER_H

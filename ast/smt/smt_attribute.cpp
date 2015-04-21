@@ -28,5 +28,3 @@ shared_ptr<IAttributeValue> Attribute::getValue() {
 void Attribute::setValue(std::shared_ptr<IAttributeValue> value) {
     this->value = value;
 }
-
-

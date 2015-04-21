@@ -16,5 +16,4 @@ namespace smt {
     };
 }
 
-
 #endif //PARSE_SMTLIB_SMT_ABSTRACT_H

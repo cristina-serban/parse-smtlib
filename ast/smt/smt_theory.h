@@ -1,6 +1,6 @@
 /**
  * \file smt_theory.h
- * \brief Definition of an SMT-LIB theory.
+ * \brief SMT-LIB theory.
  */
 
 #ifndef PARSE_SMTLIB_SMT_THEORY_H
@@ -44,6 +44,5 @@ namespace smt {
         std::vector<std::shared_ptr<Attribute>>& getAttributes();
     };
 }
-
 
 #endif //PARSE_SMTLIB_SMT_THEORY_H

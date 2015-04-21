@@ -1,6 +1,6 @@
 /**
  * \file smt_s_expr.h
- * \brief Definition of a compound S-expression.
+ * \brief Compound S-expression.
  */
 
 #ifndef PARSE_SMTLIB_SMT_S_EXPR_H
@@ -13,7 +13,7 @@
 namespace smt {
     /**
      * Compound S-expression.
-     * Node of the SMT abstract syntax tree.
+     * Node of the SMT-LIB abstract syntax tree.
      */
     class CompSExpression : public ISExpression {
     private:
@@ -28,6 +28,5 @@ namespace smt {
         std::vector<std::shared_ptr<ISExpression>> &getExpressions();
     };
 }
-
 
 #endif //PARSE_SMTLIB_SMT_S_EXPR_H
