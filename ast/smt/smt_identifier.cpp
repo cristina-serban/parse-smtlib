@@ -12,10 +12,7 @@ Identifier::Identifier(std::shared_ptr<Symbol> symbol) {
 Identifier::Identifier(std::shared_ptr<Symbol> symbol,
                        std::vector<std::shared_ptr<IIndex>> indices) {
     setSymbol(symbol);
-
-    for (std::vector<std::shared_ptr<IIndex>>::iterator it = indices.begin(); it != indices.end(); it++) {
-        indices.push_back(*it);
-    }
+    this->indices.insert(this->indices.end(), indices.begin(), indices.end());
 }
 
 std::shared_ptr<Symbol> Identifier::getSymbol() {

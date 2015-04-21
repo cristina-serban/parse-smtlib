@@ -47,16 +47,16 @@ void MetaSpecConstant::setType(MetaSpecConstant::Type type) {
 
 /* =================================== BooleanValue =================================== */
 
-BooleanValue::BooleanValue(BooleanValue::Type type) {
-    this->type = type;
+BooleanValue::BooleanValue(bool value) {
+    setValue(value);
 }
 
-BooleanValue::Type BooleanValue::getType() {
-    return type;
+bool BooleanValue::getValue() {
+    return value;
 }
 
-void BooleanValue::setType(BooleanValue::Type type) {
-    this->type = type;
+void BooleanValue::setValue(bool value) {
+    this->value = value;
 }
 
 /* =================================== PropLiteral ==================================== */

@@ -9,9 +9,7 @@ Sort::Sort(shared_ptr<Identifier> identifier) {
 
 Sort::Sort(shared_ptr<Identifier> identifier, vector<shared_ptr<Sort>> &params) {
     setIdentifier(identifier);
-    for(vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
-        this->params.push_back(*it);
-    }
+    this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
 shared_ptr<Identifier> Sort::getIdentifier() {

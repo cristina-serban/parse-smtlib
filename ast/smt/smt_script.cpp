@@ -4,10 +4,7 @@ using namespace std;
 using namespace smt;
 
 SmtScript::SmtScript(vector<shared_ptr<Command>> &commands) {
-    for (vector<shared_ptr<Command>>::iterator it = commands.begin();
-         it != commands.end(); it++) {
-        this->commands.push_back(*it);
-    }
+    this->commands.insert(this->commands.end(), commands.begin(), commands.end());
 }
 
 std::vector<shared_ptr<Command>> &SmtScript::getCommands() {

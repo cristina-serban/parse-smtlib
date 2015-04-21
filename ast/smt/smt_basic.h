@@ -91,21 +91,13 @@ namespace smt {
      * Node of the SMT-LIB abstract syntax tree.
      */
     class BooleanValue : public AstNode {
-    public:
-        /**
-         * Types of boolean values
-         */
-        enum Type {
-            BOOL_TRUE = 0,
-            BOOL_FALSE
-        };
-
-        BooleanValue(BooleanValue::Type type);
-
-        BooleanValue::Type getType();
-        void setType(BooleanValue::Type type);
     private:
-        BooleanValue::Type type;
+        bool value;
+    public:
+        BooleanValue(bool value);
+
+        bool getValue();
+        void setValue(bool value);
     };
 
     /* =================================== PropLiteral ==================================== */

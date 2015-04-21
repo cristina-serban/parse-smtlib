@@ -16,10 +16,7 @@ SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
                                              vector<shared_ptr<Attribute>> &attributes) {
     setIdentifier(identifier);
     setCardinality(cardinality);
-
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        this->attributes.push_back(*it);
-    }
+    this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
 shared_ptr<Identifier> SortSymbolDeclaration::getIdentifier() {
@@ -55,10 +52,7 @@ SpecConstFunDeclaration::SpecConstFunDeclaration(shared_ptr<ISpecConstant> const
                                                  vector<shared_ptr<Attribute>> &attributes) {
     setConstant(constant);
     setSort(sort);
-
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        this->attributes.push_back(*it);
-    }
+    this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
 shared_ptr<ISpecConstant> SpecConstFunDeclaration::getConstant() {
@@ -94,10 +88,7 @@ MetaSpecConstFunDeclaration::MetaSpecConstFunDeclaration(shared_ptr<MetaSpecCons
                                                          vector<shared_ptr<Attribute>> &attributes) {
     setConstant(constant);
     setSort(sort);
-
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        this->attributes.push_back(*it);
-    }
+    this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
 shared_ptr<MetaSpecConstant> MetaSpecConstFunDeclaration::getConstant() {
@@ -125,24 +116,16 @@ vector<shared_ptr<Attribute>> &MetaSpecConstFunDeclaration::getAttributes() {
 IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<Identifier> identifier,
                                              vector<shared_ptr<Sort>> &signature) {
     setIdentifier(identifier);
-
-    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
-        this->signature.push_back(*it);
-    }
+    this->signature.insert(this->signature.end(), signature.begin(), signature.end());
 }
 
 IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<Identifier> identifier,
                                              vector<shared_ptr<Sort>> &signature,
                                              vector<shared_ptr<Attribute>> &attributes) {
     setIdentifier(identifier);
+    this->signature.insert(this->signature.end(), signature.begin(), signature.end());
+    this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 
-    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
-        this->signature.push_back(*it);
-    }
-
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        this->attributes.push_back(*it);
-    }
 }
 
 shared_ptr<Identifier> IdentifFunDeclaration::getIdentifier() {
@@ -166,34 +149,20 @@ vector<shared_ptr<Attribute>> &IdentifFunDeclaration::getAttributes() {
 ParamFunDeclaration::ParamFunDeclaration(vector<shared_ptr<Symbol>> &params,
                                          shared_ptr<Identifier> identifier,
                                          vector<shared_ptr<Sort>> &signature) {
-    for(vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
-        this->params.push_back(*it);
-    }
-
+    this->params.insert(this->params.end(), params.begin(), params.end());
     setIdentifier(identifier);
+    this->signature.insert(this->signature.end(), signature.begin(), signature.end());
 
-    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
-        this->signature.push_back(*it);
-    }
 }
 
 ParamFunDeclaration::ParamFunDeclaration(vector<shared_ptr<Symbol>> &params,
                                          shared_ptr<Identifier> identifier,
                                          vector<shared_ptr<Sort>> &signature,
                                          vector<shared_ptr<Attribute>> &attributes) {
-    for(vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
-        this->params.push_back(*it);
-    }
-
+    this->params.insert(this->params.end(), params.begin(), params.end());
     setIdentifier(identifier);
-
-    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
-        this->signature.push_back(*it);
-    }
-
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        this->attributes.push_back(*it);
-    }
+    this->signature.insert(this->signature.end(), signature.begin(), signature.end());
+    this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
 vector<shared_ptr<Symbol>> &ParamFunDeclaration::getParams() {

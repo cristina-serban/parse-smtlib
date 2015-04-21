@@ -10,11 +10,7 @@ FunctionDeclaration::FunctionDeclaration(shared_ptr<Symbol> symbol,
                                          shared_ptr<Sort> type) {
     setSymbol(symbol);
     setType(type);
-
-    for (vector<shared_ptr<SortedVariable>>::iterator it = params.begin();
-         it != params.end(); it++) {
-        this->params.push_back(*it);
-    }
+    this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
 shared_ptr<Symbol> FunctionDeclaration::getSymbol() {
