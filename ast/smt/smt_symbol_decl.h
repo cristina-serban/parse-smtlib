@@ -27,32 +27,32 @@ namespace smt {
                                   public IAttributeValue {
     private:
         std::shared_ptr<Identifier> identifier;
-        long cardinality;
+        long arity;
         std::vector<std::shared_ptr<Attribute>> attributes;
     public:
         /**
-         * Constructor without attributes
+         * Constructs declaration without attributes.
          * \param identifier    Sort symbol identiier
-         * \param cardinality   Sort cardinality
+         * \param arity   Sort arity
          */
         SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
-                              long cardinality);
+                              long arity);
 
         /**
-         * Constructor with attributes
+         * Constructs declaration with attributes.
          * \param identifier    Sort symbol identiier
-         * \param cardinality   Sort cardinality
+         * \param arity   Sort arity
          * \param attributes    Sort symbol declaration attributes
          */
         SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
-                              long cardinality,
+                              long arity,
                               std::vector<std::shared_ptr<Attribute>> &attributes);
 
         std::shared_ptr<Identifier> getIdentifier();
         void setIdentifier(std::shared_ptr<Identifier> identifier);
 
-        long getCardinality();
-        void setCardinality(long cardinality);
+        long getArity();
+        void setArity(long arity);
 
         std::vector<std::shared_ptr<Attribute>> &getAttributes();
     };
@@ -82,7 +82,7 @@ namespace smt {
 
     public:
         /**
-        * Constructor without attributes
+        * Constructs declaration without attributes.
         * \param constant      Specification constant
         * \param sort          Function sort
         */
@@ -90,7 +90,7 @@ namespace smt {
                                 std::shared_ptr<Sort> sort);
 
         /**
-         * Constructor with attributes
+         * Constructs declaration with attributes.
          * \param constant      Specification constant
          * \param sort          Function sort
          * \param attributes    Function symbol declaration attributes
@@ -123,7 +123,7 @@ namespace smt {
 
     public:
         /**
-        * Constructor without attributes
+        * Constructs declaration without attributes.
         * \param constant      Meta specification constant
         * \param sort          Function sort
         */
@@ -131,7 +131,7 @@ namespace smt {
                                     std::shared_ptr<Sort> sort);
 
         /**
-         * Constructor with attributes
+         * Constructs declaration with attributes.
          * \param constant      Meta specification constant
          * \param sort          Function sort
          * \param attributes    Function symbol declaration attributes
@@ -166,7 +166,7 @@ namespace smt {
 
     public:
         /**
-         * Constructor without attributes
+         * Constructs declaration without attributes.
          * \param identifier    Function identifier
          * \param signature     Function signature
          */
@@ -174,7 +174,7 @@ namespace smt {
                               std::vector<std::shared_ptr<Sort>> &signature);
 
         /**
-         * Constructor with attributes
+         * Constructs declaration with attributes.
          * \param identifier    Function identifier
          * \param signature     Function signature
          * \param attributes    Function symbol declaration attributes
@@ -204,7 +204,7 @@ namespace smt {
 
     public:
         /**
-         * Constructor without attributes
+         * Constructs declaration without attributes.
          * \param params        Function parameters
          * \param identifier    Function identifier
          * \param signature     Function signature
@@ -214,7 +214,7 @@ namespace smt {
                             std::vector<std::shared_ptr<Sort>> &signature);
 
         /**
-         * Constructor with attributes
+         * Constructs declaration with attributes.
          * \param params        Function parameters
          * \param identifier    Function identifier
          * \param signature     Function signature

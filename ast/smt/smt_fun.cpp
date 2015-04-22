@@ -1,5 +1,7 @@
 #include "smt_fun.h"
 
+#include <sstream>
+
 using namespace std;
 using namespace smt;
 
@@ -7,9 +9,9 @@ using namespace smt;
 
 FunctionDeclaration::FunctionDeclaration(shared_ptr<Symbol> symbol,
                                          vector<shared_ptr<SortedVariable>> &params,
-                                         shared_ptr<Sort> type) {
+                                         shared_ptr<Sort> sort) {
     setSymbol(symbol);
-    setType(type);
+    setSort(sort);
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
@@ -25,16 +27,25 @@ vector<shared_ptr<SortedVariable>> &FunctionDeclaration::getParams() {
     return params;
 }
 
-shared_ptr<Sort> FunctionDeclaration::getType() {
-    return type;
+shared_ptr<Sort> FunctionDeclaration::getSort() {
+    return sort;
 }
 
-void FunctionDeclaration::setType(shared_ptr<Sort> type) {
-    this->type = type;
+void FunctionDeclaration::setSort(shared_ptr<Sort> sort) {
+    this->sort = sort;
 }
 
 string FunctionDeclaration::toString() {
-    return "";
+    stringstream ss;
+    ss << symbol << " ( ";
+
+    for(vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << " ) " << sort->toString();
+
+    return ss.str();
 }
 
 /* ================================ FunctionDefinition ================================ */
@@ -47,9 +58,9 @@ FunctionDefinition::FunctionDefinition(shared_ptr<FunctionDeclaration> signature
 
 FunctionDefinition::FunctionDefinition(shared_ptr<Symbol> symbol,
                                        vector<shared_ptr<SortedVariable>> &params,
-                                       shared_ptr<Sort> type,
+                                       shared_ptr<Sort> sort,
                                        shared_ptr<ITerm> body) {
-    signature = make_shared<FunctionDeclaration>(symbol, params, type);
+    signature = make_shared<FunctionDeclaration>(symbol, params, sort);
     setBody(body);
 }
 
@@ -67,4 +78,10 @@ shared_ptr<ITerm> FunctionDefinition::getBody() {
 
 void FunctionDefinition::setBody(shared_ptr<ITerm> body) {
     this->body = body;
+}
+
+string FunctionDefinition::toString() {
+    stringstream ss;
+    ss << signature->toString() << " " << body->toString();
+    return ss.str();
 }

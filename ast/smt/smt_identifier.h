@@ -59,7 +59,6 @@ namespace smt {
         std::shared_ptr<Sort> sort;
     public:
         /**
-         * Constructor
          * \param identifier    Identifier
          * \param sort          Result sort
          */

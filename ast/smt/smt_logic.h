@@ -24,13 +24,13 @@ namespace smt {
 
     public:
         /**
-         * Constructor without attributes
+         * Constructs logic without attributes.
          * \param name          Logic name
          */
         SmtLogic(std::shared_ptr<Symbol> name);
 
         /**
-         * Constructor with attributes
+         * Constructs logic with attributes.
          * \param name          Logic name
          * \param attributes    Logic attributes
          */

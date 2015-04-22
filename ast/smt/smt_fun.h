@@ -24,25 +24,24 @@ namespace smt {
     private:
         std::shared_ptr<Symbol> symbol;
         std::vector<std::shared_ptr<SortedVariable>> params;
-        std::shared_ptr<Sort> type;
+        std::shared_ptr<Sort> sort;
     public:
         /**
-         * Constructor
          * \param symbol    Name of the function
          * \param params    List of parameters
-         * \param type      Return type of the function
+         * \param sort      Sort of the return value
          */
         FunctionDeclaration(std::shared_ptr<Symbol> symbol,
                             std::vector<std::shared_ptr<SortedVariable>> &params,
-                            std::shared_ptr<Sort> type);
+                            std::shared_ptr<Sort> sort);
 
         std::shared_ptr<Symbol> getSymbol();
         void setSymbol(std::shared_ptr<Symbol> symbol);
 
         std::vector<std::shared_ptr<SortedVariable>> &getParams();
 
-        std::shared_ptr<Sort> getType();
-        void setType(std::shared_ptr<Sort> type);
+        std::shared_ptr<Sort> getSort();
+        void setSort(std::shared_ptr<Sort> sort);
 
         virtual std::string toString();
     };
@@ -58,23 +57,21 @@ namespace smt {
         std::shared_ptr<ITerm> body;
     public:
         /**
-         * Constructor
          * \param signature    Function signature
-         * \param body      Function body
+         * \param body         Function body
          */
         FunctionDefinition(std::shared_ptr<FunctionDeclaration> signature,
                            std::shared_ptr<ITerm> body);
 
         /**
-         * Constructor
          * \param symbol    Name of the function
          * \param params    List of parameters
-         * \param type      Return type of the function
+         * \param type      Sort of the return value
          * \param body      Function body
          */
         FunctionDefinition(std::shared_ptr<Symbol> symbol,
                            std::vector<std::shared_ptr<SortedVariable>> &params,
-                           std::shared_ptr<Sort> type,
+                           std::shared_ptr<Sort> sort,
                            std::shared_ptr<ITerm> body);
 
         std::shared_ptr<FunctionDeclaration> getSignature();
@@ -82,6 +79,8 @@ namespace smt {
 
         std::shared_ptr<ITerm> getBody();
         void setBody(std::shared_ptr<ITerm> body);
+
+        virtual std::string toString();
     };
 }
 

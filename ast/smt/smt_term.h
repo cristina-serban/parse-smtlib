@@ -26,7 +26,6 @@ namespace smt {
 
     public:
         /**
-         * Constructor
          * \param identifier    Qualified identifier
          * \param terms         List of terms
          */
@@ -51,7 +50,6 @@ namespace smt {
 
     public:
         /**
-         * Constructor
          * \param bindings  List of bound variables
          * \param term      Inner term
          */
@@ -76,7 +74,6 @@ namespace smt {
 
     public:
         /**
-         * Constructor
          * \param bindings  List of bound variables
          * \param term      Inner term
          */
@@ -101,7 +98,6 @@ namespace smt {
 
     public:
         /**
-         * Constructor
          * \param bindings  List of bound variables
          * \param term      Inner term
          */
@@ -126,7 +122,6 @@ namespace smt {
 
     public:
         /**
-         * Constructor
          * \param term  Inner term
          * \param attr  Attributes
          */

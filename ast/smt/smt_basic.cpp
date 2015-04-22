@@ -34,7 +34,7 @@ void Keyword::setValue(string value) {
 /* ================================= MetaSpecConstant ================================= */
 
 MetaSpecConstant::MetaSpecConstant(MetaSpecConstant::Type type) {
-    this->type = type;
+    setType(type);
 }
 
 MetaSpecConstant::Type MetaSpecConstant::getType() {

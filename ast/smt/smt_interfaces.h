@@ -10,7 +10,6 @@
 
 namespace smt {
 
-    class ICommandOption :  public virtual SmtAstNode { };
     class IAttributeValue : public virtual SmtAstNode { };
     class ISExpression :    public virtual SmtAstNode { };
     class ITerm:            public virtual SmtAstNode { };

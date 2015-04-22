@@ -6,16 +6,16 @@ using namespace smt;
 /* =============================== SortSymbolDeclaration ============================== */
 
 SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
-                                             long cardinality) {
+                                             long arity) {
     setIdentifier(identifier);
-    setCardinality(cardinality);
+    setArity(arity);
 }
 
 SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
-                                             long cardinality,
+                                             long arity,
                                              vector<shared_ptr<Attribute>> &attributes) {
     setIdentifier(identifier);
-    setCardinality(cardinality);
+    setArity(arity);
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
@@ -27,12 +27,12 @@ void SortSymbolDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
-long SortSymbolDeclaration::getCardinality() {
-    return cardinality;
+long SortSymbolDeclaration::getArity() {
+    return arity;
 }
 
-void SortSymbolDeclaration::setCardinality(long cardinality) {
-    this->cardinality = cardinality;
+void SortSymbolDeclaration::setArity(long arity) {
+    this->arity = arity;
 }
 
 vector<shared_ptr<Attribute>> &SortSymbolDeclaration::getAttributes() {

@@ -25,13 +25,13 @@ namespace smt {
 
     public:
         /**
-         * Constructor without attributes
+         * Constructs theory without attributes.
          * \param name  Theory name
          */
         SmtTheory(std::shared_ptr<Symbol> name);
 
         /**
-         * Constructor with attributes
+         * Constructs theory with attributes.
          * \param name          Theory name
          * \param attributes    Theory attributes
          */

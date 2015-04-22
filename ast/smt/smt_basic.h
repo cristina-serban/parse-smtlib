@@ -26,7 +26,6 @@ namespace smt {
         std::string value;
     public:
         /**
-         * Constructor
          * \param value     Textual value of the symbol
          */
         Symbol(std::string value);
@@ -48,7 +47,6 @@ namespace smt {
         std::string value;
     public:
         /**
-         * Constructor
          * \param value     Textual value of the keyword
          */
         Keyword(std::string value);
@@ -74,7 +72,6 @@ namespace smt {
         };
 
         /**
-         * Constructor
          * \param type  Meta specification constant type
          */
         MetaSpecConstant(MetaSpecConstant::Type type);

@@ -20,7 +20,6 @@ namespace smt {
         std::vector<std::shared_ptr<ISExpression>> exprs;
     public:
         /**
-         * Constructor
          * \param exprs     Subexpressions
          */
         CompSExpression(std::vector<std::shared_ptr<ISExpression>> &exprs);

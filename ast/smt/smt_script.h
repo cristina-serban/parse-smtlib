@@ -29,7 +29,6 @@ namespace smt {
         SmtScript() { }
 
         /**
-         * Constructor
          * \param cmds    Command list
          */
         SmtScript(std::vector<std::shared_ptr<Command>> &cmds);

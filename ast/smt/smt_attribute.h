@@ -23,20 +23,20 @@ namespace smt {
 
     public:
         /**
-         * Default constructor
+         * Default constructor.
          */
         Attribute() { }
 
         /**
-         * Constructor
+         * Constructs keyword without attribute value.
          * \param keyword   Keyword of the attribute
          */
         Attribute(std::shared_ptr<Keyword> keyword);
 
         /**
-         * Constructor
+         * Constructs keyword with attribute value.
          * \param keyword   Keyword of the attribute
-         * \param value     Value of the attribute
+         * \param value    Value of the attribute
          */
         Attribute(std::shared_ptr<Keyword> keyword,
                   std::shared_ptr<IAttributeValue> value);

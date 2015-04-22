@@ -25,7 +25,6 @@ namespace smt {
 
     public:
         /**
-         * Constructor.
          * \param symbol    Variable name
          * \param sort      Variable sort
          */
@@ -50,7 +49,6 @@ namespace smt {
 
     public:
         /**
-         * Constructor.
          * \param symbol    Variable name
          * \param term      Binding
          */
