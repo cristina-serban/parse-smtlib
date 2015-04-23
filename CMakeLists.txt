@@ -36,6 +36,8 @@ set(SOURCE_FILES
 	smt/ast/smt_var.h
 	smt/ast/smt_term.cpp
 	smt/ast/smt_term.h
+	parser/smtlib-glue.h
+	parser/smtlib-glue.cpp
 )
 
 add_executable(parse-smtlib ${SOURCE_FILES})

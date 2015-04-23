@@ -8,7 +8,7 @@ SmtTheory::SmtTheory(shared_ptr<Symbol> name) {
     setName(name);
 }
 
-SmtTheory::SmtTheory(shared_ptr<Symbol> name, vector<shared_ptr<Attribute>>&attributes) {
+SmtTheory::SmtTheory(shared_ptr<Symbol> name, vector<shared_ptr<Attribute>> &attributes) {
     setName(name);
 
     for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin();

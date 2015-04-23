@@ -143,20 +143,20 @@ namespace smt {
         class DeclareSortCommand : public Command {
         private:
             std::shared_ptr<Symbol> symbol;
-            std::shared_ptr<Symbol> arity;
+            std::shared_ptr<NumeralLiteral> arity;
         public:
             /**
              * \param name      Name of the sort
              * \param arity     Arity of the sort
              */
             DeclareSortCommand(std::shared_ptr<Symbol> symbol,
-                               std::shared_ptr<Symbol> arity);
+                               std::shared_ptr<NumeralLiteral> arity);
 
             std::shared_ptr<Symbol> getSymbol();
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
-            std::shared_ptr<Symbol> getArity();
-            void setArity(std::shared_ptr<Symbol> arity);
+            std::shared_ptr<NumeralLiteral> getArity();
+            void setArity(std::shared_ptr<NumeralLiteral> arity);
 
             virtual std::string toString();
         };
@@ -290,7 +290,7 @@ namespace smt {
             /**
              * \param   Message to print
              */
-            EchoCommand(std::string message);
+            EchoCommand(std::string message) : message(message) {}
 
             std::string &getMessage();
             void setMessage(std::string message);

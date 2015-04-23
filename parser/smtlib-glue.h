@@ -25,7 +25,7 @@ SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value);
 
 // smt_basic.h
 SmtPtr smt_newKeyword(char const* value);
-SmtPtr smt_newMetaSpecConstant(char const* meta);
+SmtPtr smt_newMetaSpecConstant(int value);
 SmtPtr smt_newBooleanValue(bool value);
 SmtPtr smt_newPropLiteral(SmtPtr symbol, bool negated);
 
@@ -36,12 +36,8 @@ SmtPtr smt_newCheckSatAssumCommand(SmtList assumptions);
 SmtPtr smt_newDeclareConstCommand(SmtPtr symbol, SmtPtr sort);
 SmtPtr smt_newDeclareFunCommand(SmtPtr symbol, SmtList params, SmtPtr sort);
 SmtPtr smt_newDeclareSortCommand(SmtPtr symbol, SmtPtr arity);
-SmtPtr smt_newDefineFunCommand1(SmtPtr definition);
-SmtPtr smt_newDefineFunCommand2(SmtPtr definition, SmtPtr body);
-SmtPtr smt_newDefineFunCommand3(SmtPtr symbol, SmtList params, SmtPtr sort, SmtPtr body);
-SmtPtr smt_newDefineFunRecCommand1(SmtPtr definition);
-SmtPtr smt_newDefineFunRecCommand2(SmtPtr definition, SmtPtr body);
-SmtPtr smt_newDefineFunRecCommand3(SmtPtr symbol, SmtList params, SmtPtr sort, SmtPtr body);
+SmtPtr smt_newDefineFunCommand(SmtPtr definition);
+SmtPtr smt_newDefineFunRecCommand(SmtPtr definition);
 SmtPtr smt_newDefineFunsRecCommand(SmtList definitions);
 SmtPtr smt_newDefineSortCommand(SmtPtr symbol, SmtList params, SmtPtr sort);
 SmtPtr smt_newEchoCommand(char*);
@@ -68,7 +64,7 @@ SmtPtr smt_newFunctionDefinition(SmtPtr signature, SmtPtr body);
 // smt_identifier.h
 SmtPtr smt_newIdentifier1(SmtPtr symbol);
 SmtPtr smt_newIdentifier2(SmtPtr symbol, SmtList indices);
-SmtPtr smt_newQualifiedIdentifier(SmtPtr identifier, SmtList sort);
+SmtPtr smt_newQualifiedIdentifier(SmtPtr identifier, SmtPtr sort);
 
 // smt_literal.h
 SmtPtr smt_newNumeralLiteral(long value);
@@ -76,7 +72,8 @@ SmtPtr smt_newDecimalLiteral(double value);
 SmtPtr smt_newStringLiteral(char const* value);
 
 // smt_logic.h
-SmtPtr smt_newSmtLogic(SmtPtr name);
+SmtPtr smt_newSmtLogic1(SmtPtr name);
+SmtPtr smt_newSmtLogic2(SmtPtr name, SmtList attributes);
 
 // smt_s_expr.h
 SmtPtr smt_newCompSExpression(SmtList exprs);

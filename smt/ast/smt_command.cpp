@@ -130,7 +130,7 @@ string DeclareFunCommand::toString() {
 /* =============================== DeclareSortCommand ================================ */
 
 DeclareSortCommand::DeclareSortCommand(shared_ptr<Symbol> symbol,
-                                       shared_ptr<Symbol> arity) {
+                                       shared_ptr<NumeralLiteral> arity) {
     setSymbol(symbol);
     setArity(arity);
 }
@@ -143,11 +143,11 @@ void DeclareSortCommand::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-shared_ptr<Symbol> DeclareSortCommand::getArity() {
+shared_ptr<NumeralLiteral> DeclareSortCommand::getArity() {
     return arity;
 }
 
-void DeclareSortCommand::setArity(shared_ptr<Symbol> arity) {
+void DeclareSortCommand::setArity(shared_ptr<NumeralLiteral> arity) {
     this->arity = arity;
 }
 
