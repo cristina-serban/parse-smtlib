@@ -18,12 +18,14 @@
 #include "smt_var.h"
 
 namespace smt {
+	namespace ast {
 
     class ParserInternalList {
     private:
         std::vector<SmtPtr> v;
     public:
-        template<class T> std::vector<std::shared_ptr<T>> unwrap() {
+        template<class T>
+        std::vector<std::shared_ptr<T>> unwrap() {
             std::vector<std::shared_ptr<T>> result;
             for (unsigned long i = 0, n = v.size(); i < n; ++i) {
                 result.push_back(std::shared_ptr<T>(dynamic_cast<T>(v[i])));
@@ -38,7 +40,7 @@ namespace smt {
     };
 }
 
-using namespace smt;
+using namespace smt::ast;
 
 template<class T>
 std::shared_ptr<T> share(SmtPtr nakedPtr) {

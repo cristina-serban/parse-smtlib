@@ -1,18 +1,16 @@
-//
-// Created by user on 22.04.2015.
-//
-
 #ifndef PARSE_SMTLIB_SMTLIB_GLUE_H
 #define PARSE_SMTLIB_SMTLIB_GLUE_H
 
 #ifdef __cplusplus
-#include <ast_node.h>
+#include "../smt/ast/smt_abstract.h"
 namespace smt {
-    class AstNode;
-    class ParserInternalList;
+    namespace ast {
+        class SmtAstNode;
+        class ParserInternalList;
+    }
 }
-typedef class smt::AstNode *SmtPtr;
-typedef class smt::ParserInternalList *SmtList;
+typedef class smt::ast::SmtAstNode *SmtPtr;
+typedef class smt::ast::ParserInternalList *SmtList;
 #else
 typedef void *SmtPtr, *SmtList;
 #endif
@@ -27,7 +25,7 @@ SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value);
 
 // smt_basic.h
 SmtPtr smt_newKeyword(char const* value);
-SmtPtr smt_newMetaSpecConstant(); // fixme: how do you specify the type?
+SmtPtr smt_newMetaSpecConstant(char const* meta);
 SmtPtr smt_newBooleanValue(bool value);
 SmtPtr smt_newPropLiteral(SmtPtr symbol, bool negated);
 
