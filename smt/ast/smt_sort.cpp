@@ -7,7 +7,8 @@ Sort::Sort(shared_ptr<Identifier> identifier) {
     setIdentifier(identifier);
 }
 
-Sort::Sort(shared_ptr<Identifier> identifier, vector<shared_ptr<Sort>> &params) {
+Sort::Sort(shared_ptr<Identifier> identifier,
+           const vector<shared_ptr<Sort>> &params) {
     setIdentifier(identifier);
     this->params.insert(this->params.end(), params.begin(), params.end());
 }

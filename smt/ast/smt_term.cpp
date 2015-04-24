@@ -6,7 +6,7 @@ using namespace smt::ast;
 /* ================================== QualifiedTerm =================================== */
 
 QualifiedTerm::QualifiedTerm(shared_ptr<IQualIdentifier> identifier,
-                             vector<shared_ptr<ITerm>> &terms) {
+                             const vector<shared_ptr<ITerm>> &terms) {
     setIdentifier(identifier);
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
 }
@@ -25,7 +25,7 @@ vector<shared_ptr<ITerm>> &QualifiedTerm::getTerms() {
 
 /* ===================================== LetTerm ====================================== */
 
-LetTerm::LetTerm(vector<shared_ptr<VarBinding>> &bindings,
+LetTerm::LetTerm(const vector<shared_ptr<VarBinding>> &bindings,
                  shared_ptr<ITerm> term) {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
     setTerm(term);
@@ -44,7 +44,7 @@ vector<shared_ptr<VarBinding>> &LetTerm::getBindings() {
 }
 
 /* ==================================== ForallTerm ==================================== */
-ForallTerm::ForallTerm(vector<shared_ptr<SortedVariable>> &bindings,
+ForallTerm::ForallTerm(const vector<shared_ptr<SortedVariable>> &bindings,
                        shared_ptr<ITerm> term) {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
     setTerm(term);
@@ -63,7 +63,7 @@ vector<shared_ptr<SortedVariable>> &ForallTerm::getBindings() {
 }
 
 /* ==================================== ExistsTerm ==================================== */
-ExistsTerm::ExistsTerm(vector<shared_ptr<SortedVariable>> &bindings,
+ExistsTerm::ExistsTerm(const vector<shared_ptr<SortedVariable>> &bindings,
                        shared_ptr<ITerm> term) {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
     setTerm(term);
@@ -83,7 +83,7 @@ vector<shared_ptr<SortedVariable>> &ExistsTerm::getBindings() {
 
 /* ================================== AnnotatedTerm =================================== */
 AnnotatedTerm::AnnotatedTerm(shared_ptr<ITerm> term,
-                             vector<shared_ptr<Attribute>> &attrs) {
+                             const vector<shared_ptr<Attribute>> &attrs) {
     setTerm(term);
     this->attrs.insert(this->attrs.end(), attrs.begin(), attrs.end());
 }

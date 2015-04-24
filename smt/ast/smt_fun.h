@@ -33,7 +33,7 @@ namespace smt {
              * \param sort      Sort of the return value
              */
             FunctionDeclaration(std::shared_ptr<Symbol> symbol,
-                                std::vector<std::shared_ptr<SortedVariable>> &params,
+                                const std::vector<std::shared_ptr<SortedVariable>> &params,
                                 std::shared_ptr<Sort> sort);
 
             std::shared_ptr<Symbol> getSymbol();
@@ -71,7 +71,7 @@ namespace smt {
              * \param body      Function body
              */
             FunctionDefinition(std::shared_ptr<Symbol> symbol,
-                               std::vector<std::shared_ptr<SortedVariable>> &params,
+                               const std::vector<std::shared_ptr<SortedVariable>> &params,
                                std::shared_ptr<Sort> sort,
                                std::shared_ptr<ITerm> body);
 

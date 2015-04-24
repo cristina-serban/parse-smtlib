@@ -26,7 +26,7 @@ namespace smt {
             std::vector<SmtPtr> v;
         public:
             template<class T>
-            std::vector<std::shared_ptr<T>> &unwrap() {
+            std::vector<std::shared_ptr<T>> unwrap() {
                 std::vector<std::shared_ptr<T>> result;
                 for (unsigned long i = 0, n = v.size(); i < n; ++i) {
                     result.push_back(std::shared_ptr<T>(dynamic_cast<T*>(v[i])));
@@ -267,12 +267,14 @@ SmtPtr smt_newSort2(SmtPtr identifier, SmtList params) {
 }
 
 // smt_symbol_decl.h
-SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, long arity) {
-    return new SortSymbolDeclaration(share<Identifier>(identifier), arity);
+SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, SmtPtr arity) {
+    return new SortSymbolDeclaration(share<Identifier>(identifier),
+                                     share<NumeralLiteral>(arity));
 }
 
-SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, long arity, SmtList attributes) {
-    return new SortSymbolDeclaration(share<Identifier>(identifier), arity,
+SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, SmtPtr arity, SmtList attributes) {
+    return new SortSymbolDeclaration(share<Identifier>(identifier),
+                                     share<NumeralLiteral>(arity),
                                      attributes->unwrap<Attribute>());
 }
 

@@ -32,7 +32,7 @@ string CheckSatCommand::toString() {
 
 /* =============================== CheckSatAssumCommand =============================== */
 
-CheckSatAssumCommand::CheckSatAssumCommand(vector<shared_ptr<PropLiteral>> &assumptions) {
+CheckSatAssumCommand::CheckSatAssumCommand(const vector<shared_ptr<PropLiteral>> &assumptions) {
     this->assumptions.insert(this->assumptions.end(), assumptions.begin(), assumptions.end());
 }
 
@@ -87,7 +87,7 @@ string DeclareConstCommand::toString() {
 /* =============================== DeclareFunCommand ================================ */
 
 DeclareFunCommand::DeclareFunCommand(shared_ptr<Symbol> symbol,
-                                     vector<shared_ptr<Sort>> &params,
+                                     const vector<shared_ptr<Sort>> &params,
                                      shared_ptr<Sort> sort) {
     setSymbol(symbol);
     this->params.insert(this->params.end(), params.begin(), params.end());
@@ -169,7 +169,7 @@ DefineFunCommand::DefineFunCommand(shared_ptr<FunctionDeclaration> signature,
 }
 
 DefineFunCommand::DefineFunCommand(shared_ptr<Symbol> symbol,
-                                   vector<shared_ptr<SortedVariable>> &params,
+                                   const vector<shared_ptr<SortedVariable>> &params,
                                    shared_ptr<Sort> sort,
                                    shared_ptr<ITerm> body) {
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
@@ -195,7 +195,7 @@ DefineFunRecCommand::DefineFunRecCommand(shared_ptr<FunctionDeclaration> signatu
 }
 
 DefineFunRecCommand::DefineFunRecCommand(shared_ptr<Symbol> symbol,
-                                         vector<shared_ptr<SortedVariable>> &params,
+                                         const vector<shared_ptr<SortedVariable>> &params,
                                          shared_ptr<Sort> sort,
                                          shared_ptr<ITerm> body) {
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
@@ -212,41 +212,41 @@ void DefineFunRecCommand::setDefinition(shared_ptr<FunctionDefinition> definitio
 /* =============================== DefineFunsRecCommand =============================== */
 
 DefineFunsRecCommand::DefineFunsRecCommand(
-        std::vector<std::shared_ptr<FunctionDefinition>> &definitions) {
+        const vector<shared_ptr<FunctionDefinition>> &definitions) {
     this->definitions.insert(this->definitions.end(), definitions.begin(), definitions.end());
 }
 
-std::vector<std::shared_ptr<FunctionDefinition>> &DefineFunsRecCommand::getDefinitions() {
+vector<shared_ptr<FunctionDefinition>> &DefineFunsRecCommand::getDefinitions() {
     return definitions;
 }
 
 /* ================================ DefineSortCommand ================================= */
 
-DefineSortCommand::DefineSortCommand(std::shared_ptr<Symbol> symbol,
-                                     std::vector<std::shared_ptr<Symbol>> &params,
-                                     std::shared_ptr<Sort> sort) {
+DefineSortCommand::DefineSortCommand(shared_ptr<Symbol> symbol,
+                                     const vector<shared_ptr<Symbol>> &params,
+                                     shared_ptr<Sort> sort) {
     setSymbol(symbol);
     this->params.insert(this->params.end(), params.begin(), params.end());
     setSort(sort);
 }
 
-std::shared_ptr<Symbol> DefineSortCommand::getSymbol() {
+shared_ptr<Symbol> DefineSortCommand::getSymbol() {
     return symbol;
 }
 
-void DefineSortCommand::setSymbol(std::shared_ptr<Symbol> symbol) {
+void DefineSortCommand::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-std::vector<std::shared_ptr<Symbol>> &DefineSortCommand::getParams() {
+vector<shared_ptr<Symbol>> &DefineSortCommand::getParams() {
     return params;
 }
 
-std::shared_ptr<Sort> DefineSortCommand::getSort() {
+shared_ptr<Sort> DefineSortCommand::getSort() {
     return sort;
 }
 
-void DefineSortCommand::setSort(std::shared_ptr<Sort> sort) {
+void DefineSortCommand::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }
 
@@ -269,15 +269,15 @@ string GetAssignsCommand::toString() {
 }
 
 /* ================================== GetInfoCommand ================================== */
-GetInfoCommand::GetInfoCommand(std::shared_ptr<Keyword> flag) {
+GetInfoCommand::GetInfoCommand(shared_ptr<Keyword> flag) {
     setFlag(flag);
 }
 
-std::shared_ptr<Keyword> GetInfoCommand::getFlag() {
+shared_ptr<Keyword> GetInfoCommand::getFlag() {
     return flag;
 }
 
-void GetInfoCommand::setFlag(std::shared_ptr<Keyword> flag) {
+void GetInfoCommand::setFlag(shared_ptr<Keyword> flag) {
     this->flag = flag;
 }
 
@@ -289,15 +289,15 @@ string GetModelCommand::toString() {
 
 /* ================================= GetOptionCommand ================================= */
 
-GetOptionCommand::GetOptionCommand(std::shared_ptr<Keyword> option) {
+GetOptionCommand::GetOptionCommand(shared_ptr<Keyword> option) {
     setOption(option);
 }
 
-std::shared_ptr<Keyword> GetOptionCommand::getOption() {
+shared_ptr<Keyword> GetOptionCommand::getOption() {
     return option;
 }
 
-void GetOptionCommand::setOption(std::shared_ptr<Keyword> option) {
+void GetOptionCommand::setOption(shared_ptr<Keyword> option) {
     this->option = option;
 }
 
@@ -315,29 +315,29 @@ string GetUnsatCoreCommand::toString() {
 
 /* ================================= GetValueCommand ================================== */
 
-GetValueCommand::GetValueCommand(std::vector<std::shared_ptr<ITerm>> &terms) {
+GetValueCommand::GetValueCommand(const vector<shared_ptr<ITerm>> &terms) {
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
 }
 
-std::vector<std::shared_ptr<ITerm>> &GetValueCommand::getTerms() {
+vector<shared_ptr<ITerm>> &GetValueCommand::getTerms() {
     return terms;
 }
 
 /* =================================== PopCommand ==================================== */
 
-PopCommand::PopCommand(std::shared_ptr<NumeralLiteral> numeral) {
+PopCommand::PopCommand(shared_ptr<NumeralLiteral> numeral) {
     setNumeral(numeral);
 }
 
-std::shared_ptr<NumeralLiteral> PopCommand::getNumeral() {
+shared_ptr<NumeralLiteral> PopCommand::getNumeral() {
     return numeral;
 }
 
-void PopCommand::setNumeral(std::shared_ptr<NumeralLiteral> numeral) {
+void PopCommand::setNumeral(shared_ptr<NumeralLiteral> numeral) {
     this->numeral = numeral;
 }
 
-std::string PopCommand::toString() {
+string PopCommand::toString() {
     stringstream ss;
     ss << "( push " << numeral->toString() << " )";
     return ss.str();
@@ -345,19 +345,19 @@ std::string PopCommand::toString() {
 
 /* =================================== PushCommand ==================================== */
 
-PushCommand::PushCommand(std::shared_ptr<NumeralLiteral> numeral) {
+PushCommand::PushCommand(shared_ptr<NumeralLiteral> numeral) {
     setNumeral(numeral);
 }
 
-std::shared_ptr<NumeralLiteral> PushCommand::getNumeral() {
+shared_ptr<NumeralLiteral> PushCommand::getNumeral() {
     return numeral;
 }
 
-void PushCommand::setNumeral(std::shared_ptr<NumeralLiteral> numeral) {
+void PushCommand::setNumeral(shared_ptr<NumeralLiteral> numeral) {
     this->numeral = numeral;
 }
 
-std::string PushCommand::toString() {
+string PushCommand::toString() {
     stringstream ss;
     ss << "( push " << numeral->toString() << " )";
     return ss.str();
@@ -377,19 +377,19 @@ string ResetAssertsCommand::toString() {
 
 /* ================================== SetInfoCommand ================================== */
 
-SetInfoCommand::SetInfoCommand(std::shared_ptr<Attribute> info) {
+SetInfoCommand::SetInfoCommand(shared_ptr<Attribute> info) {
     setInfo(info);
 }
 
-std::shared_ptr<Attribute> SetInfoCommand::getInfo() {
+shared_ptr<Attribute> SetInfoCommand::getInfo() {
     return info;
 }
 
-void SetInfoCommand::setInfo(std::shared_ptr<Attribute> info) {
+void SetInfoCommand::setInfo(shared_ptr<Attribute> info) {
     this->info = info;
 }
 
-std::string SetInfoCommand::toString() {
+string SetInfoCommand::toString() {
     stringstream ss;
     ss << "( set-option " << info->getKeyword()->toString()
     << " " << info->getValue()->toString() << " )";
@@ -398,19 +398,19 @@ std::string SetInfoCommand::toString() {
 
 /* ================================= SetLogicCommand ================================== */
 
-SetLogicCommand::SetLogicCommand(std::shared_ptr<Symbol> logic) {
+SetLogicCommand::SetLogicCommand(shared_ptr<Symbol> logic) {
     setLogic(logic);
 }
 
-std::shared_ptr<Symbol> SetLogicCommand::getLogic() {
+shared_ptr<Symbol> SetLogicCommand::getLogic() {
     return logic;
 }
 
-void SetLogicCommand::setLogic(std::shared_ptr<Symbol> logic) {
+void SetLogicCommand::setLogic(shared_ptr<Symbol> logic) {
     this->logic = logic;
 }
 
-std::string SetLogicCommand::toString() {
+string SetLogicCommand::toString() {
     stringstream ss;
     ss << "( set-logic " << logic->toString() << " )";
     return ss.str();
@@ -418,19 +418,19 @@ std::string SetLogicCommand::toString() {
 
 /* ================================= SetOptionCommand ================================= */
 
-SetOptionCommand::SetOptionCommand(std::shared_ptr<Attribute> option) {
+SetOptionCommand::SetOptionCommand(shared_ptr<Attribute> option) {
     setOption(option);
 }
 
-std::shared_ptr<Attribute> SetOptionCommand::getOption() {
+shared_ptr<Attribute> SetOptionCommand::getOption() {
     return option;
 }
 
-void SetOptionCommand::setOption(std::shared_ptr<Attribute> option) {
+void SetOptionCommand::setOption(shared_ptr<Attribute> option) {
     this->option = option;
 }
 
-std::string SetOptionCommand::toString() {
+string SetOptionCommand::toString() {
     stringstream ss;
     ss << "( set-option " << option->getKeyword()->toString()
     << " " << option->getValue()->toString() << " )";

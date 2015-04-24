@@ -14,6 +14,7 @@
 #include "smt_identifier.h"
 #include "smt_interfaces.h"
 #include "smt_sort.h"
+#include "smt_literal.h"
 
 namespace smt {
     namespace ast {
@@ -27,7 +28,7 @@ namespace smt {
                                       public IAttributeValue {
         private:
             std::shared_ptr<Identifier> identifier;
-            long arity;
+            std::shared_ptr<NumeralLiteral> arity;
             std::vector<std::shared_ptr<Attribute>> attributes;
         public:
             /**
@@ -35,7 +36,7 @@ namespace smt {
              * \param identifier    Sort symbol identiier
              * \param arity         Sort arity
              */
-            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier, long arity);
+            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier, std::shared_ptr<NumeralLiteral> arity);
 
             /**
              * Constructs declaration with attributes.
@@ -43,14 +44,14 @@ namespace smt {
              * \param arity         Sort arity
              * \param attributes    Sort symbol declaration attributes
              */
-            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier, long arity,
-                                  std::vector<std::shared_ptr<Attribute>> &attributes);
+            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier, std::shared_ptr<NumeralLiteral> arity,
+                                  const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<Identifier> getIdentifier();
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
-            long getArity();
-            void setArity(long arity);
+            std::shared_ptr<NumeralLiteral> getArity();
+            void setArity(std::shared_ptr<NumeralLiteral> arity);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
         };
@@ -94,7 +95,7 @@ namespace smt {
              */
             SpecConstFunDeclaration(std::shared_ptr<ISpecConstant> constant,
                                     std::shared_ptr<Sort> sort,
-                                    std::vector<std::shared_ptr<Attribute>> &attributes);
+                                    const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<ISpecConstant> getConstant();
             void setConstant(std::shared_ptr<ISpecConstant> constant);
@@ -135,7 +136,7 @@ namespace smt {
              */
             MetaSpecConstFunDeclaration(std::shared_ptr<MetaSpecConstant> constant,
                                         std::shared_ptr<Sort> sort,
-                                        std::vector<std::shared_ptr<Attribute>> &attributes);
+                                        const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<MetaSpecConstant> getConstant();
 
@@ -169,7 +170,7 @@ namespace smt {
              * \param signature     Function signature
              */
             IdentifFunDeclaration(std::shared_ptr<Identifier> identifier,
-                                  std::vector<std::shared_ptr<Sort>> &signature);
+                                  const std::vector<std::shared_ptr<Sort>> &signature);
 
             /**
              * Constructs declaration with attributes.
@@ -178,8 +179,8 @@ namespace smt {
              * \param attributes    Function symbol declaration attributes
              */
             IdentifFunDeclaration(std::shared_ptr<Identifier> identifier,
-                                  std::vector<std::shared_ptr<Sort>> &signature,
-                                  std::vector<std::shared_ptr<Attribute>> &attributes);
+                                  const std::vector<std::shared_ptr<Sort>> &signature,
+                                  const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<Identifier> getIdentifier();
             void setIdentifier(std::shared_ptr<Identifier> identifier);
@@ -206,9 +207,9 @@ namespace smt {
              * \param identifier    Function identifier
              * \param signature     Function signature
              */
-            ParamFunDeclaration(std::vector<std::shared_ptr<Symbol>> &params,
+            ParamFunDeclaration(const std::vector<std::shared_ptr<Symbol>> &params,
                                 std::shared_ptr<Identifier> identifier,
-                                std::vector<std::shared_ptr<Sort>> &signature);
+                                const std::vector<std::shared_ptr<Sort>> &signature);
 
             /**
              * Constructs declaration with attributes.
@@ -217,10 +218,10 @@ namespace smt {
              * \param signature     Function signature
              * \param attributes    Function symbol declaration attributes
              */
-            ParamFunDeclaration(std::vector<std::shared_ptr<Symbol>> &params,
+            ParamFunDeclaration(const std::vector<std::shared_ptr<Symbol>> &params,
                                 std::shared_ptr<Identifier> identifier,
-                                std::vector<std::shared_ptr<Sort>> &signature,
-                                std::vector<std::shared_ptr<Attribute>> &attributes);
+                                const std::vector<std::shared_ptr<Sort>> &signature,
+                                const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::vector<std::shared_ptr<Symbol>> &getParams();
         };

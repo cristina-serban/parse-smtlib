@@ -71,7 +71,7 @@ namespace smt {
             /**
              * \param assumptions   List of assumptions
              */
-            CheckSatAssumCommand(std::vector<std::shared_ptr<PropLiteral>> &assumptions);
+            CheckSatAssumCommand(const std::vector<std::shared_ptr<PropLiteral>> &assumptions);
 
             std::vector<std::shared_ptr<PropLiteral>> &getAssumptions();
 
@@ -121,7 +121,7 @@ namespace smt {
              * \param sort      Sort of the return value
              */
             DeclareFunCommand(std::shared_ptr<Symbol> symbol,
-                              std::vector<std::shared_ptr<Sort>> &params,
+                              const std::vector<std::shared_ptr<Sort>> &params,
                               std::shared_ptr<Sort> sort);
 
             std::shared_ptr<Symbol> getSymbol();
@@ -189,7 +189,7 @@ namespace smt {
              * \param body      Function body
              */
             DefineFunCommand(std::shared_ptr<Symbol> symbol,
-                             std::vector<std::shared_ptr<SortedVariable>> &params,
+                             const  std::vector<std::shared_ptr<SortedVariable>> &params,
                              std::shared_ptr<Sort> sort,
                              std::shared_ptr<ITerm> body);
 
@@ -225,7 +225,7 @@ namespace smt {
              * \param body      Function body
              */
             DefineFunRecCommand(std::shared_ptr<Symbol> symbol,
-                                std::vector<std::shared_ptr<SortedVariable>> &params,
+                                const std::vector<std::shared_ptr<SortedVariable>> &params,
                                 std::shared_ptr<Sort> sort,
                                 std::shared_ptr<ITerm> body);
 
@@ -245,7 +245,7 @@ namespace smt {
             /**
              * \param definitions    Function definitions
              */
-            DefineFunsRecCommand(std::vector<std::shared_ptr<FunctionDefinition>> &definitions);
+            DefineFunsRecCommand(const std::vector<std::shared_ptr<FunctionDefinition>> &definitions);
 
             std::vector<std::shared_ptr<FunctionDefinition>> &getDefinitions();
         };
@@ -266,7 +266,7 @@ namespace smt {
              * \param arity     Arity of the sort
              */
             DefineSortCommand(std::shared_ptr<Symbol> symbol,
-                              std::vector<std::shared_ptr<Symbol>> &params,
+                              const std::vector<std::shared_ptr<Symbol>> &params,
                               std::shared_ptr<Sort> sort);
 
             std::shared_ptr<Symbol> getSymbol();
@@ -416,7 +416,7 @@ namespace smt {
             /**
              * \param terms Terms to evaluate
              */
-            GetValueCommand(std::vector<std::shared_ptr<ITerm>> &terms);
+            GetValueCommand(const std::vector<std::shared_ptr<ITerm>> &terms);
 
             std::vector<std::shared_ptr<ITerm>> &getTerms();
         };

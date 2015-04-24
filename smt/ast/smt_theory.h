@@ -37,7 +37,7 @@ namespace smt {
              * \param attributes    Theory attributes
              */
             SmtTheory(std::shared_ptr<Symbol> name,
-                      std::vector<std::shared_ptr<Attribute>> &attributes);
+                      const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<Symbol> getName();
             void setName(std::shared_ptr<Symbol> name);

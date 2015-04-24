@@ -23,7 +23,7 @@ namespace smt {
             /**
              * \param exprs     Subexpressions
              */
-            CompSExpression(std::vector<std::shared_ptr<ISExpression>> &exprs);
+            CompSExpression(const std::vector<std::shared_ptr<ISExpression>> &exprs);
 
             std::vector<std::shared_ptr<ISExpression>> &getExpressions();
         };

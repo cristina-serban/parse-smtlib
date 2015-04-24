@@ -5,13 +5,15 @@ using namespace smt::ast;
 
 /* =============================== SortSymbolDeclaration ============================== */
 
-SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier, long arity) {
+SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
+                                             std::shared_ptr<NumeralLiteral> arity) {
     setIdentifier(identifier);
     setArity(arity);
 }
 
-SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier, long arity,
-                                             vector<shared_ptr<Attribute>> &attributes) {
+SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
+                                             std::shared_ptr<NumeralLiteral> arity,
+                                             const vector<shared_ptr<Attribute>> &attributes) {
     setIdentifier(identifier);
     setArity(arity);
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
@@ -25,11 +27,11 @@ void SortSymbolDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
-long SortSymbolDeclaration::getArity() {
+shared_ptr<NumeralLiteral> SortSymbolDeclaration::getArity() {
     return arity;
 }
 
-void SortSymbolDeclaration::setArity(long arity) {
+void SortSymbolDeclaration::setArity(shared_ptr<NumeralLiteral> arity) {
     this->arity = arity;
 }
 
@@ -47,7 +49,7 @@ SpecConstFunDeclaration::SpecConstFunDeclaration(shared_ptr<ISpecConstant> const
 
 SpecConstFunDeclaration::SpecConstFunDeclaration(shared_ptr<ISpecConstant> constant,
                                                  shared_ptr<Sort> sort,
-                                                 vector<shared_ptr<Attribute>> &attributes) {
+                                                 const vector<shared_ptr<Attribute>> &attributes) {
     setConstant(constant);
     setSort(sort);
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
@@ -83,7 +85,7 @@ MetaSpecConstFunDeclaration::MetaSpecConstFunDeclaration(shared_ptr<MetaSpecCons
 
 MetaSpecConstFunDeclaration::MetaSpecConstFunDeclaration(shared_ptr<MetaSpecConstant> constant,
                                                          shared_ptr<Sort> sort,
-                                                         vector<shared_ptr<Attribute>> &attributes) {
+                                                         const vector<shared_ptr<Attribute>> &attributes) {
     setConstant(constant);
     setSort(sort);
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
@@ -112,14 +114,14 @@ vector<shared_ptr<Attribute>> &MetaSpecConstFunDeclaration::getAttributes() {
 /* ============================== IdentifFunDeclaration =============================== */
 
 IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<Identifier> identifier,
-                                             vector<shared_ptr<Sort>> &signature) {
+                                             const vector<shared_ptr<Sort>> &signature) {
     setIdentifier(identifier);
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
 }
 
 IdentifFunDeclaration::IdentifFunDeclaration(shared_ptr<Identifier> identifier,
-                                             vector<shared_ptr<Sort>> &signature,
-                                             vector<shared_ptr<Attribute>> &attributes) {
+                                             const vector<shared_ptr<Sort>> &signature,
+                                             const vector<shared_ptr<Attribute>> &attributes) {
     setIdentifier(identifier);
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
@@ -144,19 +146,19 @@ vector<shared_ptr<Attribute>> &IdentifFunDeclaration::getAttributes() {
 
 /* =============================== ParamFunDeclaration ================================ */
 
-ParamFunDeclaration::ParamFunDeclaration(vector<shared_ptr<Symbol>> &params,
+ParamFunDeclaration::ParamFunDeclaration(const vector<shared_ptr<Symbol>> &params,
                                          shared_ptr<Identifier> identifier,
-                                         vector<shared_ptr<Sort>> &signature) {
+                                         const vector<shared_ptr<Sort>> &signature) {
     this->params.insert(this->params.end(), params.begin(), params.end());
     setIdentifier(identifier);
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
 
 }
 
-ParamFunDeclaration::ParamFunDeclaration(vector<shared_ptr<Symbol>> &params,
+ParamFunDeclaration::ParamFunDeclaration(const vector<shared_ptr<Symbol>> &params,
                                          shared_ptr<Identifier> identifier,
-                                         vector<shared_ptr<Sort>> &signature,
-                                         vector<shared_ptr<Attribute>> &attributes) {
+                                         const vector<shared_ptr<Sort>> &signature,
+                                         const vector<shared_ptr<Attribute>> &attributes) {
     this->params.insert(this->params.end(), params.begin(), params.end());
     setIdentifier(identifier);
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());

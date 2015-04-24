@@ -32,7 +32,7 @@ namespace smt {
             /**
              * \param cmds    Command list
              */
-            SmtScript(std::vector<std::shared_ptr<Command>> &cmds);
+            SmtScript(const std::vector<std::shared_ptr<Command>> &cmds);
 
             std::vector<std::shared_ptr<Command>> &getCommands();
         };

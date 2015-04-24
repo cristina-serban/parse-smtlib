@@ -8,7 +8,7 @@ using namespace smt::ast;
 /* ================================ FunctionDeclaration =============================== */
 
 FunctionDeclaration::FunctionDeclaration(shared_ptr<Symbol> symbol,
-                                         vector<shared_ptr<SortedVariable>> &params,
+                                         const vector<shared_ptr<SortedVariable>> &params,
                                          shared_ptr<Sort> sort) {
     setSymbol(symbol);
     setSort(sort);
@@ -57,7 +57,7 @@ FunctionDefinition::FunctionDefinition(shared_ptr<FunctionDeclaration> signature
 }
 
 FunctionDefinition::FunctionDefinition(shared_ptr<Symbol> symbol,
-                                       vector<shared_ptr<SortedVariable>> &params,
+                                       const vector<shared_ptr<SortedVariable>> &params,
                                        shared_ptr<Sort> sort,
                                        shared_ptr<ITerm> body) {
     signature = make_shared<FunctionDeclaration>(symbol, params, sort);

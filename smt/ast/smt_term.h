@@ -30,7 +30,7 @@ namespace smt {
              * \param terms         List of terms
              */
             QualifiedTerm(std::shared_ptr<IQualIdentifier> identifier,
-                          std::vector<std::shared_ptr<ITerm>> &terms);
+                          const std::vector<std::shared_ptr<ITerm>> &terms);
 
             std::shared_ptr<IQualIdentifier> getIdentifier();
             void setIdentifier(std::shared_ptr<IQualIdentifier> identifier);
@@ -53,7 +53,7 @@ namespace smt {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            LetTerm(std::vector<std::shared_ptr<VarBinding>> &bindings,
+            LetTerm(const std::vector<std::shared_ptr<VarBinding>> &bindings,
                     std::shared_ptr<ITerm> term);
 
             std::shared_ptr<ITerm> getTerm();
@@ -77,7 +77,7 @@ namespace smt {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            ForallTerm(std::vector<std::shared_ptr<SortedVariable>> &bindings,
+            ForallTerm(const std::vector<std::shared_ptr<SortedVariable>> &bindings,
                        std::shared_ptr<ITerm> term);
 
             std::shared_ptr<ITerm> getTerm();
@@ -101,7 +101,7 @@ namespace smt {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            ExistsTerm(std::vector<std::shared_ptr<SortedVariable>> &bindings,
+            ExistsTerm(const std::vector<std::shared_ptr<SortedVariable>> &bindings,
                        std::shared_ptr<ITerm> term);
 
             std::shared_ptr<ITerm> getTerm();
@@ -126,7 +126,7 @@ namespace smt {
              * \param attr  Attributes
              */
             AnnotatedTerm(std::shared_ptr<ITerm> term,
-                          std::vector<std::shared_ptr<Attribute>> &attrs);
+                          const std::vector<std::shared_ptr<Attribute>> &attrs);
 
             std::shared_ptr<ITerm> getTerm();
             void setTerm(std::shared_ptr<ITerm> term);

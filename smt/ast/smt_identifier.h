@@ -37,7 +37,7 @@ namespace smt {
              * \param indices   Identifier indices
              */
             Identifier(std::shared_ptr<Symbol> symbol,
-                       std::vector<std::shared_ptr<IIndex>> indices);
+                       const std::vector<std::shared_ptr<IIndex>> indices);
 
             std::shared_ptr<Symbol> getSymbol();
             void setSymbol(std::shared_ptr<Symbol> symbol);

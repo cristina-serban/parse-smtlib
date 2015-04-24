@@ -87,8 +87,8 @@ SmtPtr smt_newSort1(SmtPtr identifier);
 SmtPtr smt_newSort2(SmtPtr identifier, SmtList params);
 
 // smt_symbol_decl.h
-SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, long arity);
-SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, long arity, SmtList attributes);
+SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, SmtPtr arity);
+SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, SmtPtr arity, SmtList attributes);
 SmtPtr smt_newSpecConstFunDeclaration1(SmtPtr constant, SmtPtr sort);
 SmtPtr smt_newSpecConstFunDeclaration2(SmtPtr constant, SmtPtr sort, SmtList attributes);
 SmtPtr smt_newMetaSpecConstFunDeclaration1(SmtPtr constant, SmtPtr sort);

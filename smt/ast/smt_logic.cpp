@@ -8,7 +8,7 @@ SmtLogic::SmtLogic(std::shared_ptr<Symbol> name) {
 }
 
 SmtLogic::SmtLogic(std::shared_ptr<Symbol> name,
-                   vector<shared_ptr<Attribute>> &attributes) {
+                   const vector<shared_ptr<Attribute>> &attributes) {
     setName(name);
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }

@@ -5,25 +5,25 @@ using namespace smt::ast;
 
 /* ==================================== Identifier ==================================== */
 
-Identifier::Identifier(std::shared_ptr<Symbol> symbol) {
+Identifier::Identifier(shared_ptr<Symbol> symbol) {
     setSymbol(symbol);
 }
 
-Identifier::Identifier(std::shared_ptr<Symbol> symbol,
-                       std::vector<std::shared_ptr<IIndex>> indices) {
+Identifier::Identifier(shared_ptr<Symbol> symbol,
+                       const vector<shared_ptr<IIndex>> indices) {
     setSymbol(symbol);
     this->indices.insert(this->indices.end(), indices.begin(), indices.end());
 }
 
-std::shared_ptr<Symbol> Identifier::getSymbol() {
+shared_ptr<Symbol> Identifier::getSymbol() {
     return symbol;
 }
 
-void Identifier::setSymbol(std::shared_ptr<Symbol> symbol) {
+void Identifier::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-std::vector<std::shared_ptr<IIndex>> &Identifier::getIndices() {
+vector<shared_ptr<IIndex>> &Identifier::getIndices() {
     return indices;
 }
 
@@ -33,24 +33,24 @@ bool Identifier::isIndexed() {
 
 /* =============================== QualifiedIdentifier ================================ */
 
-QualifiedIdentifier::QualifiedIdentifier(std::shared_ptr<Identifier> identifier,
-                                         std::shared_ptr<Sort> sort) {
+QualifiedIdentifier::QualifiedIdentifier(shared_ptr<Identifier> identifier,
+                                         shared_ptr<Sort> sort) {
     setIdentifier(identifier);
     setSort(sort);
 }
 
-std::shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() {
+shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() {
     return identifier;
 }
 
-void QualifiedIdentifier::setIdentifier(std::shared_ptr<Identifier> identifier) {
+void QualifiedIdentifier::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
-std::shared_ptr<Sort> QualifiedIdentifier::getSort() {
+shared_ptr<Sort> QualifiedIdentifier::getSort() {
     return sort;
 }
 
-void QualifiedIdentifier::setSort(std::shared_ptr<Sort> sort) {
+void QualifiedIdentifier::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }

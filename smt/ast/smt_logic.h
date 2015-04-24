@@ -36,7 +36,7 @@ namespace smt {
              * \param attributes    Logic attributes
              */
             SmtLogic(std::shared_ptr<Symbol> name,
-                     std::vector<std::shared_ptr<Attribute>> &attributes);
+                     const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<Symbol> getName();
             void setName(std::shared_ptr<Symbol> name);

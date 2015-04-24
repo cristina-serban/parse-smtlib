@@ -3,7 +3,7 @@
 using namespace std;
 using namespace smt::ast;
 
-SmtScript::SmtScript(vector<shared_ptr<Command>> &commands) {
+SmtScript::SmtScript(const vector<shared_ptr<Command>> &commands) {
     this->commands.insert(this->commands.end(), commands.begin(), commands.end());
 }
 

@@ -34,7 +34,8 @@ namespace smt {
              * \param identifier    Sort name
              * \param params        Sort parameters
              */
-            Sort(std::shared_ptr<Identifier> identifier, std::vector<std::shared_ptr<Sort>> &params);
+            Sort(std::shared_ptr<Identifier> identifier,
+                 const std::vector<std::shared_ptr<Sort>> &params);
 
             std::shared_ptr<Identifier> getIdentifier();
             void setIdentifier(std::shared_ptr<Identifier> identifier);

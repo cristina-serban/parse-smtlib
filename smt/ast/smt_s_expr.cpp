@@ -3,7 +3,7 @@
 using namespace std;
 using namespace smt::ast;
 
-CompSExpression::CompSExpression(vector<shared_ptr<ISExpression>> &exprs) {
+CompSExpression::CompSExpression(const vector<shared_ptr<ISExpression>> &exprs) {
     this->exprs.insert(this->exprs.end(), exprs.begin(), exprs.end());
 }
 
