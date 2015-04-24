@@ -28,7 +28,7 @@ namespace smt {
             /**
              * \param value     Textual value of the symbol
              */
-            Symbol(std::string value);
+            Symbol(std::string value) : value(value) { }
 
             std::string getValue();
             void setValue(std::string value);
@@ -48,7 +48,7 @@ namespace smt {
             /**
              * \param value     Textual value of the keyword
              */
-            Keyword(std::string value);
+            Keyword(std::string value) : value(value) { }
 
             std::string getValue();
             void setValue(std::string value);
@@ -73,7 +73,7 @@ namespace smt {
             /**
              * \param type  Meta specification constant type
              */
-            MetaSpecConstant(MetaSpecConstant::Type type);
+            MetaSpecConstant(MetaSpecConstant::Type type) : type(type) { }
 
             MetaSpecConstant::Type getType();
             void setType(MetaSpecConstant::Type type);
@@ -91,7 +91,7 @@ namespace smt {
         private:
             bool value;
         public:
-            BooleanValue(bool value);
+            BooleanValue(bool value) : value(value) { }
 
             bool getValue();
             void setValue(bool value);
@@ -108,7 +108,8 @@ namespace smt {
             bool negated;
 
         public:
-            PropLiteral(std::shared_ptr<Symbol> symbol, bool negated);
+            PropLiteral(std::shared_ptr<Symbol> symbol, bool negated)
+                    : symbol(symbol), negated(negated) { }
 
             std::shared_ptr<Symbol> getSymbol();
 

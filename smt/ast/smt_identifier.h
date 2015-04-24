@@ -29,7 +29,7 @@ namespace smt {
              * Constuctor for unindexed identifier.
              * \param symbol    Identifier symbol
              */
-            Identifier(std::shared_ptr<Symbol> symbol);
+            Identifier(std::shared_ptr<Symbol> symbol) : symbol(symbol) { }
 
             /**
              * Constuctor for indexed identifier.
@@ -64,7 +64,8 @@ namespace smt {
              * \param sort          Result sort
              */
             QualifiedIdentifier(std::shared_ptr<Identifier> identifier,
-                                std::shared_ptr<Sort> sort);
+                                std::shared_ptr<Sort> sort) :
+                    identifier(identifier), sort(sort) { }
 
             std::shared_ptr<Identifier> getIdentifier();
             void setIdentifier(std::shared_ptr<Identifier> identifier);

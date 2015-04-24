@@ -29,7 +29,7 @@ namespace smt {
              * Constructs theory without attributes.
              * \param name  Theory name
              */
-            SmtTheory(std::shared_ptr<Symbol> name);
+            SmtTheory(std::shared_ptr<Symbol> name) : name(name) { }
 
             /**
              * Constructs theory with attributes.

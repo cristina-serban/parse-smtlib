@@ -5,10 +5,6 @@ using namespace std;
 
 /* ====================================== Symbol ====================================== */
 
-Symbol::Symbol(string value) {
-    this->value = value;
-}
-
 string Symbol::getValue() {
     return value;
 }
@@ -18,10 +14,6 @@ void Symbol::setValue(string value) {
 }
 
 /* ====================================== Keyword ===================================== */
-
-Keyword::Keyword(string value) {
-    this->value = value;
-}
 
 string Keyword::getValue() {
     return value;
@@ -33,10 +25,6 @@ void Keyword::setValue(string value) {
 
 /* ================================= MetaSpecConstant ================================= */
 
-MetaSpecConstant::MetaSpecConstant(MetaSpecConstant::Type type) {
-    setType(type);
-}
-
 MetaSpecConstant::Type MetaSpecConstant::getType() {
     return type;
 }
@@ -47,10 +35,6 @@ void MetaSpecConstant::setType(MetaSpecConstant::Type type) {
 
 /* =================================== BooleanValue =================================== */
 
-BooleanValue::BooleanValue(bool value) {
-    setValue(value);
-}
-
 bool BooleanValue::getValue() {
     return value;
 }
@@ -60,11 +44,6 @@ void BooleanValue::setValue(bool value) {
 }
 
 /* =================================== PropLiteral ==================================== */
-
-PropLiteral::PropLiteral(std::shared_ptr<Symbol> symbol, bool negated) {
-    setSymbol(symbol);
-    setNegated(negated);
-}
 
 std::shared_ptr<Symbol> PropLiteral::getSymbol() {
     return symbol;

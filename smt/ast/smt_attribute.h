@@ -32,15 +32,16 @@ namespace smt {
              * Constructs keyword without attribute value.
              * \param keyword   Keyword of the attribute
              */
-            Attribute(std::shared_ptr<Keyword> keyword);
+            Attribute(std::shared_ptr<Keyword> keyword) : keyword(keyword) { }
 
             /**
              * Constructs keyword with attribute value.
              * \param keyword   Keyword of the attribute
-             * \param value    Value of the attribute
+             * \param value     Value of the attribute
              */
             Attribute(std::shared_ptr<Keyword> keyword,
-                      std::shared_ptr<IAttributeValue> value);
+                      std::shared_ptr<IAttributeValue> value)
+                    : keyword(keyword), value(value) { }
 
             std::shared_ptr<Keyword> getKeyword();
             void setKeyword(std::shared_ptr<Keyword> keyword);

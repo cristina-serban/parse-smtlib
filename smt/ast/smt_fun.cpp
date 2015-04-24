@@ -9,9 +9,8 @@ using namespace smt::ast;
 
 FunctionDeclaration::FunctionDeclaration(shared_ptr<Symbol> symbol,
                                          const vector<shared_ptr<SortedVariable>> &params,
-                                         shared_ptr<Sort> sort) {
-    setSymbol(symbol);
-    setSort(sort);
+                                         shared_ptr<Sort> sort)
+        : symbol(symbol), sort(sort) {
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
@@ -50,18 +49,12 @@ string FunctionDeclaration::toString() {
 
 /* ================================ FunctionDefinition ================================ */
 
-FunctionDefinition::FunctionDefinition(shared_ptr<FunctionDeclaration> signature,
-                                       shared_ptr<ITerm> body) {
-    setSignature(signature);
-    setBody(body);
-}
-
 FunctionDefinition::FunctionDefinition(shared_ptr<Symbol> symbol,
                                        const vector<shared_ptr<SortedVariable>> &params,
                                        shared_ptr<Sort> sort,
-                                       shared_ptr<ITerm> body) {
+                                       shared_ptr<ITerm> body)
+        : body(body) {
     signature = make_shared<FunctionDeclaration>(symbol, params, sort);
-    setBody(body);
 }
 
 shared_ptr<FunctionDeclaration> FunctionDefinition::getSignature() {

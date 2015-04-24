@@ -26,6 +26,7 @@ namespace smt {
 
         public:
             T &getValue();
+
             void setValue(T &value);
         };
 

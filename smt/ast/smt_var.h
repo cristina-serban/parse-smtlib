@@ -29,7 +29,9 @@ namespace smt {
              * \param symbol    Variable name
              * \param sort      Variable sort
              */
-            SortedVariable(std::shared_ptr<Symbol> symbol, std::shared_ptr<Sort> sort);
+            SortedVariable(std::shared_ptr<Symbol> symbol,
+                           std::shared_ptr<Sort> sort)
+                    : symbol(symbol), sort(sort) { }
 
             std::shared_ptr<Symbol> getSymbol();
             void setSymbol(std::shared_ptr<Symbol> symbol);
@@ -53,7 +55,10 @@ namespace smt {
              * \param symbol    Variable name
              * \param term      Binding
              */
-            VarBinding(std::shared_ptr<Symbol> symbol, std::shared_ptr<ITerm> term);
+            VarBinding(std::shared_ptr<Symbol> symbol,
+                       std::shared_ptr<ITerm> term)
+                    : symbol(symbol), term(term) {
+            }
 
             std::shared_ptr<Symbol> getSymbol();
             void setSymbol(std::shared_ptr<Symbol> symbol);

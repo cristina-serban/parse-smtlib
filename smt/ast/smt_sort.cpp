@@ -3,13 +3,9 @@
 using namespace std;
 using namespace smt::ast;
 
-Sort::Sort(shared_ptr<Identifier> identifier) {
-    setIdentifier(identifier);
-}
-
 Sort::Sort(shared_ptr<Identifier> identifier,
-           const vector<shared_ptr<Sort>> &params) {
-    setIdentifier(identifier);
+           const vector<shared_ptr<Sort>> &params)
+        : identifier(identifier) {
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 

@@ -6,10 +6,6 @@ using namespace smt::ast;
 
 /* ================================== AssertCommand =================================== */
 
-AssertCommand::AssertCommand(shared_ptr<ITerm> term) {
-    setTerm(term);
-}
-
 shared_ptr<ITerm> AssertCommand::getTerm() {
     return term;
 }
@@ -56,12 +52,6 @@ string CheckSatAssumCommand::toString() {
 
 /* =============================== DeclareConstCommand ================================ */
 
-DeclareConstCommand::DeclareConstCommand(shared_ptr<Symbol> symbol,
-                                         shared_ptr<Sort> sort) {
-    setSymbol(symbol);
-    setSort(sort);
-}
-
 shared_ptr<Symbol> DeclareConstCommand::getSymbol() {
     return symbol;
 }
@@ -88,10 +78,9 @@ string DeclareConstCommand::toString() {
 
 DeclareFunCommand::DeclareFunCommand(shared_ptr<Symbol> symbol,
                                      const vector<shared_ptr<Sort>> &params,
-                                     shared_ptr<Sort> sort) {
-    setSymbol(symbol);
+                                     shared_ptr<Sort> sort)
+        : symbol(symbol), sort(sort) {
     this->params.insert(this->params.end(), params.begin(), params.end());
-    setSort(sort);
 }
 
 shared_ptr<Symbol> DeclareFunCommand::getSymbol() {
@@ -129,12 +118,6 @@ string DeclareFunCommand::toString() {
 
 /* =============================== DeclareSortCommand ================================ */
 
-DeclareSortCommand::DeclareSortCommand(shared_ptr<Symbol> symbol,
-                                       shared_ptr<NumeralLiteral> arity) {
-    setSymbol(symbol);
-    setArity(arity);
-}
-
 shared_ptr<Symbol> DeclareSortCommand::getSymbol() {
     return symbol;
 }
@@ -159,10 +142,6 @@ string DeclareSortCommand::toString() {
 
 /* ================================= DefineFunCommand ================================= */
 
-DefineFunCommand::DefineFunCommand(shared_ptr<FunctionDefinition> definition) {
-    setDefinition(definition);
-}
-
 DefineFunCommand::DefineFunCommand(shared_ptr<FunctionDeclaration> signature,
                                    shared_ptr<ITerm> body) {
     definition = make_shared<FunctionDefinition>(signature, body);
@@ -184,10 +163,6 @@ void DefineFunCommand::setDefinition(shared_ptr<FunctionDefinition> definition) 
 }
 
 /* ================================ DefineFunRecCommand =============================== */
-
-DefineFunRecCommand::DefineFunRecCommand(shared_ptr<FunctionDefinition> definition) {
-    setDefinition(definition);
-}
 
 DefineFunRecCommand::DefineFunRecCommand(shared_ptr<FunctionDeclaration> signature,
                                          shared_ptr<ITerm> body) {
@@ -224,10 +199,9 @@ vector<shared_ptr<FunctionDefinition>> &DefineFunsRecCommand::getDefinitions() {
 
 DefineSortCommand::DefineSortCommand(shared_ptr<Symbol> symbol,
                                      const vector<shared_ptr<Symbol>> &params,
-                                     shared_ptr<Sort> sort) {
-    setSymbol(symbol);
+                                     shared_ptr<Sort> sort)
+        : symbol(symbol), sort(sort) {
     this->params.insert(this->params.end(), params.begin(), params.end());
-    setSort(sort);
 }
 
 shared_ptr<Symbol> DefineSortCommand::getSymbol() {
@@ -269,9 +243,6 @@ string GetAssignsCommand::toString() {
 }
 
 /* ================================== GetInfoCommand ================================== */
-GetInfoCommand::GetInfoCommand(shared_ptr<Keyword> flag) {
-    setFlag(flag);
-}
 
 shared_ptr<Keyword> GetInfoCommand::getFlag() {
     return flag;
@@ -288,10 +259,6 @@ string GetModelCommand::toString() {
 }
 
 /* ================================= GetOptionCommand ================================= */
-
-GetOptionCommand::GetOptionCommand(shared_ptr<Keyword> option) {
-    setOption(option);
-}
 
 shared_ptr<Keyword> GetOptionCommand::getOption() {
     return option;
@@ -325,10 +292,6 @@ vector<shared_ptr<ITerm>> &GetValueCommand::getTerms() {
 
 /* =================================== PopCommand ==================================== */
 
-PopCommand::PopCommand(shared_ptr<NumeralLiteral> numeral) {
-    setNumeral(numeral);
-}
-
 shared_ptr<NumeralLiteral> PopCommand::getNumeral() {
     return numeral;
 }
@@ -344,10 +307,6 @@ string PopCommand::toString() {
 }
 
 /* =================================== PushCommand ==================================== */
-
-PushCommand::PushCommand(shared_ptr<NumeralLiteral> numeral) {
-    setNumeral(numeral);
-}
 
 shared_ptr<NumeralLiteral> PushCommand::getNumeral() {
     return numeral;
@@ -377,10 +336,6 @@ string ResetAssertsCommand::toString() {
 
 /* ================================== SetInfoCommand ================================== */
 
-SetInfoCommand::SetInfoCommand(shared_ptr<Attribute> info) {
-    setInfo(info);
-}
-
 shared_ptr<Attribute> SetInfoCommand::getInfo() {
     return info;
 }
@@ -398,10 +353,6 @@ string SetInfoCommand::toString() {
 
 /* ================================= SetLogicCommand ================================== */
 
-SetLogicCommand::SetLogicCommand(shared_ptr<Symbol> logic) {
-    setLogic(logic);
-}
-
 shared_ptr<Symbol> SetLogicCommand::getLogic() {
     return logic;
 }
@@ -417,10 +368,6 @@ string SetLogicCommand::toString() {
 }
 
 /* ================================= SetOptionCommand ================================= */
-
-SetOptionCommand::SetOptionCommand(shared_ptr<Attribute> option) {
-    setOption(option);
-}
 
 shared_ptr<Attribute> SetOptionCommand::getOption() {
     return option;

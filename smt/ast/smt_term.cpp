@@ -6,8 +6,8 @@ using namespace smt::ast;
 /* ================================== QualifiedTerm =================================== */
 
 QualifiedTerm::QualifiedTerm(shared_ptr<IQualIdentifier> identifier,
-                             const vector<shared_ptr<ITerm>> &terms) {
-    setIdentifier(identifier);
+                             const vector<shared_ptr<ITerm>> &terms)
+        : identifier(identifier) {
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
 }
 
@@ -26,9 +26,9 @@ vector<shared_ptr<ITerm>> &QualifiedTerm::getTerms() {
 /* ===================================== LetTerm ====================================== */
 
 LetTerm::LetTerm(const vector<shared_ptr<VarBinding>> &bindings,
-                 shared_ptr<ITerm> term) {
+                 shared_ptr<ITerm> term)
+        : term(term) {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
-    setTerm(term);
 }
 
 shared_ptr<ITerm> LetTerm::getTerm() {
@@ -45,9 +45,9 @@ vector<shared_ptr<VarBinding>> &LetTerm::getBindings() {
 
 /* ==================================== ForallTerm ==================================== */
 ForallTerm::ForallTerm(const vector<shared_ptr<SortedVariable>> &bindings,
-                       shared_ptr<ITerm> term) {
+                       shared_ptr<ITerm> term)
+        : term(term)  {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
-    setTerm(term);
 }
 
 shared_ptr<ITerm> ForallTerm::getTerm() {
@@ -64,9 +64,9 @@ vector<shared_ptr<SortedVariable>> &ForallTerm::getBindings() {
 
 /* ==================================== ExistsTerm ==================================== */
 ExistsTerm::ExistsTerm(const vector<shared_ptr<SortedVariable>> &bindings,
-                       shared_ptr<ITerm> term) {
+                       shared_ptr<ITerm> term)
+        : term(term) {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
-    setTerm(term);
 }
 
 shared_ptr<ITerm> ExistsTerm::getTerm() {
@@ -83,8 +83,8 @@ vector<shared_ptr<SortedVariable>> &ExistsTerm::getBindings() {
 
 /* ================================== AnnotatedTerm =================================== */
 AnnotatedTerm::AnnotatedTerm(shared_ptr<ITerm> term,
-                             const vector<shared_ptr<Attribute>> &attrs) {
-    setTerm(term);
+                             const vector<shared_ptr<Attribute>> &attrs)
+        : term(term) {
     this->attrs.insert(this->attrs.end(), attrs.begin(), attrs.end());
 }
 

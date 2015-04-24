@@ -5,13 +5,9 @@ using namespace smt::ast;
 
 /* ==================================== Identifier ==================================== */
 
-Identifier::Identifier(shared_ptr<Symbol> symbol) {
-    setSymbol(symbol);
-}
-
 Identifier::Identifier(shared_ptr<Symbol> symbol,
-                       const vector<shared_ptr<IIndex>> indices) {
-    setSymbol(symbol);
+                       const vector<shared_ptr<IIndex>> indices)
+        : symbol(symbol) {
     this->indices.insert(this->indices.end(), indices.begin(), indices.end());
 }
 
@@ -32,12 +28,6 @@ bool Identifier::isIndexed() {
 }
 
 /* =============================== QualifiedIdentifier ================================ */
-
-QualifiedIdentifier::QualifiedIdentifier(shared_ptr<Identifier> identifier,
-                                         shared_ptr<Sort> sort) {
-    setIdentifier(identifier);
-    setSort(sort);
-}
 
 shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() {
     return identifier;

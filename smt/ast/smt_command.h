@@ -38,7 +38,7 @@ namespace smt {
             /**
              * \param term  Asserted term
              */
-            AssertCommand(std::shared_ptr<ITerm> term);
+            AssertCommand(std::shared_ptr<ITerm> term) : term(term) { }
 
             std::shared_ptr<ITerm> getTerm();
             void setTerm(std::shared_ptr<ITerm> term);
@@ -92,8 +92,8 @@ namespace smt {
              * \param name  Name of the constant
              * \param sort  Sort of the constant
              */
-            DeclareConstCommand(std::shared_ptr<Symbol> symbol,
-                                std::shared_ptr<Sort> sort);
+            DeclareConstCommand(std::shared_ptr<Symbol> symbol, std::shared_ptr<Sort> sort)
+                    : symbol(symbol), sort(sort) { }
 
             std::shared_ptr<Symbol> getSymbol();
             void setSymbol(std::shared_ptr<Symbol> symbol);
@@ -150,7 +150,8 @@ namespace smt {
              * \param arity     Arity of the sort
              */
             DeclareSortCommand(std::shared_ptr<Symbol> symbol,
-                               std::shared_ptr<NumeralLiteral> arity);
+                               std::shared_ptr<NumeralLiteral> arity)
+                    : symbol(symbol), arity(arity) { }
 
             std::shared_ptr<Symbol> getSymbol();
             void setSymbol(std::shared_ptr<Symbol> symbol);
@@ -173,7 +174,8 @@ namespace smt {
             /**
              * \param definition    Function definition
              */
-            DefineFunCommand(std::shared_ptr<FunctionDefinition> definition);
+            DefineFunCommand(std::shared_ptr<FunctionDefinition> definition)
+                    : definition(definition) { }
 
             /**
              * \param signature    Function signature
@@ -209,7 +211,8 @@ namespace smt {
             /**
              * \param definition    Function definition
              */
-            DefineFunRecCommand(std::shared_ptr<FunctionDefinition> definition);
+            DefineFunRecCommand(std::shared_ptr<FunctionDefinition> definition)
+                    : definition(definition) { }
 
             /**
              * \param signature    Function signature
@@ -344,7 +347,7 @@ namespace smt {
             /**
              * \param flag  Flag name
              */
-            GetInfoCommand(std::shared_ptr<Keyword> flag);
+            GetInfoCommand(std::shared_ptr<Keyword> flag) : flag(flag) { }
 
             std::shared_ptr<Keyword> getFlag();
             void setFlag(std::shared_ptr<Keyword> flag);
@@ -374,7 +377,7 @@ namespace smt {
             /**
              * \param option    Option name
              */
-            GetOptionCommand(std::shared_ptr<Keyword> option);
+            GetOptionCommand(std::shared_ptr<Keyword> option) : option(option) { }
 
             std::shared_ptr<Keyword> getOption();
             void setOption(std::shared_ptr<Keyword> option);
@@ -430,7 +433,7 @@ namespace smt {
         private:
             std::shared_ptr<NumeralLiteral> numeral;
         public:
-            PopCommand(std::shared_ptr<NumeralLiteral> numeral);
+            PopCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
             std::shared_ptr<NumeralLiteral> getNumeral();
             void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
@@ -447,7 +450,7 @@ namespace smt {
         private:
             std::shared_ptr<NumeralLiteral> numeral;
         public:
-            PushCommand(std::shared_ptr<NumeralLiteral> numeral);
+            PushCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
             std::shared_ptr<NumeralLiteral> getNumeral();
             void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
@@ -491,7 +494,7 @@ namespace smt {
             /**
              * \param info    Info to set
              */
-            SetInfoCommand(std::shared_ptr<Attribute> info);
+            SetInfoCommand(std::shared_ptr<Attribute> info) : info(info) { }
 
             std::shared_ptr<Attribute> getInfo();
             void setInfo(std::shared_ptr<Attribute> info);
@@ -511,7 +514,7 @@ namespace smt {
             /**
              * \param name  Name of the logic to set
              */
-            SetLogicCommand(std::shared_ptr<Symbol> logic);
+            SetLogicCommand(std::shared_ptr<Symbol> logic) : logic(logic) { }
 
             std::shared_ptr<Symbol> getLogic();
             void setLogic(std::shared_ptr<Symbol> logic);
@@ -531,7 +534,7 @@ namespace smt {
             /**
              * \param option    Option to set
              */
-            SetOptionCommand(std::shared_ptr<Attribute> option);
+            SetOptionCommand(std::shared_ptr<Attribute> option) : option(option) { }
 
             std::shared_ptr<Attribute> getOption();
             void setOption(std::shared_ptr<Attribute> option);

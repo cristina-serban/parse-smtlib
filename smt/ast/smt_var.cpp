@@ -5,12 +5,6 @@ using namespace smt::ast;
 
 /* ================================== SortedVariable ================================== */
 
-SortedVariable::SortedVariable(shared_ptr<Symbol> symbol,
-                               shared_ptr<Sort> sort) {
-    setSymbol(symbol);
-    setSort(sort);
-}
-
 shared_ptr<Symbol> SortedVariable::getSymbol() {
     return symbol;
 }
@@ -28,12 +22,6 @@ void SortedVariable::setSort(shared_ptr<Sort> sort) {
 }
 
 /* ==================================== VarBinding ==================================== */
-
-VarBinding::VarBinding(shared_ptr<Symbol> symbol,
-                       shared_ptr<ITerm> term) {
-    setSymbol(symbol);
-    setTerm(term);
-}
 
 shared_ptr<Symbol> VarBinding::getSymbol() {
     return symbol;

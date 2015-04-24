@@ -3,16 +3,6 @@
 using namespace smt::ast;
 using namespace std;
 
-Attribute::Attribute(shared_ptr<Keyword> keyword) {
-    setKeyword(keyword);
-}
-
-Attribute::Attribute(shared_ptr<Keyword> keyword,
-                     shared_ptr<IAttributeValue> value) {
-    setKeyword(keyword);
-    setValue(value);
-}
-
 shared_ptr<Keyword> Attribute::getKeyword() {
     return keyword;
 }

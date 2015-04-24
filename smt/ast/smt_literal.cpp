@@ -6,12 +6,12 @@ using namespace std;
 /* ====================================== Literal ===================================== */
 
 template <class T>
-T& Literal<T>::getValue() {
+T &Literal<T>::getValue() {
     return value;
 }
 
 template <class T>
-void Literal<T>::setValue(T& value) {
+void Literal<T>::setValue(T &value) {
     this->value = value;
 }
 

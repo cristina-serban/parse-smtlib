@@ -4,13 +4,9 @@
 using namespace smt::ast;
 using namespace std;
 
-SmtTheory::SmtTheory(shared_ptr<Symbol> name) {
-    setName(name);
-}
-
 SmtTheory::SmtTheory(shared_ptr<Symbol> name,
-                     const vector<shared_ptr<Attribute>> &attributes) {
-    setName(name);
+                     const vector<shared_ptr<Attribute>> &attributes)
+        : name(name) {
     this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
 }
 

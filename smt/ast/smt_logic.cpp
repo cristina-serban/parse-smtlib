@@ -3,13 +3,9 @@
 using namespace smt::ast;
 using namespace std;
 
-SmtLogic::SmtLogic(std::shared_ptr<Symbol> name) {
-    setName(name);
-}
-
 SmtLogic::SmtLogic(std::shared_ptr<Symbol> name,
-                   const vector<shared_ptr<Attribute>> &attributes) {
-    setName(name);
+                   const vector<shared_ptr<Attribute>> &attributes)
+        : name(name) {
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 

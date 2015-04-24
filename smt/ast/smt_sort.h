@@ -27,7 +27,7 @@ namespace smt {
              * Constructor for a simple sort
              * \param identifier    Sort name
              */
-            Sort(std::shared_ptr<Identifier> identifier);
+            Sort(std::shared_ptr<Identifier> identifier) : identifier(identifier) { }
 
             /**
              * Constructor for a parametric sort

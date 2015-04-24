@@ -36,7 +36,9 @@ namespace smt {
              * \param identifier    Sort symbol identiier
              * \param arity         Sort arity
              */
-            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier, std::shared_ptr<NumeralLiteral> arity);
+            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
+                                  std::shared_ptr<NumeralLiteral> arity)
+                    : identifier(identifier), arity(arity) { }
 
             /**
              * Constructs declaration with attributes.
@@ -44,7 +46,8 @@ namespace smt {
              * \param arity         Sort arity
              * \param attributes    Sort symbol declaration attributes
              */
-            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier, std::shared_ptr<NumeralLiteral> arity,
+            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
+                                  std::shared_ptr<NumeralLiteral> arity,
                                   const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<Identifier> getIdentifier();
@@ -85,7 +88,8 @@ namespace smt {
             * \param sort          Function sort
             */
             SpecConstFunDeclaration(std::shared_ptr<ISpecConstant> constant,
-                                    std::shared_ptr<Sort> sort);
+                                    std::shared_ptr<Sort> sort)
+                    : constant(constant), sort(sort) { }
 
             /**
              * Constructs declaration with attributes.
@@ -126,7 +130,8 @@ namespace smt {
             * \param sort          Function sort
             */
             MetaSpecConstFunDeclaration(std::shared_ptr<MetaSpecConstant> constant,
-                                        std::shared_ptr<Sort> sort);
+                                        std::shared_ptr<Sort> sort)
+                    : constant(constant), sort(sort) { }
 
             /**
              * Constructs declaration with attributes.

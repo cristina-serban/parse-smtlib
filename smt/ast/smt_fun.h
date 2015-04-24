@@ -62,7 +62,8 @@ namespace smt {
              * \param body         Function body
              */
             FunctionDefinition(std::shared_ptr<FunctionDeclaration> signature,
-                               std::shared_ptr<ITerm> body);
+                               std::shared_ptr<ITerm> body)
+                    : signature(signature), body(body) { }
 
             /**
              * \param symbol    Name of the function
