@@ -1,3 +1,4 @@
+#include <sstream>
 #include "smt_sort.h"
 
 using namespace std;
@@ -23,4 +24,20 @@ vector<shared_ptr<Sort>>& Sort::getParams() {
 
 bool Sort::isParametric() {
     return !params.empty();
+}
+
+string Sort::toString() {
+    if(!isParametric()) {
+        return identifier->toString();
+    } else {
+        stringstream ss;
+        ss << "( " << identifier->toString() << " ";
+
+        for(vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
+            ss << (*it)->toString() << " ";
+        }
+
+        ss << ")";
+        return ss.str();
+    }
 }

@@ -57,6 +57,8 @@ namespace smt {
             void setArity(std::shared_ptr<NumeralLiteral> arity);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
+
+            virtual std::string toString();
         };
 
         /* =============================== FunSymbolDeclaration =============================== */
@@ -108,6 +110,8 @@ namespace smt {
             void setSort(std::shared_ptr<Sort> sort);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
+
+            virtual std::string toString();
         };
 
         /* ========================== MetaSpecConstFunDeclaration =========================== */
@@ -151,6 +155,8 @@ namespace smt {
             void setSort(std::shared_ptr<Sort> sort);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
+
+            virtual std::string toString();
         };
 
         /* ============================== IdentifFunDeclaration =============================== */
@@ -192,6 +198,8 @@ namespace smt {
 
             std::vector<std::shared_ptr<Sort>> &getSignature();
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
+
+            virtual std::string toString();
         };
 
         /* =============================== ParamFunDeclaration ================================ */
@@ -229,6 +237,8 @@ namespace smt {
                                 const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::vector<std::shared_ptr<Symbol>> &getParams();
+
+            virtual std::string toString();
         };
     }
 }

@@ -1,3 +1,4 @@
+#include <sstream>
 #include "smt_attribute.h"
 
 using namespace smt::ast;
@@ -17,4 +18,12 @@ shared_ptr<IAttributeValue> Attribute::getValue() {
 
 void Attribute::setValue(std::shared_ptr<IAttributeValue> value) {
     this->value = value;
+}
+
+string Attribute::toString() {
+    stringstream ss;
+    ss << keyword->toString();
+    if(value)
+        ss << " " << value->toString();
+    return ss.str();
 }

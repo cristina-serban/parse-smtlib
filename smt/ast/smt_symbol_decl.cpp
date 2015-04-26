@@ -1,3 +1,4 @@
+#include <sstream>
 #include "smt_symbol_decl.h"
 
 using namespace std;
@@ -32,6 +33,19 @@ vector<shared_ptr<Attribute>> &SortSymbolDeclaration::getAttributes() {
     return attributes;
 }
 
+string SortSymbolDeclaration::toString() {
+    stringstream ss;
+    ss << "( " << identifier->toString() << " " << arity->toString() << " ";
+
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ")";
+
+    return ss.str();
+}
+
 /* ============================= SpecConstFunDeclaration ============================== */
 SpecConstFunDeclaration::SpecConstFunDeclaration(shared_ptr<ISpecConstant> constant,
                                                  shared_ptr<Sort> sort,
@@ -58,6 +72,19 @@ void SpecConstFunDeclaration::setSort(shared_ptr<Sort> sort) {
 
 vector<shared_ptr<Attribute>> &SpecConstFunDeclaration::getAttributes() {
     return attributes;
+}
+
+string SpecConstFunDeclaration::toString() {
+    stringstream ss;
+    ss << "( " << constant->toString() << " " << sort->toString() << " ";
+
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ")";
+
+    return ss.str();
 }
 
 /* ========================== MetaSpecConstFunDeclaration =========================== */
@@ -87,6 +114,19 @@ void MetaSpecConstFunDeclaration::setSort(shared_ptr<Sort> sort) {
 
 vector<shared_ptr<Attribute>> &MetaSpecConstFunDeclaration::getAttributes() {
     return attributes;
+}
+
+string MetaSpecConstFunDeclaration::toString() {
+    stringstream ss;
+    ss << "( " << constant->toString() << " " << sort->toString() << " ";
+
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ")";
+
+    return ss.str();
 }
 
 /* ============================== IdentifFunDeclaration =============================== */
@@ -122,6 +162,23 @@ vector<shared_ptr<Attribute>> &IdentifFunDeclaration::getAttributes() {
     return attributes;
 }
 
+string IdentifFunDeclaration::toString() {
+    stringstream ss;
+    ss << "( " << identifier->toString() << " ";
+
+    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ")";
+
+    return ss.str();
+}
+
 /* =============================== ParamFunDeclaration ================================ */
 
 ParamFunDeclaration::ParamFunDeclaration(const vector<shared_ptr<Symbol>> &params,
@@ -144,4 +201,25 @@ ParamFunDeclaration::ParamFunDeclaration(const vector<shared_ptr<Symbol>> &param
 
 vector<shared_ptr<Symbol>> &ParamFunDeclaration::getParams() {
     return params;
+}
+
+string ParamFunDeclaration::toString() {
+    stringstream ss;
+    ss << "( par ( ";
+    for(vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ") ( " << identifier->toString() << " ";
+    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ") )";
+
+    return ss.str();
 }

@@ -42,6 +42,8 @@ namespace smt {
             void setName(std::shared_ptr<Symbol> name);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
+
+            virtual std::string toString();
         };
     }
 }

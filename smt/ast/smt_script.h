@@ -35,6 +35,8 @@ namespace smt {
             SmtScript(const std::vector<std::shared_ptr<Command>> &cmds);
 
             std::vector<std::shared_ptr<Command>> &getCommands();
+
+            virtual std::string toString();
         };
     }
 }

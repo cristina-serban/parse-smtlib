@@ -48,6 +48,8 @@ namespace smt {
 
             std::shared_ptr<IAttributeValue> getValue();
             void setValue(std::shared_ptr<IAttributeValue> value);
+
+            virtual std::string toString();
         };
     }
 }

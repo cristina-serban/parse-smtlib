@@ -26,6 +26,8 @@ namespace smt {
             CompSExpression(const std::vector<std::shared_ptr<ISExpression>> &exprs);
 
             std::vector<std::shared_ptr<ISExpression>> &getExpressions();
+
+            virtual std::string toString();
         };
     }
 }

@@ -1,3 +1,4 @@
+#include <sstream>
 #include "smt_basic.h"
 
 using namespace smt::ast;
@@ -13,6 +14,10 @@ void Symbol::setValue(string value) {
     this->value = value;
 }
 
+string Symbol::toString() {
+    return value;
+}
+
 /* ====================================== Keyword ===================================== */
 
 string Keyword::getValue() {
@@ -21,6 +26,10 @@ string Keyword::getValue() {
 
 void Keyword::setValue(string value) {
     this->value = value;
+}
+
+string Keyword::toString() {
+    return value;
 }
 
 /* ================================= MetaSpecConstant ================================= */
@@ -33,6 +42,12 @@ void MetaSpecConstant::setType(MetaSpecConstant::Type type) {
     this->type = type;
 }
 
+string MetaSpecConstant::toString() {
+    return (type == Type::META_SPEC_STRING) ? "STRING"
+                                            : (type == Type::META_SPEC_NUMERAL ? "NUMERAL"
+                                                                               : "DECIMAL");
+}
+
 /* =================================== BooleanValue =================================== */
 
 bool BooleanValue::getValue() {
@@ -43,13 +58,20 @@ void BooleanValue::setValue(bool value) {
     this->value = value;
 }
 
+string BooleanValue::toString() {
+    if(value)
+        return "true";
+    else
+        return "false";
+}
+
 /* =================================== PropLiteral ==================================== */
 
-std::shared_ptr<Symbol> PropLiteral::getSymbol() {
+shared_ptr<Symbol> PropLiteral::getSymbol() {
     return symbol;
 }
 
-void PropLiteral::setSymbol(std::shared_ptr<Symbol> symbol) {
+void PropLiteral::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
@@ -59,4 +81,14 @@ bool PropLiteral::isNegated() {
 
 void PropLiteral::setNegated(bool negated) {
     this->negated = negated;
+}
+
+string PropLiteral::toString() {
+    if(negated) {
+        stringstream ss;
+        ss << "( not " << symbol << " )";
+        return ss.str();
+    } else {
+        return symbol->toString();
+    }
 }

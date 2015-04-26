@@ -41,6 +41,8 @@ namespace smt {
                                public ISpecConstant {
         public:
             NumeralLiteral(long value);
+
+            virtual std::string toString();
         };
 
         /* ================================== DecimalLiteral ================================== */
@@ -53,6 +55,8 @@ namespace smt {
                                public ISpecConstant {
         public:
             DecimalLiteral(double value);
+
+            virtual std::string toString();
         };
 
         /* ================================== StringLiteral =================================== */
@@ -65,6 +69,8 @@ namespace smt {
                               public ISpecConstant {
         public:
             StringLiteral(std::string value);
+
+            virtual std::string toString();
         };
     }
 }

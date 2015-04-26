@@ -1,3 +1,4 @@
+#include <sstream>
 #include "smt_s_expr.h"
 
 using namespace std;
@@ -9,4 +10,14 @@ CompSExpression::CompSExpression(const vector<shared_ptr<ISExpression>> &exprs) 
 
 vector<shared_ptr<ISExpression>> &CompSExpression::getExpressions() {
     return exprs;
+}
+
+string CompSExpression::toString() {
+    stringstream ss;
+    ss << "( ";
+    for(vector<shared_ptr<ISExpression>>::iterator it = exprs.begin(); it != exprs.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+    ss <<")";
+    return ss.str();
 }

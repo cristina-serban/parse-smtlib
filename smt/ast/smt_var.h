@@ -38,6 +38,8 @@ namespace smt {
 
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
+
+            virtual std::string toString();
         };
 
         /* ==================================== VarBinding ==================================== */
@@ -65,6 +67,8 @@ namespace smt {
 
             std::shared_ptr<ITerm> getTerm();
             void setTerm(std::shared_ptr<ITerm> term);
+
+            virtual std::string toString();
         };
     }
 }

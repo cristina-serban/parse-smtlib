@@ -32,6 +32,8 @@ namespace smt {
 
             std::string getValue();
             void setValue(std::string value);
+
+            virtual std::string toString();
         };
 
         /* ====================================== Keyword ===================================== */
@@ -52,6 +54,8 @@ namespace smt {
 
             std::string getValue();
             void setValue(std::string value);
+
+            virtual std::string toString();
         };
 
         /* ================================= MetaSpecConstant ================================= */
@@ -78,6 +82,8 @@ namespace smt {
             MetaSpecConstant::Type getType();
             void setType(MetaSpecConstant::Type type);
 
+            virtual std::string toString();
+
         private:
             MetaSpecConstant::Type type;
         };
@@ -95,6 +101,8 @@ namespace smt {
 
             bool getValue();
             void setValue(bool value);
+
+            virtual std::string toString();
         };
 
         /* =================================== PropLiteral ==================================== */
@@ -117,6 +125,8 @@ namespace smt {
 
             bool isNegated();
             void setNegated(bool negated);
+
+            virtual std::string toString();
         };
     }
 }

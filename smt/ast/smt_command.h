@@ -197,6 +197,8 @@ namespace smt {
 
             std::shared_ptr<FunctionDefinition> getDefinition();
             void setDefinition(std::shared_ptr<FunctionDefinition> definition);
+
+            virtual std::string toString();
         };
 
         /* ================================ DefineFunRecCommand =============================== */
@@ -234,6 +236,8 @@ namespace smt {
 
             std::shared_ptr<FunctionDefinition> getDefinition();
             void setDefinition(std::shared_ptr<FunctionDefinition> definition);
+
+            virtual std::string toString();
         };
 
         /* =============================== DefineFunsRecCommand =============================== */
@@ -251,6 +255,8 @@ namespace smt {
             DefineFunsRecCommand(const std::vector<std::shared_ptr<FunctionDefinition>> &definitions);
 
             std::vector<std::shared_ptr<FunctionDefinition>> &getDefinitions();
+
+            virtual std::string toString();
         };
 
         /* ================================ DefineSortCommand ================================= */
@@ -279,6 +285,8 @@ namespace smt {
 
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
+
+            virtual std::string toString();
         };
 
         /* =================================== EchoCommand ==================================== */
@@ -297,6 +305,8 @@ namespace smt {
 
             std::string &getMessage();
             void setMessage(std::string message);
+
+            virtual std::string toString();
         };
 
         /* =================================== ExitCommand ==================================== */
@@ -351,6 +361,8 @@ namespace smt {
 
             std::shared_ptr<Keyword> getFlag();
             void setFlag(std::shared_ptr<Keyword> flag);
+
+            virtual std::string toString();
         };
 
         /* ================================= GetModelCommand ================================== */
@@ -381,6 +393,8 @@ namespace smt {
 
             std::shared_ptr<Keyword> getOption();
             void setOption(std::shared_ptr<Keyword> option);
+
+            virtual std::string toString();
         };
 
         /* ================================= GetProofCommand ================================== */
@@ -422,6 +436,8 @@ namespace smt {
             GetValueCommand(const std::vector<std::shared_ptr<ITerm>> &terms);
 
             std::vector<std::shared_ptr<ITerm>> &getTerms();
+
+            virtual std::string toString();
         };
 
         /* ==================================== PopCommand ==================================== */

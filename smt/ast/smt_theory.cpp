@@ -1,4 +1,5 @@
 #include <memory>
+#include <sstream>
 #include "smt_theory.h"
 
 using namespace smt::ast;
@@ -20,4 +21,16 @@ void SmtTheory::setName(shared_ptr<Symbol> name) {
 
 vector<shared_ptr<Attribute>>& SmtTheory::getAttributes() {
     return attributes;
+}
+
+string SmtTheory::toString() {
+    stringstream ss;
+    ss << "( theory  ";
+
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ")";
+    return ss.str();
 }

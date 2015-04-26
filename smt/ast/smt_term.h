@@ -36,6 +36,8 @@ namespace smt {
             void setIdentifier(std::shared_ptr<IQualIdentifier> identifier);
 
             std::vector<std::shared_ptr<ITerm>> &getTerms();
+
+            virtual std::string toString();
         };
 
         /* ===================================== LetTerm ====================================== */
@@ -60,6 +62,8 @@ namespace smt {
             void setTerm(std::shared_ptr<ITerm> term);
 
             std::vector<std::shared_ptr<VarBinding>> &getBindings();
+
+            virtual std::string toString();
         };
 
         /* ==================================== ForallTerm ==================================== */
@@ -84,6 +88,8 @@ namespace smt {
             void setTerm(std::shared_ptr<ITerm> term);
 
             std::vector<std::shared_ptr<SortedVariable>> &getBindings();
+
+            virtual std::string toString();
         };
 
         /* ==================================== ExistsTerm ==================================== */
@@ -108,6 +114,8 @@ namespace smt {
             void setTerm(std::shared_ptr<ITerm> term);
 
             std::vector<std::shared_ptr<SortedVariable>> &getBindings();
+
+            virtual std::string toString();
         };
 
         /* ================================== AnnotatedTerm =================================== */
@@ -132,6 +140,8 @@ namespace smt {
             void setTerm(std::shared_ptr<ITerm> term);
 
             std::vector<std::shared_ptr<Attribute>> &getAttrs();
+
+            virtual std::string toString();
         };
     }
 }

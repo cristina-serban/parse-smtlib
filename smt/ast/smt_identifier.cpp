@@ -1,3 +1,4 @@
+#include <sstream>
 #include "smt_identifier.h"
 
 using namespace std;
@@ -27,6 +28,20 @@ bool Identifier::isIndexed() {
     return !indices.empty();
 }
 
+string Identifier::toString() {
+    if(!isIndexed())
+        return symbol->toString();
+    else {
+        stringstream ss;
+        ss << "( _ " << symbol << " ";
+        for(vector<shared_ptr<IIndex>>::iterator it = indices.begin(); it != indices.end(); it++) {
+            ss << (*it)->toString() << " ";
+        }
+        ss << ")";
+        return ss.str();
+    }
+}
+
 /* =============================== QualifiedIdentifier ================================ */
 
 shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() {
@@ -43,4 +58,10 @@ shared_ptr<Sort> QualifiedIdentifier::getSort() {
 
 void QualifiedIdentifier::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
+}
+
+string QualifiedIdentifier::toString() {
+    stringstream ss;
+    ss << "( as " << identifier->toString() << " " << sort->toString() << " )";
+    return ss.str();
 }

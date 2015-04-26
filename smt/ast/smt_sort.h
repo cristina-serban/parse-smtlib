@@ -13,6 +13,7 @@
 
 namespace smt {
     namespace ast {
+        class Identifier;
         /**
          * An SMT-LIB sort.
          * Node of the SMT-LIB abstract syntax tree.
@@ -46,6 +47,8 @@ namespace smt {
              * Checks whether the sort is parametric (i.e. the list of parameters is not empty).
              */
             bool isParametric();
+
+            virtual std::string toString();
         };
     }
 }

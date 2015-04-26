@@ -162,6 +162,12 @@ void DefineFunCommand::setDefinition(shared_ptr<FunctionDefinition> definition) 
     this->definition = definition;
 }
 
+string DefineFunCommand::toString() {
+    stringstream ss;
+    ss << "( define-fun " << definition->toString() << " )";
+    return ss.str();
+}
+
 /* ================================ DefineFunRecCommand =============================== */
 
 DefineFunRecCommand::DefineFunRecCommand(shared_ptr<FunctionDeclaration> signature,
@@ -184,6 +190,12 @@ void DefineFunRecCommand::setDefinition(shared_ptr<FunctionDefinition> definitio
     this->definition = definition;
 }
 
+string DefineFunRecCommand::toString() {
+    stringstream ss;
+    ss << "( define-fun-rec " << definition->toString() << " )";
+    return ss.str();
+}
+
 /* =============================== DefineFunsRecCommand =============================== */
 
 DefineFunsRecCommand::DefineFunsRecCommand(
@@ -193,6 +205,24 @@ DefineFunsRecCommand::DefineFunsRecCommand(
 
 vector<shared_ptr<FunctionDefinition>> &DefineFunsRecCommand::getDefinitions() {
     return definitions;
+}
+
+string DefineFunsRecCommand::toString() {
+    stringstream ss;
+    ss << "( define-funs-rec ( ";
+    for (vector<shared_ptr<FunctionDefinition>>::iterator it = definitions.begin();
+         it != definitions.end(); it++) {
+        ss << "(" << (*it)->getSignature()->toString() << ") ";
+    }
+
+    ss << ") ( ";
+    for (vector<shared_ptr<FunctionDefinition>>::iterator it = definitions.begin();
+         it != definitions.end(); it++) {
+        ss << "(" << (*it)->getBody()->toString() << ") ";
+    }
+
+    ss << ") )";
+    return ss.str();
 }
 
 /* ================================ DefineSortCommand ================================= */
@@ -224,6 +254,34 @@ void DefineSortCommand::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }
 
+string DefineSortCommand::toString() {
+    stringstream ss;
+    ss << "( define-sort " << symbol->toString() << " ( ";
+    for (vector<shared_ptr<Symbol>>::iterator it = params.begin();
+         it != params.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ") " << sort->toString() << " )";
+    return ss.str();
+}
+
+/* =================================== EchoCommand ==================================== */
+
+string &EchoCommand::getMessage() {
+    return message;
+}
+
+void EchoCommand::setMessage(string message) {
+    this->message = message;
+}
+
+string EchoCommand::toString() {
+    stringstream ss;
+    ss << "( echo " << message << " )";
+    return ss.str();
+}
+
 /* =================================== ExitCommand ==================================== */
 
 string ExitCommand::toString() {
@@ -252,6 +310,12 @@ void GetInfoCommand::setFlag(shared_ptr<Keyword> flag) {
     this->flag = flag;
 }
 
+string GetInfoCommand::toString() {
+    stringstream ss;
+    ss << "( get-info " << flag->toString() << " )";
+    return ss.str();
+}
+
 /* ================================= GetModelCommand ================================== */
 
 string GetModelCommand::toString() {
@@ -266,6 +330,12 @@ shared_ptr<Keyword> GetOptionCommand::getOption() {
 
 void GetOptionCommand::setOption(shared_ptr<Keyword> option) {
     this->option = option;
+}
+
+string GetOptionCommand::toString() {
+    stringstream ss;
+    ss << "( get-option " << option->toString() << " )";
+    return ss.str();
 }
 
 /* ================================= GetProofCommand ================================== */
@@ -288,6 +358,18 @@ GetValueCommand::GetValueCommand(const vector<shared_ptr<ITerm>> &terms) {
 
 vector<shared_ptr<ITerm>> &GetValueCommand::getTerms() {
     return terms;
+}
+
+string GetValueCommand::toString() {
+    stringstream ss;
+    ss << "( get-value ( ";
+
+    for(vector<shared_ptr<ITerm>>::iterator it = terms.begin(); it != terms.end(); it++) {
+        ss << (*it)->toString() << " ";
+    }
+
+    ss << ") )";
+    return ss.str();
 }
 
 /* =================================== PopCommand ==================================== */

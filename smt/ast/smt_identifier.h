@@ -10,10 +10,11 @@
 #include <vector>
 #include "smt_basic.h"
 #include "smt_interfaces.h"
+#include "smt_sort.h"
 
 namespace smt {
     namespace ast {
-        class Sort;  // To avoid circular inclusion of header files
+       class Sort;
 
         /* ==================================== Identifier ==================================== */
         /**
@@ -48,6 +49,8 @@ namespace smt {
              * Checks whether the identifier is indexed (i.e. the list of indices is not empty).
              */
             bool isIndexed();
+
+            virtual std::string toString();
         };
 
         /* =============================== QualifiedIdentifier ================================ */
@@ -72,6 +75,8 @@ namespace smt {
 
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
+
+            virtual std::string toString();
         };
     }
 }

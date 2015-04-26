@@ -1,3 +1,4 @@
+#include <sstream>
 #include "smt_var.h"
 
 using namespace std;
@@ -21,6 +22,12 @@ void SortedVariable::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }
 
+string SortedVariable::toString() {
+    stringstream ss;
+    ss << symbol->toString() << " " << sort->toString();
+    return ss.str();
+}
+
 /* ==================================== VarBinding ==================================== */
 
 shared_ptr<Symbol> VarBinding::getSymbol() {
@@ -37,4 +44,10 @@ shared_ptr<ITerm> VarBinding::getTerm() {
 
 void VarBinding::setTerm(shared_ptr<ITerm> term) {
     this->term = term;
+}
+
+string VarBinding::toString() {
+    stringstream ss;
+    ss << symbol->toString() << " (" << term->toString() << ")";
+    return ss.str();
 }
