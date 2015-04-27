@@ -16,7 +16,8 @@ namespace smt {
          * Compound S-expression.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class CompSExpression : public ISExpression {
+        class CompSExpression : public ISExpression,
+                                public IAttributeValue {
         private:
             std::vector<std::shared_ptr<ISExpression>> exprs;
         public:

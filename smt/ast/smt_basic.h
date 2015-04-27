@@ -21,7 +21,8 @@ namespace smt {
      */
         class Symbol : public virtual SmtAstNode,
                        public ISExpression,
-                       public IIndex {
+                       public IIndex,
+                       public IAttributeValue{
         private:
             std::string value;
         public:

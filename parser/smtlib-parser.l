@@ -1,4 +1,6 @@
 %{ 
+#include <stdlib.h>
+#include "smtlib-glue.h" 
 #include "smtlib-parser.h" 
 %}
 
@@ -20,22 +22,43 @@ simple_symbol  {sym_begin}{sym_continue}*
 %x quoted
 
 %%
-"_"                { return '_'; }
-"!"                { return '!'; }
-"as"               { return KW_AS; }
-"let"              { return KW_LET; }
-"exists"           { return KW_EXISTS; }
-"forall"           { return KW_FORALL; }
-"par"              { return KW_PAR; }
+"_"                	{ return '_'; }
+"!"                	{ return '!'; }
+"as"               	{ return KW_AS; }
+"let"              	{ return KW_LET; }
+"exists"           	{ return KW_EXISTS; }
+"forall"           	{ return KW_FORALL; }
+"par"              	{ return KW_PAR; }
 
-"("				   { return '('; }
-")"				   { return ')'; }
-{numeral}		   { return NUMERAL; }
-{decimal}		   { return DECIMAL; }
-{hexadecimal}	   { return HEXADECIMAL; }
-{binary}		   { return BINARY; }
+"("				   	{ return '('; }
+")"				   	{ return ')'; }
 
-"true"|"false"	   { return BOOL_VALUE; }
+{numeral}		   	{ 
+						yylval.ptr = smt_newNumeralLiteral(strtol(yytext, NULL, 10)); 
+						return NUMERAL; 
+					}
+{decimal}		   	{
+						yylval.ptr = smt_newDecimalLiteral(strtod(yytext, NULL));  
+						return DECIMAL; 
+					}
+{hexadecimal}	   	{ 
+						yylval.ptr = smt_newNumeralLiteral(strtol(yytext+2, NULL, 16)); 
+						return HEXADECIMAL; 
+					}
+{binary}		   	{
+						yylval.ptr = smt_newNumeralLiteral(strtol(yytext+2, NULL, 2)); 
+						return BINARY; 
+					}
+
+"true"	{ 
+			yylval.ptr = smt_newBooleanValue(1); 
+			return BOOL_VALUE; 
+		}
+
+"false"	{
+			yylval.ptr = smt_newBooleanValue(0); 
+			return BOOL_VALUE;
+		}
 
 "not"					{ return NOT; }
 
@@ -68,48 +91,152 @@ simple_symbol  {sym_begin}{sym_continue}*
 "set-logic"				{ return CMD_SET_LOGIC; }
 "set-option"			{ return CMD_SET_OPT; }
 
-"DECIMAL"				{ return META_SPEC_DECIMAL; }
-"NUMERAL"				{ return META_SPEC_NUMERAL; }
-"STRING"				{ return META_SPEC_STRING; }
+"DECIMAL"	{ 
+				yylval.ptr = smt_newMetaSpecConstant(0);
+				return META_SPEC_DECIMAL; 
+			}
+"NUMERAL"	{ 
+				yylval.ptr = smt_newMetaSpecConstant(1);
+				return META_SPEC_NUMERAL; 
+			}
+"STRING"	{ 
+				yylval.ptr = smt_newMetaSpecConstant(2);
+				return META_SPEC_STRING; 
+			}
 
-":diagnostic-output-channel"	{ return OPT_DIAGN_OUTPUT_CHANNEL; }	
-":expand-definitions" 			{ return OPT_EXPAND_DEFS; }
-":global-declarations" 			{ return OPT_GLOBAL_DECLS; }
-":interactive-mode" 			{ return OPT_INTERACT_MODE; }
-":print-success" 				{ return OPT_PRINT_SUCCESS; }
-":produce-assertions" 			{ return OPT_PROD_ASSERTS; }
-":produce-assignments" 			{ return OPT_PROD_ASSIGNS; }
-":produce-models"				{ return OPT_PROD_MODELS; }
-":produce-proofs"				{ return OPT_PROD_PROOFS; } 
-":produce-unsat-assumptions"	{ return OPT_PROD_UNSAT_ASSUMS; } 
-":produce-unsat-cores"			{ return OPT_PROD_UNSAT_CORES; } 
-":random-seed"					{ return OPT_RAND_SEED; } 
-":regular-output-channel"		{ return OPT_REG_OUTPUT_CHANNEL; } 
-":reproducible-resource-limit"	{ return OPT_REPROD_RES_LIMIT; } 	
-":verbosity" 					{ return OPT_VERBOSITY; }
+":diagnostic-output-channel" 	{
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_DIAGN_OUTPUT_CHANNEL; 
+								}	
+":expand-definitions" 			{
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_EXPAND_DEFS; 
+								}
+":global-declarations"  		{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_GLOBAL_DECLS; 
+								}
+":interactive-mode"  			{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_INTERACT_MODE; 
+								}
+":print-success" 				{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_PRINT_SUCCESS; 
+								}
+":produce-assertions" 			{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_PROD_ASSERTS; 
+								}
+":produce-assignments" 			{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_PROD_ASSIGNS; 
+								}
+":produce-models" 				{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_PROD_MODELS; 
+								}
+":produce-proofs" 				{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_PROD_PROOFS; 
+								} 
+":produce-unsat-assumptions" 	{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_PROD_UNSAT_ASSUMS; 
+								} 
+":produce-unsat-cores"			{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_PROD_UNSAT_CORES; 
+								} 
+":random-seed" 					{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_RAND_SEED; 
+								} 
+":regular-output-channel"		{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_REG_OUTPUT_CHANNEL; 
+								} 
+":reproducible-resource-limit" 	{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_REPROD_RES_LIMIT; 
+								} 	
+":verbosity" 					{ 
+									yylval.ptr = smt_newKeyword(yytext); 
+									return OPT_VERBOSITY; 
+								}
 
-"theory" 	{ return THEORY; }
-"logic" 	{ return LOGIC; }
+"theory" 	{ 
+				yylval.ptr = smt_newSymbol(yytext); 
+				return THEORY; 
+			}
+"logic" 	{ 
+				yylval.ptr = smt_newSymbol(yytext); 
+				return LOGIC; 
+			}
 
-":sorts"				{ return ATTR_SORTS; }
-":funs"					{ return ATTR_FUNS; }
-":sorts-description" 	{ return ATTR_SORTS_DESC; }
-":funs-description" 	{ return ATTR_FUNS_DESC; }
-":definition"  			{ return ATTR_DEF; }
-":values"  				{ return ATTR_VALUES; }
-":notes"  				{ return ATTR_NOTES; }
-":theories" 			{ return ATTR_THEORIES; }
-":language" 			{ return ATTR_LANG; }
-":extensions" 			{ return ATTR_EXTS; }
+":sorts"				{ 
+							yylval.ptr = smt_newKeyword(yytext);
+							return ATTR_SORTS; 
+						}
+":funs"					{ 
+							yylval.ptr = smt_newKeyword(yytext);
+							return ATTR_FUNS; 
+						}
+":sorts-description" 	{ 
+							yylval.ptr = smt_newKeyword(yytext);
+							return ATTR_SORTS_DESC; 
+						}
+":funs-description" 	{ 
+							yylval.ptr = smt_newKeyword(yytext);
+							return ATTR_FUNS_DESC; 
+						}
+":definition"  			{ 
+							yylval.ptr = smt_newKeyword(yytext);
+							return ATTR_DEF; 
+						}
+":values"  				{ 
+							yylval.ptr = smt_newKeyword(yytext);
+							return ATTR_VALUES; 
+						}
+":notes"  				{
+							yylval.ptr = smt_newKeyword(yytext); 
+							return ATTR_NOTES; 
+						}
+":theories" 			{
+							yylval.ptr = smt_newKeyword(yytext); 
+							return ATTR_THEORIES; 
+						}
+":language" 			{ 
+							yylval.ptr = smt_newKeyword(yytext);
+							return ATTR_LANG; 
+						}
+":extensions" 			{
+							yylval.ptr = smt_newKeyword(yytext); 
+							return ATTR_EXTS; 
+						}
 
-{simple_symbol}		{ return SYMBOL; }
-":"{simple_symbol}	{ return KEYWORD; }
+{simple_symbol}		{
+						yylval.ptr = smt_newSymbol(yytext); 
+						return SYMBOL; 
+					}
+":"{simple_symbol}	{ 
+						yylval.ptr = smt_newKeyword(yytext); 
+						return KEYWORD; 
+					}
 
 \"					{ BEGIN string; }
 <string>\"\"   
-<string>\"			{ BEGIN 0; return STRING; }
+<string>\"			{ 
+						BEGIN 0; 
+						yylval.ptr = smt_newStringLiteral(yytext);
+						return STRING; 
+					}
 
 \|					{ BEGIN quoted; }
-<quoted>\|			{ BEGIN 0; return SYMBOL; }
+<quoted>\|			{ 
+						BEGIN 0; 
+						yylval.ptr = smt_newSymbol(yytext);
+						return SYMBOL; 
+					}
 <quoted>\\			{ }
 <quoted>.			{ }

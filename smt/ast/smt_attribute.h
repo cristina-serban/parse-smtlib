@@ -8,12 +8,14 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 #include "smt_abstract.h"
 #include "smt_basic.h"
 #include "smt_interfaces.h"
 
 namespace smt {
     namespace ast {
+        /* ==================================== Attribute ===================================== */
         /**
          * An SMT-LIB attribute
          */
@@ -48,6 +50,21 @@ namespace smt {
 
             std::shared_ptr<IAttributeValue> getValue();
             void setValue(std::shared_ptr<IAttributeValue> value);
+
+            virtual std::string toString();
+        };
+
+        /* ============================== CompoundAttributeValue ============================== */
+        /**
+         * A compound value for an SMT-LIB attribute
+         */
+        class CompoundAttributeValue : public IAttributeValue {
+        private:
+            std::vector<std::shared_ptr<IAttributeValue>> values;
+        public:
+            CompoundAttributeValue(const std::vector<std::shared_ptr<IAttributeValue>> values);
+
+            std::vector<std::shared_ptr<IAttributeValue>> &getValues();
 
             virtual std::string toString();
         };

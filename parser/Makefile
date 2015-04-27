@@ -6,7 +6,8 @@ smtlib-parser:
 	mv lex.yy.c smtlib-parser.l.c
 	gcc -g -c smtlib-parser.l.c -o smtlib-parser.l.o
 	gcc -g -c smtlib-parser.y.c -o smtlib-parser.y.o
-	gcc -g -o smtlib-parser smtlib-parser.l.o smtlib-parser.y.o -lfl
+	g++ -g -c -std=c++11 smtlib-glue.cpp -o smtlib-glue.o
+	gcc -g -o smtlib-parser smtlib-parser.l.o smtlib-parser.y.o smtlib-glue.o -lfl
 clean:
 	rm -f smtlib-parser.h
 	rm -f smtlib-parser.y.c
@@ -14,4 +15,5 @@ clean:
 	rm -f smtlib-parser.output
 	rm -f smtlib-parser.y.o
 	rm -f smtlib-parser.l.o
+	rm -f smtlib-glue.o
 	rm -f smtlib-parser

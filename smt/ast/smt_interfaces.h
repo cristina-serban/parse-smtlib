@@ -29,7 +29,8 @@ namespace smt {
 
         class ISpecConstant : public virtual SmtAstNode,
                               public ISExpression,
-                              public ITerm {
+                              public ITerm,
+                              public IAttributeValue{
         };
     }
 }

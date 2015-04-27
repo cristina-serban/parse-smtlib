@@ -3,20 +3,20 @@
 #include <vector>
 #include "smtlib-glue.h"
 
-#include "smt_attribute.h"
-#include "smt_basic.h"
-#include "smt_command.h"
-#include "smt_fun.h"
-#include "smt_identifier.h"
-#include "smt_literal.h"
-#include "smt_logic.h"
-#include "smt_s_expr.h"
-#include "smt_script.h"
-#include "smt_sort.h"
-#include "smt_symbol_decl.h"
-#include "smt_term.h"
-#include "smt_theory.h"
-#include "smt_var.h"
+#include "../smt/ast/smt_attribute.h"
+#include "../smt/ast/smt_basic.h"
+#include "../smt/ast/smt_command.h"
+#include "../smt/ast/smt_fun.h"
+#include "../smt/ast/smt_identifier.h"
+#include "../smt/ast/smt_literal.h"
+#include "../smt/ast/smt_logic.h"
+#include "../smt/ast/smt_s_expr.h"
+#include "../smt/ast/smt_script.h"
+#include "../smt/ast/smt_sort.h"
+#include "../smt/ast/smt_symbol_decl.h"
+#include "../smt/ast/smt_term.h"
+#include "../smt/ast/smt_theory.h"
+#include "../smt/ast/smt_var.h"
 
 namespace smt {
     namespace ast {
@@ -73,7 +73,15 @@ SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value) {
     );
 }
 
+SmtPtr smt_newCompoundAttributeValue(SmtList values) {
+    return new CompoundAttributeValue(values->unwrap<IAttributeValue>());
+}
+
 // smt_basic.h
+SmtPtr smt_newSymbol(char const* value) {
+    return new Symbol(value);
+}
+
 SmtPtr smt_newKeyword(char const* value) {
     return new Keyword(value);
 }
@@ -82,11 +90,11 @@ SmtPtr smt_newMetaSpecConstant(int value) {
     return new MetaSpecConstant(static_cast<MetaSpecConstant::Type>(value));
 }
 
-SmtPtr smt_newBooleanValue(bool value) {
+SmtPtr smt_newBooleanValue(int value) {
     return new BooleanValue(value);
 }
 
-SmtPtr smt_newPropLiteral(SmtPtr symbol, bool negated) {
+SmtPtr smt_newPropLiteral(SmtPtr symbol, int negated) {
     return new PropLiteral(share<Symbol>(symbol), negated);
 }
 
@@ -241,11 +249,7 @@ SmtPtr smt_newStringLiteral(char const* value) {
 }
 
 // smt_logic.h
-SmtPtr smt_newSmtLogic1(SmtPtr name) {
-    return new SmtLogic(share<Symbol>(name));
-}
-
-SmtPtr smt_newSmtLogic2(SmtPtr name, SmtList attributes) {
+SmtPtr smt_newSmtLogic(SmtPtr name, SmtList attributes) {
     return new SmtLogic(share<Symbol>(name),
                         attributes->unwrap<Attribute>());
 }
@@ -256,11 +260,7 @@ SmtPtr smt_newCompSExpression(SmtList exprs) {
 }
 
 // smt_script.h
-SmtPtr smt_newSmtScript1() {
-    return new SmtScript();
-}
-
-SmtPtr smt_newSmtScript2(SmtList cmds) {
+SmtPtr smt_newSmtScript(SmtList cmds) {
     return new SmtScript(cmds->unwrap<Command>());
 }
 
@@ -275,53 +275,29 @@ SmtPtr smt_newSort2(SmtPtr identifier, SmtList params) {
 }
 
 // smt_symbol_decl.h
-SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, SmtPtr arity) {
-    return new SortSymbolDeclaration(share<Identifier>(identifier),
-                                     share<NumeralLiteral>(arity));
-}
-
-SmtPtr smt_newSortSymbolDeclaration1(SmtPtr identifier, SmtPtr arity, SmtList attributes) {
+SmtPtr smt_newSortSymbolDeclaration(SmtPtr identifier, SmtPtr arity, SmtList attributes) {
     return new SortSymbolDeclaration(share<Identifier>(identifier),
                                      share<NumeralLiteral>(arity),
                                      attributes->unwrap<Attribute>());
 }
 
-SmtPtr smt_newSpecConstFunDeclaration1(SmtPtr constant, SmtPtr sort) {
-    return new SpecConstFunDeclaration(share<ISpecConstant>(constant), share<Sort>(sort));
-}
-
-SmtPtr smt_newSpecConstFunDeclaration2(SmtPtr constant, SmtPtr sort, SmtList attributes) {
+SmtPtr smt_newSpecConstFunDeclaration(SmtPtr constant, SmtPtr sort, SmtList attributes) {
     return new SpecConstFunDeclaration(share<ISpecConstant>(constant), share<Sort>(sort),
                                        attributes->unwrap<Attribute>());
 }
 
-SmtPtr smt_newMetaSpecConstFunDeclaration1(SmtPtr constant, SmtPtr sort) {
-    return new MetaSpecConstFunDeclaration(share<MetaSpecConstant>(constant), share<Sort>(sort));
-}
-
-SmtPtr smt_newMetaSpecConstFunDeclaration2(SmtPtr constant, SmtPtr sort, SmtList attributes) {
+SmtPtr smt_newMetaSpecConstFunDeclaration(SmtPtr constant, SmtPtr sort, SmtList attributes) {
     return new MetaSpecConstFunDeclaration(share<MetaSpecConstant>(constant), share<Sort>(sort),
                                            attributes->unwrap<Attribute>());
 }
 
-SmtPtr smt_newIdentifFunDeclaration1(SmtPtr identifier, SmtList signature) {
-    return new IdentifFunDeclaration(share<Identifier>(identifier),
-                                     signature->unwrap<Sort>());
-}
-
-SmtPtr smt_newIdentifFunDeclaration2(SmtPtr identifier, SmtList signature, SmtList attributes) {
+SmtPtr smt_newIdentifFunDeclaration(SmtPtr identifier, SmtList signature, SmtList attributes) {
     return new IdentifFunDeclaration(share<Identifier>(identifier),
                                      signature->unwrap<Sort>(),
                                      attributes->unwrap<Attribute>());
 }
 
-SmtPtr smt_newParamFunDeclaration1(SmtList params, SmtPtr identifier, SmtList signature) {
-    return new ParamFunDeclaration(params->unwrap<Symbol>(),
-                                   share<Identifier>(identifier),
-                                   signature->unwrap<Sort>());
-}
-
-SmtPtr smt_newParamFunDeclaration2(SmtList params, SmtPtr identifier, SmtList signature, SmtList attributes) {
+SmtPtr smt_newParamFunDeclaration(SmtList params, SmtPtr identifier, SmtList signature, SmtList attributes) {
     return new ParamFunDeclaration(params->unwrap<Symbol>(),
                                    share<Identifier>(identifier),
                                    signature->unwrap<Sort>(),
@@ -355,11 +331,7 @@ SmtPtr smt_newAnnotatedTerm(SmtPtr term, SmtList attrs) {
 }
 
 // smt_theory.h
-SmtPtr smt_newSmtTheory1(SmtPtr name) {
-    return new SmtTheory(share<Symbol>(name));
-}
-
-SmtPtr smt_newSmtTheory2(SmtPtr name, SmtList attributes) {
+SmtPtr smt_newSmtTheory(SmtPtr name, SmtList attributes) {
     return new SmtTheory(share<Symbol>(name),
                          attributes->unwrap<Attribute>());
 }
