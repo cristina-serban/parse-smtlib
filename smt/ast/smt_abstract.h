@@ -15,7 +15,7 @@ namespace smt {
          */
         class SmtAstNode {
         public:
-            virtual std::string toString() { return ""; }
+            virtual std::string toString() = 0;
         };
 
         /**

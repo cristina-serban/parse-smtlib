@@ -57,7 +57,7 @@ simple_symbol  {sym_begin}{sym_continue}*
 "get-model"				{ return CMD_GET_MODEL; }
 "get-option"			{ return CMD_GET_OPT; }
 "get-proof"				{ return CMD_GET_PROOF; }
-"get-unsat-assumptions"	{ return CMD_GET_UNSAT_ASSUM; }
+"get-unsat-assumptions"	{ return CMD_GET_UNSAT_ASSUMS; }
 "get-unsat-core"		{ return CMD_GET_UNSAT_CORE; }
 "get-value"				{ return CMD_GET_VALUE; }
 "pop"					{ return CMD_POP; }

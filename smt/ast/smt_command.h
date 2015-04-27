@@ -409,6 +409,18 @@ namespace smt {
             virtual std::string toString();
         };
 
+        /* ============================== GetUnsatAssumsCommand =============================== */
+        /**
+         * A 'get-unsat-assumptions' command.
+         * Node of the SMT-LIB abstract syntax tree.
+         */
+        class GetUnsatAssumsCommand : public Command {
+        public:
+            GetUnsatAssumsCommand() { }
+
+            virtual std::string toString();
+        };
+
         /* =============================== GetUnsatCoreCommand ================================ */
         /**
          * A 'get-unsat-core' command.

@@ -344,6 +344,12 @@ string GetProofCommand::toString() {
     return "( get-proof )";
 }
 
+/* ============================== GetUnsatAssumsCommand =============================== */
+
+string GetUnsatAssumsCommand::toString() {
+    return "( get-unsat-assumptions )";
+}
+
 /* =============================== GetUnsatCoreCommand ================================ */
 
 string GetUnsatCoreCommand::toString() {

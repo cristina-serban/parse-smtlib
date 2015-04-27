@@ -155,12 +155,20 @@ SmtPtr smt_newGetInfoCommand(SmtPtr keyword) {
     return new GetInfoCommand(share<Keyword>(keyword));
 }
 
+SmtPtr smt_newGetModelCommand() {
+    return new GetModelCommand();
+}
+
 SmtPtr smt_newGetOptionCommand(SmtPtr keyword) {
     return new GetOptionCommand(share<Keyword>(keyword));
 }
 
 SmtPtr smt_newGetProofCommand() {
     return new GetProofCommand();
+}
+
+SmtPtr smt_newGetUnsatAssumsCommand() {
+    return new GetUnsatAssumsCommand();
 }
 
 SmtPtr smt_newGetUnsatCoreCommand() {
