@@ -23,6 +23,10 @@ SmtList smt_listCreate();
 void smt_listAdd(SmtList list, SmtPtr item);
 void smt_listDelete(SmtList list);
 
+void smt_print(SmtPtr ptr);
+
+int smt_bool_value(SmtPtr ptr);
+
 // smt_attribute.h
 SmtPtr smt_newAttribute1(SmtPtr keyword);
 SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value);
@@ -75,7 +79,7 @@ SmtPtr smt_newIdentifier2(SmtPtr symbol, SmtList indices);
 SmtPtr smt_newQualifiedIdentifier(SmtPtr identifier, SmtPtr sort);
 
 // smt_literal.h
-SmtPtr smt_newNumeralLiteral(long value);
+SmtPtr smt_newNumeralLiteral(long value, unsigned int base);
 SmtPtr smt_newDecimalLiteral(double value);
 SmtPtr smt_newStringLiteral(char const* value);
 

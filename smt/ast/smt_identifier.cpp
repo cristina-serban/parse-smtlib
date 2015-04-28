@@ -33,7 +33,7 @@ string Identifier::toString() {
         return symbol->toString();
     else {
         stringstream ss;
-        ss << "( _ " << symbol << " ";
+        ss << "( _ " << symbol->toString() << " ";
         for(vector<shared_ptr<IIndex>>::iterator it = indices.begin(); it != indices.end(); it++) {
             ss << (*it)->toString() << " ";
         }

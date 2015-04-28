@@ -86,7 +86,7 @@ void PropLiteral::setNegated(bool negated) {
 string PropLiteral::toString() {
     if(negated) {
         stringstream ss;
-        ss << "( not " << symbol << " )";
+        ss << "( not " << symbol->toString() << " )";
         return ss.str();
     } else {
         return symbol->toString();

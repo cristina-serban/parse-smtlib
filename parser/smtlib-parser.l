@@ -1,18 +1,21 @@
 %{ 
 #include <stdlib.h>
+#include <string.h>
 #include "smtlib-glue.h" 
 #include "smtlib-parser.h" 
 %}
 
-whitespace     [\x09\r\n \xA0]
-printable_char [\x20-\x7E\xA0-xFF]
-digit          [0-9]
-letter         [a-zA-Z]
-numeral        0|[1-9][0-9]*
-decimal        {numeral}.0*{numeral}
-hexadecimal    "#x"[0-9A-Fa-f]+
-binary         "#b"[01]+
-special_char  [~!@$%^&*_\-+=.?/]
+whitespace     	[\x09\r\n \xA0]
+printable_char 	[\x20-\x7E\xA0-xFF]
+digit          	[0-9]
+letter         	[a-zA-Z]
+numeral        	0|[1-9][0-9]*
+decimal        	{numeral}.0*{numeral}
+hexadecimal    	"#x"[0-9A-Fa-f]+
+binary         	"#b"[01]+
+special_char	[+\-/*=%?!.$_~&^<>@]
+
+comment			";".*[\n\r]+
 
 sym_begin      {letter}|{special_char}
 sym_continue   {sym_begin}|{digit}
@@ -20,8 +23,10 @@ simple_symbol  {sym_begin}{sym_continue}*
 
 %x string
 %x quoted
+%x comment
 
 %%
+
 "_"                	{ return '_'; }
 "!"                	{ return '!'; }
 "as"               	{ return KW_AS; }
@@ -34,32 +39,25 @@ simple_symbol  {sym_begin}{sym_continue}*
 ")"				   	{ return ')'; }
 
 {numeral}		   	{ 
-						yylval.ptr = smt_newNumeralLiteral(strtol(yytext, NULL, 10)); 
+						yylval.ptr = smt_newNumeralLiteral(
+							strtol(yytext, NULL, 10), 10); 
 						return NUMERAL; 
 					}
 {decimal}		   	{
-						yylval.ptr = smt_newDecimalLiteral(strtod(yytext, NULL));  
+						yylval.ptr = smt_newDecimalLiteral(
+							strtod(yytext, NULL));  
 						return DECIMAL; 
 					}
 {hexadecimal}	   	{ 
-						yylval.ptr = smt_newNumeralLiteral(strtol(yytext+2, NULL, 16)); 
+						yylval.ptr = smt_newNumeralLiteral(
+							strtol(yytext+2, NULL, 16), 16); 
 						return HEXADECIMAL; 
 					}
 {binary}		   	{
-						yylval.ptr = smt_newNumeralLiteral(strtol(yytext+2, NULL, 2)); 
+						yylval.ptr = smt_newNumeralLiteral(
+							strtol(yytext+2, NULL, 2), 2); 
 						return BINARY; 
 					}
-
-"true"	{ 
-			yylval.ptr = smt_newBooleanValue(1); 
-			return BOOL_VALUE; 
-		}
-
-"false"	{
-			yylval.ptr = smt_newBooleanValue(0); 
-			return BOOL_VALUE;
-		}
-
 "not"					{ return NOT; }
 
 "assert"		   		{ return CMD_ASSERT; }
@@ -104,67 +102,6 @@ simple_symbol  {sym_begin}{sym_continue}*
 				return META_SPEC_STRING; 
 			}
 
-":diagnostic-output-channel" 	{
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_DIAGN_OUTPUT_CHANNEL; 
-								}	
-":expand-definitions" 			{
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_EXPAND_DEFS; 
-								}
-":global-declarations"  		{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_GLOBAL_DECLS; 
-								}
-":interactive-mode"  			{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_INTERACT_MODE; 
-								}
-":print-success" 				{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_PRINT_SUCCESS; 
-								}
-":produce-assertions" 			{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_PROD_ASSERTS; 
-								}
-":produce-assignments" 			{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_PROD_ASSIGNS; 
-								}
-":produce-models" 				{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_PROD_MODELS; 
-								}
-":produce-proofs" 				{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_PROD_PROOFS; 
-								} 
-":produce-unsat-assumptions" 	{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_PROD_UNSAT_ASSUMS; 
-								} 
-":produce-unsat-cores"			{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_PROD_UNSAT_CORES; 
-								} 
-":random-seed" 					{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_RAND_SEED; 
-								} 
-":regular-output-channel"		{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_REG_OUTPUT_CHANNEL; 
-								} 
-":reproducible-resource-limit" 	{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_REPROD_RES_LIMIT; 
-								} 	
-":verbosity" 					{ 
-									yylval.ptr = smt_newKeyword(yytext); 
-									return OPT_VERBOSITY; 
-								}
-
 "theory" 	{ 
 				yylval.ptr = smt_newSymbol(yytext); 
 				return THEORY; 
@@ -182,37 +119,9 @@ simple_symbol  {sym_begin}{sym_continue}*
 							yylval.ptr = smt_newKeyword(yytext);
 							return ATTR_FUNS; 
 						}
-":sorts-description" 	{ 
-							yylval.ptr = smt_newKeyword(yytext);
-							return ATTR_SORTS_DESC; 
-						}
-":funs-description" 	{ 
-							yylval.ptr = smt_newKeyword(yytext);
-							return ATTR_FUNS_DESC; 
-						}
-":definition"  			{ 
-							yylval.ptr = smt_newKeyword(yytext);
-							return ATTR_DEF; 
-						}
-":values"  				{ 
-							yylval.ptr = smt_newKeyword(yytext);
-							return ATTR_VALUES; 
-						}
-":notes"  				{
-							yylval.ptr = smt_newKeyword(yytext); 
-							return ATTR_NOTES; 
-						}
 ":theories" 			{
 							yylval.ptr = smt_newKeyword(yytext); 
 							return ATTR_THEORIES; 
-						}
-":language" 			{ 
-							yylval.ptr = smt_newKeyword(yytext);
-							return ATTR_LANG; 
-						}
-":extensions" 			{
-							yylval.ptr = smt_newKeyword(yytext); 
-							return ATTR_EXTS; 
 						}
 
 {simple_symbol}		{
@@ -225,18 +134,27 @@ simple_symbol  {sym_begin}{sym_continue}*
 					}
 
 \"					{ BEGIN string; }
-<string>\"\"   
+<string>\"\"   		{ yymore(); }
+<string>[\n\r]+		{ yymore(); }
 <string>\"			{ 
+						char *content = (char *)malloc(sizeof(char) * (yyleng - 1));
+						strncpy(content, yytext, yyleng - 1);
 						BEGIN 0; 
-						yylval.ptr = smt_newStringLiteral(yytext);
+						yylval.ptr = smt_newStringLiteral(content);
 						return STRING; 
 					}
+<string>.			{ yymore(); }
 
-\|					{ BEGIN quoted; }
+\|					{ yymore(); BEGIN quoted; }
+<quoted>[\n\r]+		{ yymore(); }
 <quoted>\|			{ 
 						BEGIN 0; 
 						yylval.ptr = smt_newSymbol(yytext);
 						return SYMBOL; 
 					}
 <quoted>\\			{ }
-<quoted>.			{ }
+<quoted>.			{ yymore(); }
+
+{whitespace}		{ /*ignore*/ }
+{comment}			{ /*ignore*/ }
+

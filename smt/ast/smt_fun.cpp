@@ -36,7 +36,7 @@ void FunctionDeclaration::setSort(shared_ptr<Sort> sort) {
 
 string FunctionDeclaration::toString() {
     stringstream ss;
-    ss << symbol << " ( ";
+    ss << symbol->toString() << " ( ";
 
     for(vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
         ss << (*it)->toString() << " ";

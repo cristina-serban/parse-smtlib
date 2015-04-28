@@ -42,8 +42,10 @@ vector<shared_ptr<IAttributeValue>> &CompoundAttributeValue::getValues() {
 
 string CompoundAttributeValue::toString() {
     stringstream ss;
+    ss << "( ";
     for(vector<shared_ptr<IAttributeValue>>::iterator it = values.begin(); it != values.end(); it++) {
         ss << (*it)->toString() << " ";
     }
+    ss << ") ";
     return ss.str();
 }

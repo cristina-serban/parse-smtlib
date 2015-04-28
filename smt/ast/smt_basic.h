@@ -94,7 +94,8 @@ namespace smt {
      * A boolean value ("true" or "false").
      * Node of the SMT-LIB abstract syntax tree.
      */
-        class BooleanValue : public SmtAstNode {
+        class BooleanValue : public virtual SmtAstNode,
+                             public IAttributeValue {
         private:
             bool value;
         public:

@@ -25,7 +25,7 @@ vector<shared_ptr<Attribute>>& SmtTheory::getAttributes() {
 
 string SmtTheory::toString() {
     stringstream ss;
-    ss << "( theory  ";
+    ss << "( theory  " << name->toString() << " ";
 
     for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << (*it)->toString() << " ";

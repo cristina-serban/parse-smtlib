@@ -1,3 +1,4 @@
+#include <iostream>
 #include <memory>
 #include <string>
 #include <vector>
@@ -59,6 +60,19 @@ void smt_listAdd(SmtList list, SmtPtr item) {
 
 void smt_listDelete(SmtList list) {
     delete list;
+}
+
+void smt_print(SmtPtr ptr) {
+    std::cout << share<SmtAstNode>(ptr)->toString();
+}
+
+int smt_bool_value(SmtPtr ptr) {
+    std::shared_ptr<BooleanValue> val = share<BooleanValue>(ptr);
+    if(val) {
+        return val->getValue();
+    } else {
+        return 2;
+    }
 }
 
 // smt_attribute.h
@@ -239,8 +253,8 @@ SmtPtr smt_newQualifiedIdentifier(SmtPtr identifier, SmtPtr sort) {
 }
 
 // smt_literal.h
-SmtPtr smt_newNumeralLiteral(long value) {
-    return new NumeralLiteral(value);
+SmtPtr smt_newNumeralLiteral(long value, unsigned int base) {
+    return new NumeralLiteral(value, base);
 }
 
 SmtPtr smt_newDecimalLiteral(double value) {

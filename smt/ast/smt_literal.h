@@ -43,8 +43,13 @@ namespace smt {
         class NumeralLiteral : public Literal<long>,
                                public IIndex,
                                public ISpecConstant {
+        private:
+            unsigned int base;
         public:
-            NumeralLiteral(long value);
+            NumeralLiteral(long value, unsigned int base);
+
+            unsigned int getBase();
+            void setBase(unsigned int base);
 
             virtual std::string toString();
         };

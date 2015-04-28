@@ -16,7 +16,7 @@ void AssertCommand::setTerm(shared_ptr<ITerm> term) {
 
 string AssertCommand::toString() {
     stringstream ss;
-    ss << "( assert " << term->toString() << ")";
+    ss << "( assert " << term->toString() << " )";
     return ss.str();
 }
 
@@ -105,7 +105,7 @@ void DeclareFunCommand::setSort(shared_ptr<Sort> sort) {
 
 string DeclareFunCommand::toString() {
     stringstream ss;
-    ss << "( declare-fun " << symbol << " ( ";
+    ss << "( declare-fun " << symbol->toString() << " ( ";
 
     for (vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
         ss << (*it)->toString() << " ";
@@ -396,7 +396,7 @@ void PopCommand::setNumeral(shared_ptr<NumeralLiteral> numeral) {
 
 string PopCommand::toString() {
     stringstream ss;
-    ss << "( push " << numeral->toString() << " )";
+    ss << "( pop " << numeral->toString() << " )";
     return ss.str();
 }
 

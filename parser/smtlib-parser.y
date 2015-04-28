@@ -14,7 +14,7 @@ int yyerror(const char *);
 
 %token KW_AS KW_LET KW_FORALL KW_EXISTS KW_PAR NOT
 
-%token <ptr> NUMERAL DECIMAL HEXADECIMAL BINARY BOOL_VALUE 
+%token <ptr> NUMERAL DECIMAL HEXADECIMAL BINARY
 
 %token CMD_ASSERT CMD_CHK_SAT CMD_CHK_SAT_ASSUM CMD_DECL_CONST CMD_DECL_FUN CMD_DECL_SORT
 %token CMD_DEF_FUN CMD_DEF_FUN_REC CMD_DEF_FUNS_REC CMD_DEF_SORT CMD_ECHO CMD_EXIT
@@ -25,34 +25,28 @@ int yyerror(const char *);
 %token <ptr> META_SPEC_DECIMAL META_SPEC_NUMERAL META_SPEC_STRING
 %token <ptr> KEYWORD STRING SYMBOL THEORY LOGIC
 
-%token <ptr> OPT_DIAGN_OUTPUT_CHANNEL OPT_EXPAND_DEFS OPT_GLOBAL_DECLS OPT_INTERACT_MODE
-%token <ptr> OPT_PRINT_SUCCESS OPT_PROD_ASSERTS OPT_PROD_ASSIGNS OPT_PROD_MODELS
-%token <ptr> OPT_PROD_PROOFS OPT_PROD_UNSAT_ASSUMS OPT_PROD_UNSAT_CORES OPT_RAND_SEED
-%token <ptr> OPT_REG_OUTPUT_CHANNEL OPT_REPROD_RES_LIMIT OPT_VERBOSITY
-
-%token <ptr> ATTR_SORTS ATTR_FUNS ATTR_SORTS_DESC ATTR_FUNS_DESC ATTR_DEF ATTR_VALUES 
-%token <ptr> ATTR_NOTES ATTR_THEORIES ATTR_LANG ATTR_EXTS
+%token <ptr> ATTR_SORTS ATTR_FUNS ATTR_THEORIES
 
 %type <ptr> smt_file script command term spec_const qual_identifier identifier index
 %type <ptr> sort var_binding sorted_var attribute attr_value s_exp prop_literal
 %type <ptr> fun_decl fun_def info_flag option theory_decl theory_attr sort_symbol_decl
-%type <ptr> par_fun_symbol_decl fun_symbol_decl meta_spec_const logic logic_attr
+%type <ptr> par_fun_symbol_decl fun_symbol_decl meta_spec_const logic logic_attr symbol
 
 %type <list> command_plus term_plus index_plus sort_plus var_binding_plus sorted_var_plus
 %type <list> attribute_star attribute_plus s_exp_plus prop_literal_star fun_decl_plus
 %type <list> symbol_star symbol_plus theory_attr_plus sort_symbol_decl_plus
-%type <list> par_fun_symbol_decl_plus logic_attr_plus
+%type <list> par_fun_symbol_decl_plus logic_attr_plus sort_star sorted_var_star
 
 %start smt_file
 
 %%
 
 smt_file:
-	script			{ $$ = $1; }
+	script			{ $$ = $1; smt_print($1); }
 |
-	theory_decl		{ $$ = $1; }
+	theory_decl		{ $$ = $1; smt_print($1); }
 |
-	logic 			{ $$ = $1; }
+	logic 			{ $$ = $1; smt_print($1); }
 ;
 
 script:
@@ -83,13 +77,13 @@ command:
 	'(' CMD_CHK_SAT_ASSUM '(' prop_literal_star ')' ')'		
 		{ $$ = smt_newCheckSatAssumCommand($4); }
 |
-	'(' CMD_DECL_CONST SYMBOL sort ')'						
+	'(' CMD_DECL_CONST symbol sort ')'						
 		{ $$ = smt_newDeclareConstCommand($3, $4); }
 |
-	'(' CMD_DECL_FUN SYMBOL '(' sort_plus ')' sort ')'
+	'(' CMD_DECL_FUN symbol '(' sort_star ')' sort ')'
 		{ $$ = smt_newDeclareFunCommand($3, $5, $7); }
 |
-	'(' CMD_DECL_SORT SYMBOL NUMERAL ')'
+	'(' CMD_DECL_SORT symbol NUMERAL ')'
 		{ $$ = smt_newDeclareSortCommand($3, $4); }
 |
 	'(' CMD_DEF_FUNS_REC '(' fun_decl_plus ')'  '(' term_plus ')' ')'
@@ -101,7 +95,7 @@ command:
 	'(' CMD_DEF_FUN fun_def ')'
 		{ $$ = smt_newDefineFunCommand($3); }
 |
-	'(' CMD_DEF_SORT SYMBOL '(' symbol_star ')' sort ')'
+	'(' CMD_DEF_SORT symbol '(' symbol_star ')' sort ')'
 		{ $$ = smt_newDefineSortCommand($3, $5, $7); }
 |
 	'(' CMD_ECHO STRING ')'
@@ -152,7 +146,7 @@ command:
 	'(' CMD_SET_INFO attribute ')'
 		{ $$ = smt_newSetInfoCommand($3); }
 |
-	'(' CMD_SET_LOGIC SYMBOL ')'
+	'(' CMD_SET_LOGIC symbol ')'
 		{ $$ = smt_newSetLogicCommand($3); }
 |
 	'(' CMD_SET_OPT option ')'
@@ -206,6 +200,14 @@ spec_const:
 	STRING 			{ $$ = $1; }
 ;
 
+symbol:
+	SYMBOL
+		{ $$ = $1; }
+|
+	NOT
+		{ $$ = smt_newSymbol("not"); }
+;
+
 qual_identifier:
 	identifier 		{ $$ = $1; }
 |
@@ -214,17 +216,17 @@ qual_identifier:
 ;
 
 identifier:
-	SYMBOL 			
+	symbol 			
 		{ $$ = smt_newIdentifier1($1); }
 |
-	'(' '_' SYMBOL index_plus ')'
+	'(' '_' symbol index_plus ')'
 		{ $$ = smt_newIdentifier2($3, $4); }
 ;
 
 index:
 	NUMERAL 	{ $$ = $1; }
 |
-	SYMBOL 		{ $$ = $1; }
+	symbol 		{ $$ = $1; }
 ;
 
 index_plus:
@@ -263,8 +265,19 @@ sort_plus:
 		}
 ;
 
+sort_star:
+	/* empty */
+		{ $$ = smt_listCreate(); }
+|
+	sort_star sort
+		{ 
+			smt_listAdd($1, $2); 
+			$$ = $1; 
+		}
+;
+
 var_binding:
-	'(' SYMBOL term ')'
+	'(' symbol term ')'
 		{ $$ = smt_newVarBinding($2, $3); }
 ;
 
@@ -283,7 +296,7 @@ var_binding_plus:
 ;
 
 sorted_var:
-	'(' SYMBOL sort ')'
+	'(' symbol sort ')'
 		{ $$ = smt_newSortedVariable($2, $3); }
 ;
 
@@ -295,6 +308,17 @@ sorted_var_plus:
 		}
 |
 	sorted_var_plus sorted_var
+		{ 
+			smt_listAdd($1, $2); 
+			$$ = $1; 
+		}
+;
+
+sorted_var_star:
+	/* empty */
+		{ $$ = smt_listCreate(); }
+|
+	sorted_var_star sorted_var
 		{ 
 			smt_listAdd($1, $2); 
 			$$ = $1; 
@@ -338,7 +362,7 @@ attr_value:
 	spec_const
 		{ $$ = $1; }
 |
-	SYMBOL
+	symbol
 		{ $$ = $1; }
 |
 	'(' s_exp_plus ')'
@@ -349,7 +373,7 @@ s_exp:
 	spec_const
 		{ $$ = $1; }
 |
-	SYMBOL
+	symbol
 		{ $$ = $1; }
 |
 	KEYWORD
@@ -394,7 +418,7 @@ prop_literal_star:
 ;
 
 fun_decl:
-	'(' SYMBOL '(' sorted_var_plus ')' sort ')'
+	'(' symbol '(' sorted_var_star ')' sort ')'
 		{ $$ = smt_newFunctionDeclaration($2, $4, $6); }
 ;
 
@@ -413,7 +437,7 @@ fun_decl_plus:
 ;
 
 fun_def:
-	SYMBOL '(' sorted_var_plus ')' sort term
+	symbol '(' sorted_var_star ')' sort term
 		{ $$ = smt_newFunctionDefinition(
 			smt_newFunctionDeclaration($1, $3, $5), $6); }
 ;
@@ -422,7 +446,7 @@ symbol_star:
 	/* empty */
 		{ $$ = smt_listCreate(); }
 |
-	symbol_star SYMBOL
+	symbol_star symbol
 		{ 
 			smt_listAdd($1, $2); 
 			$$ = $1; 
@@ -430,13 +454,13 @@ symbol_star:
 ;
 
 symbol_plus:
-	SYMBOL
+	symbol
 		{ 
 			$$ = smt_listCreate(); 
 			smt_listAdd($$, $1); 
 		}
 |
-	symbol_plus SYMBOL
+	symbol_plus symbol
 		{ 
 			smt_listAdd($1, $2); 
 			$$ = $1; 
@@ -448,56 +472,11 @@ info_flag:
 ;
 
 option:
-	OPT_DIAGN_OUTPUT_CHANNEL STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_EXPAND_DEFS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-| 
-	OPT_GLOBAL_DECLS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-| 
-	OPT_INTERACT_MODE BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-| 
-	OPT_PRINT_SUCCESS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-| 
-	OPT_PROD_ASSERTS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_PROD_ASSIGNS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_PROD_MODELS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_PROD_PROOFS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_PROD_UNSAT_ASSUMS BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_PROD_UNSAT_CORES BOOL_VALUE
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_RAND_SEED NUMERAL
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_REG_OUTPUT_CHANNEL STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_REPROD_RES_LIMIT NUMERAL
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	OPT_VERBOSITY NUMERAL
-		{ $$ = smt_newAttribute2($1, $2); }
-|
 	attribute 	{ $$ = $1; }
 ;
 
 theory_decl:
-	'(' THEORY SYMBOL theory_attr_plus ')'
+	'(' THEORY symbol theory_attr_plus ')'
 		{ $$ = smt_newSmtTheory($3, $4); }
 ;
 
@@ -510,21 +489,6 @@ theory_attr:
 		{ $$ = smt_newAttribute2($1, 
 			smt_newCompoundAttributeValue($3)); }
 |
-	ATTR_SORTS_DESC STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	ATTR_FUNS_DESC STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|	
-	ATTR_DEF STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	ATTR_VALUES STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	ATTR_NOTES STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|	
 	attribute 	{ $$ = $1; }
 ;
 
@@ -605,25 +569,13 @@ meta_spec_const:
 ;
 
 logic:
-	'(' LOGIC SYMBOL logic_attr_plus ')'
+	'(' LOGIC symbol logic_attr_plus ')'
 		{ $$ = smt_newSmtLogic($3, $4); }
 ;
 
 logic_attr:
 	ATTR_THEORIES '(' symbol_plus ')'
 		{ $$ = smt_newAttribute2($1, smt_newCompoundAttributeValue($3)); }
-|
-	ATTR_LANG STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	ATTR_EXTS STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	ATTR_VALUES STRING
-		{ $$ = smt_newAttribute2($1, $2); }
-|
-	ATTR_NOTES STRING
-		{ $$ = smt_newAttribute2($1, $2); }
 |
 	attribute 	{ $$ = $1; }
 ;

@@ -24,7 +24,7 @@ std::vector<shared_ptr<Attribute>> &SmtLogic::getAttributes() {
 
 string SmtLogic::toString() {
     stringstream ss;
-    ss << "( logic  ";
+    ss << "( logic  " << name->toString() << " ";
 
     for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << (*it)->toString() << " ";
