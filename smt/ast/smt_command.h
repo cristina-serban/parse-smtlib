@@ -247,14 +247,19 @@ namespace smt {
          */
         class DefineFunsRecCommand : public Command {
         private:
-            std::vector<std::shared_ptr<FunctionDefinition>> definitions;
+            std::vector<std::shared_ptr<FunctionDeclaration>> declarations;
+            std::vector<std::shared_ptr<ITerm>> bodies;
         public:
             /**
-             * \param definitions    Function definitions
+             * \param declarations    Function declarations
+             * \param bodies          Function bodies
              */
-            DefineFunsRecCommand(const std::vector<std::shared_ptr<FunctionDefinition>> &definitions);
+            DefineFunsRecCommand(const std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
+                                 const std::vector<std::shared_ptr<ITerm>> &bodies);
 
-            std::vector<std::shared_ptr<FunctionDefinition>> &getDefinitions();
+            std::vector<std::shared_ptr<FunctionDeclaration>> &getDeclarations();
+
+            std::vector<std::shared_ptr<ITerm>> &getBodies();
 
             virtual std::string toString();
         };

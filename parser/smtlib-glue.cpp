@@ -133,8 +133,9 @@ SmtPtr smt_newDefineFunRecCommand(SmtPtr definition) {
     return new DefineFunRecCommand(share<FunctionDefinition>(definition));
 }
 
-SmtPtr smt_newDefineFunsRecCommand(SmtList definitions) {
-    return new DefineFunsRecCommand(definitions->unwrap<FunctionDefinition>());
+SmtPtr smt_newDefineFunsRecCommand(SmtList declarations, SmtList bodies) {
+    return new DefineFunsRecCommand(declarations->unwrap<FunctionDeclaration>(),
+                                    bodies->unwrap<ITerm>());
 }
 
 SmtPtr smt_newDefineSortCommand(SmtPtr symbol, SmtList params, SmtPtr sort) {
@@ -143,8 +144,8 @@ SmtPtr smt_newDefineSortCommand(SmtPtr symbol, SmtList params, SmtPtr sort) {
                                  share<Sort>(sort));
 }
 
-SmtPtr smt_newEchoCommand(char const* msg) {
-    return new EchoCommand(msg);
+SmtPtr smt_newEchoCommand(SmtPtr msg) {
+    return new EchoCommand(share<StringLiteral>(msg)->getValue());
 }
 
 SmtPtr smt_newExitCommand() {
@@ -183,7 +184,9 @@ SmtPtr smt_newGetUnsatCoreCommand() {
     return new GetUnsatCoreCommand();
 }
 
-SmtPtr smt_newGetValueCommand(SmtList terms);
+SmtPtr smt_newGetValueCommand(SmtList terms) {
+    return new GetValueCommand(terms->unwrap<ITerm>());
+}
 
 SmtPtr smt_newPopCommand(SmtPtr numeral) {
     return new PopCommand(share<NumeralLiteral>(numeral));

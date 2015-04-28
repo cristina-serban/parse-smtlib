@@ -1,6 +1,9 @@
 %{
 #include <stdio.h>
 #include "smtlib-glue.h"
+
+int yylex(void);
+int yyerror(const char *);
 %}
 
 %union
@@ -641,7 +644,7 @@ logic_attr_plus:
 
 %%
 
-int yyerror(char *s) {
+int yyerror(const char *s) {
 	printf("yyerror: %s\n", s);
 }
 

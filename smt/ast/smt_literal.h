@@ -25,9 +25,13 @@ namespace smt {
             Literal() { }
 
         public:
-            T &getValue();
+            T &getValue() {
+                return value;
+            }
 
-            void setValue(T &value);
+            void setValue(T &value) {
+                this->value = value;
+            }
         };
 
         /* ================================== NumeralLiteral ================================== */

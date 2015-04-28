@@ -199,26 +199,32 @@ string DefineFunRecCommand::toString() {
 /* =============================== DefineFunsRecCommand =============================== */
 
 DefineFunsRecCommand::DefineFunsRecCommand(
-        const vector<shared_ptr<FunctionDefinition>> &definitions) {
-    this->definitions.insert(this->definitions.end(), definitions.begin(), definitions.end());
+        const std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
+        const std::vector<std::shared_ptr<ITerm>> &bodies) {
+    this->declarations.insert(this->declarations.end(), declarations.begin(), declarations.end());
+    this->bodies.insert(this->bodies.end(), bodies.begin(), bodies.end());
 }
 
-vector<shared_ptr<FunctionDefinition>> &DefineFunsRecCommand::getDefinitions() {
-    return definitions;
+std::vector<std::shared_ptr<FunctionDeclaration>> &DefineFunsRecCommand::getDeclarations() {
+    return declarations;
+}
+
+std::vector<std::shared_ptr<ITerm>> &DefineFunsRecCommand::getBodies() {
+    return bodies;
 }
 
 string DefineFunsRecCommand::toString() {
     stringstream ss;
     ss << "( define-funs-rec ( ";
-    for (vector<shared_ptr<FunctionDefinition>>::iterator it = definitions.begin();
-         it != definitions.end(); it++) {
-        ss << "(" << (*it)->getSignature()->toString() << ") ";
+    for (vector<shared_ptr<FunctionDeclaration>>::iterator it = declarations.begin();
+         it != declarations.end(); it++) {
+        ss << "(" << (*it)->toString() << ") ";
     }
 
     ss << ") ( ";
-    for (vector<shared_ptr<FunctionDefinition>>::iterator it = definitions.begin();
-         it != definitions.end(); it++) {
-        ss << "(" << (*it)->getBody()->toString() << ") ";
+    for (vector<shared_ptr<ITerm>>::iterator it = bodies.begin();
+         it != bodies.end(); it++) {
+        ss << "(" << (*it)->toString() << ") ";
     }
 
     ss << ") )";

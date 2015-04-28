@@ -46,7 +46,7 @@ SmtPtr smt_newDefineFunCommand(SmtPtr definition);
 SmtPtr smt_newDefineFunRecCommand(SmtPtr definition);
 SmtPtr smt_newDefineFunsRecCommand(SmtList declarations, SmtList bodies);
 SmtPtr smt_newDefineSortCommand(SmtPtr symbol, SmtList params, SmtPtr sort);
-SmtPtr smt_newEchoCommand(char*);
+SmtPtr smt_newEchoCommand(SmtPtr);
 SmtPtr smt_newExitCommand();
 SmtPtr smt_newGetAssertsCommand();
 SmtPtr smt_newGetAssignsCommand();
