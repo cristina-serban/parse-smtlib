@@ -10,7 +10,7 @@ printable_char 	[\x20-\x7E\xA0-xFF]
 digit          	[0-9]
 letter         	[a-zA-Z]
 numeral        	0|[1-9][0-9]*
-decimal        	{numeral}.0*{numeral}
+decimal        	{numeral}\.0*{numeral}
 hexadecimal    	"#x"[0-9A-Fa-f]+
 binary         	"#b"[01]+
 special_char	[+\-/*=%?!.$_~&^<>@]
@@ -43,6 +43,7 @@ simple_symbol  {sym_begin}{sym_continue}*
 							strtol(yytext, NULL, 10), 10); 
 						return NUMERAL; 
 					}
+
 {decimal}		   	{
 						yylval.ptr = smt_newDecimalLiteral(
 							strtod(yytext, NULL));  
