@@ -25,4 +25,4 @@ Doxygen is required to generate the documentation.
 #!
 .../parse-smtlib> doxygen
 ```
-The documentation in `html` format is generated in the `docs` folder.
+The documentation in `html` format is generated in the `docs` folder. Open the `docs/index.html` file in a browser.
