@@ -266,8 +266,8 @@ SmtPtr smt_newStringLiteral(char const* value) {
 }
 
 // smt_logic.h
-SmtPtr smt_newSmtLogic(SmtPtr name, SmtList attributes) {
-    return new SmtLogic(share<Symbol>(name),
+SmtPtr smt_newLogic(SmtPtr name, SmtList attributes) {
+    return new Logic(share<Symbol>(name),
                         attributes->unwrap<Attribute>());
 }
 
@@ -278,7 +278,7 @@ SmtPtr smt_newCompSExpression(SmtList exprs) {
 
 // smt_script.h
 SmtPtr smt_newSmtScript(SmtList cmds) {
-    return new SmtScript(cmds->unwrap<Command>());
+    return new Script(cmds->unwrap<Command>());
 }
 
 // smt_sort.h
@@ -348,8 +348,8 @@ SmtPtr smt_newAnnotatedTerm(SmtPtr term, SmtList attrs) {
 }
 
 // smt_theory.h
-SmtPtr smt_newSmtTheory(SmtPtr name, SmtList attributes) {
-    return new SmtTheory(share<Symbol>(name),
+SmtPtr smt_newTheory(SmtPtr name, SmtList attributes) {
+    return new Theory(share<Symbol>(name),
                          attributes->unwrap<Attribute>());
 }
 

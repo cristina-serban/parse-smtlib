@@ -21,7 +21,7 @@ namespace smt {
         /**
          * Root of the SMT-LIB abstract syntax tree
          */
-        class SmtFile : public SmtAstNode {
+        class SmtAstRoot : public SmtAstNode {
         };
     }
 }

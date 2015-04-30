@@ -18,7 +18,7 @@ namespace smt {
          * Node and (possible) root of the SMT abstract syntax tree.
          * Represents the contents of a logic file.
          */
-        class SmtLogic : public SmtFile {
+        class Logic : public SmtAstRoot {
         private:
             std::shared_ptr<Symbol> name;
             std::vector<std::shared_ptr<Attribute>> attributes;
@@ -28,14 +28,14 @@ namespace smt {
              * Constructs logic without attributes.
              * \param name          Logic name
              */
-            SmtLogic(std::shared_ptr<Symbol> name) : name(name) { }
+            Logic(std::shared_ptr<Symbol> name) : name(name) { }
 
             /**
              * Constructs logic with attributes.
              * \param name          Logic name
              * \param attributes    Logic attributes
              */
-            SmtLogic(std::shared_ptr<Symbol> name,
+            Logic(std::shared_ptr<Symbol> name,
                      const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::shared_ptr<Symbol> getName();

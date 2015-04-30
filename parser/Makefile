@@ -21,7 +21,7 @@ smtlib-parser:
 	g++ -g -c -std=c++11 ../smt/ast/smt_term.cpp -o smt_term.o
 	g++ -g -c -std=c++11 ../smt/ast/smt_theory.cpp -o smt_theory.o
 	g++ -g -c -std=c++11 ../smt/ast/smt_var.cpp -o smt_var.o
-	g++ -g -o smtlib-parser smtlib-parser.l.o smtlib-parser.y.o smtlib-glue.o smt_attribute.o smt_basic.o smt_command.o smt_fun.o smt_identifier.o smt_literal.o smt_logic.o smt_s_expr.o smt_sort.o smt_script.o smt_symbol_decl.o smt_term.o smt_theory.o smt_var.o -lfl
+	g++ -g -o parse-smtlib smtlib-parser.l.o smtlib-parser.y.o smtlib-glue.o smt_attribute.o smt_basic.o smt_command.o smt_fun.o smt_identifier.o smt_literal.o smt_logic.o smt_s_expr.o smt_sort.o smt_script.o smt_symbol_decl.o smt_term.o smt_theory.o smt_var.o -lfl
 	rm -f *.o
 clean:
 	rm -f smtlib-parser.h

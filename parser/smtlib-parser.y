@@ -477,7 +477,7 @@ option:
 
 theory_decl:
 	'(' THEORY symbol theory_attr_plus ')'
-		{ $$ = smt_newSmtTheory($3, $4); }
+		{ $$ = smt_newTheory($3, $4); }
 ;
 
 theory_attr:
@@ -570,7 +570,7 @@ meta_spec_const:
 
 logic:
 	'(' LOGIC symbol logic_attr_plus ')'
-		{ $$ = smt_newSmtLogic($3, $4); }
+		{ $$ = smt_newLogic($3, $4); }
 ;
 
 logic_attr:

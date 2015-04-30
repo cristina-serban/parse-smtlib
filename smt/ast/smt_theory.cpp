@@ -5,25 +5,25 @@
 using namespace smt::ast;
 using namespace std;
 
-SmtTheory::SmtTheory(shared_ptr<Symbol> name,
+Theory::Theory(shared_ptr<Symbol> name,
                      const vector<shared_ptr<Attribute>> &attributes)
         : name(name) {
     this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
 }
 
-shared_ptr<Symbol> SmtTheory::getName() {
+shared_ptr<Symbol> Theory::getName() {
     return name;
 }
 
-void SmtTheory::setName(shared_ptr<Symbol> name) {
+void Theory::setName(shared_ptr<Symbol> name) {
     this->name = name;
 }
 
-vector<shared_ptr<Attribute>>& SmtTheory::getAttributes() {
+vector<shared_ptr<Attribute>>&Theory::getAttributes() {
     return attributes;
 }
 
-string SmtTheory::toString() {
+string Theory::toString() {
     stringstream ss;
     ss << "( theory  " << name->toString() << " ";
 

@@ -19,7 +19,7 @@ namespace smt {
          * Node and (possible) root of the SMT abstract syntax tree.
          * Represents the contents of a query file.
          */
-        class SmtScript : public SmtFile {
+        class Script : public SmtAstRoot {
         private:
             std::vector<std::shared_ptr<Command>> commands;
 
@@ -27,12 +27,12 @@ namespace smt {
             /**
              * Default constructor
              */
-            SmtScript() { }
+            Script() { }
 
             /**
              * \param cmds    Command list
              */
-            SmtScript(const std::vector<std::shared_ptr<Command>> &cmds);
+            Script(const std::vector<std::shared_ptr<Command>> &cmds);
 
             std::vector<std::shared_ptr<Command>> &getCommands();
 

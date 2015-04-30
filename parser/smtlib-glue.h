@@ -84,7 +84,7 @@ SmtPtr smt_newDecimalLiteral(double value);
 SmtPtr smt_newStringLiteral(char const* value);
 
 // smt_logic.h
-SmtPtr smt_newSmtLogic(SmtPtr name, SmtList attributes);
+SmtPtr smt_newLogic(SmtPtr name, SmtList attributes);
 
 // smt_s_expr.h
 SmtPtr smt_newCompSExpression(SmtList exprs);
@@ -111,7 +111,7 @@ SmtPtr smt_newExistsTerm(SmtList bindings, SmtPtr term);
 SmtPtr smt_newAnnotatedTerm(SmtPtr term, SmtList attrs);
 
 // smt_theory.h
-SmtPtr smt_newSmtTheory(SmtPtr name, SmtList attributes);
+SmtPtr smt_newTheory(SmtPtr name, SmtList attributes);
 
 // smt_var.h
 SmtPtr smt_newSortedVariable(SmtPtr symbol, SmtPtr sort);
