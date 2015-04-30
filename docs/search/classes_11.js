@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['yystype',['YYSTYPE',['../unionYYSTYPE.html',1,'']]]
+  ['varbinding',['VarBinding',['../classsmt_1_1ast_1_1VarBinding.html',1,'smt::ast']]]
 ];

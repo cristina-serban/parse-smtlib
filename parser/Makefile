@@ -29,4 +29,4 @@ clean:
 	rm -f smtlib-parser.l.c
 	rm -f smtlib-parser.output
 	rm -f *.o
-	rm -f smtlib-parser
+	rm -f parse-smtlib

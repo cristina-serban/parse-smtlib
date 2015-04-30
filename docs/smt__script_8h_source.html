@@ -98,14 +98,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>smt {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">namespace </span>ast {</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1SmtScript.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1SmtScript.html">SmtScript</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtFile.html">SmtFile</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Script.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1Script.html">Script</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstRoot.html">SmtAstRoot</a> {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; commands;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1SmtScript.html#a80e38e04077fdca84de691f5bd407f83">   30</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1SmtScript.html#a80e38e04077fdca84de691f5bd407f83">SmtScript</a>() { }</div>
+<div class="line"><a name="l00030"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Script.html#a044c343bf8e67d8e0558d16ea1e4549a">   30</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Script.html#a044c343bf8e67d8e0558d16ea1e4549a">Script</a>() { }</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1SmtScript.html#a80e38e04077fdca84de691f5bd407f83">SmtScript</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;cmds);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Script.html#a044c343bf8e67d8e0558d16ea1e4549a">Script</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;cmds);</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;            std::vector&lt;std::shared_ptr&lt;Command&gt;&gt; &amp;getCommands();</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
@@ -115,16 +115,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;}</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="preprocessor">#endif //PARSE_SMTLIB_SMT_SCRIPT_H</span></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtFile_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtFile.html">smt::ast::SmtFile</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:24</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtScript_html_a80e38e04077fdca84de691f5bd407f83"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtScript.html#a80e38e04077fdca84de691f5bd407f83">smt::ast::SmtScript::SmtScript</a></div><div class="ttdeci">SmtScript()</div><div class="ttdef"><b>Definition:</b> smt_script.h:30</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtScript_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtScript.html">smt::ast::SmtScript</a></div><div class="ttdef"><b>Definition:</b> smt_script.h:22</div></div>
+<div class="ttc" id="classsmt_1_1ast_1_1Script_html"><div class="ttname"><a href="classsmt_1_1ast_1_1Script.html">smt::ast::Script</a></div><div class="ttdef"><b>Definition:</b> smt_script.h:22</div></div>
+<div class="ttc" id="classsmt_1_1ast_1_1SmtAstRoot_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtAstRoot.html">smt::ast::SmtAstRoot</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:24</div></div>
 <div class="ttc" id="smt__basic_8h_html"><div class="ttname"><a href="smt__basic_8h.html">smt_basic.h</a></div><div class="ttdoc">Basic SMT-LIB concepts. </div></div>
 <div class="ttc" id="smt__command_8h_html"><div class="ttname"><a href="smt__command_8h.html">smt_command.h</a></div><div class="ttdoc">SMT-LIB commands that appear in a query file. </div></div>
+<div class="ttc" id="classsmt_1_1ast_1_1Script_html_a044c343bf8e67d8e0558d16ea1e4549a"><div class="ttname"><a href="classsmt_1_1ast_1_1Script.html#a044c343bf8e67d8e0558d16ea1e4549a">smt::ast::Script::Script</a></div><div class="ttdeci">Script()</div><div class="ttdef"><b>Definition:</b> smt_script.h:30</div></div>
 <div class="ttc" id="smt__abstract_8h_html"><div class="ttname"><a href="smt__abstract_8h.html">smt_abstract.h</a></div><div class="ttdoc">Abstract SMT-LIB data structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 30 2015 12:02:43 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Apr 30 2015 13:23:54 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>
