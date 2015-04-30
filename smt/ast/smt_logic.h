@@ -18,7 +18,7 @@ namespace smt {
          * Node and (possible) root of the SMT abstract syntax tree.
          * Represents the contents of a logic file.
          */
-        class SmtLogic : public SmtObject {
+        class SmtLogic : public SmtFile {
         private:
             std::shared_ptr<Symbol> name;
             std::vector<std::shared_ptr<Attribute>> attributes;

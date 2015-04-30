@@ -19,7 +19,7 @@ namespace smt {
          * Node and (possible) root of the SMT abstract syntax tree.
          * Represents the contents of a theory file.
          */
-        class SmtTheory : public SmtObject {
+        class SmtTheory : public SmtFile {
         private:
             std::shared_ptr<Symbol> name;
             std::vector<std::shared_ptr<Attribute>> attributes;
