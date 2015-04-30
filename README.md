@@ -8,7 +8,6 @@ Minimum requirements for parser compilation: Flex 2.5.35 and Bison 3.0.2.
 Compiling and running the parser:
 ```
 #!
-.../parse-smtlib> cd parser
 .../parse-smtlib/parser> make
 .../parse-smtlib/parser> ./parse < test1.smt
 .../parse-smtlib/parser> ./parse < test2.smt
@@ -18,7 +17,6 @@ Compiling and running the parser:
 Recompiling the parser:
 ```
 #!
-.../parse-smtlib> cd parser
 .../parse-smtlib/parser> make clean
 .../parse-smtlib/parser> make
 ```
