@@ -9,9 +9,7 @@ Compiling and running the parser:
 ```
 #!
 .../parse-smtlib/parser> make
-.../parse-smtlib/parser> ./parse < test1.smt
-.../parse-smtlib/parser> ./parse < test2.smt
-.../parse-smtlib/parser> ./parse < test3.smt
+.../parse-smtlib/parser> ./parse < input_file_path
 ```
 
 Recompiling the parser:
