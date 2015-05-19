@@ -40,4 +40,4 @@ set(SOURCE_FILES
 	parser/smtlib-glue.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES})
+add_executable(parse-smtlib ${SOURCE_FILES} main.h main.cpp)

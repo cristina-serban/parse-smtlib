@@ -2,9 +2,15 @@
 #include <stdio.h>
 #include "smtlib-glue.h"
 
-int yylex(void);
+int yylex();
 int yyerror(const char *);
+
+#define YYMAXDEPTH 500000
+#define YYINITDEPTH 500000
 %}
+
+%locations
+%error-verbose
 
 %union
 {
@@ -28,7 +34,7 @@ int yyerror(const char *);
 %token <ptr> ATTR_SORTS ATTR_FUNS ATTR_THEORIES
 
 %type <ptr> smt_file script command term spec_const qual_identifier identifier index
-%type <ptr> sort var_binding sorted_var attribute attr_value s_exp prop_literal
+%type <ptr> sort var_binding sorted_var attribute attr_value s_exp prop_literal 
 %type <ptr> fun_decl fun_def info_flag option theory_decl theory_attr sort_symbol_decl
 %type <ptr> par_fun_symbol_decl fun_symbol_decl meta_spec_const logic logic_attr symbol
 
@@ -42,11 +48,11 @@ int yyerror(const char *);
 %%
 
 smt_file:
-	script			{ $$ = $1; smt_print($1); }
+	script			{ $$ = $1; /*smt_print($1);*/ }
 |
-	theory_decl		{ $$ = $1; smt_print($1); }
+	theory_decl		{ $$ = $1; /*smt_print($1);*/ }
 |
-	logic 			{ $$ = $1; smt_print($1); }
+	logic 			{ $$ = $1; /*smt_print($1);*/ }
 ;
 
 script:
@@ -172,6 +178,9 @@ term:
 |
 	'(' '!' term attribute_plus ')'
 		{ $$ = smt_newAnnotatedTerm($3, $4); }
+|
+	'(' term ')' 
+		{ $$ = $2; }
 ;
 
 term_plus:
@@ -203,6 +212,9 @@ spec_const:
 symbol:
 	SYMBOL
 		{ $$ = $1; }
+|
+	CMD_RESET
+		{ $$ = smt_newSymbol("reset"); }
 |
 	NOT
 		{ $$ = smt_newSymbol("not"); }
@@ -597,9 +609,9 @@ logic_attr_plus:
 %%
 
 int yyerror(const char *s) {
-	printf("yyerror: %s\n", s);
+	fprintf(stderr, "%d:%d-%d:%d\t%s\n", yylloc.first_line, yylloc.first_column, yylloc.last_line, yylloc.last_column, s);
 }
 
 int main() {
-	yyparse();
+	return yyparse();
 }

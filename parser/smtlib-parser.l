@@ -3,6 +3,11 @@
 #include <string.h>
 #include "smtlib-glue.h" 
 #include "smtlib-parser.h" 
+
+int yycolumn = 1;
+#define YY_USER_ACTION yylloc.first_line = yylloc.last_line = yylineno; \
+yylloc.first_column = yycolumn; yylloc.last_column = yycolumn+yyleng-1; \
+yycolumn += yyleng;
 %}
 
 whitespace     	[\x09\r\n \xA0]
@@ -24,6 +29,8 @@ simple_symbol  {sym_begin}{sym_continue}*
 %x string
 %x quoted
 %x comment
+
+%option yylineno
 
 %%
 
@@ -136,7 +143,7 @@ simple_symbol  {sym_begin}{sym_continue}*
 
 \"					{ BEGIN string; }
 <string>\"\"   		{ yymore(); }
-<string>[\n\r]+		{ yymore(); }
+<string>[\n\r]+		{ yycolumn = 1; yymore(); }
 <string>\"			{ 
 						char *content = (char *)malloc(sizeof(char) * (yyleng - 1));
 						strncpy(content, yytext, yyleng - 1);
@@ -147,7 +154,7 @@ simple_symbol  {sym_begin}{sym_continue}*
 <string>.			{ yymore(); }
 
 \|					{ yymore(); BEGIN quoted; }
-<quoted>[\n\r]+		{ yymore(); }
+<quoted>[\n\r]+		{ yycolumn = 1; yymore(); }
 <quoted>\|			{ 
 						BEGIN 0; 
 						yylval.ptr = smt_newSymbol(yytext);
@@ -156,6 +163,7 @@ simple_symbol  {sym_begin}{sym_continue}*
 <quoted>\\			{ }
 <quoted>.			{ yymore(); }
 
+[\n\r]+				{ yycolumn = 1; }
 {whitespace}		{ /*ignore*/ }
 {comment}			{ /*ignore*/ }
 

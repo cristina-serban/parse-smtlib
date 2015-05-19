@@ -19,6 +19,8 @@ typedef void *SmtPtr, *SmtList;
 extern "C" {
 #endif
 
+
+
 SmtList smt_listCreate();
 void smt_listAdd(SmtList list, SmtPtr item);
 void smt_listDelete(SmtList list);
