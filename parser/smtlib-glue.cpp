@@ -69,19 +69,28 @@ void smt_print(SmtPtr ptr) {
     std::cout << share<AstNode>(ptr)->toString();
 }
 
+
+void smt_setAst(SmtPrsr parser, SmtPtr ast) {
+    if(parser && ast) {
+        Parser *p = dynamic_cast<Parser *>(parser);
+        p->setAst(dynamic_cast<AstNode *>(ast));
+    }
+}
+
+void smt_reportError(SmtPrsr parser, unsigned int lineL, unsigned int colL,
+                     unsigned int lineR, unsigned int colR, const char* msg) {
+    if(parser && msg) {
+        Parser *p = dynamic_cast<Parser *>(parser);
+        p->reportError(lineL, colL, lineR, colR, msg);
+    }
+}
+
 int smt_bool_value(SmtPtr ptr) {
     std::shared_ptr<BooleanValue> val = share<BooleanValue>(ptr);
     if(val) {
         return val->getValue();
     } else {
         return 2;
-    }
-}
-
-void smt_setAst(SmtPrsr parser, SmtPtr ast) {
-    if(parser && ast) {
-        Parser *p = dynamic_cast<Parser *>(parser);
-        p->setAst(dynamic_cast<AstNode *>(ast));
     }
 }
 

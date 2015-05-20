@@ -24,13 +24,15 @@ extern "C" {
 int yylex (void);
 int yyparse(SmtPrsr);
 
+void smt_print(SmtPtr ptr);
+
 void smt_setAst(SmtPrsr parser, SmtPtr ast);
+void smt_reportError(SmtPrsr parser, unsigned int lineL, unsigned int colL,
+                     unsigned int lineR, unsigned int colR, const char* msg);
 
 SmtList smt_listCreate();
 void smt_listAdd(SmtList list, SmtPtr item);
 void smt_listDelete(SmtList list);
-
-void smt_print(SmtPtr ptr);
 
 int smt_bool_value(SmtPtr ptr);
 

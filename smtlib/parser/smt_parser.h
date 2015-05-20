@@ -9,10 +9,14 @@ namespace smtlib {
     class Parser {
     private:
         std::shared_ptr<ast::AstNode> ast;
+        std::string filename;
     public:
         std::shared_ptr<smtlib::ast::AstNode> parse(std::string filename);
 
         void setAst(smtlib::ast::AstNode * ast);
+
+        void reportError(unsigned int lineL, unsigned int colL,
+                         unsigned int lineR, unsigned int colR, const char *msg);
     };
 }
 

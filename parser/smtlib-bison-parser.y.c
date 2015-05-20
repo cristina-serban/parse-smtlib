@@ -2709,5 +2709,6 @@ yyreturn:
 
 
 int yyerror(SmtPrsr parser, const char *s) {
-	fprintf(stderr, "%d:%d-%d:%d\t%s\n", yylloc.first_line, yylloc.first_column, yylloc.last_line, yylloc.last_column, s);
+	smt_reportError(parser, yylloc.first_line, yylloc.first_column,
+					yylloc.last_line, yylloc.last_column, s);
 }
