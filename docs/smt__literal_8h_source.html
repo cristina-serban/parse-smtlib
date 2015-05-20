@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Parse SMT-LIB: smt/ast/smt_literal.h Source File</title>
+<title>Parse SMT-LIB: smtlib/ast/smt_literal.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_06486aac2a68e31147849d3317bf6bf0.html">smt</a></li><li class="navelem"><a class="el" href="dir_8ce8eb0cc93364b9fe381f89f132bfbf.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_df80df55d2107eefdcea828146ead2dd.html">smtlib</a></li><li class="navelem"><a class="el" href="dir_ac5474d36d9f7d25437bb30a800d1758.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -94,15 +94,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__abstract_8h.html">smt_abstract.h</a>&quot;</span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__interfaces_8h.html">smt_interfaces.h</a>&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>smt {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">namespace </span>smtlib {</div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">namespace </span>ast {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;        <span class="comment">/* ====================================== Literal ===================================== */</span></div>
 <div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;        <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
-<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Literal.html">   21</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1Literal.html">Literal</a> : <span class="keyword">public</span> <span class="keyword">virtual</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1Literal.html">   21</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1Literal.html">Literal</a> : <span class="keyword">public</span> <span class="keyword">virtual</span> <a class="code" href="classsmtlib_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
 <div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;        <span class="keyword">protected</span>:</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;            T value;</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;</div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Literal.html">Literal</a>() { }</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1Literal.html">Literal</a>() { }</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">public</span>:</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            T &amp;getValue() {</div>
@@ -115,13 +115,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        };</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="comment">/* ================================== NumeralLiteral ================================== */</span></div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1NumeralLiteral.html">   43</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1NumeralLiteral.html">NumeralLiteral</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1Literal.html">Literal</a>&lt;long&gt;,</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                               <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1IIndex.html">IIndex</a>,</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                               <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ISpecConstant.html">ISpecConstant</a> {</div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1NumeralLiteral.html">   43</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1NumeralLiteral.html">NumeralLiteral</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1Literal.html">Literal</a>&lt;long&gt;,</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;                               <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1IIndex.html">IIndex</a>,</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                               <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ISpecConstant.html">ISpecConstant</a> {</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> base;</div>
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1NumeralLiteral.html">NumeralLiteral</a>(<span class="keywordtype">long</span> value, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> base);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1NumeralLiteral.html">NumeralLiteral</a>(<span class="keywordtype">long</span> value, <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> base);</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> getBase();</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            <span class="keywordtype">void</span> setBase(<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> base);</div>
@@ -130,19 +130,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        };</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="comment">/* ================================== DecimalLiteral ================================== */</span></div>
-<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1DecimalLiteral.html">   63</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1DecimalLiteral.html">DecimalLiteral</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1Literal.html">Literal</a>&lt;double&gt;,</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                               <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ISpecConstant.html">ISpecConstant</a> {</div>
+<div class="line"><a name="l00063"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1DecimalLiteral.html">   63</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1DecimalLiteral.html">DecimalLiteral</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1Literal.html">Literal</a>&lt;double&gt;,</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;                               <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ISpecConstant.html">ISpecConstant</a> {</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1DecimalLiteral.html">DecimalLiteral</a>(<span class="keywordtype">double</span> value);</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1DecimalLiteral.html">DecimalLiteral</a>(<span class="keywordtype">double</span> value);</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;            <span class="keyword">virtual</span> std::string toString();</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        };</div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;        <span class="comment">/* ================================== StringLiteral =================================== */</span></div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1StringLiteral.html">   77</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1StringLiteral.html">StringLiteral</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1Literal.html">Literal</a>&lt;std::string&gt;,</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                              <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ISpecConstant.html">ISpecConstant</a> {</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1StringLiteral.html">   77</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1StringLiteral.html">StringLiteral</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1Literal.html">Literal</a>&lt;std::string&gt;,</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;                              <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ISpecConstant.html">ISpecConstant</a> {</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1StringLiteral.html">StringLiteral</a>(std::string value);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1StringLiteral.html">StringLiteral</a>(std::string value);</div>
 <div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;            <span class="keyword">virtual</span> std::string toString();</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;        };</div>
@@ -150,19 +150,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;}</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif //PARSE_SMTLIB_SMT_LITERAL_H</span></div>
-<div class="ttc" id="classsmt_1_1ast_1_1NumeralLiteral_html"><div class="ttname"><a href="classsmt_1_1ast_1_1NumeralLiteral.html">smt::ast::NumeralLiteral</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:43</div></div>
 <div class="ttc" id="smt__interfaces_8h_html"><div class="ttname"><a href="smt__interfaces_8h.html">smt_interfaces.h</a></div><div class="ttdoc">Interfaces that need to be implemented by some of the SMT-LIB AST nodes. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1Literal_html"><div class="ttname"><a href="classsmt_1_1ast_1_1Literal.html">smt::ast::Literal</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:21</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtAstNode.html">smt::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1IIndex_html"><div class="ttname"><a href="classsmt_1_1ast_1_1IIndex.html">smt::ast::IIndex</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:27</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1StringLiteral_html"><div class="ttname"><a href="classsmt_1_1ast_1_1StringLiteral.html">smt::ast::StringLiteral</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:77</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1DecimalLiteral_html"><div class="ttname"><a href="classsmt_1_1ast_1_1DecimalLiteral.html">smt::ast::DecimalLiteral</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:63</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1ISpecConstant_html"><div class="ttname"><a href="classsmt_1_1ast_1_1ISpecConstant.html">smt::ast::ISpecConstant</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:30</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1ISpecConstant_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1ISpecConstant.html">smtlib::ast::ISpecConstant</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:30</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1IIndex_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1IIndex.html">smtlib::ast::IIndex</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:27</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1Literal_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1Literal.html">smtlib::ast::Literal</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:21</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1NumeralLiteral_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1NumeralLiteral.html">smtlib::ast::NumeralLiteral</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:43</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1StringLiteral_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1StringLiteral.html">smtlib::ast::StringLiteral</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:77</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1DecimalLiteral_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1DecimalLiteral.html">smtlib::ast::DecimalLiteral</a></div><div class="ttdef"><b>Definition:</b> smt_literal.h:63</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1SmtAstNode.html">smtlib::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
 <div class="ttc" id="smt__abstract_8h_html"><div class="ttname"><a href="smt__abstract_8h.html">smt_abstract.h</a></div><div class="ttdoc">Abstract SMT-LIB data structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 30 2015 13:27:05 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 20 2015 15:00:00 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

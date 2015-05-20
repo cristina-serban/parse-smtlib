@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Parse SMT-LIB: smt/ast/smt_term.h Source File</title>
+<title>Parse SMT-LIB: smtlib/ast/smt_term.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_06486aac2a68e31147849d3317bf6bf0.html">smt</a></li><li class="navelem"><a class="el" href="dir_8ce8eb0cc93364b9fe381f89f132bfbf.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_df80df55d2107eefdcea828146ead2dd.html">smtlib</a></li><li class="navelem"><a class="el" href="dir_ac5474d36d9f7d25437bb30a800d1758.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -96,16 +96,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__var_8h.html">smt_var.h</a>&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__attribute_8h.html">smt_attribute.h</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>smt {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>smtlib {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">namespace </span>ast {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="comment">/* ================================== QualifiedTerm =================================== */</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1QualifiedTerm.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1QualifiedTerm.html">QualifiedTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ITerm.html">ITerm</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1QualifiedTerm.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1QualifiedTerm.html">QualifiedTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ITerm.html">ITerm</a> {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            std::shared_ptr&lt;IQualIdentifier&gt; identifier;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            std::vector&lt;std::shared_ptr&lt;ITerm&gt;&gt; terms;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1QualifiedTerm.html#a86de2470f0647242e8e268ffc1ed9b9b">QualifiedTerm</a>(std::shared_ptr&lt;IQualIdentifier&gt; identifier,</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1QualifiedTerm.html#a1757d0515ea59a628ad9182eeb8eb97a">QualifiedTerm</a>(std::shared_ptr&lt;IQualIdentifier&gt; identifier,</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                          <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;ITerm&gt;&gt; &amp;terms);</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            std::shared_ptr&lt;IQualIdentifier&gt; getIdentifier();</div>
@@ -117,13 +117,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        };</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        <span class="comment">/* ===================================== LetTerm ====================================== */</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1LetTerm.html">   48</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1LetTerm.html">LetTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ITerm.html">ITerm</a> {</div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1LetTerm.html">   48</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1LetTerm.html">LetTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ITerm.html">ITerm</a> {</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;            std::vector&lt;std::shared_ptr&lt;VarBinding&gt;&gt; bindings;</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;            std::shared_ptr&lt;ITerm&gt; term;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1LetTerm.html#a4df5652e06dc26dbc230ea180ecc9e29">LetTerm</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;VarBinding&gt;&gt; &amp;bindings,</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1LetTerm.html#af1dfd7c8e714d1685dc5038eacde4024">LetTerm</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;VarBinding&gt;&gt; &amp;bindings,</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                    std::shared_ptr&lt;ITerm&gt; term);</div>
 <div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;            std::shared_ptr&lt;ITerm&gt; getTerm();</div>
@@ -135,13 +135,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        };</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
 <div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        <span class="comment">/* ==================================== ForallTerm ==================================== */</span></div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1ForallTerm.html">   74</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1ForallTerm.html">ForallTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ITerm.html">ITerm</a> {</div>
+<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1ForallTerm.html">   74</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1ForallTerm.html">ForallTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ITerm.html">ITerm</a> {</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;            std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; bindings;</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;            std::shared_ptr&lt;ITerm&gt; term;</div>
 <div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
 <div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1ForallTerm.html#ac185cf579acb994594c3cdc178d0426c">ForallTerm</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; &amp;bindings,</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1ForallTerm.html#ad897fe8e9854044b6e0274d57d7168b0">ForallTerm</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; &amp;bindings,</div>
 <div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;                       std::shared_ptr&lt;ITerm&gt; term);</div>
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;            std::shared_ptr&lt;ITerm&gt; getTerm();</div>
@@ -153,13 +153,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;        };</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;        <span class="comment">/* ==================================== ExistsTerm ==================================== */</span></div>
-<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1ExistsTerm.html">  100</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1ExistsTerm.html">ExistsTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ITerm.html">ITerm</a> {</div>
+<div class="line"><a name="l00100"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1ExistsTerm.html">  100</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1ExistsTerm.html">ExistsTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ITerm.html">ITerm</a> {</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;            std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; bindings;</div>
 <div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;            std::shared_ptr&lt;ITerm&gt; term;</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1ExistsTerm.html#a383ce62ca3b0509ada06b95b093a9b7d">ExistsTerm</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; &amp;bindings,</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1ExistsTerm.html#a4d5ed31ea183bd170842978306588a8f">ExistsTerm</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; &amp;bindings,</div>
 <div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;                       std::shared_ptr&lt;ITerm&gt; term);</div>
 <div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;            std::shared_ptr&lt;ITerm&gt; getTerm();</div>
@@ -171,13 +171,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;        };</div>
 <div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
 <div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="comment">/* ================================== AnnotatedTerm =================================== */</span></div>
-<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1AnnotatedTerm.html">  126</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1AnnotatedTerm.html">AnnotatedTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1ITerm.html">ITerm</a> {</div>
+<div class="line"><a name="l00126"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1AnnotatedTerm.html">  126</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1AnnotatedTerm.html">AnnotatedTerm</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1ITerm.html">ITerm</a> {</div>
 <div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160;            std::shared_ptr&lt;ITerm&gt; term;</div>
 <div class="line"><a name="l00129"></a><span class="lineno">  129</span>&#160;            std::vector&lt;std::shared_ptr&lt;Attribute&gt;&gt; attrs;</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;</div>
 <div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1AnnotatedTerm.html#a182a0acb59c0e1221303b5ca0b1c9dc9">AnnotatedTerm</a>(std::shared_ptr&lt;ITerm&gt; term,</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1AnnotatedTerm.html#a218c90e15552f996d9b1a381b7c9a844">AnnotatedTerm</a>(std::shared_ptr&lt;ITerm&gt; term,</div>
 <div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;                          <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Attribute&gt;&gt; &amp;attrs);</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;            std::shared_ptr&lt;ITerm&gt; getTerm();</div>
@@ -192,23 +192,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;<span class="preprocessor">#endif //PARSE_SMTLIB_SMT_TERM_H</span></div>
 <div class="ttc" id="smt__attribute_8h_html"><div class="ttname"><a href="smt__attribute_8h.html">smt_attribute.h</a></div><div class="ttdoc">SMT-LIB attribute. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1ForallTerm_html_ac185cf579acb994594c3cdc178d0426c"><div class="ttname"><a href="classsmt_1_1ast_1_1ForallTerm.html#ac185cf579acb994594c3cdc178d0426c">smt::ast::ForallTerm::ForallTerm</a></div><div class="ttdeci">ForallTerm(const std::vector&lt; std::shared_ptr&lt; SortedVariable &gt;&gt; &amp;bindings, std::shared_ptr&lt; ITerm &gt; term)</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1ExistsTerm_html_a4d5ed31ea183bd170842978306588a8f"><div class="ttname"><a href="classsmtlib_1_1ast_1_1ExistsTerm.html#a4d5ed31ea183bd170842978306588a8f">smtlib::ast::ExistsTerm::ExistsTerm</a></div><div class="ttdeci">ExistsTerm(const std::vector&lt; std::shared_ptr&lt; SortedVariable &gt;&gt; &amp;bindings, std::shared_ptr&lt; ITerm &gt; term)</div></div>
 <div class="ttc" id="smt__interfaces_8h_html"><div class="ttname"><a href="smt__interfaces_8h.html">smt_interfaces.h</a></div><div class="ttdoc">Interfaces that need to be implemented by some of the SMT-LIB AST nodes. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1QualifiedTerm_html_a86de2470f0647242e8e268ffc1ed9b9b"><div class="ttname"><a href="classsmt_1_1ast_1_1QualifiedTerm.html#a86de2470f0647242e8e268ffc1ed9b9b">smt::ast::QualifiedTerm::QualifiedTerm</a></div><div class="ttdeci">QualifiedTerm(std::shared_ptr&lt; IQualIdentifier &gt; identifier, const std::vector&lt; std::shared_ptr&lt; ITerm &gt;&gt; &amp;terms)</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1ITerm_html"><div class="ttname"><a href="classsmt_1_1ast_1_1ITerm.html">smt::ast::ITerm</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:20</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1QualifiedTerm_html"><div class="ttname"><a href="classsmt_1_1ast_1_1QualifiedTerm.html">smt::ast::QualifiedTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:22</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1LetTerm_html"><div class="ttname"><a href="classsmt_1_1ast_1_1LetTerm.html">smt::ast::LetTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:48</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1LetTerm_html_a4df5652e06dc26dbc230ea180ecc9e29"><div class="ttname"><a href="classsmt_1_1ast_1_1LetTerm.html#a4df5652e06dc26dbc230ea180ecc9e29">smt::ast::LetTerm::LetTerm</a></div><div class="ttdeci">LetTerm(const std::vector&lt; std::shared_ptr&lt; VarBinding &gt;&gt; &amp;bindings, std::shared_ptr&lt; ITerm &gt; term)</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1ExistsTerm_html_a383ce62ca3b0509ada06b95b093a9b7d"><div class="ttname"><a href="classsmt_1_1ast_1_1ExistsTerm.html#a383ce62ca3b0509ada06b95b093a9b7d">smt::ast::ExistsTerm::ExistsTerm</a></div><div class="ttdeci">ExistsTerm(const std::vector&lt; std::shared_ptr&lt; SortedVariable &gt;&gt; &amp;bindings, std::shared_ptr&lt; ITerm &gt; term)</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1AnnotatedTerm_html"><div class="ttname"><a href="classsmt_1_1ast_1_1AnnotatedTerm.html">smt::ast::AnnotatedTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:126</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1QualifiedTerm_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1QualifiedTerm.html">smtlib::ast::QualifiedTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:22</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1AnnotatedTerm_html_a218c90e15552f996d9b1a381b7c9a844"><div class="ttname"><a href="classsmtlib_1_1ast_1_1AnnotatedTerm.html#a218c90e15552f996d9b1a381b7c9a844">smtlib::ast::AnnotatedTerm::AnnotatedTerm</a></div><div class="ttdeci">AnnotatedTerm(std::shared_ptr&lt; ITerm &gt; term, const std::vector&lt; std::shared_ptr&lt; Attribute &gt;&gt; &amp;attrs)</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1ForallTerm_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1ForallTerm.html">smtlib::ast::ForallTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:74</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1ForallTerm_html_ad897fe8e9854044b6e0274d57d7168b0"><div class="ttname"><a href="classsmtlib_1_1ast_1_1ForallTerm.html#ad897fe8e9854044b6e0274d57d7168b0">smtlib::ast::ForallTerm::ForallTerm</a></div><div class="ttdeci">ForallTerm(const std::vector&lt; std::shared_ptr&lt; SortedVariable &gt;&gt; &amp;bindings, std::shared_ptr&lt; ITerm &gt; term)</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1QualifiedTerm_html_a1757d0515ea59a628ad9182eeb8eb97a"><div class="ttname"><a href="classsmtlib_1_1ast_1_1QualifiedTerm.html#a1757d0515ea59a628ad9182eeb8eb97a">smtlib::ast::QualifiedTerm::QualifiedTerm</a></div><div class="ttdeci">QualifiedTerm(std::shared_ptr&lt; IQualIdentifier &gt; identifier, const std::vector&lt; std::shared_ptr&lt; ITerm &gt;&gt; &amp;terms)</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1AnnotatedTerm_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1AnnotatedTerm.html">smtlib::ast::AnnotatedTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:126</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1ExistsTerm_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1ExistsTerm.html">smtlib::ast::ExistsTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:100</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1ITerm_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1ITerm.html">smtlib::ast::ITerm</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:20</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1LetTerm_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1LetTerm.html">smtlib::ast::LetTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:48</div></div>
 <div class="ttc" id="smt__var_8h_html"><div class="ttname"><a href="smt__var_8h.html">smt_var.h</a></div><div class="ttdoc">SMT-LIB sorted variable and variable binding. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1AnnotatedTerm_html_a182a0acb59c0e1221303b5ca0b1c9dc9"><div class="ttname"><a href="classsmt_1_1ast_1_1AnnotatedTerm.html#a182a0acb59c0e1221303b5ca0b1c9dc9">smt::ast::AnnotatedTerm::AnnotatedTerm</a></div><div class="ttdeci">AnnotatedTerm(std::shared_ptr&lt; ITerm &gt; term, const std::vector&lt; std::shared_ptr&lt; Attribute &gt;&gt; &amp;attrs)</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1ExistsTerm_html"><div class="ttname"><a href="classsmt_1_1ast_1_1ExistsTerm.html">smt::ast::ExistsTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:100</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1ForallTerm_html"><div class="ttname"><a href="classsmt_1_1ast_1_1ForallTerm.html">smt::ast::ForallTerm</a></div><div class="ttdef"><b>Definition:</b> smt_term.h:74</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1LetTerm_html_af1dfd7c8e714d1685dc5038eacde4024"><div class="ttname"><a href="classsmtlib_1_1ast_1_1LetTerm.html#af1dfd7c8e714d1685dc5038eacde4024">smtlib::ast::LetTerm::LetTerm</a></div><div class="ttdeci">LetTerm(const std::vector&lt; std::shared_ptr&lt; VarBinding &gt;&gt; &amp;bindings, std::shared_ptr&lt; ITerm &gt; term)</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 30 2015 13:27:05 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 20 2015 15:00:00 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

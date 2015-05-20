@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Parse SMT-LIB: smt/ast/smt_attribute.h Source File</title>
+<title>Parse SMT-LIB: smtlib/ast/smt_attribute.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_06486aac2a68e31147849d3317bf6bf0.html">smt</a></li><li class="navelem"><a class="el" href="dir_8ce8eb0cc93364b9fe381f89f132bfbf.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_df80df55d2107eefdcea828146ead2dd.html">smtlib</a></li><li class="navelem"><a class="el" href="dir_ac5474d36d9f7d25437bb30a800d1758.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -97,20 +97,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__basic_8h.html">smt_basic.h</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__interfaces_8h.html">smt_interfaces.h</a>&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>smt {</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">namespace </span>smtlib {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keyword">namespace </span>ast {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;        <span class="comment">/* ==================================== Attribute ===================================== */</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Attribute.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1Attribute.html">Attribute</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1Attribute.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1Attribute.html">Attribute</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            std::shared_ptr&lt;Keyword&gt; keyword;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            std::shared_ptr&lt;IAttributeValue&gt; value;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Attribute.html#a3863231543b4ae57e598d12263b732e7">   31</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Attribute.html#a3863231543b4ae57e598d12263b732e7">Attribute</a>() { }</div>
+<div class="line"><a name="l00031"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1Attribute.html#aef1275cf42e803fff451ba2a4b5684ef">   31</a></span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1Attribute.html#aef1275cf42e803fff451ba2a4b5684ef">Attribute</a>() { }</div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;</div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Attribute.html#a05e29366b5a1e9b79e32168b79637b7b">   37</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Attribute.html#a05e29366b5a1e9b79e32168b79637b7b">Attribute</a>(std::shared_ptr&lt;Keyword&gt; keyword) : keyword(keyword) { }</div>
+<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1Attribute.html#a759ccf4439ee446ef906d1aba13040b7">   37</a></span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1Attribute.html#a759ccf4439ee446ef906d1aba13040b7">Attribute</a>(std::shared_ptr&lt;Keyword&gt; keyword) : keyword(keyword) { }</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Attribute.html#a632b21dc3faf4ad03b132d1e24cf4712">   44</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Attribute.html#a632b21dc3faf4ad03b132d1e24cf4712">Attribute</a>(std::shared_ptr&lt;Keyword&gt; keyword,</div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1Attribute.html#ae993e53d2dfa5775aabd840cf8b2d461">   44</a></span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1Attribute.html#ae993e53d2dfa5775aabd840cf8b2d461">Attribute</a>(std::shared_ptr&lt;Keyword&gt; keyword,</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;                      std::shared_ptr&lt;IAttributeValue&gt; value)</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;                    : keyword(keyword), value(value) { }</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;</div>
@@ -124,11 +124,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        };</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;        <span class="comment">/* ============================== CompoundAttributeValue ============================== */</span></div>
-<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1CompoundAttributeValue.html">   61</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1CompoundAttributeValue.html">CompoundAttributeValue</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1IAttributeValue.html">IAttributeValue</a> {</div>
+<div class="line"><a name="l00061"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1CompoundAttributeValue.html">   61</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1CompoundAttributeValue.html">CompoundAttributeValue</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1IAttributeValue.html">IAttributeValue</a> {</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            std::vector&lt;std::shared_ptr&lt;IAttributeValue&gt;&gt; values;</div>
 <div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1CompoundAttributeValue.html">CompoundAttributeValue</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;IAttributeValue&gt;&gt; values);</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1CompoundAttributeValue.html">CompoundAttributeValue</a>(<span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;IAttributeValue&gt;&gt; values);</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;            std::vector&lt;std::shared_ptr&lt;IAttributeValue&gt;&gt; &amp;getValues();</div>
 <div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
@@ -138,20 +138,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}</div>
 <div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif //PARSE_SMTLIB_SMT_ATTR_H</span></div>
-<div class="ttc" id="classsmt_1_1ast_1_1IAttributeValue_html"><div class="ttname"><a href="classsmt_1_1ast_1_1IAttributeValue.html">smt::ast::IAttributeValue</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:14</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1CompoundAttributeValue_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1CompoundAttributeValue.html">smtlib::ast::CompoundAttributeValue</a></div><div class="ttdef"><b>Definition:</b> smt_attribute.h:61</div></div>
 <div class="ttc" id="smt__interfaces_8h_html"><div class="ttname"><a href="smt__interfaces_8h.html">smt_interfaces.h</a></div><div class="ttdoc">Interfaces that need to be implemented by some of the SMT-LIB AST nodes. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1Attribute_html_a3863231543b4ae57e598d12263b732e7"><div class="ttname"><a href="classsmt_1_1ast_1_1Attribute.html#a3863231543b4ae57e598d12263b732e7">smt::ast::Attribute::Attribute</a></div><div class="ttdeci">Attribute()</div><div class="ttdef"><b>Definition:</b> smt_attribute.h:31</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtAstNode.html">smt::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1Attribute_html_a632b21dc3faf4ad03b132d1e24cf4712"><div class="ttname"><a href="classsmt_1_1ast_1_1Attribute.html#a632b21dc3faf4ad03b132d1e24cf4712">smt::ast::Attribute::Attribute</a></div><div class="ttdeci">Attribute(std::shared_ptr&lt; Keyword &gt; keyword, std::shared_ptr&lt; IAttributeValue &gt; value)</div><div class="ttdef"><b>Definition:</b> smt_attribute.h:44</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1Attribute_html_aef1275cf42e803fff451ba2a4b5684ef"><div class="ttname"><a href="classsmtlib_1_1ast_1_1Attribute.html#aef1275cf42e803fff451ba2a4b5684ef">smtlib::ast::Attribute::Attribute</a></div><div class="ttdeci">Attribute()</div><div class="ttdef"><b>Definition:</b> smt_attribute.h:31</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1Attribute_html_ae993e53d2dfa5775aabd840cf8b2d461"><div class="ttname"><a href="classsmtlib_1_1ast_1_1Attribute.html#ae993e53d2dfa5775aabd840cf8b2d461">smtlib::ast::Attribute::Attribute</a></div><div class="ttdeci">Attribute(std::shared_ptr&lt; Keyword &gt; keyword, std::shared_ptr&lt; IAttributeValue &gt; value)</div><div class="ttdef"><b>Definition:</b> smt_attribute.h:44</div></div>
 <div class="ttc" id="smt__basic_8h_html"><div class="ttname"><a href="smt__basic_8h.html">smt_basic.h</a></div><div class="ttdoc">Basic SMT-LIB concepts. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1Attribute_html_a05e29366b5a1e9b79e32168b79637b7b"><div class="ttname"><a href="classsmt_1_1ast_1_1Attribute.html#a05e29366b5a1e9b79e32168b79637b7b">smt::ast::Attribute::Attribute</a></div><div class="ttdeci">Attribute(std::shared_ptr&lt; Keyword &gt; keyword)</div><div class="ttdef"><b>Definition:</b> smt_attribute.h:37</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1CompoundAttributeValue_html"><div class="ttname"><a href="classsmt_1_1ast_1_1CompoundAttributeValue.html">smt::ast::CompoundAttributeValue</a></div><div class="ttdef"><b>Definition:</b> smt_attribute.h:61</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1SmtAstNode.html">smtlib::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1Attribute_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1Attribute.html">smtlib::ast::Attribute</a></div><div class="ttdef"><b>Definition:</b> smt_attribute.h:22</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1Attribute_html_a759ccf4439ee446ef906d1aba13040b7"><div class="ttname"><a href="classsmtlib_1_1ast_1_1Attribute.html#a759ccf4439ee446ef906d1aba13040b7">smtlib::ast::Attribute::Attribute</a></div><div class="ttdeci">Attribute(std::shared_ptr&lt; Keyword &gt; keyword)</div><div class="ttdef"><b>Definition:</b> smt_attribute.h:37</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1IAttributeValue_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1IAttributeValue.html">smtlib::ast::IAttributeValue</a></div><div class="ttdef"><b>Definition:</b> smt_interfaces.h:14</div></div>
 <div class="ttc" id="smt__abstract_8h_html"><div class="ttname"><a href="smt__abstract_8h.html">smt_abstract.h</a></div><div class="ttdoc">Abstract SMT-LIB data structures. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1Attribute_html"><div class="ttname"><a href="classsmt_1_1ast_1_1Attribute.html">smt::ast::Attribute</a></div><div class="ttdef"><b>Definition:</b> smt_attribute.h:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 30 2015 13:27:05 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 20 2015 15:00:00 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

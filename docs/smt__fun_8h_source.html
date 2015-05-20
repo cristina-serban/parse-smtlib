@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Parse SMT-LIB: smt/ast/smt_fun.h Source File</title>
+<title>Parse SMT-LIB: smtlib/ast/smt_fun.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_06486aac2a68e31147849d3317bf6bf0.html">smt</a></li><li class="navelem"><a class="el" href="dir_8ce8eb0cc93364b9fe381f89f132bfbf.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_df80df55d2107eefdcea828146ead2dd.html">smtlib</a></li><li class="navelem"><a class="el" href="dir_ac5474d36d9f7d25437bb30a800d1758.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -98,16 +98,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__sort_8h.html">smt_sort.h</a>&quot;</span></div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__var_8h.html">smt_var.h</a>&quot;</span></div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>smt {</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">namespace </span>smtlib {</div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keyword">namespace </span>ast {</div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;        <span class="comment">/* =============================== FunctionDeclaration ================================ */</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1FunctionDeclaration.html">   24</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1FunctionDeclaration.html">FunctionDeclaration</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1FunctionDeclaration.html">   24</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1FunctionDeclaration.html">FunctionDeclaration</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;            std::shared_ptr&lt;Symbol&gt; symbol;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;            std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; params;</div>
 <div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;            std::shared_ptr&lt;Sort&gt; sort;</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1FunctionDeclaration.html#a0de48f0bdd3d96b3314633d91a0cbf5b">FunctionDeclaration</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1FunctionDeclaration.html#acdbeb365e9fe507c66f05c17b69a054a">FunctionDeclaration</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;                                <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; &amp;params,</div>
 <div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;                                std::shared_ptr&lt;Sort&gt; sort);</div>
 <div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
@@ -123,16 +123,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;        };</div>
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;</div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;        <span class="comment">/* ================================ FunctionDefinition ================================ */</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1FunctionDefinition.html">   55</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1FunctionDefinition.html">FunctionDefinition</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1FunctionDefinition.html">   55</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1FunctionDefinition.html">FunctionDefinition</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
 <div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;            std::shared_ptr&lt;FunctionDeclaration&gt; signature;</div>
 <div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;            std::shared_ptr&lt;ITerm&gt; body;</div>
 <div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1FunctionDefinition.html#ae3716d20dc9bd8c9c4eea33c7106b7b4">   64</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1FunctionDefinition.html#ae3716d20dc9bd8c9c4eea33c7106b7b4">FunctionDefinition</a>(std::shared_ptr&lt;FunctionDeclaration&gt; signature,</div>
+<div class="line"><a name="l00064"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1FunctionDefinition.html#a70ee98b817f47159e22d8debfa5b4b65">   64</a></span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1FunctionDefinition.html#a70ee98b817f47159e22d8debfa5b4b65">FunctionDefinition</a>(std::shared_ptr&lt;FunctionDeclaration&gt; signature,</div>
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;                               std::shared_ptr&lt;ITerm&gt; body)</div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;                    : signature(signature), body(body) { }</div>
 <div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1FunctionDefinition.html#ae3716d20dc9bd8c9c4eea33c7106b7b4">FunctionDefinition</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1FunctionDefinition.html#a70ee98b817f47159e22d8debfa5b4b65">FunctionDefinition</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;                               <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;SortedVariable&gt;&gt; &amp;params,</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;                               std::shared_ptr&lt;Sort&gt; sort,</div>
 <div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;                               std::shared_ptr&lt;ITerm&gt; body);</div>
@@ -150,19 +150,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;<span class="preprocessor">#endif //PARSE_SMTLIB_SMT_FUN_H</span></div>
 <div class="ttc" id="smt__interfaces_8h_html"><div class="ttname"><a href="smt__interfaces_8h.html">smt_interfaces.h</a></div><div class="ttdoc">Interfaces that need to be implemented by some of the SMT-LIB AST nodes. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1FunctionDeclaration_html_a0de48f0bdd3d96b3314633d91a0cbf5b"><div class="ttname"><a href="classsmt_1_1ast_1_1FunctionDeclaration.html#a0de48f0bdd3d96b3314633d91a0cbf5b">smt::ast::FunctionDeclaration::FunctionDeclaration</a></div><div class="ttdeci">FunctionDeclaration(std::shared_ptr&lt; Symbol &gt; symbol, const std::vector&lt; std::shared_ptr&lt; SortedVariable &gt;&gt; &amp;params, std::shared_ptr&lt; Sort &gt; sort)</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtAstNode.html">smt::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1FunctionDefinition_html_ae3716d20dc9bd8c9c4eea33c7106b7b4"><div class="ttname"><a href="classsmt_1_1ast_1_1FunctionDefinition.html#ae3716d20dc9bd8c9c4eea33c7106b7b4">smt::ast::FunctionDefinition::FunctionDefinition</a></div><div class="ttdeci">FunctionDefinition(std::shared_ptr&lt; FunctionDeclaration &gt; signature, std::shared_ptr&lt; ITerm &gt; body)</div><div class="ttdef"><b>Definition:</b> smt_fun.h:64</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1FunctionDeclaration_html"><div class="ttname"><a href="classsmt_1_1ast_1_1FunctionDeclaration.html">smt::ast::FunctionDeclaration</a></div><div class="ttdef"><b>Definition:</b> smt_fun.h:24</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1FunctionDefinition_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1FunctionDefinition.html">smtlib::ast::FunctionDefinition</a></div><div class="ttdef"><b>Definition:</b> smt_fun.h:55</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1FunctionDeclaration_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1FunctionDeclaration.html">smtlib::ast::FunctionDeclaration</a></div><div class="ttdef"><b>Definition:</b> smt_fun.h:24</div></div>
 <div class="ttc" id="smt__basic_8h_html"><div class="ttname"><a href="smt__basic_8h.html">smt_basic.h</a></div><div class="ttdoc">Basic SMT-LIB concepts. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1FunctionDefinition_html"><div class="ttname"><a href="classsmt_1_1ast_1_1FunctionDefinition.html">smt::ast::FunctionDefinition</a></div><div class="ttdef"><b>Definition:</b> smt_fun.h:55</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1FunctionDefinition_html_a70ee98b817f47159e22d8debfa5b4b65"><div class="ttname"><a href="classsmtlib_1_1ast_1_1FunctionDefinition.html#a70ee98b817f47159e22d8debfa5b4b65">smtlib::ast::FunctionDefinition::FunctionDefinition</a></div><div class="ttdeci">FunctionDefinition(std::shared_ptr&lt; FunctionDeclaration &gt; signature, std::shared_ptr&lt; ITerm &gt; body)</div><div class="ttdef"><b>Definition:</b> smt_fun.h:64</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1FunctionDeclaration_html_acdbeb365e9fe507c66f05c17b69a054a"><div class="ttname"><a href="classsmtlib_1_1ast_1_1FunctionDeclaration.html#acdbeb365e9fe507c66f05c17b69a054a">smtlib::ast::FunctionDeclaration::FunctionDeclaration</a></div><div class="ttdeci">FunctionDeclaration(std::shared_ptr&lt; Symbol &gt; symbol, const std::vector&lt; std::shared_ptr&lt; SortedVariable &gt;&gt; &amp;params, std::shared_ptr&lt; Sort &gt; sort)</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1SmtAstNode.html">smtlib::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
 <div class="ttc" id="smt__var_8h_html"><div class="ttname"><a href="smt__var_8h.html">smt_var.h</a></div><div class="ttdoc">SMT-LIB sorted variable and variable binding. </div></div>
 <div class="ttc" id="smt__sort_8h_html"><div class="ttname"><a href="smt__sort_8h.html">smt_sort.h</a></div><div class="ttdoc">SMT-LIB sort. </div></div>
 <div class="ttc" id="smt__abstract_8h_html"><div class="ttname"><a href="smt__abstract_8h.html">smt_abstract.h</a></div><div class="ttdoc">Abstract SMT-LIB data structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 30 2015 13:27:05 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 20 2015 15:00:00 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

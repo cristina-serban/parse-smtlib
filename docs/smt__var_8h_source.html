@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Parse SMT-LIB: smt/ast/smt_var.h Source File</title>
+<title>Parse SMT-LIB: smtlib/ast/smt_var.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_06486aac2a68e31147849d3317bf6bf0.html">smt</a></li><li class="navelem"><a class="el" href="dir_8ce8eb0cc93364b9fe381f89f132bfbf.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_df80df55d2107eefdcea828146ead2dd.html">smtlib</a></li><li class="navelem"><a class="el" href="dir_ac5474d36d9f7d25437bb30a800d1758.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -96,16 +96,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__interfaces_8h.html">smt_interfaces.h</a>&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__sort_8h.html">smt_sort.h</a>&quot;</span></div>
 <div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>smt {</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">namespace </span>smtlib {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keyword">namespace </span>ast {</div>
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;        <span class="comment">/* ================================== SortedVariable ================================== */</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1SortedVariable.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1SortedVariable.html">SortedVariable</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1SortedVariable.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1SortedVariable.html">SortedVariable</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            std::shared_ptr&lt;Symbol&gt; symbol;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            std::shared_ptr&lt;Sort&gt; sort;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1SortedVariable.html#ab7eb444822ce4cf6dc5624d13d91a807">   32</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1SortedVariable.html#ab7eb444822ce4cf6dc5624d13d91a807">SortedVariable</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1SortedVariable.html#a78bbb638aa3c65ce3d61f0bdd8adf1d9">   32</a></span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1SortedVariable.html#a78bbb638aa3c65ce3d61f0bdd8adf1d9">SortedVariable</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;                           std::shared_ptr&lt;Sort&gt; sort)</div>
 <div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;                    : symbol(symbol), sort(sort) { }</div>
 <div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;</div>
@@ -119,13 +119,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;        };</div>
 <div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;</div>
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;        <span class="comment">/* ==================================== VarBinding ==================================== */</span></div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1VarBinding.html">   50</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1VarBinding.html">VarBinding</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1VarBinding.html">   50</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1VarBinding.html">VarBinding</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1SmtAstNode.html">SmtAstNode</a> {</div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;            std::shared_ptr&lt;Symbol&gt; symbol;</div>
 <div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;            std::shared_ptr&lt;ITerm&gt; term;</div>
 <div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
 <div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1VarBinding.html#a26ddb436b166af20e40a30984b93f6e8">   60</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1VarBinding.html#a26ddb436b166af20e40a30984b93f6e8">VarBinding</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
+<div class="line"><a name="l00060"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1VarBinding.html#a1fea3226870214bb6db9c28824a922d9">   60</a></span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1VarBinding.html#a1fea3226870214bb6db9c28824a922d9">VarBinding</a>(std::shared_ptr&lt;Symbol&gt; symbol,</div>
 <div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;                       std::shared_ptr&lt;ITerm&gt; term)</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;                    : symbol(symbol), term(term) {</div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;            }</div>
@@ -142,19 +142,19 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;}</div>
 <div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="preprocessor">#endif //PARSE_SMTLIB_SMT_VAR_H</span></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1VarBinding_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1VarBinding.html">smtlib::ast::VarBinding</a></div><div class="ttdef"><b>Definition:</b> smt_var.h:50</div></div>
 <div class="ttc" id="smt__interfaces_8h_html"><div class="ttname"><a href="smt__interfaces_8h.html">smt_interfaces.h</a></div><div class="ttdoc">Interfaces that need to be implemented by some of the SMT-LIB AST nodes. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1VarBinding_html_a26ddb436b166af20e40a30984b93f6e8"><div class="ttname"><a href="classsmt_1_1ast_1_1VarBinding.html#a26ddb436b166af20e40a30984b93f6e8">smt::ast::VarBinding::VarBinding</a></div><div class="ttdeci">VarBinding(std::shared_ptr&lt; Symbol &gt; symbol, std::shared_ptr&lt; ITerm &gt; term)</div><div class="ttdef"><b>Definition:</b> smt_var.h:60</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SortedVariable_html_ab7eb444822ce4cf6dc5624d13d91a807"><div class="ttname"><a href="classsmt_1_1ast_1_1SortedVariable.html#ab7eb444822ce4cf6dc5624d13d91a807">smt::ast::SortedVariable::SortedVariable</a></div><div class="ttdeci">SortedVariable(std::shared_ptr&lt; Symbol &gt; symbol, std::shared_ptr&lt; Sort &gt; sort)</div><div class="ttdef"><b>Definition:</b> smt_var.h:32</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtAstNode.html">smt::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1VarBinding_html"><div class="ttname"><a href="classsmt_1_1ast_1_1VarBinding.html">smt::ast::VarBinding</a></div><div class="ttdef"><b>Definition:</b> smt_var.h:50</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SortedVariable_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SortedVariable.html">smt::ast::SortedVariable</a></div><div class="ttdef"><b>Definition:</b> smt_var.h:22</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1VarBinding_html_a1fea3226870214bb6db9c28824a922d9"><div class="ttname"><a href="classsmtlib_1_1ast_1_1VarBinding.html#a1fea3226870214bb6db9c28824a922d9">smtlib::ast::VarBinding::VarBinding</a></div><div class="ttdeci">VarBinding(std::shared_ptr&lt; Symbol &gt; symbol, std::shared_ptr&lt; ITerm &gt; term)</div><div class="ttdef"><b>Definition:</b> smt_var.h:60</div></div>
 <div class="ttc" id="smt__basic_8h_html"><div class="ttname"><a href="smt__basic_8h.html">smt_basic.h</a></div><div class="ttdoc">Basic SMT-LIB concepts. </div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1SortedVariable_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1SortedVariable.html">smtlib::ast::SortedVariable</a></div><div class="ttdef"><b>Definition:</b> smt_var.h:22</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1SortedVariable_html_a78bbb638aa3c65ce3d61f0bdd8adf1d9"><div class="ttname"><a href="classsmtlib_1_1ast_1_1SortedVariable.html#a78bbb638aa3c65ce3d61f0bdd8adf1d9">smtlib::ast::SortedVariable::SortedVariable</a></div><div class="ttdeci">SortedVariable(std::shared_ptr&lt; Symbol &gt; symbol, std::shared_ptr&lt; Sort &gt; sort)</div><div class="ttdef"><b>Definition:</b> smt_var.h:32</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1SmtAstNode_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1SmtAstNode.html">smtlib::ast::SmtAstNode</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:16</div></div>
 <div class="ttc" id="smt__sort_8h_html"><div class="ttname"><a href="smt__sort_8h.html">smt_sort.h</a></div><div class="ttdoc">SMT-LIB sort. </div></div>
 <div class="ttc" id="smt__abstract_8h_html"><div class="ttname"><a href="smt__abstract_8h.html">smt_abstract.h</a></div><div class="ttdoc">Abstract SMT-LIB data structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 30 2015 13:27:05 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 20 2015 15:00:00 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

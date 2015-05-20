@@ -2,17 +2,17 @@
 #define PARSE_SMTLIB_SMTLIB_GLUE_H
 
 #ifdef __cplusplus
-#include "../smt/ast/smt_abstract.h"
-namespace smt {
+#include "../smtlib/ast/smt_abstract.h"
+namespace smtlib {
     namespace ast {
-        class SmtAstNode;
+        class AstNode;
         class ParserInternalList;
     }
-    class SmtParser;
+    class Parser;
 }
-typedef class smt::ast::SmtAstNode *SmtPtr;
-typedef class smt::ast::ParserInternalList *SmtList;
-typedef class smt::SmtParser *SmtPrsr;
+typedef class smtlib::ast::AstNode *SmtPtr;
+typedef class smtlib::ast::ParserInternalList *SmtList;
+typedef class smtlib::Parser *SmtPrsr;
 #else
 typedef void *SmtPtr, *SmtList, *SmtPrsr;
 #endif

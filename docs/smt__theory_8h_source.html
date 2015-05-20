@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Parse SMT-LIB: smt/ast/smt_theory.h Source File</title>
+<title>Parse SMT-LIB: smtlib/ast/smt_theory.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -78,7 +78,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_06486aac2a68e31147849d3317bf6bf0.html">smt</a></li><li class="navelem"><a class="el" href="dir_8ce8eb0cc93364b9fe381f89f132bfbf.html">ast</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_df80df55d2107eefdcea828146ead2dd.html">smtlib</a></li><li class="navelem"><a class="el" href="dir_ac5474d36d9f7d25437bb30a800d1758.html">ast</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -95,18 +95,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__abstract_8h.html">smt_abstract.h</a>&quot;</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="smt__attribute_8h.html">smt_attribute.h</a>&quot;</span></div>
 <div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>smt {</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="keyword">namespace </span>smtlib {</div>
 <div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">namespace </span>ast {</div>
 <div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Theory.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmt_1_1ast_1_1Theory.html">Theory</a> : <span class="keyword">public</span> <a class="code" href="classsmt_1_1ast_1_1SmtAstRoot.html">SmtAstRoot</a> {</div>
+<div class="line"><a name="l00022"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1Theory.html">   22</a></span>&#160;        <span class="keyword">class </span><a class="code" href="classsmtlib_1_1ast_1_1Theory.html">Theory</a> : <span class="keyword">public</span> <a class="code" href="classsmtlib_1_1ast_1_1SmtAstRoot.html">SmtAstRoot</a> {</div>
 <div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keyword">private</span>:</div>
 <div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;            std::shared_ptr&lt;Symbol&gt; name;</div>
 <div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;            std::vector&lt;std::shared_ptr&lt;Attribute&gt;&gt; attributes;</div>
 <div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;</div>
 <div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classsmt_1_1ast_1_1Theory.html#a99d244dc839e4d91aa919d23a45f7616">   32</a></span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Theory.html#a99d244dc839e4d91aa919d23a45f7616">Theory</a>(std::shared_ptr&lt;Symbol&gt; name) : name(name) { }</div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="classsmtlib_1_1ast_1_1Theory.html#a3ed09386a9682201e79c8d861de3d53d">   32</a></span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1Theory.html#a3ed09386a9682201e79c8d861de3d53d">Theory</a>(std::shared_ptr&lt;Symbol&gt; name) : name(name) { }</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <a class="code" href="classsmt_1_1ast_1_1Theory.html#a99d244dc839e4d91aa919d23a45f7616">Theory</a>(std::shared_ptr&lt;Symbol&gt; name,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            <a class="code" href="classsmtlib_1_1ast_1_1Theory.html#a3ed09386a9682201e79c8d861de3d53d">Theory</a>(std::shared_ptr&lt;Symbol&gt; name,</div>
 <div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;                      <span class="keyword">const</span> std::vector&lt;std::shared_ptr&lt;Attribute&gt;&gt; &amp;attributes);</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;            std::shared_ptr&lt;Symbol&gt; getName();</div>
@@ -121,14 +121,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#endif //PARSE_SMTLIB_SMT_THEORY_H</span></div>
 <div class="ttc" id="smt__attribute_8h_html"><div class="ttname"><a href="smt__attribute_8h.html">smt_attribute.h</a></div><div class="ttdoc">SMT-LIB attribute. </div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1Theory_html"><div class="ttname"><a href="classsmt_1_1ast_1_1Theory.html">smt::ast::Theory</a></div><div class="ttdef"><b>Definition:</b> smt_theory.h:22</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1Theory_html_a99d244dc839e4d91aa919d23a45f7616"><div class="ttname"><a href="classsmt_1_1ast_1_1Theory.html#a99d244dc839e4d91aa919d23a45f7616">smt::ast::Theory::Theory</a></div><div class="ttdeci">Theory(std::shared_ptr&lt; Symbol &gt; name)</div><div class="ttdef"><b>Definition:</b> smt_theory.h:32</div></div>
-<div class="ttc" id="classsmt_1_1ast_1_1SmtAstRoot_html"><div class="ttname"><a href="classsmt_1_1ast_1_1SmtAstRoot.html">smt::ast::SmtAstRoot</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:24</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1Theory_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1Theory.html">smtlib::ast::Theory</a></div><div class="ttdef"><b>Definition:</b> smt_theory.h:22</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1SmtAstRoot_html"><div class="ttname"><a href="classsmtlib_1_1ast_1_1SmtAstRoot.html">smtlib::ast::SmtAstRoot</a></div><div class="ttdef"><b>Definition:</b> smt_abstract.h:24</div></div>
+<div class="ttc" id="classsmtlib_1_1ast_1_1Theory_html_a3ed09386a9682201e79c8d861de3d53d"><div class="ttname"><a href="classsmtlib_1_1ast_1_1Theory.html#a3ed09386a9682201e79c8d861de3d53d">smtlib::ast::Theory::Theory</a></div><div class="ttdeci">Theory(std::shared_ptr&lt; Symbol &gt; name)</div><div class="ttdef"><b>Definition:</b> smt_theory.h:32</div></div>
 <div class="ttc" id="smt__abstract_8h_html"><div class="ttname"><a href="smt__abstract_8h.html">smt_abstract.h</a></div><div class="ttdoc">Abstract SMT-LIB data structures. </div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Apr 30 2015 13:27:05 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed May 20 2015 15:00:00 for Parse SMT-LIB by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.6
 </small></address>

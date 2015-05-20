@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['theory',['Theory',['../classsmt_1_1ast_1_1Theory.html',1,'smt::ast']]]
+  ['theory',['Theory',['../classsmtlib_1_1ast_1_1Theory.html',1,'smtlib::ast']]]
 ];

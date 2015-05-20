@@ -4,24 +4,24 @@
 #include <vector>
 #include "smtlib-glue.h"
 
-#include "../smt/parser/smt_parser.h"
+#include "../smtlib/parser/smt_parser.h"
 
-#include "../smt/ast/smt_attribute.h"
-#include "../smt/ast/smt_basic.h"
-#include "../smt/ast/smt_command.h"
-#include "../smt/ast/smt_fun.h"
-#include "../smt/ast/smt_identifier.h"
-#include "../smt/ast/smt_literal.h"
-#include "../smt/ast/smt_logic.h"
-#include "../smt/ast/smt_s_expr.h"
-#include "../smt/ast/smt_script.h"
-#include "../smt/ast/smt_sort.h"
-#include "../smt/ast/smt_symbol_decl.h"
-#include "../smt/ast/smt_term.h"
-#include "../smt/ast/smt_theory.h"
-#include "../smt/ast/smt_var.h"
+#include "../smtlib/ast/smt_attribute.h"
+#include "../smtlib/ast/smt_basic.h"
+#include "../smtlib/ast/smt_command.h"
+#include "../smtlib/ast/smt_fun.h"
+#include "../smtlib/ast/smt_identifier.h"
+#include "../smtlib/ast/smt_literal.h"
+#include "../smtlib/ast/smt_logic.h"
+#include "../smtlib/ast/smt_s_expr.h"
+#include "../smtlib/ast/smt_script.h"
+#include "../smtlib/ast/smt_sort.h"
+#include "../smtlib/ast/smt_symbol_decl.h"
+#include "../smtlib/ast/smt_term.h"
+#include "../smtlib/ast/smt_theory.h"
+#include "../smtlib/ast/smt_var.h"
 
-namespace smt {
+namespace smtlib {
     namespace ast {
 
         class ParserInternalList {
@@ -45,8 +45,8 @@ namespace smt {
     }
 }
 
-using namespace smt;
-using namespace smt::ast;
+using namespace smtlib;
+using namespace smtlib::ast;
 
 template<class T>
 std::shared_ptr<T> share(SmtPtr nakedPtr) {
@@ -66,7 +66,7 @@ void smt_listDelete(SmtList list) {
 }
 
 void smt_print(SmtPtr ptr) {
-    std::cout << share<SmtAstNode>(ptr)->toString();
+    std::cout << share<AstNode>(ptr)->toString();
 }
 
 int smt_bool_value(SmtPtr ptr) {
@@ -80,8 +80,8 @@ int smt_bool_value(SmtPtr ptr) {
 
 void smt_setAst(SmtPrsr parser, SmtPtr ast) {
     if(parser && ast) {
-        SmtParser *p = dynamic_cast<SmtParser *>(parser);
-        p->setAst(dynamic_cast<SmtAstNode*>(ast));
+        Parser *p = dynamic_cast<Parser *>(parser);
+        p->setAst(dynamic_cast<AstNode *>(ast));
     }
 }
 
