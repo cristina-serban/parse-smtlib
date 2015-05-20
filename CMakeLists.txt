@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8.4)
 project(parse-smtlib)
 
+set(LIB_FLEX fl)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 include_directories("smt" "smt/ast")
 
@@ -38,6 +39,12 @@ set(SOURCE_FILES
 	smt/ast/smt_term.h
 	parser/smtlib-glue.h
 	parser/smtlib-glue.cpp
+	parser/smtlib-parser.h
+	parser/smtlib-parser.l.c
+	parser/smtlib-parser.y.c
+	smt/parser/smt_parser.h
+	smt/parser/smt_parser.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} main.h main.cpp)
+add_executable(parse-smtlib ${SOURCE_FILES})
+target_link_libraries(parse-smtlib ${LIB_FLEX})

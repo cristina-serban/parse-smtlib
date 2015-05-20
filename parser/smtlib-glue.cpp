@@ -4,6 +4,8 @@
 #include <vector>
 #include "smtlib-glue.h"
 
+#include "../smt/parser/smt_parser.h"
+
 #include "../smt/ast/smt_attribute.h"
 #include "../smt/ast/smt_basic.h"
 #include "../smt/ast/smt_command.h"
@@ -43,6 +45,7 @@ namespace smt {
     }
 }
 
+using namespace smt;
 using namespace smt::ast;
 
 template<class T>
@@ -72,6 +75,13 @@ int smt_bool_value(SmtPtr ptr) {
         return val->getValue();
     } else {
         return 2;
+    }
+}
+
+void smt_setAst(SmtPrsr parser, SmtPtr ast) {
+    if(parser && ast) {
+        SmtParser *p = dynamic_cast<SmtParser *>(parser);
+        p->setAst(dynamic_cast<SmtAstNode*>(ast));
     }
 }
 
@@ -105,11 +115,11 @@ SmtPtr smt_newMetaSpecConstant(int value) {
 }
 
 SmtPtr smt_newBooleanValue(int value) {
-    return new BooleanValue(value);
+    return new BooleanValue((bool)value);
 }
 
 SmtPtr smt_newPropLiteral(SmtPtr symbol, int negated) {
-    return new PropLiteral(share<Symbol>(symbol), negated);
+    return new PropLiteral(share<Symbol>(symbol), (bool)negated);
 }
 
 // smt_command.h

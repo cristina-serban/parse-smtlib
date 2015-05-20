@@ -8,18 +8,23 @@ namespace smt {
         class SmtAstNode;
         class ParserInternalList;
     }
+    class SmtParser;
 }
 typedef class smt::ast::SmtAstNode *SmtPtr;
 typedef class smt::ast::ParserInternalList *SmtList;
+typedef class smt::SmtParser *SmtPrsr;
 #else
-typedef void *SmtPtr, *SmtList;
+typedef void *SmtPtr, *SmtList, *SmtPrsr;
 #endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+int yylex (void);
+int yyparse(SmtPrsr);
 
+void smt_setAst(SmtPrsr parser, SmtPtr ast);
 
 SmtList smt_listCreate();
 void smt_listAdd(SmtList list, SmtPtr item);

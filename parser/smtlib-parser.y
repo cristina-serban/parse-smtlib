@@ -3,14 +3,16 @@
 #include "smtlib-glue.h"
 
 int yylex();
-int yyerror(const char *);
+int yyerror(SmtPrsr parser, const char *);
 
-#define YYMAXDEPTH 500000
-#define YYINITDEPTH 500000
+#define YYMAXDEPTH 300000
+#define YYINITDEPTH 300000
 %}
 
 %locations
 %error-verbose
+
+%parse-param {SmtPrsr parser}
 
 %union
 {
@@ -48,11 +50,11 @@ int yyerror(const char *);
 %%
 
 smt_file:
-	script			{ $$ = $1; /*smt_print($1);*/ }
+	script			{ $$ = $1; smt_setAst(parser, $1); }
 |
-	theory_decl		{ $$ = $1; /*smt_print($1);*/ }
+	theory_decl		{ $$ = $1; smt_setAst(parser, $1); }
 |
-	logic 			{ $$ = $1; /*smt_print($1);*/ }
+	logic 			{ $$ = $1; smt_setAst(parser, $1); }
 ;
 
 script:
@@ -608,10 +610,6 @@ logic_attr_plus:
 
 %%
 
-int yyerror(const char *s) {
+int yyerror(SmtPrsr parser, const char *s) {
 	fprintf(stderr, "%d:%d-%d:%d\t%s\n", yylloc.first_line, yylloc.first_column, yylloc.last_line, yylloc.last_column, s);
-}
-
-int main() {
-	return yyparse();
 }
