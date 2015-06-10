@@ -14,12 +14,16 @@ void Attribute::setKeyword(shared_ptr<Keyword> keyword) {
     this->keyword = keyword;
 }
 
-shared_ptr<IAttributeValue> Attribute::getValue() {
+shared_ptr<AttributeValue> Attribute::getValue() {
     return value;
 }
 
-void Attribute::setValue(std::shared_ptr<IAttributeValue> value) {
+void Attribute::setValue(std::shared_ptr<AttributeValue> value) {
     this->value = value;
+}
+
+void Attribute::accept(AstVisitor0* visitor) const {
+    visitor->visit(this);
 }
 
 string Attribute::toString() {
@@ -32,18 +36,22 @@ string Attribute::toString() {
 
 /* ============================== CompoundAttributeValue ============================== */
 
-CompoundAttributeValue::CompoundAttributeValue(const vector<shared_ptr<IAttributeValue>> values) {
+CompoundAttributeValue::CompoundAttributeValue(const vector<shared_ptr<AttributeValue>> values) {
     this->values.insert(this->values.begin(), values.begin(), values.end());
 }
 
-vector<shared_ptr<IAttributeValue>> &CompoundAttributeValue::getValues() {
+vector<shared_ptr<AttributeValue>> &CompoundAttributeValue::getValues() {
     return values;
+}
+
+void CompoundAttributeValue::accept(AstVisitor0* visitor) const {
+    visitor->visit(this);
 }
 
 string CompoundAttributeValue::toString() {
     stringstream ss;
     ss << "( ";
-    for(vector<shared_ptr<IAttributeValue>>::iterator it = values.begin(); it != values.end(); it++) {
+    for(vector<shared_ptr<AttributeValue>>::iterator it = values.begin(); it != values.end(); it++) {
         ss << (*it)->toString() << " ";
     }
     ss << ") ";

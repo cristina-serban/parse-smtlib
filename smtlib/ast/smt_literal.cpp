@@ -22,6 +22,10 @@ void NumeralLiteral::setBase(unsigned int base) {
     this->base = base;
 }
 
+void NumeralLiteral::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string NumeralLiteral::toString() {
     stringstream ss;
 
@@ -54,6 +58,10 @@ DecimalLiteral::DecimalLiteral(double value) {
     setValue(value);
 }
 
+void DecimalLiteral::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string DecimalLiteral::toString() {
     stringstream ss;
     ss << value;
@@ -64,6 +72,10 @@ string DecimalLiteral::toString() {
 
 StringLiteral::StringLiteral(string value) {
     setValue(value);
+}
+
+void StringLiteral::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
 }
 
 string StringLiteral::toString() {

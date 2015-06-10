@@ -20,9 +20,9 @@ namespace smtlib {
      * Can act as an S-expression, an index.
      */
         class Symbol : public virtual AstNode,
-                       public ISExpression,
-                       public IIndex,
-                       public IAttributeValue{
+                       public SExpression,
+                       public Index,
+                       public AttributeValue {
         private:
             std::string value;
         public:
@@ -34,6 +34,8 @@ namespace smtlib {
             std::string getValue();
             void setValue(std::string value);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -44,7 +46,7 @@ namespace smtlib {
      * Can act as an S-expression.
      */
         class Keyword : public virtual AstNode,
-                        public ISExpression {
+                        public SExpression {
         private:
             std::string value;
         public:
@@ -55,6 +57,8 @@ namespace smtlib {
 
             std::string getValue();
             void setValue(std::string value);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -83,6 +87,8 @@ namespace smtlib {
             MetaSpecConstant::Type getType();
             void setType(MetaSpecConstant::Type type);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
 
         private:
@@ -95,7 +101,7 @@ namespace smtlib {
      * Node of the SMT-LIB abstract syntax tree.
      */
         class BooleanValue : public virtual AstNode,
-                             public IAttributeValue {
+                             public AttributeValue {
         private:
             bool value;
         public:
@@ -103,6 +109,8 @@ namespace smtlib {
 
             bool getValue();
             void setValue(bool value);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -127,6 +135,8 @@ namespace smtlib {
 
             bool isNegated();
             void setNegated(bool negated);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

@@ -23,6 +23,10 @@ vector<shared_ptr<Attribute>>&Theory::getAttributes() {
     return attributes;
 }
 
+void Theory::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string Theory::toString() {
     stringstream ss;
     ss << "( theory  " << name->toString() << " ";

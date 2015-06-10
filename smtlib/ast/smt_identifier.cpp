@@ -7,7 +7,7 @@ using namespace smtlib::ast;
 /* ==================================== Identifier ==================================== */
 
 Identifier::Identifier(shared_ptr<Symbol> symbol,
-                       const vector<shared_ptr<IIndex>> indices)
+                       const vector<shared_ptr<Index>> indices)
         : symbol(symbol) {
     this->indices.insert(this->indices.end(), indices.begin(), indices.end());
 }
@@ -20,12 +20,16 @@ void Identifier::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-vector<shared_ptr<IIndex>> &Identifier::getIndices() {
+vector<shared_ptr<Index>> &Identifier::getIndices() {
     return indices;
 }
 
 bool Identifier::isIndexed() {
     return !indices.empty();
+}
+
+void Identifier::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
 }
 
 string Identifier::toString() {
@@ -34,7 +38,7 @@ string Identifier::toString() {
     else {
         stringstream ss;
         ss << "( _ " << symbol->toString() << " ";
-        for(vector<shared_ptr<IIndex>>::iterator it = indices.begin(); it != indices.end(); it++) {
+        for(vector<shared_ptr<Index>>::iterator it = indices.begin(); it != indices.end(); it++) {
             ss << (*it)->toString() << " ";
         }
         ss << ")";
@@ -58,6 +62,10 @@ shared_ptr<Sort> QualifiedIdentifier::getSort() {
 
 void QualifiedIdentifier::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
+}
+
+void QualifiedIdentifier::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
 }
 
 string QualifiedIdentifier::toString() {

@@ -12,6 +12,7 @@
 #include "smt_abstract.h"
 #include "smt_basic.h"
 #include "smt_interfaces.h"
+#include "../visitor/ast_visitor.h"
 
 namespace smtlib {
     namespace ast {
@@ -22,7 +23,7 @@ namespace smtlib {
         class Attribute : public AstNode {
         private:
             std::shared_ptr<Keyword> keyword;
-            std::shared_ptr<IAttributeValue> value;
+            std::shared_ptr<AttributeValue> value;
 
         public:
             /**
@@ -42,14 +43,16 @@ namespace smtlib {
              * \param value     Value of the attribute
              */
             Attribute(std::shared_ptr<Keyword> keyword,
-                      std::shared_ptr<IAttributeValue> value)
+                      std::shared_ptr<AttributeValue> value)
                     : keyword(keyword), value(value) { }
 
             std::shared_ptr<Keyword> getKeyword();
             void setKeyword(std::shared_ptr<Keyword> keyword);
 
-            std::shared_ptr<IAttributeValue> getValue();
-            void setValue(std::shared_ptr<IAttributeValue> value);
+            std::shared_ptr<AttributeValue> getValue();
+            void setValue(std::shared_ptr<AttributeValue> value);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -58,13 +61,15 @@ namespace smtlib {
         /**
          * A compound value for an SMT-LIB attribute
          */
-        class CompoundAttributeValue : public IAttributeValue {
+        class CompoundAttributeValue : public AttributeValue {
         private:
-            std::vector<std::shared_ptr<IAttributeValue>> values;
+            std::vector<std::shared_ptr<AttributeValue>> values;
         public:
-            CompoundAttributeValue(const std::vector<std::shared_ptr<IAttributeValue>> values);
+            CompoundAttributeValue(const std::vector<std::shared_ptr<AttributeValue>> values);
 
-            std::vector<std::shared_ptr<IAttributeValue>> &getValues();
+            std::vector<std::shared_ptr<AttributeValue>> &getValues();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

@@ -8,6 +8,7 @@
 
 #include <memory>
 #include <vector>
+#include <visitor/ast_visitor.h>
 #include "smt_abstract.h"
 #include "smt_basic.h"
 #include "smt_interfaces.h"
@@ -44,6 +45,8 @@ namespace smtlib {
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -55,14 +58,14 @@ namespace smtlib {
         class FunctionDefinition : public AstNode {
         private:
             std::shared_ptr<FunctionDeclaration> signature;
-            std::shared_ptr<ITerm> body;
+            std::shared_ptr<Term> body;
         public:
             /**
              * \param signature    Function signature
              * \param body         Function body
              */
             FunctionDefinition(std::shared_ptr<FunctionDeclaration> signature,
-                               std::shared_ptr<ITerm> body)
+                               std::shared_ptr<Term> body)
                     : signature(signature), body(body) { }
 
             /**
@@ -74,13 +77,15 @@ namespace smtlib {
             FunctionDefinition(std::shared_ptr<Symbol> symbol,
                                const std::vector<std::shared_ptr<SortedVariable>> &params,
                                std::shared_ptr<Sort> sort,
-                               std::shared_ptr<ITerm> body);
+                               std::shared_ptr<Term> body);
 
             std::shared_ptr<FunctionDeclaration> getSignature();
             void setSignature(std::shared_ptr<FunctionDeclaration> signature);
 
-            std::shared_ptr<ITerm> getBody();
-            void setBody(std::shared_ptr<ITerm> body);
+            std::shared_ptr<Term> getBody();
+            void setBody(std::shared_ptr<Term> body);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

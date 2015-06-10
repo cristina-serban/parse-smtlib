@@ -16,17 +16,19 @@ namespace smtlib {
          * Compound S-expression.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class CompSExpression : public ISExpression,
-                                public IAttributeValue {
+        class CompSExpression : public SExpression,
+                                public AttributeValue {
         private:
-            std::vector<std::shared_ptr<ISExpression>> exprs;
+            std::vector<std::shared_ptr<SExpression>> exprs;
         public:
             /**
              * \param exprs     Subexpressions
              */
-            CompSExpression(const std::vector<std::shared_ptr<ISExpression>> &exprs);
+            CompSExpression(const std::vector<std::shared_ptr<SExpression>> &exprs);
 
-            std::vector<std::shared_ptr<ISExpression>> &getExpressions();
+            std::vector<std::shared_ptr<SExpression>> &getExpressions();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

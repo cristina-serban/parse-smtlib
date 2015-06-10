@@ -22,6 +22,10 @@ std::vector<shared_ptr<Attribute>> &Logic::getAttributes() {
     return attributes;
 }
 
+void Logic::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string Logic::toString() {
     stringstream ss;
     ss << "( logic  " << name->toString() << " ";

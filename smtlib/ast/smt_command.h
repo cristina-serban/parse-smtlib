@@ -32,16 +32,18 @@ namespace smtlib {
          */
         class AssertCommand : public Command {
         private:
-            std::shared_ptr<ITerm> term;
+            std::shared_ptr<Term> term;
 
         public:
             /**
              * \param term  Asserted term
              */
-            AssertCommand(std::shared_ptr<ITerm> term) : term(term) { }
+            AssertCommand(std::shared_ptr<Term> term) : term(term) { }
 
-            std::shared_ptr<ITerm> getTerm();
-            void setTerm(std::shared_ptr<ITerm> term);
+            std::shared_ptr<Term> getTerm();
+            void setTerm(std::shared_ptr<Term> term);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -54,6 +56,8 @@ namespace smtlib {
         class CheckSatCommand : public Command {
         public:
             CheckSatCommand() { }
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -74,6 +78,8 @@ namespace smtlib {
             CheckSatAssumCommand(const std::vector<std::shared_ptr<PropLiteral>> &assumptions);
 
             std::vector<std::shared_ptr<PropLiteral>> &getAssumptions();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -100,6 +106,8 @@ namespace smtlib {
 
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -132,6 +140,8 @@ namespace smtlib {
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -159,6 +169,8 @@ namespace smtlib {
             std::shared_ptr<NumeralLiteral> getArity();
             void setArity(std::shared_ptr<NumeralLiteral> arity);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -182,7 +194,7 @@ namespace smtlib {
              * \param body         Function body
              */
             DefineFunCommand(std::shared_ptr<FunctionDeclaration> signature,
-                             std::shared_ptr<ITerm> body);
+                             std::shared_ptr<Term> body);
 
             /**
              * \param symbol    Name of the function
@@ -193,10 +205,12 @@ namespace smtlib {
             DefineFunCommand(std::shared_ptr<Symbol> symbol,
                              const  std::vector<std::shared_ptr<SortedVariable>> &params,
                              std::shared_ptr<Sort> sort,
-                             std::shared_ptr<ITerm> body);
+                             std::shared_ptr<Term> body);
 
             std::shared_ptr<FunctionDefinition> getDefinition();
             void setDefinition(std::shared_ptr<FunctionDefinition> definition);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -221,7 +235,7 @@ namespace smtlib {
              * \param body         Function body
              */
             DefineFunRecCommand(std::shared_ptr<FunctionDeclaration> signature,
-                                std::shared_ptr<ITerm> body);
+                                std::shared_ptr<Term> body);
 
             /**
              * \param symbol    Name of the function
@@ -232,10 +246,12 @@ namespace smtlib {
             DefineFunRecCommand(std::shared_ptr<Symbol> symbol,
                                 const std::vector<std::shared_ptr<SortedVariable>> &params,
                                 std::shared_ptr<Sort> sort,
-                                std::shared_ptr<ITerm> body);
+                                std::shared_ptr<Term> body);
 
             std::shared_ptr<FunctionDefinition> getDefinition();
             void setDefinition(std::shared_ptr<FunctionDefinition> definition);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -248,18 +264,20 @@ namespace smtlib {
         class DefineFunsRecCommand : public Command {
         private:
             std::vector<std::shared_ptr<FunctionDeclaration>> declarations;
-            std::vector<std::shared_ptr<ITerm>> bodies;
+            std::vector<std::shared_ptr<Term>> bodies;
         public:
             /**
              * \param declarations    Function declarations
              * \param bodies          Function bodies
              */
             DefineFunsRecCommand(const std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
-                                 const std::vector<std::shared_ptr<ITerm>> &bodies);
+                                 const std::vector<std::shared_ptr<Term>> &bodies);
 
             std::vector<std::shared_ptr<FunctionDeclaration>> &getDeclarations();
 
-            std::vector<std::shared_ptr<ITerm>> &getBodies();
+            std::vector<std::shared_ptr<Term>> &getBodies();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -291,6 +309,8 @@ namespace smtlib {
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -311,6 +331,8 @@ namespace smtlib {
             std::string &getMessage();
             void setMessage(std::string message);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -322,6 +344,8 @@ namespace smtlib {
         class ExitCommand : public Command {
         public:
             ExitCommand() { }
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -335,6 +359,8 @@ namespace smtlib {
         public:
             GetAssertsCommand() { }
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -346,6 +372,8 @@ namespace smtlib {
         class GetAssignsCommand : public Command {
         public:
             GetAssignsCommand() { }
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -367,6 +395,8 @@ namespace smtlib {
             std::shared_ptr<Keyword> getFlag();
             void setFlag(std::shared_ptr<Keyword> flag);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -378,6 +408,8 @@ namespace smtlib {
         class GetModelCommand : public Command {
         public:
             GetModelCommand() { }
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -399,6 +431,8 @@ namespace smtlib {
             std::shared_ptr<Keyword> getOption();
             void setOption(std::shared_ptr<Keyword> option);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -410,6 +444,8 @@ namespace smtlib {
         class GetProofCommand : public Command {
         public:
             GetProofCommand() { }
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -423,6 +459,8 @@ namespace smtlib {
         public:
             GetUnsatAssumsCommand() { }
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -435,6 +473,8 @@ namespace smtlib {
         public:
             GetUnsatCoreCommand() { }
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -445,14 +485,16 @@ namespace smtlib {
          */
         class GetValueCommand : public Command {
         private:
-            std::vector<std::shared_ptr<ITerm>> terms;
+            std::vector<std::shared_ptr<Term>> terms;
         public:
             /**
              * \param terms Terms to evaluate
              */
-            GetValueCommand(const std::vector<std::shared_ptr<ITerm>> &terms);
+            GetValueCommand(const std::vector<std::shared_ptr<Term>> &terms);
 
-            std::vector<std::shared_ptr<ITerm>> &getTerms();
+            std::vector<std::shared_ptr<Term>> &getTerms();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -471,6 +513,8 @@ namespace smtlib {
             std::shared_ptr<NumeralLiteral> getNumeral();
             void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -488,6 +532,8 @@ namespace smtlib {
             std::shared_ptr<NumeralLiteral> getNumeral();
             void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -500,6 +546,8 @@ namespace smtlib {
         public:
             ResetCommand() { }
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -511,6 +559,8 @@ namespace smtlib {
         class ResetAssertsCommand : public Command {
         public:
             ResetAssertsCommand() { }
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -532,6 +582,8 @@ namespace smtlib {
             std::shared_ptr<Attribute> getInfo();
             void setInfo(std::shared_ptr<Attribute> info);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -552,6 +604,8 @@ namespace smtlib {
             std::shared_ptr<Symbol> getLogic();
             void setLogic(std::shared_ptr<Symbol> logic);
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -571,6 +625,8 @@ namespace smtlib {
 
             std::shared_ptr<Attribute> getOption();
             void setOption(std::shared_ptr<Attribute> option);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

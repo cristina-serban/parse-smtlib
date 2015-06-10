@@ -48,6 +48,8 @@ namespace smtlib {
              */
             bool isParametric();
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
     }

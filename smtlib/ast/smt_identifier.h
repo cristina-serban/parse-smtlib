@@ -20,10 +20,10 @@ namespace smtlib {
         /**
          * Identifier (e.g. "Real", "|John Brown|", "_ BitVec 32").
          */
-        class Identifier : public IQualIdentifier {
+        class Identifier : public QIdentifier {
         private:
             std::shared_ptr<Symbol> symbol;
-            std::vector<std::shared_ptr<IIndex>> indices;
+            std::vector<std::shared_ptr<Index>> indices;
 
         public:
             /**
@@ -38,17 +38,19 @@ namespace smtlib {
              * \param indices   Identifier indices
              */
             Identifier(std::shared_ptr<Symbol> symbol,
-                       const std::vector<std::shared_ptr<IIndex>> indices);
+                       const std::vector<std::shared_ptr<Index>> indices);
 
             std::shared_ptr<Symbol> getSymbol();
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
-            std::vector<std::shared_ptr<IIndex>> &getIndices();
+            std::vector<std::shared_ptr<Index>> &getIndices();
 
             /**
              * Checks whether the identifier is indexed (i.e. the list of indices is not empty).
              */
             bool isIndexed();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -57,7 +59,7 @@ namespace smtlib {
         /**
          * Qualified identifier (e.g. "(as f Sigma)").
          */
-        class QualifiedIdentifier : public IQualIdentifier {
+        class QualifiedIdentifier : public QIdentifier {
         private:
             std::shared_ptr<Identifier> identifier;
             std::shared_ptr<Sort> sort;
@@ -75,6 +77,8 @@ namespace smtlib {
 
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

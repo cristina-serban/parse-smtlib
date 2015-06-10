@@ -22,6 +22,10 @@ void SortedVariable::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }
 
+void SortedVariable::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string SortedVariable::toString() {
     stringstream ss;
     ss << symbol->toString() << " " << sort->toString();
@@ -38,12 +42,16 @@ void VarBinding::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-shared_ptr<ITerm> VarBinding::getTerm() {
+shared_ptr<Term> VarBinding::getTerm() {
     return term;
 }
 
-void VarBinding::setTerm(shared_ptr<ITerm> term) {
+void VarBinding::setTerm(shared_ptr<Term> term) {
     this->term = term;
+}
+
+void VarBinding::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
 }
 
 string VarBinding::toString() {

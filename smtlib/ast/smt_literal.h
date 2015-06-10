@@ -41,8 +41,8 @@ namespace smtlib {
          * Can act as an index or a specification constant.
          */
         class NumeralLiteral : public Literal<long>,
-                               public IIndex,
-                               public ISpecConstant {
+                               public Index,
+                               public SpecConstant {
         private:
             unsigned int base;
         public:
@@ -50,6 +50,8 @@ namespace smtlib {
 
             unsigned int getBase();
             void setBase(unsigned int base);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -61,9 +63,11 @@ namespace smtlib {
          * Can act as a specification constant.
          */
         class DecimalLiteral : public Literal<double>,
-                               public ISpecConstant {
+                               public SpecConstant {
         public:
             DecimalLiteral(double value);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -75,9 +79,11 @@ namespace smtlib {
          * Can act as a specification constant.
          */
         class StringLiteral : public Literal<std::string>,
-                              public ISpecConstant {
+                              public SpecConstant {
         public:
             StringLiteral(std::string value);
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

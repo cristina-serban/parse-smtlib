@@ -25,7 +25,7 @@ namespace smtlib {
          * Can act as an attribute value.
          */
         class SortSymbolDeclaration : public virtual AstNode,
-                                      public IAttributeValue {
+                                      public AttributeValue {
         private:
             std::shared_ptr<Identifier> identifier;
             std::shared_ptr<NumeralLiteral> arity;
@@ -58,6 +58,8 @@ namespace smtlib {
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
@@ -68,7 +70,7 @@ namespace smtlib {
          * Can act as an attribute value.
          */
         class FunSymbolDeclaration : public virtual AstNode,
-                                     public IAttributeValue {
+                                     public AttributeValue {
         };
 
         /* ============================= SpecConstFunDeclaration ============================== */
@@ -79,7 +81,7 @@ namespace smtlib {
          */
         class SpecConstFunDeclaration : public FunSymbolDeclaration {
         private:
-            std::shared_ptr<ISpecConstant> constant;
+            std::shared_ptr<SpecConstant> constant;
             std::shared_ptr<Sort> sort;
             std::vector<std::shared_ptr<Attribute>> attributes;
 
@@ -89,7 +91,7 @@ namespace smtlib {
             * \param constant      Specification constant
             * \param sort          Function sort
             */
-            SpecConstFunDeclaration(std::shared_ptr<ISpecConstant> constant,
+            SpecConstFunDeclaration(std::shared_ptr<SpecConstant> constant,
                                     std::shared_ptr<Sort> sort)
                     : constant(constant), sort(sort) { }
 
@@ -99,17 +101,19 @@ namespace smtlib {
              * \param sort          Function sort
              * \param attributes    Function symbol declaration attributes
              */
-            SpecConstFunDeclaration(std::shared_ptr<ISpecConstant> constant,
+            SpecConstFunDeclaration(std::shared_ptr<SpecConstant> constant,
                                     std::shared_ptr<Sort> sort,
                                     const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<ISpecConstant> getConstant();
-            void setConstant(std::shared_ptr<ISpecConstant> constant);
+            std::shared_ptr<SpecConstant> getConstant();
+            void setConstant(std::shared_ptr<SpecConstant> constant);
 
             std::shared_ptr<Sort> getSort();
             void setSort(std::shared_ptr<Sort> sort);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };
@@ -156,23 +160,25 @@ namespace smtlib {
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
-        /* ============================== IdentifFunDeclaration =============================== */
+        /* ============================== IdentifierFunDeclaration =============================== */
 
         /**
          * Identifier function symbol declaration.
          * Node of the SMT-LIB abstract syntax tree.
          * Can act as an attribute value.
          */
-        class IdentifFunDeclaration : public FunSymbolDeclaration {
+        class IdentifierFunDeclaration : public FunSymbolDeclaration {
         protected:
             std::shared_ptr<Identifier> identifier;
             std::vector<std::shared_ptr<Sort>> signature;
             std::vector<std::shared_ptr<Attribute>> attributes;
 
-            IdentifFunDeclaration() { }
+            IdentifierFunDeclaration() { }
 
         public:
             /**
@@ -180,7 +186,7 @@ namespace smtlib {
              * \param identifier    Function identifier
              * \param signature     Function signature
              */
-            IdentifFunDeclaration(std::shared_ptr<Identifier> identifier,
+            IdentifierFunDeclaration(std::shared_ptr<Identifier> identifier,
                                   const std::vector<std::shared_ptr<Sort>> &signature);
 
             /**
@@ -189,7 +195,7 @@ namespace smtlib {
              * \param signature     Function signature
              * \param attributes    Function symbol declaration attributes
              */
-            IdentifFunDeclaration(std::shared_ptr<Identifier> identifier,
+            IdentifierFunDeclaration(std::shared_ptr<Identifier> identifier,
                                   const std::vector<std::shared_ptr<Sort>> &signature,
                                   const std::vector<std::shared_ptr<Attribute>> &attributes);
 
@@ -199,17 +205,19 @@ namespace smtlib {
             std::vector<std::shared_ptr<Sort>> &getSignature();
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
 
-        /* =============================== ParamFunDeclaration ================================ */
+        /* =============================== ParametricFunDeclaration ================================ */
 
         /**
         * Parametric function symbol declaration.
         * Node of the SMT-LIB abstract syntax tree.
         * Can act as an attribute value.
         */
-        class ParamFunDeclaration : public IdentifFunDeclaration {
+        class ParametricFunDeclaration : public IdentifierFunDeclaration {
         private:
             std::vector<std::shared_ptr<Symbol>> params;
 
@@ -220,7 +228,7 @@ namespace smtlib {
              * \param identifier    Function identifier
              * \param signature     Function signature
              */
-            ParamFunDeclaration(const std::vector<std::shared_ptr<Symbol>> &params,
+            ParametricFunDeclaration(const std::vector<std::shared_ptr<Symbol>> &params,
                                 std::shared_ptr<Identifier> identifier,
                                 const std::vector<std::shared_ptr<Sort>> &signature);
 
@@ -231,12 +239,14 @@ namespace smtlib {
              * \param signature     Function signature
              * \param attributes    Function symbol declaration attributes
              */
-            ParamFunDeclaration(const std::vector<std::shared_ptr<Symbol>> &params,
+            ParametricFunDeclaration(const std::vector<std::shared_ptr<Symbol>> &params,
                                 std::shared_ptr<Identifier> identifier,
                                 const std::vector<std::shared_ptr<Sort>> &signature,
                                 const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::vector<std::shared_ptr<Symbol>> &getParams();
+
+            virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
         };

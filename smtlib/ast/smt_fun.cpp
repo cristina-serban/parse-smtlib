@@ -34,6 +34,10 @@ void FunctionDeclaration::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }
 
+void FunctionDeclaration::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string FunctionDeclaration::toString() {
     stringstream ss;
     ss << symbol->toString() << " ( ";
@@ -52,7 +56,7 @@ string FunctionDeclaration::toString() {
 FunctionDefinition::FunctionDefinition(shared_ptr<Symbol> symbol,
                                        const vector<shared_ptr<SortedVariable>> &params,
                                        shared_ptr<Sort> sort,
-                                       shared_ptr<ITerm> body)
+                                       shared_ptr<Term> body)
         : body(body) {
     signature = make_shared<FunctionDeclaration>(symbol, params, sort);
 }
@@ -65,12 +69,16 @@ void FunctionDefinition::setSignature(shared_ptr<FunctionDeclaration> signature)
     this->signature = signature;
 }
 
-shared_ptr<ITerm> FunctionDefinition::getBody() {
+shared_ptr<Term> FunctionDefinition::getBody() {
     return body;
 }
 
-void FunctionDefinition::setBody(shared_ptr<ITerm> body) {
+void FunctionDefinition::setBody(shared_ptr<Term> body) {
     this->body = body;
+}
+
+void FunctionDefinition::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
 }
 
 string FunctionDefinition::toString() {

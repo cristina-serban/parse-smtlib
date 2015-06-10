@@ -12,6 +12,10 @@ std::vector<shared_ptr<Command>> &Script::getCommands() {
     return commands;
 }
 
+void Script::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string Script::toString() {
     stringstream ss;
     for(vector<shared_ptr<Command>>::iterator it = commands.begin(); it != commands.end(); it++) {

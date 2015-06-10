@@ -11,26 +11,26 @@
 namespace smtlib {
     namespace ast {
 
-        class IAttributeValue : public virtual AstNode {
+        class AttributeValue : public virtual AstNode {
         };
 
-        class ISExpression : public virtual AstNode {
+        class SExpression : public virtual AstNode {
         };
 
-        class ITerm : public virtual AstNode {
+        class Term : public virtual AstNode {
         };
 
-        class IQualIdentifier : public virtual AstNode,
-                                public ITerm {
+        class QIdentifier : public virtual AstNode,
+                                public Term {
         };
 
-        class IIndex : public virtual AstNode {
+        class Index : public virtual AstNode {
         };
 
-        class ISpecConstant : public virtual AstNode,
-                              public ISExpression,
-                              public ITerm,
-                              public IAttributeValue{
+        class SpecConstant : public virtual AstNode,
+                              public SExpression,
+                              public Term,
+                              public AttributeValue {
         };
     }
 }

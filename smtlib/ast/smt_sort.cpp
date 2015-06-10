@@ -26,6 +26,10 @@ bool Sort::isParametric() {
     return !params.empty();
 }
 
+void Sort::accept(AstVisitor0* visitor) const {
+     visitor->visit(this);
+}
+
 string Sort::toString() {
     if(!isParametric()) {
         return identifier->toString();

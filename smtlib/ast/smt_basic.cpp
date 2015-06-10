@@ -14,6 +14,10 @@ void Symbol::setValue(string value) {
     this->value = value;
 }
 
+void Symbol::accept(AstVisitor0* visitor) const {
+    visitor->visit(this);
+}
+
 string Symbol::toString() {
     return value;
 }
@@ -26,6 +30,10 @@ string Keyword::getValue() {
 
 void Keyword::setValue(string value) {
     this->value = value;
+}
+
+void Keyword::accept(AstVisitor0* visitor) const {
+    visitor->visit(this);
 }
 
 string Keyword::toString() {
@@ -42,6 +50,10 @@ void MetaSpecConstant::setType(MetaSpecConstant::Type type) {
     this->type = type;
 }
 
+void MetaSpecConstant::accept(AstVisitor0* visitor) const {
+    visitor->visit(this);
+}
+
 string MetaSpecConstant::toString() {
     return (type == Type::META_SPEC_STRING) ? "STRING"
                                             : (type == Type::META_SPEC_NUMERAL ? "NUMERAL"
@@ -56,6 +68,10 @@ bool BooleanValue::getValue() {
 
 void BooleanValue::setValue(bool value) {
     this->value = value;
+}
+
+void BooleanValue::accept(AstVisitor0* visitor) const {
+    visitor->visit(this);
 }
 
 string BooleanValue::toString() {
@@ -81,6 +97,10 @@ bool PropLiteral::isNegated() {
 
 void PropLiteral::setNegated(bool negated) {
     this->negated = negated;
+}
+
+void PropLiteral::accept(AstVisitor0* visitor) const {
+    visitor->visit(this);
 }
 
 string PropLiteral::toString() {

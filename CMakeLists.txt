@@ -46,5 +46,5 @@ set(SOURCE_FILES
 	smtlib/parser/smt_parser.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} smtlib/util/smt_logger.h smtlib/util/smt_logger.cpp)
+add_executable(parse-smtlib ${SOURCE_FILES} smtlib/util/smt_logger.h smtlib/util/smt_logger.cpp smtlib/visitor/ast_visitor.h smtlib/visitor/ast_visitor.cpp smtlib/ast/smt_classes.h)
 target_link_libraries(parse-smtlib ${LIB_FLEX})

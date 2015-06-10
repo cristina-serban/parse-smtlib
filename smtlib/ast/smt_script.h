@@ -36,6 +36,8 @@ namespace smtlib {
 
             std::vector<std::shared_ptr<Command>> &getCommands();
 
+            virtual void accept(AstVisitor0* visitor) const;
+
             virtual std::string toString();
         };
     }

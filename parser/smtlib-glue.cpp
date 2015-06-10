@@ -102,12 +102,12 @@ SmtPtr smt_newAttribute1(SmtPtr keyword) {
 SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value) {
     return new Attribute(
             share<Keyword>(keyword),
-            share<IAttributeValue>(attr_value)
+            share<AttributeValue>(attr_value)
     );
 }
 
 SmtPtr smt_newCompoundAttributeValue(SmtList values) {
-    return new CompoundAttributeValue(values->unwrap<IAttributeValue>());
+    return new CompoundAttributeValue(values->unwrap<AttributeValue>());
 }
 
 // smt_basic.h
@@ -133,7 +133,7 @@ SmtPtr smt_newPropLiteral(SmtPtr symbol, int negated) {
 
 // smt_command.h
 SmtPtr smt_newAssertCommand(SmtPtr term) {
-    return new AssertCommand(share<ITerm>(term));
+    return new AssertCommand(share<Term>(term));
 }
 
 SmtPtr smt_newCheckSatCommand() {
@@ -168,7 +168,7 @@ SmtPtr smt_newDefineFunRecCommand(SmtPtr definition) {
 
 SmtPtr smt_newDefineFunsRecCommand(SmtList declarations, SmtList bodies) {
     return new DefineFunsRecCommand(declarations->unwrap<FunctionDeclaration>(),
-                                    bodies->unwrap<ITerm>());
+                                    bodies->unwrap<Term>());
 }
 
 SmtPtr smt_newDefineSortCommand(SmtPtr symbol, SmtList params, SmtPtr sort) {
@@ -218,7 +218,7 @@ SmtPtr smt_newGetUnsatCoreCommand() {
 }
 
 SmtPtr smt_newGetValueCommand(SmtList terms) {
-    return new GetValueCommand(terms->unwrap<ITerm>());
+    return new GetValueCommand(terms->unwrap<Term>());
 }
 
 SmtPtr smt_newPopCommand(SmtPtr numeral) {
@@ -254,7 +254,7 @@ SmtPtr smt_newFunctionDeclaration(SmtPtr symbol, SmtList params, SmtPtr sort) {
 }
 
 SmtPtr smt_newFunctionDefinition(SmtPtr signature, SmtPtr body) {
-    return new FunctionDefinition(share<FunctionDeclaration>(signature), share<ITerm>(body));
+    return new FunctionDefinition(share<FunctionDeclaration>(signature), share<Term>(body));
 }
 
 // smt_identifier.h
@@ -264,7 +264,7 @@ SmtPtr smt_newIdentifier1(SmtPtr symbol) {
 
 SmtPtr smt_newIdentifier2(SmtPtr symbol, SmtList indices) {
     return new Identifier(share<Symbol>(symbol),
-                          indices->unwrap<IIndex>());
+                          indices->unwrap<Index>());
 }
 
 SmtPtr smt_newQualifiedIdentifier(SmtPtr identifier, SmtPtr sort) {
@@ -292,7 +292,7 @@ SmtPtr smt_newLogic(SmtPtr name, SmtList attributes) {
 
 // smt_s_expr.h
 SmtPtr smt_newCompSExpression(SmtList exprs) {
-    return new CompSExpression(exprs->unwrap<ISExpression>());
+    return new CompSExpression(exprs->unwrap<SExpression>());
 }
 
 // smt_script.h
@@ -318,7 +318,7 @@ SmtPtr smt_newSortSymbolDeclaration(SmtPtr identifier, SmtPtr arity, SmtList att
 }
 
 SmtPtr smt_newSpecConstFunDeclaration(SmtPtr constant, SmtPtr sort, SmtList attributes) {
-    return new SpecConstFunDeclaration(share<ISpecConstant>(constant), share<Sort>(sort),
+    return new SpecConstFunDeclaration(share<SpecConstant>(constant), share<Sort>(sort),
                                        attributes->unwrap<Attribute>());
 }
 
@@ -328,13 +328,13 @@ SmtPtr smt_newMetaSpecConstFunDeclaration(SmtPtr constant, SmtPtr sort, SmtList 
 }
 
 SmtPtr smt_newIdentifFunDeclaration(SmtPtr identifier, SmtList signature, SmtList attributes) {
-    return new IdentifFunDeclaration(share<Identifier>(identifier),
+    return new IdentifierFunDeclaration(share<Identifier>(identifier),
                                      signature->unwrap<Sort>(),
                                      attributes->unwrap<Attribute>());
 }
 
 SmtPtr smt_newParamFunDeclaration(SmtList params, SmtPtr identifier, SmtList signature, SmtList attributes) {
-    return new ParamFunDeclaration(params->unwrap<Symbol>(),
+    return new ParametricFunDeclaration(params->unwrap<Symbol>(),
                                    share<Identifier>(identifier),
                                    signature->unwrap<Sort>(),
                                    attributes->unwrap<Attribute>());
@@ -342,27 +342,27 @@ SmtPtr smt_newParamFunDeclaration(SmtList params, SmtPtr identifier, SmtList sig
 
 // smt_term.h
 SmtPtr smt_newQualifiedTerm(SmtPtr identifier, SmtList terms) {
-    return new QualifiedTerm(share<IQualIdentifier>(identifier),
-                             terms->unwrap<ITerm>());
+    return new QualifiedTerm(share<QIdentifier>(identifier),
+                             terms->unwrap<Term>());
 }
 
 SmtPtr smt_newLetTerm(SmtList bindings, SmtPtr term) {
     return new LetTerm(bindings->unwrap<VarBinding>(),
-                       share<ITerm>(term));
+                       share<Term>(term));
 }
 
 SmtPtr smt_newForallTerm(SmtList bindings, SmtPtr term) {
     return new ForallTerm(bindings->unwrap<SortedVariable>(),
-                          share<ITerm>(term));
+                          share<Term>(term));
 }
 
 SmtPtr smt_newExistsTerm(SmtList bindings, SmtPtr term) {
     return new ExistsTerm(bindings->unwrap<SortedVariable>(),
-                          share<ITerm>(term));
+                          share<Term>(term));
 }
 
 SmtPtr smt_newAnnotatedTerm(SmtPtr term, SmtList attrs) {
-    return new AnnotatedTerm(share<ITerm>(term),
+    return new AnnotatedTerm(share<Term>(term),
                              attrs->unwrap<Attribute>());
 }
 
@@ -378,5 +378,5 @@ SmtPtr smt_newSortedVariable(SmtPtr symbol, SmtPtr sort) {
 }
 
 SmtPtr smt_newVarBinding(SmtPtr symbol, SmtPtr term) {
-    return new VarBinding(share<Symbol>(symbol), share<ITerm>(term));
+    return new VarBinding(share<Symbol>(symbol), share<Term>(term));
 }
