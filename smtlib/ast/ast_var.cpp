@@ -1,5 +1,5 @@
 #include <sstream>
-#include "smt_var.h"
+#include "ast_var.h"
 
 using namespace std;
 using namespace smtlib::ast;

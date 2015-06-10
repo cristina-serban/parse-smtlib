@@ -3,14 +3,14 @@
  * \brief SMT-LIB script.
  */
 
-#ifndef PARSE_SMTLIB_SMT_SCRIPT_H
-#define PARSE_SMTLIB_SMT_SCRIPT_H
+#ifndef PARSE_SMTLIB_AST_SCRIPT_H
+#define PARSE_SMTLIB_AST_SCRIPT_H
 
 #include <memory>
 #include <vector>
-#include "smt_abstract.h"
-#include "smt_command.h"
-#include "smt_basic.h"
+#include "ast_abstract.h"
+#include "ast_command.h"
+#include "ast_basic.h"
 
 namespace smtlib {
     namespace ast {
@@ -43,4 +43,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_SCRIPT_H
+#endif //PARSE_SMTLIB_AST_SCRIPT_H

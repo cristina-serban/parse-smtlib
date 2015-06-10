@@ -3,14 +3,14 @@
  * \brief SMT-LIB terms.
  */
 
-#ifndef PARSE_SMTLIB_SMT_TERM_H
-#define PARSE_SMTLIB_SMT_TERM_H
+#ifndef PARSE_SMTLIB_AST_TERM_H
+#define PARSE_SMTLIB_AST_TERM_H
 
 #include <memory>
 #include <vector>
-#include "smt_interfaces.h"
-#include "smt_var.h"
-#include "smt_attribute.h"
+#include "ast_interfaces.h"
+#include "ast_var.h"
+#include "ast_attribute.h"
 
 namespace smtlib {
     namespace ast {
@@ -156,4 +156,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_TERM_H
+#endif //PARSE_SMTLIB_AST_TERM_H

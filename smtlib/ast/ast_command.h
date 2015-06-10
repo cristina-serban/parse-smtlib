@@ -3,18 +3,18 @@
  * \brief SMT-LIB commands that appear in a query file.
  */
 
-#ifndef PARSE_SMTLIB_SMT_COMMAND_H
-#define PARSE_SMTLIB_SMT_COMMAND_H
+#ifndef PARSE_SMTLIB_AST_COMMAND_H
+#define PARSE_SMTLIB_AST_COMMAND_H
 
 #include <memory>
 #include <vector>
-#include "smt_abstract.h"
-#include "smt_interfaces.h"
-#include "smt_basic.h"
-#include "smt_sort.h"
-#include "smt_literal.h"
-#include "smt_fun.h"
-#include "smt_attribute.h"
+#include "ast_abstract.h"
+#include "ast_interfaces.h"
+#include "ast_basic.h"
+#include "ast_sort.h"
+#include "ast_literal.h"
+#include "ast_fun.h"
+#include "ast_attribute.h"
 
 namespace smtlib {
 	namespace ast {
@@ -633,4 +633,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_COMMAND_H
+#endif //PARSE_SMTLIB_AST_COMMAND_H

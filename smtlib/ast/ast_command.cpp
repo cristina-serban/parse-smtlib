@@ -1,5 +1,5 @@
 #include <sstream>
-#include "smt_command.h"
+#include "ast_command.h"
 
 using namespace std;
 using namespace smtlib::ast;

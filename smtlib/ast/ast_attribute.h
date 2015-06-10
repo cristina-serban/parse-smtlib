@@ -1,17 +1,17 @@
 /**
- * \file smt_attribute.h
+ * \file ast_attribute.h
  * \brief SMT-LIB attribute.
  */
 
-#ifndef PARSE_SMTLIB_SMT_ATTR_H
-#define PARSE_SMTLIB_SMT_ATTR_H
+#ifndef PARSE_SMTLIB_AST_ATTR_H
+#define PARSE_SMTLIB_AST_ATTR_H
 
 #include <memory>
 #include <string>
 #include <vector>
-#include "smt_abstract.h"
-#include "smt_basic.h"
-#include "smt_interfaces.h"
+#include "ast_abstract.h"
+#include "ast_basic.h"
+#include "ast_interfaces.h"
 #include "../visitor/ast_visitor.h"
 
 namespace smtlib {
@@ -76,4 +76,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_ATTR_H
+#endif //PARSE_SMTLIB_AST_ATTR_H

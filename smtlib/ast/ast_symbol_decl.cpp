@@ -1,5 +1,5 @@
 #include <sstream>
-#include "smt_symbol_decl.h"
+#include "ast_symbol_decl.h"
 
 using namespace std;
 using namespace smtlib::ast;

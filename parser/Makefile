@@ -7,7 +7,7 @@ smtlib-parser:
 	g++ -g -c smtlib-flex-lexer.l.c -o smtlib-flex-lexer.l.o
 	g++ -g -c smtlib-bison-parser.y.c -o smtlib-bison-parser.y.o
 	g++ -g -c -std=c++11 smtlib-glue.cpp -o smtlib-glue.o
-	g++ -g -c -std=c++11 ../smtlib/ast/smt_attribute.cpp -o smt_attribute.o
+	g++ -g -c -std=c++11 ../smtlib/ast/ast_attribute.cpp -o ast_attribute.o
 	g++ -g -c -std=c++11 ../smtlib/ast/smt_basic.cpp -o smt_basic.o
 	g++ -g -c -std=c++11 ../smtlib/ast/smt_command.cpp -o smt_command.o
 	g++ -g -c -std=c++11 ../smtlib/ast/smt_fun.cpp -o smt_fun.o
@@ -23,7 +23,7 @@ smtlib-parser:
 	g++ -g -c -std=c++11 ../smtlib/ast/smt_var.cpp -o smt_var.o
 	g++ -g -c -std=c++11 ../smtlib/parser/smt_parser.cpp -o smt_parser.o
 	g++ -g -c -std=c++11 ../smtlib/util/smt_logger.cpp -o smt_logger.o
-	g++ -g -o parse-smtlib smtlib-flex-lexer.l.o smtlib-bison-parser.y.o smtlib-glue.o smt_attribute.o smt_basic.o smt_command.o smt_fun.o smt_identifier.o smt_literal.o smt_logic.o smt_s_expr.o smt_sort.o smt_script.o smt_symbol_decl.o smt_term.o smt_theory.o smt_var.o smt_parser.o smt_logger.o -lfl
+	g++ -g -o parse-smtlib smtlib-flex-lexer.l.o smtlib-bison-parser.y.o smtlib-glue.o ast_attribute.o smt_basic.o smt_command.o smt_fun.o smt_identifier.o smt_literal.o smt_logic.o smt_s_expr.o smt_sort.o smt_script.o smt_symbol_decl.o smt_term.o smt_theory.o smt_var.o smt_parser.o smt_logger.o -lfl
 	rm -f *.o
 clean:
 	rm -f smtlib-bison-parser.y.h

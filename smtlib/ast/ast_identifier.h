@@ -3,14 +3,14 @@
  * \brief SMT-LIB identifiers.
  */
 
-#ifndef PARSE_SMTLIB_SMT_IDENTIFIER_H
-#define PARSE_SMTLIB_SMT_IDENTIFIER_H
+#ifndef PARSE_SMTLIB_AST_IDENTIFIER_H
+#define PARSE_SMTLIB_AST_IDENTIFIER_H
 
 #include <memory>
 #include <vector>
-#include "smt_basic.h"
-#include "smt_interfaces.h"
-#include "smt_sort.h"
+#include "ast_basic.h"
+#include "ast_interfaces.h"
+#include "ast_sort.h"
 
 namespace smtlib {
     namespace ast {
@@ -85,4 +85,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_IDENTIFIER_H
+#endif //PARSE_SMTLIB_AST_IDENTIFIER_H

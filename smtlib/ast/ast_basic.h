@@ -3,13 +3,13 @@
  * \brief Basic SMT-LIB concepts.
  */
 
-#ifndef PARSE_SMTLIB_SMT_BASIC_H
-#define PARSE_SMTLIB_SMT_BASIC_H
+#ifndef PARSE_SMTLIB_AST_BASIC_H
+#define PARSE_SMTLIB_AST_BASIC_H
 
 #include <memory>
 #include <string>
-#include "smt_abstract.h"
-#include "smt_interfaces.h"
+#include "ast_abstract.h"
+#include "ast_interfaces.h"
 
 namespace smtlib {
     namespace ast {
@@ -143,4 +143,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_BASIC_H
+#endif //PARSE_SMTLIB_AST_BASIC_H

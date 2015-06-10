@@ -2,7 +2,7 @@
 #define PARSE_SMTLIB_SMTLIB_GLUE_H
 
 #ifdef __cplusplus
-#include "../smtlib/ast/smt_abstract.h"
+#include "../smtlib/ast/ast_abstract.h"
 namespace smtlib {
     namespace ast {
         class AstNode;
@@ -36,7 +36,7 @@ void smt_listDelete(SmtList list);
 
 int smt_bool_value(SmtPtr ptr);
 
-// smt_attribute.h
+// ast_attribute.h
 SmtPtr smt_newAttribute1(SmtPtr keyword);
 SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value);
 SmtPtr smt_newCompoundAttributeValue(SmtList values);

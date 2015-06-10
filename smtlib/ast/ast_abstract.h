@@ -1,10 +1,10 @@
 /**
- * \file smt_abstract.h
+ * \file ast_abstract.h
  * \brief Abstract SMT-LIB data structures.
  */
 
-#ifndef PARSE_SMTLIB_SMT_ABSTRACT_H
-#define PARSE_SMTLIB_SMT_ABSTRACT_H
+#ifndef PARSE_SMTLIB_AST_ABSTRACT_H
+#define PARSE_SMTLIB_AST_ABSTRACT_H
 
 #include <memory>
 #include <string>
@@ -30,4 +30,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_ABSTRACT_H
+#endif //PARSE_SMTLIB_AST_ABSTRACT_H

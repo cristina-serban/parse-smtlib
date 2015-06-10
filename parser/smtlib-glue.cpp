@@ -6,20 +6,20 @@
 
 #include "../smtlib/parser/smt_parser.h"
 
-#include "../smtlib/ast/smt_attribute.h"
-#include "../smtlib/ast/smt_basic.h"
-#include "../smtlib/ast/smt_command.h"
-#include "../smtlib/ast/smt_fun.h"
-#include "../smtlib/ast/smt_identifier.h"
-#include "../smtlib/ast/smt_literal.h"
-#include "../smtlib/ast/smt_logic.h"
-#include "../smtlib/ast/smt_s_expr.h"
-#include "../smtlib/ast/smt_script.h"
-#include "../smtlib/ast/smt_sort.h"
-#include "../smtlib/ast/smt_symbol_decl.h"
-#include "../smtlib/ast/smt_term.h"
-#include "../smtlib/ast/smt_theory.h"
-#include "../smtlib/ast/smt_var.h"
+#include "../smtlib/ast/ast_attribute.h"
+#include "ast_basic.h"
+#include "ast_command.h"
+#include "ast_fun.h"
+#include "ast_identifier.h"
+#include "ast_literal.h"
+#include "ast_logic.h"
+#include "ast_sexp.h"
+#include "ast_script.h"
+#include "ast_sort.h"
+#include "ast_symbol_decl.h"
+#include "ast_term.h"
+#include "ast_theory.h"
+#include "ast_var.h"
 
 namespace smtlib {
     namespace ast {
@@ -94,7 +94,7 @@ int smt_bool_value(SmtPtr ptr) {
     }
 }
 
-// smt_attribute.h
+// ast_attribute.h
 SmtPtr smt_newAttribute1(SmtPtr keyword) {
     return new Attribute(share<Keyword>(keyword));
 }

@@ -1,5 +1,5 @@
 #include <sstream>
-#include "smt_attribute.h"
+#include "ast_attribute.h"
 
 using namespace smtlib::ast;
 using namespace std;

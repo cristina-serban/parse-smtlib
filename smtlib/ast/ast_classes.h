@@ -1,5 +1,5 @@
-#ifndef PARSE_SMTLIB_SMT_CLASSES_H
-#define PARSE_SMTLIB_SMT_CLASSES_H
+#ifndef PARSE_SMTLIB_AST_CLASSES_H
+#define PARSE_SMTLIB_AST_CLASSES_H
 
 namespace smtlib {
     namespace ast {
@@ -78,4 +78,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_CLASSES_H
+#endif //PARSE_SMTLIB_AST_CLASSES_H

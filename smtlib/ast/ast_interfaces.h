@@ -3,10 +3,10 @@
  * \brief Interfaces that need to be implemented by some of the SMT-LIB AST nodes
  */
 
-#ifndef PARSE_SMTLIB_SMT_INTERFACES_H
-#define PARSE_SMTLIB_SMT_INTERFACES_H
+#ifndef PARSE_SMTLIB_AST_INTERFACES_H
+#define PARSE_SMTLIB_AST_INTERFACES_H
 
-#include "smt_abstract.h"
+#include "ast_abstract.h"
 
 namespace smtlib {
     namespace ast {
@@ -35,4 +35,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_INTERFACES_H
+#endif //PARSE_SMTLIB_AST_INTERFACES_H

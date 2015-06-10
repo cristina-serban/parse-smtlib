@@ -1,5 +1,5 @@
 #include <visitor/ast_visitor.h>
-#include <ast/smt_abstract.h>
+#include <ast/ast_abstract.h>
 
 using namespace smtlib::ast;
 

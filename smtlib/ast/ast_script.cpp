@@ -1,5 +1,5 @@
 #include <sstream>
-#include "smt_script.h"
+#include "ast_script.h"
 
 using namespace std;
 using namespace smtlib::ast;

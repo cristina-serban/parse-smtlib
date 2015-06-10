@@ -3,12 +3,12 @@
  * \brief SMT-LIB literals.
  */
 
-#ifndef PARSE_SMTLIB_SMT_LITERAL_H
-#define PARSE_SMTLIB_SMT_LITERAL_H
+#ifndef PARSE_SMTLIB_AST_LITERAL_H
+#define PARSE_SMTLIB_AST_LITERAL_H
 
 #include <string>
-#include "smt_abstract.h"
-#include "smt_interfaces.h"
+#include "ast_abstract.h"
+#include "ast_interfaces.h"
 
 namespace smtlib {
     namespace ast {
@@ -90,4 +90,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_LITERAL_H
+#endif //PARSE_SMTLIB_AST_LITERAL_H

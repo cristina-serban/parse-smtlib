@@ -3,17 +3,17 @@
  * \brief Function declaration and definition.
  */
 
-#ifndef PARSE_SMTLIB_SMT_FUN_H
-#define PARSE_SMTLIB_SMT_FUN_H
+#ifndef PARSE_SMTLIB_AST_FUN_H
+#define PARSE_SMTLIB_AST_FUN_H
 
 #include <memory>
 #include <vector>
 #include <visitor/ast_visitor.h>
-#include "smt_abstract.h"
-#include "smt_basic.h"
-#include "smt_interfaces.h"
-#include "smt_sort.h"
-#include "smt_var.h"
+#include "ast_abstract.h"
+#include "ast_basic.h"
+#include "ast_interfaces.h"
+#include "ast_sort.h"
+#include "ast_var.h"
 
 namespace smtlib {
     namespace ast {
@@ -92,4 +92,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_FUN_H
+#endif //PARSE_SMTLIB_AST_FUN_H

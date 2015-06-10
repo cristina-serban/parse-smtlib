@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 #include <sstream>
-#include "smt_literal.h"
+#include "ast_literal.h"
 
 using namespace smtlib::ast;
 using namespace std;

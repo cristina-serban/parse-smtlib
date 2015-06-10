@@ -3,13 +3,13 @@
  * \brief SMT-LIB sort.
  */
 
-#ifndef PARSE_SMTLIB_SMT_SORT_H
-#define PARSE_SMTLIB_SMT_SORT_H
+#ifndef PARSE_SMTLIB_AST_SORT_H
+#define PARSE_SMTLIB_AST_SORT_H
 
 #include <memory>
 #include <vector>
-#include "smt_basic.h"
-#include "smt_identifier.h"
+#include "ast_basic.h"
+#include "ast_identifier.h"
 
 namespace smtlib {
     namespace ast {
@@ -55,4 +55,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_SORT_H
+#endif //PARSE_SMTLIB_AST_SORT_H

@@ -3,18 +3,18 @@
  * \brief SMT-LIB sort and function symbol declarations.
  */
 
-#ifndef PARSE_SMTLIB_SMT_SYMBOL_DECL_H
-#define PARSE_SMTLIB_SMT_SYMBOL_DECL_H
+#ifndef PARSE_SMTLIB_AST_SYMBOL_DECL_H
+#define PARSE_SMTLIB_AST_SYMBOL_DECL_H
 
 #include <memory>
 #include <vector>
-#include "smt_abstract.h"
-#include "smt_attribute.h"
-#include "smt_basic.h"
-#include "smt_identifier.h"
-#include "smt_interfaces.h"
-#include "smt_sort.h"
-#include "smt_literal.h"
+#include "ast_abstract.h"
+#include "ast_attribute.h"
+#include "ast_basic.h"
+#include "ast_identifier.h"
+#include "ast_interfaces.h"
+#include "ast_sort.h"
+#include "ast_literal.h"
 
 namespace smtlib {
     namespace ast {
@@ -253,4 +253,4 @@ namespace smtlib {
     }
 }
 
-#endif //PARSE_SMTLIB_SMT_SYMBOL_DECL_H
+#endif //PARSE_SMTLIB_AST_SYMBOL_DECL_H

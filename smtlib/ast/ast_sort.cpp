@@ -1,5 +1,5 @@
 #include <sstream>
-#include "smt_sort.h"
+#include "ast_sort.h"
 
 using namespace std;
 using namespace smtlib::ast;

@@ -1,5 +1,5 @@
 #include <sstream>
-#include "smt_s_expr.h"
+#include "ast_sexp.h"
 
 using namespace std;
 using namespace smtlib::ast;

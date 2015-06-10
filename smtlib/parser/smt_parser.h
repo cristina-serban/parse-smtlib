@@ -3,7 +3,7 @@
 
 #include <memory>
 #include <string>
-#include "../ast/smt_abstract.h"
+#include "../ast/ast_abstract.h"
 
 namespace smtlib {
     class Parser {

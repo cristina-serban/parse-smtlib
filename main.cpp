@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 #include "smtlib/parser/smt_parser.h"
-#include "smtlib/ast/smt_abstract.h"
+#include "smtlib/ast/ast_abstract.h"
 
 using namespace std;
 using namespace smtlib;

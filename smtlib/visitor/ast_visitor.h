@@ -2,7 +2,7 @@
 #define PARSE_SMTLIB_AST_VISITOR_H
 
 #include <memory>
-#include <ast/smt_classes.h>
+#include "ast_classes.h"
 
 namespace smtlib {
     namespace ast {
