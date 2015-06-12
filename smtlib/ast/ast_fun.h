@@ -37,12 +37,12 @@ namespace smtlib {
                                 const std::vector<std::shared_ptr<SortedVariable>> &params,
                                 std::shared_ptr<Sort> sort);
 
-            std::shared_ptr<Symbol> getSymbol();
+            std::shared_ptr<Symbol> getSymbol() const;
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
             std::vector<std::shared_ptr<SortedVariable>> &getParams();
 
-            std::shared_ptr<Sort> getSort();
+            std::shared_ptr<Sort> getSort() const;
             void setSort(std::shared_ptr<Sort> sort);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -79,10 +79,10 @@ namespace smtlib {
                                std::shared_ptr<Sort> sort,
                                std::shared_ptr<Term> body);
 
-            std::shared_ptr<FunctionDeclaration> getSignature();
+            std::shared_ptr<FunctionDeclaration> getSignature() const;
             void setSignature(std::shared_ptr<FunctionDeclaration> signature);
 
-            std::shared_ptr<Term> getBody();
+            std::shared_ptr<Term> getBody() const;
             void setBody(std::shared_ptr<Term> body);
 
             virtual void accept(AstVisitor0* visitor) const;

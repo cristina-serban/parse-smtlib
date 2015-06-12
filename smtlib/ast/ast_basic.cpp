@@ -83,7 +83,7 @@ string BooleanValue::toString() {
 
 /* =================================== PropLiteral ==================================== */
 
-shared_ptr<Symbol> PropLiteral::getSymbol() {
+shared_ptr<Symbol> PropLiteral::getSymbol() const {
     return symbol;
 }
 

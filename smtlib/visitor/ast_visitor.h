@@ -2,7 +2,7 @@
 #define PARSE_SMTLIB_AST_VISITOR_H
 
 #include <memory>
-#include "ast_classes.h"
+#include <ast/ast_classes.h>
 
 namespace smtlib {
     namespace ast {
@@ -80,28 +80,6 @@ namespace smtlib {
             virtual void visit(SortedVariable const *node) = 0;
             virtual void visit(VarBinding const *node) = 0;
         };
-
-        template<class RetT>
-        class AstVisitor1 : public AstVisitor0 {
-        protected:
-            RetT ret;
-
-            RetT wrappedVisit(AstNode const *node);
-        public:
-            virtual RetT run (AstNode const *node);
-        };
-
-        template<class RetT, class ArgT>
-        class AstVisitor2 : public AstVisitor0 {
-        protected:
-            ArgT arg;
-            RetT ret;
-
-            RetT wrappedVisit(ArgT arg, AstNode const *node);
-        public:
-            virtual RetT run(ArgT arg, AstNode const *node);
-        };
-
     }
 }
 

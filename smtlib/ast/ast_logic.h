@@ -38,10 +38,11 @@ namespace smtlib {
             Logic(std::shared_ptr<Symbol> name,
                      const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<Symbol> getName();
+            std::shared_ptr<Symbol> getName() const;
             void setName(std::shared_ptr<Symbol> name);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            std::vector<std::shared_ptr<Attribute>> getAttributes() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 

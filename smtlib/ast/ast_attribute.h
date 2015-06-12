@@ -46,7 +46,7 @@ namespace smtlib {
                       std::shared_ptr<AttributeValue> value)
                     : keyword(keyword), value(value) { }
 
-            std::shared_ptr<Keyword> getKeyword();
+            std::shared_ptr<Keyword> getKeyword() const;
             void setKeyword(std::shared_ptr<Keyword> keyword);
 
             std::shared_ptr<AttributeValue> getValue();

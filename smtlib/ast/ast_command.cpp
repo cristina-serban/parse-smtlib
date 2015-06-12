@@ -6,7 +6,7 @@ using namespace smtlib::ast;
 
 /* ================================== AssertCommand =================================== */
 
-shared_ptr<Term> AssertCommand::getTerm() {
+shared_ptr<Term> AssertCommand::getTerm() const {
     return term;
 }
 
@@ -64,7 +64,7 @@ string CheckSatAssumCommand::toString() {
 
 /* =============================== DeclareConstCommand ================================ */
 
-shared_ptr<Symbol> DeclareConstCommand::getSymbol() {
+shared_ptr<Symbol> DeclareConstCommand::getSymbol() const {
     return symbol;
 }
 
@@ -72,7 +72,7 @@ void DeclareConstCommand::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-shared_ptr<Sort> DeclareConstCommand::getSort() {
+shared_ptr<Sort> DeclareConstCommand::getSort() const {
     return sort;
 }
 
@@ -99,7 +99,7 @@ DeclareFunCommand::DeclareFunCommand(shared_ptr<Symbol> symbol,
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
-shared_ptr<Symbol> DeclareFunCommand::getSymbol() {
+shared_ptr<Symbol> DeclareFunCommand::getSymbol() const {
     return symbol;
 }
 
@@ -111,7 +111,7 @@ vector<shared_ptr<Sort>> &DeclareFunCommand::getParams() {
     return params;
 }
 
-shared_ptr<Sort> DeclareFunCommand::getSort() {
+shared_ptr<Sort> DeclareFunCommand::getSort() const {
     return sort;
 }
 
@@ -138,7 +138,7 @@ string DeclareFunCommand::toString() {
 
 /* =============================== DeclareSortCommand ================================ */
 
-shared_ptr<Symbol> DeclareSortCommand::getSymbol() {
+shared_ptr<Symbol> DeclareSortCommand::getSymbol() const {
     return symbol;
 }
 
@@ -146,7 +146,7 @@ void DeclareSortCommand::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-shared_ptr<NumeralLiteral> DeclareSortCommand::getArity() {
+shared_ptr<NumeralLiteral> DeclareSortCommand::getArity() const {
     return arity;
 }
 
@@ -178,7 +178,7 @@ DefineFunCommand::DefineFunCommand(shared_ptr<Symbol> symbol,
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
 }
 
-shared_ptr<FunctionDefinition> DefineFunCommand::getDefinition() {
+shared_ptr<FunctionDefinition> DefineFunCommand::getDefinition() const {
     return definition;
 }
 
@@ -210,7 +210,7 @@ DefineFunRecCommand::DefineFunRecCommand(shared_ptr<Symbol> symbol,
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
 }
 
-shared_ptr<FunctionDefinition> DefineFunRecCommand::getDefinition() {
+shared_ptr<FunctionDefinition> DefineFunRecCommand::getDefinition() const {
     return definition;
 }
 
@@ -245,6 +245,14 @@ std::vector<std::shared_ptr<Term>> &DefineFunsRecCommand::getBodies() {
     return bodies;
 }
 
+std::vector<std::shared_ptr<FunctionDeclaration>> DefineFunsRecCommand::getDeclarations() const {
+    return declarations;
+}
+
+std::vector<std::shared_ptr<Term>> DefineFunsRecCommand::getBodies() const {
+    return bodies;
+}
+
 void DefineFunsRecCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
@@ -276,7 +284,7 @@ DefineSortCommand::DefineSortCommand(shared_ptr<Symbol> symbol,
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
-shared_ptr<Symbol> DefineSortCommand::getSymbol() {
+shared_ptr<Symbol> DefineSortCommand::getSymbol() const {
     return symbol;
 }
 
@@ -288,7 +296,7 @@ vector<shared_ptr<Symbol>> &DefineSortCommand::getParams() {
     return params;
 }
 
-shared_ptr<Sort> DefineSortCommand::getSort() {
+shared_ptr<Sort> DefineSortCommand::getSort() const {
     return sort;
 }
 
@@ -315,6 +323,10 @@ string DefineSortCommand::toString() {
 /* =================================== EchoCommand ==================================== */
 
 string &EchoCommand::getMessage() {
+    return message;
+}
+
+string EchoCommand::getMessage() const {
     return message;
 }
 
@@ -364,7 +376,7 @@ string GetAssignsCommand::toString() {
 
 /* ================================== GetInfoCommand ================================== */
 
-shared_ptr<Keyword> GetInfoCommand::getFlag() {
+shared_ptr<Keyword> GetInfoCommand::getFlag() const {
     return flag;
 }
 
@@ -394,7 +406,7 @@ string GetModelCommand::toString() {
 
 /* ================================= GetOptionCommand ================================= */
 
-shared_ptr<Keyword> GetOptionCommand::getOption() {
+shared_ptr<Keyword> GetOptionCommand::getOption() const {
     return option;
 }
 
@@ -452,6 +464,10 @@ vector<shared_ptr<Term>> &GetValueCommand::getTerms() {
     return terms;
 }
 
+vector<shared_ptr<Term>> GetValueCommand::getTerms() const {
+    return terms;
+}
+
 void GetValueCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
@@ -470,7 +486,7 @@ string GetValueCommand::toString() {
 
 /* =================================== PopCommand ==================================== */
 
-shared_ptr<NumeralLiteral> PopCommand::getNumeral() {
+shared_ptr<NumeralLiteral> PopCommand::getNumeral() const {
     return numeral;
 }
 
@@ -490,7 +506,7 @@ string PopCommand::toString() {
 
 /* =================================== PushCommand ==================================== */
 
-shared_ptr<NumeralLiteral> PushCommand::getNumeral() {
+shared_ptr<NumeralLiteral> PushCommand::getNumeral() const {
     return numeral;
 }
 
@@ -530,7 +546,7 @@ string ResetAssertsCommand::toString() {
 
 /* ================================== SetInfoCommand ================================== */
 
-shared_ptr<Attribute> SetInfoCommand::getInfo() {
+shared_ptr<Attribute> SetInfoCommand::getInfo() const {
     return info;
 }
 
@@ -551,7 +567,7 @@ string SetInfoCommand::toString() {
 
 /* ================================= SetLogicCommand ================================== */
 
-shared_ptr<Symbol> SetLogicCommand::getLogic() {
+shared_ptr<Symbol> SetLogicCommand::getLogic() const {
     return logic;
 }
 
@@ -571,7 +587,7 @@ string SetLogicCommand::toString() {
 
 /* ================================= SetOptionCommand ================================= */
 
-shared_ptr<Attribute> SetOptionCommand::getOption() {
+shared_ptr<Attribute> SetOptionCommand::getOption() const {
     return option;
 }
 

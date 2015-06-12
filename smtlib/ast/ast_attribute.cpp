@@ -6,7 +6,7 @@ using namespace std;
 
 /* ==================================== Attribute ===================================== */
 
-shared_ptr<Keyword> Attribute::getKeyword() {
+shared_ptr<Keyword> Attribute::getKeyword() const {
     return keyword;
 }
 

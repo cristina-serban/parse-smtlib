@@ -1,4 +1,4 @@
-#include "ast_visitor.h"
+#include <visitor/ast_visitor_extra.h>
 
 #ifndef PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
 #define PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
@@ -89,6 +89,11 @@ namespace smtlib {
 
             virtual void visit(SortedVariable const *node);
             virtual void visit(VarBinding const *node);
+
+            virtual bool run (AstNode const *node) {
+                ret = true;
+                return wrappedVisit(node);
+            }
         };
     }
 }

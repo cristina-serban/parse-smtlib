@@ -40,7 +40,7 @@ namespace smtlib {
              */
             AssertCommand(std::shared_ptr<Term> term) : term(term) { }
 
-            std::shared_ptr<Term> getTerm();
+            std::shared_ptr<Term> getTerm() const;
             void setTerm(std::shared_ptr<Term> term);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -101,10 +101,10 @@ namespace smtlib {
             DeclareConstCommand(std::shared_ptr<Symbol> symbol, std::shared_ptr<Sort> sort)
                     : symbol(symbol), sort(sort) { }
 
-            std::shared_ptr<Symbol> getSymbol();
+            std::shared_ptr<Symbol> getSymbol() const;
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
-            std::shared_ptr<Sort> getSort();
+            std::shared_ptr<Sort> getSort() const;
             void setSort(std::shared_ptr<Sort> sort);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -132,12 +132,12 @@ namespace smtlib {
                               const std::vector<std::shared_ptr<Sort>> &params,
                               std::shared_ptr<Sort> sort);
 
-            std::shared_ptr<Symbol> getSymbol();
+            std::shared_ptr<Symbol> getSymbol() const;
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
             std::vector<std::shared_ptr<Sort>> &getParams();
 
-            std::shared_ptr<Sort> getSort();
+            std::shared_ptr<Sort> getSort() const;
             void setSort(std::shared_ptr<Sort> sort);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -163,10 +163,10 @@ namespace smtlib {
                                std::shared_ptr<NumeralLiteral> arity)
                     : symbol(symbol), arity(arity) { }
 
-            std::shared_ptr<Symbol> getSymbol();
+            std::shared_ptr<Symbol> getSymbol() const;
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
-            std::shared_ptr<NumeralLiteral> getArity();
+            std::shared_ptr<NumeralLiteral> getArity() const;
             void setArity(std::shared_ptr<NumeralLiteral> arity);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -207,7 +207,7 @@ namespace smtlib {
                              std::shared_ptr<Sort> sort,
                              std::shared_ptr<Term> body);
 
-            std::shared_ptr<FunctionDefinition> getDefinition();
+            std::shared_ptr<FunctionDefinition> getDefinition() const;
             void setDefinition(std::shared_ptr<FunctionDefinition> definition);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -248,7 +248,7 @@ namespace smtlib {
                                 std::shared_ptr<Sort> sort,
                                 std::shared_ptr<Term> body);
 
-            std::shared_ptr<FunctionDefinition> getDefinition();
+            std::shared_ptr<FunctionDefinition> getDefinition() const;
             void setDefinition(std::shared_ptr<FunctionDefinition> definition);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -274,8 +274,10 @@ namespace smtlib {
                                  const std::vector<std::shared_ptr<Term>> &bodies);
 
             std::vector<std::shared_ptr<FunctionDeclaration>> &getDeclarations();
-
             std::vector<std::shared_ptr<Term>> &getBodies();
+
+            std::vector<std::shared_ptr<FunctionDeclaration>> getDeclarations() const;
+            std::vector<std::shared_ptr<Term>> getBodies() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 
@@ -301,12 +303,12 @@ namespace smtlib {
                               const std::vector<std::shared_ptr<Symbol>> &params,
                               std::shared_ptr<Sort> sort);
 
-            std::shared_ptr<Symbol> getSymbol();
+            std::shared_ptr<Symbol> getSymbol() const;
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
             std::vector<std::shared_ptr<Symbol>> &getParams();
 
-            std::shared_ptr<Sort> getSort();
+            std::shared_ptr<Sort> getSort() const;
             void setSort(std::shared_ptr<Sort> sort);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -329,6 +331,8 @@ namespace smtlib {
             EchoCommand(std::string message) : message(message) {}
 
             std::string &getMessage();
+            std::string getMessage() const;
+
             void setMessage(std::string message);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -392,7 +396,7 @@ namespace smtlib {
              */
             GetInfoCommand(std::shared_ptr<Keyword> flag) : flag(flag) { }
 
-            std::shared_ptr<Keyword> getFlag();
+            std::shared_ptr<Keyword> getFlag() const;
             void setFlag(std::shared_ptr<Keyword> flag);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -428,7 +432,7 @@ namespace smtlib {
              */
             GetOptionCommand(std::shared_ptr<Keyword> option) : option(option) { }
 
-            std::shared_ptr<Keyword> getOption();
+            std::shared_ptr<Keyword> getOption() const;
             void setOption(std::shared_ptr<Keyword> option);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -494,6 +498,8 @@ namespace smtlib {
 
             std::vector<std::shared_ptr<Term>> &getTerms();
 
+            std::vector<std::shared_ptr<Term>> getTerms() const;
+
             virtual void accept(AstVisitor0* visitor) const;
 
             virtual std::string toString();
@@ -510,7 +516,7 @@ namespace smtlib {
         public:
             PopCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
-            std::shared_ptr<NumeralLiteral> getNumeral();
+            std::shared_ptr<NumeralLiteral> getNumeral() const;
             void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -529,7 +535,7 @@ namespace smtlib {
         public:
             PushCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
-            std::shared_ptr<NumeralLiteral> getNumeral();
+            std::shared_ptr<NumeralLiteral> getNumeral() const;
             void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -579,7 +585,7 @@ namespace smtlib {
              */
             SetInfoCommand(std::shared_ptr<Attribute> info) : info(info) { }
 
-            std::shared_ptr<Attribute> getInfo();
+            std::shared_ptr<Attribute> getInfo() const;
             void setInfo(std::shared_ptr<Attribute> info);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -601,7 +607,7 @@ namespace smtlib {
              */
             SetLogicCommand(std::shared_ptr<Symbol> logic) : logic(logic) { }
 
-            std::shared_ptr<Symbol> getLogic();
+            std::shared_ptr<Symbol> getLogic() const;
             void setLogic(std::shared_ptr<Symbol> logic);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -623,7 +629,7 @@ namespace smtlib {
              */
             SetOptionCommand(std::shared_ptr<Attribute> option) : option(option) { }
 
-            std::shared_ptr<Attribute> getOption();
+            std::shared_ptr<Attribute> getOption() const;
             void setOption(std::shared_ptr<Attribute> option);
 
             virtual void accept(AstVisitor0* visitor) const;

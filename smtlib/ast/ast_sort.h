@@ -38,15 +38,16 @@ namespace smtlib {
             Sort(std::shared_ptr<Identifier> identifier,
                  const std::vector<std::shared_ptr<Sort>> &params);
 
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<Identifier> getIdentifier() const;
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
             std::vector<std::shared_ptr<Sort>> &getParams();
+            std::vector<std::shared_ptr<Sort>> getParams() const;
 
             /**
              * Checks whether the sort is parametric (i.e. the list of parameters is not empty).
              */
-            bool isParametric();
+            bool isParametric() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 

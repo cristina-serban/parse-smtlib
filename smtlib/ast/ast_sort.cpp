@@ -10,7 +10,7 @@ Sort::Sort(shared_ptr<Identifier> identifier,
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
-shared_ptr<Identifier> Sort::getIdentifier() {
+shared_ptr<Identifier> Sort::getIdentifier() const {
     return identifier;
 }
 
@@ -22,7 +22,11 @@ vector<shared_ptr<Sort>>& Sort::getParams() {
     return params;
 }
 
-bool Sort::isParametric() {
+vector<shared_ptr<Sort>> Sort::getParams() const {
+    return params;
+}
+
+bool Sort::isParametric() const {
     return !params.empty();
 }
 

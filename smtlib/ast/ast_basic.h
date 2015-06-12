@@ -129,7 +129,7 @@ namespace smtlib {
             PropLiteral(std::shared_ptr<Symbol> symbol, bool negated)
                     : symbol(symbol), negated(negated) { }
 
-            std::shared_ptr<Symbol> getSymbol();
+            std::shared_ptr<Symbol> getSymbol() const;
 
             void setSymbol(std::shared_ptr<Symbol> symbol);
 

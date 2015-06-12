@@ -50,10 +50,10 @@ namespace smtlib {
                                   std::shared_ptr<NumeralLiteral> arity,
                                   const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<Identifier> getIdentifier() const;
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
-            std::shared_ptr<NumeralLiteral> getArity();
+            std::shared_ptr<NumeralLiteral> getArity() const;
             void setArity(std::shared_ptr<NumeralLiteral> arity);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
@@ -105,10 +105,10 @@ namespace smtlib {
                                     std::shared_ptr<Sort> sort,
                                     const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<SpecConstant> getConstant();
+            std::shared_ptr<SpecConstant> getConstant() const;
             void setConstant(std::shared_ptr<SpecConstant> constant);
 
-            std::shared_ptr<Sort> getSort();
+            std::shared_ptr<Sort> getSort() const ;
             void setSort(std::shared_ptr<Sort> sort);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
@@ -151,11 +151,11 @@ namespace smtlib {
                                         std::shared_ptr<Sort> sort,
                                         const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<MetaSpecConstant> getConstant();
+            std::shared_ptr<MetaSpecConstant> getConstant() const;
 
             void setConstant(std::shared_ptr<MetaSpecConstant> constant);
 
-            std::shared_ptr<Sort> getSort();
+            std::shared_ptr<Sort> getSort() const;
             void setSort(std::shared_ptr<Sort> sort);
 
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
@@ -199,10 +199,12 @@ namespace smtlib {
                                   const std::vector<std::shared_ptr<Sort>> &signature,
                                   const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<Identifier> getIdentifier() const;
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
             std::vector<std::shared_ptr<Sort>> &getSignature();
+            std::vector<std::shared_ptr<Sort>> getSignature() const;
+
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -245,6 +247,7 @@ namespace smtlib {
                                 const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             std::vector<std::shared_ptr<Symbol>> &getParams();
+            std::vector<std::shared_ptr<Symbol>> getParams() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 
