@@ -11,7 +11,11 @@ Theory::Theory(shared_ptr<Symbol> name,
     this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
 }
 
-shared_ptr<Symbol> Theory::getName() const {
+const shared_ptr<Symbol> Theory::getName() const {
+    return name;
+}
+
+shared_ptr<Symbol> Theory::getName() {
     return name;
 }
 
@@ -19,11 +23,11 @@ void Theory::setName(shared_ptr<Symbol> name) {
     this->name = name;
 }
 
-vector<shared_ptr<Attribute>>&Theory::getAttributes() {
+const vector<shared_ptr<Attribute>> &Theory::getAttributes() const {
     return attributes;
 }
 
-vector<shared_ptr<Attribute>> Theory::getAttributes() const {
+vector<shared_ptr<Attribute>>&Theory::getAttributes() {
     return attributes;
 }
 

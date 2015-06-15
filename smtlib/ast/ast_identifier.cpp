@@ -12,7 +12,11 @@ Identifier::Identifier(shared_ptr<Symbol> symbol,
     this->indices.insert(this->indices.end(), indices.begin(), indices.end());
 }
 
-shared_ptr<Symbol> Identifier::getSymbol() const {
+const shared_ptr<Symbol> Identifier::getSymbol() const {
+    return symbol;
+}
+
+shared_ptr<Symbol> Identifier::getSymbol() {
     return symbol;
 }
 
@@ -20,11 +24,11 @@ void Identifier::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-vector<shared_ptr<Index>> &Identifier::getIndices() {
+const vector<shared_ptr<Index>> &Identifier::getIndices() const {
     return indices;
 }
 
-vector<shared_ptr<Index>> Identifier::getIndices() const {
+vector<shared_ptr<Index>> &Identifier::getIndices() {
     return indices;
 }
 
@@ -52,7 +56,11 @@ string Identifier::toString() {
 
 /* =============================== QualifiedIdentifier ================================ */
 
-shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() const {
+const shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() const {
+    return identifier;
+}
+
+shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() {
     return identifier;
 }
 
@@ -60,7 +68,11 @@ void QualifiedIdentifier::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
-shared_ptr<Sort> QualifiedIdentifier::getSort() const {
+const shared_ptr<Sort> QualifiedIdentifier::getSort() const {
+    return sort;
+}
+
+shared_ptr<Sort> QualifiedIdentifier::getSort() {
     return sort;
 }
 

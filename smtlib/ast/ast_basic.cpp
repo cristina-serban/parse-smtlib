@@ -6,7 +6,11 @@ using namespace std;
 
 /* ====================================== Symbol ====================================== */
 
-string Symbol::getValue() {
+const string &Symbol::getValue() const {
+    return value;
+}
+
+string &Symbol::getValue() {
     return value;
 }
 
@@ -23,6 +27,10 @@ string Symbol::toString() {
 }
 
 /* ====================================== Keyword ===================================== */
+
+const string &Keyword::getValue() const {
+    return value;
+}
 
 string Keyword::getValue() {
     return value;
@@ -41,6 +49,10 @@ string Keyword::toString() {
 }
 
 /* ================================= MetaSpecConstant ================================= */
+
+MetaSpecConstant::Type MetaSpecConstant::getType() const {
+    return type;
+}
 
 MetaSpecConstant::Type MetaSpecConstant::getType() {
     return type;
@@ -61,6 +73,10 @@ string MetaSpecConstant::toString() {
 }
 
 /* =================================== BooleanValue =================================== */
+
+bool BooleanValue::getValue() const {
+    return value;
+}
 
 bool BooleanValue::getValue() {
     return value;
@@ -83,12 +99,20 @@ string BooleanValue::toString() {
 
 /* =================================== PropLiteral ==================================== */
 
-shared_ptr<Symbol> PropLiteral::getSymbol() const {
+const shared_ptr<Symbol> PropLiteral::getSymbol() const {
+    return symbol;
+}
+
+shared_ptr<Symbol> PropLiteral::getSymbol() {
     return symbol;
 }
 
 void PropLiteral::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
+}
+
+bool PropLiteral::isNegated() const {
+    return negated;
 }
 
 bool PropLiteral::isNegated() {

@@ -40,11 +40,13 @@ namespace smtlib {
             Identifier(std::shared_ptr<Symbol> symbol,
                        const std::vector<std::shared_ptr<Index>> indices);
 
-            std::shared_ptr<Symbol> getSymbol() const;
+            const std::shared_ptr<Symbol> getSymbol() const;
+            std::shared_ptr<Symbol> getSymbol();
+
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
+            const std::vector<std::shared_ptr<Index>> &getIndices() const;
             std::vector<std::shared_ptr<Index>> &getIndices();
-            std::vector<std::shared_ptr<Index>> getIndices() const;
 
             /**
              * Checks whether the identifier is indexed (i.e. the list of indices is not empty).
@@ -73,10 +75,14 @@ namespace smtlib {
                                 std::shared_ptr<Sort> sort) :
                     identifier(identifier), sort(sort) { }
 
-            std::shared_ptr<Identifier> getIdentifier() const;
+            const std::shared_ptr<Identifier> getIdentifier() const;
+            std::shared_ptr<Identifier> getIdentifier();
+
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
-            std::shared_ptr<Sort> getSort() const;
+            const std::shared_ptr<Sort> getSort() const;
+            std::shared_ptr<Sort> getSort();
+
             void setSort(std::shared_ptr<Sort> sort);
 
             virtual void accept(AstVisitor0* visitor) const;

@@ -1,5 +1,6 @@
-#include <vector>
+#include <regex>
 #include <memory>
+#include <vector>
 
 #include <visitor/ast_syntax_checker.h>
 #include <ast/ast_attribute.h>
@@ -20,11 +21,13 @@ void AstSyntaxChecker::visit(Attribute const *node) {
 void AstSyntaxChecker::visit(CompoundAttributeValue const *node) { }
 
 void AstSyntaxChecker::visit(Symbol const *node) {
-    //TODO
+    if(!std::regex_match(node->getValue(), regexSymbol))
+        ret = false;
 }
 
 void AstSyntaxChecker::visit(Keyword const *node) {
-    //TODO
+    if(!std::regex_match(node->getValue(), regexSymbol))
+        ret = false;
 }
 
 void AstSyntaxChecker::visit(MetaSpecConstant const *node) { }

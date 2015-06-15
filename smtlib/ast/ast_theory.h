@@ -39,12 +39,13 @@ namespace smtlib {
             Theory(std::shared_ptr<Symbol> name,
                       const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<Symbol> getName() const;
+            const std::shared_ptr<Symbol> getName() const;
+            std::shared_ptr<Symbol> getName();
+
             void setName(std::shared_ptr<Symbol> name);
 
+            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
-
-            std::vector<std::shared_ptr<Attribute>> getAttributes() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 

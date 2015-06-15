@@ -34,6 +34,7 @@ namespace smtlib {
              */
             Script(const std::vector<std::shared_ptr<Command>> &cmds);
 
+            const std::vector<std::shared_ptr<Command>> &getCommands() const;
             std::vector<std::shared_ptr<Command>> &getCommands();
 
             virtual void accept(AstVisitor0* visitor) const;

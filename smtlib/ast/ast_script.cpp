@@ -8,6 +8,10 @@ Script::Script(const vector<shared_ptr<Command>> &commands) {
     this->commands.insert(this->commands.end(), commands.begin(), commands.end());
 }
 
+const std::vector<shared_ptr<Command>> &Script::getCommands() const {
+    return commands;
+}
+
 std::vector<shared_ptr<Command>> &Script::getCommands() {
     return commands;
 }

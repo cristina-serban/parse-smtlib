@@ -14,7 +14,11 @@ FunctionDeclaration::FunctionDeclaration(shared_ptr<Symbol> symbol,
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
-shared_ptr<Symbol> FunctionDeclaration::getSymbol() const {
+const shared_ptr<Symbol> FunctionDeclaration::getSymbol() const {
+    return symbol;
+}
+
+shared_ptr<Symbol> FunctionDeclaration::getSymbol() {
     return symbol;
 }
 
@@ -22,11 +26,19 @@ void FunctionDeclaration::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
+const vector<shared_ptr<SortedVariable>> &FunctionDeclaration::getParams() const {
+    return params;
+}
+
 vector<shared_ptr<SortedVariable>> &FunctionDeclaration::getParams() {
     return params;
 }
 
-shared_ptr<Sort> FunctionDeclaration::getSort() const {
+const shared_ptr<Sort> FunctionDeclaration::getSort() const {
+    return sort;
+}
+
+shared_ptr<Sort> FunctionDeclaration::getSort() {
     return sort;
 }
 
@@ -61,7 +73,11 @@ FunctionDefinition::FunctionDefinition(shared_ptr<Symbol> symbol,
     signature = make_shared<FunctionDeclaration>(symbol, params, sort);
 }
 
-shared_ptr<FunctionDeclaration> FunctionDefinition::getSignature() const {
+const shared_ptr<FunctionDeclaration> FunctionDefinition::getSignature() const {
+    return signature;
+}
+
+shared_ptr<FunctionDeclaration> FunctionDefinition::getSignature() {
     return signature;
 }
 
@@ -69,7 +85,11 @@ void FunctionDefinition::setSignature(shared_ptr<FunctionDeclaration> signature)
     this->signature = signature;
 }
 
-shared_ptr<Term> FunctionDefinition::getBody() const {
+const shared_ptr<Term> FunctionDefinition::getBody() const {
+    return body;
+}
+
+shared_ptr<Term> FunctionDefinition::getBody() {
     return body;
 }
 

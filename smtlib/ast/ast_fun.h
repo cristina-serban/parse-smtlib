@@ -37,12 +37,17 @@ namespace smtlib {
                                 const std::vector<std::shared_ptr<SortedVariable>> &params,
                                 std::shared_ptr<Sort> sort);
 
-            std::shared_ptr<Symbol> getSymbol() const;
+            const std::shared_ptr<Symbol> getSymbol() const;
+            std::shared_ptr<Symbol> getSymbol();
+
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
+            const std::vector<std::shared_ptr<SortedVariable>> &getParams() const;
             std::vector<std::shared_ptr<SortedVariable>> &getParams();
 
-            std::shared_ptr<Sort> getSort() const;
+            const std::shared_ptr<Sort> getSort() const;
+            std::shared_ptr<Sort> getSort();
+
             void setSort(std::shared_ptr<Sort> sort);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -79,10 +84,14 @@ namespace smtlib {
                                std::shared_ptr<Sort> sort,
                                std::shared_ptr<Term> body);
 
-            std::shared_ptr<FunctionDeclaration> getSignature() const;
+            const std::shared_ptr<FunctionDeclaration> getSignature() const;
+            std::shared_ptr<FunctionDeclaration> getSignature();
+
             void setSignature(std::shared_ptr<FunctionDeclaration> signature);
 
-            std::shared_ptr<Term> getBody() const;
+            const std::shared_ptr<Term> getBody() const;
+            std::shared_ptr<Term> getBody();
+
             void setBody(std::shared_ptr<Term> body);
 
             virtual void accept(AstVisitor0* visitor) const;

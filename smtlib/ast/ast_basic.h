@@ -31,7 +31,9 @@ namespace smtlib {
              */
             Symbol(std::string value) : value(value) { }
 
-            std::string getValue();
+            const std::string &getValue() const;
+            std::string &getValue();
+
             void setValue(std::string value);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -55,7 +57,9 @@ namespace smtlib {
              */
             Keyword(std::string value) : value(value) { }
 
+            const std::string &getValue() const;
             std::string getValue();
+
             void setValue(std::string value);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -84,7 +88,9 @@ namespace smtlib {
              */
             MetaSpecConstant(MetaSpecConstant::Type type) : type(type) { }
 
+            MetaSpecConstant::Type getType() const;
             MetaSpecConstant::Type getType();
+
             void setType(MetaSpecConstant::Type type);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -107,7 +113,9 @@ namespace smtlib {
         public:
             BooleanValue(bool value) : value(value) { }
 
+            bool getValue() const;
             bool getValue();
+
             void setValue(bool value);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -129,11 +137,14 @@ namespace smtlib {
             PropLiteral(std::shared_ptr<Symbol> symbol, bool negated)
                     : symbol(symbol), negated(negated) { }
 
-            std::shared_ptr<Symbol> getSymbol() const;
+            const std::shared_ptr<Symbol> getSymbol() const;
+            std::shared_ptr<Symbol> getSymbol();
 
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
+            bool isNegated() const;
             bool isNegated();
+
             void setNegated(bool negated);
 
             virtual void accept(AstVisitor0* visitor) const;

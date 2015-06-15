@@ -14,6 +14,10 @@ NumeralLiteral::NumeralLiteral(long value, unsigned int base) : base(base) {
     setValue(value);
 }
 
+unsigned int NumeralLiteral::getBase() const {
+    return base;
+}
+
 unsigned int NumeralLiteral::getBase() {
     return base;
 }

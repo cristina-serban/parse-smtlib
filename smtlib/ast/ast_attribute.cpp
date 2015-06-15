@@ -6,12 +6,20 @@ using namespace std;
 
 /* ==================================== Attribute ===================================== */
 
-shared_ptr<Keyword> Attribute::getKeyword() const {
+const shared_ptr<Keyword> Attribute::getKeyword() const {
+    return keyword;
+}
+
+shared_ptr<Keyword> Attribute::getKeyword() {
     return keyword;
 }
 
 void Attribute::setKeyword(shared_ptr<Keyword> keyword) {
     this->keyword = keyword;
+}
+
+const shared_ptr<AttributeValue> Attribute::getValue() const {
+    return value;
 }
 
 shared_ptr<AttributeValue> Attribute::getValue() {
@@ -38,6 +46,10 @@ string Attribute::toString() {
 
 CompoundAttributeValue::CompoundAttributeValue(const vector<shared_ptr<AttributeValue>> values) {
     this->values.insert(this->values.begin(), values.begin(), values.end());
+}
+
+const vector<shared_ptr<AttributeValue>> &CompoundAttributeValue::getValues() const {
+    return values;
 }
 
 vector<shared_ptr<AttributeValue>> &CompoundAttributeValue::getValues() {

@@ -10,7 +10,11 @@ Logic::Logic(std::shared_ptr<Symbol> name,
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
-shared_ptr<Symbol> Logic::getName() const {
+const shared_ptr<Symbol> Logic::getName() const {
+    return name;
+}
+
+shared_ptr<Symbol> Logic::getName() {
     return name;
 }
 
@@ -18,11 +22,11 @@ void Logic::setName(shared_ptr<Symbol> name) {
     this->name = name;
 }
 
-std::vector<shared_ptr<Attribute>> &Logic::getAttributes() {
+const std::vector<shared_ptr<Attribute>> &Logic::getAttributes() const {
     return attributes;
 }
 
-std::vector<shared_ptr<Attribute>> Logic::getAttributes() const {
+std::vector<shared_ptr<Attribute>> &Logic::getAttributes() {
     return attributes;
 }
 

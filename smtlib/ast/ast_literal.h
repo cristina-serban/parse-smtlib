@@ -25,6 +25,10 @@ namespace smtlib {
             Literal() { }
 
         public:
+            const T &getValue() const{
+                return value;
+            }
+
             T &getValue() {
                 return value;
             }
@@ -49,6 +53,8 @@ namespace smtlib {
             NumeralLiteral(long value, unsigned int base);
 
             unsigned int getBase();
+            unsigned int getBase() const;
+
             void setBase(unsigned int base);
 
             virtual void accept(AstVisitor0* visitor) const;

@@ -46,10 +46,14 @@ namespace smtlib {
                       std::shared_ptr<AttributeValue> value)
                     : keyword(keyword), value(value) { }
 
-            std::shared_ptr<Keyword> getKeyword() const;
+            const std::shared_ptr<Keyword> getKeyword() const;
+            std::shared_ptr<Keyword> getKeyword();
+
             void setKeyword(std::shared_ptr<Keyword> keyword);
 
+            const std::shared_ptr<AttributeValue> getValue() const;
             std::shared_ptr<AttributeValue> getValue();
+
             void setValue(std::shared_ptr<AttributeValue> value);
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -67,6 +71,7 @@ namespace smtlib {
         public:
             CompoundAttributeValue(const std::vector<std::shared_ptr<AttributeValue>> values);
 
+            const std::vector<std::shared_ptr<AttributeValue>> &getValues() const;
             std::vector<std::shared_ptr<AttributeValue>> &getValues();
 
             virtual void accept(AstVisitor0* visitor) const;
