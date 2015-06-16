@@ -26,6 +26,7 @@ namespace smtlib {
              */
             CompSExpression(const std::vector<std::shared_ptr<SExpression>> &exprs);
 
+            const std::vector<std::shared_ptr<SExpression>> &getExpressions() const;
             std::vector<std::shared_ptr<SExpression>> &getExpressions();
 
             virtual void accept(AstVisitor0* visitor) const;

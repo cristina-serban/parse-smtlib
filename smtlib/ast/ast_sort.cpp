@@ -10,7 +10,11 @@ Sort::Sort(shared_ptr<Identifier> identifier,
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
-shared_ptr<Identifier> Sort::getIdentifier() const {
+const shared_ptr<Identifier> Sort::getIdentifier() const {
+    return identifier;
+}
+
+shared_ptr<Identifier> Sort::getIdentifier() {
     return identifier;
 }
 
@@ -18,11 +22,11 @@ void Sort::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
-vector<shared_ptr<Sort>>& Sort::getParams() {
+const vector<shared_ptr<Sort>>& Sort::getParams() const {
     return params;
 }
 
-vector<shared_ptr<Sort>> Sort::getParams() const {
+vector<shared_ptr<Sort>> &Sort::getParams() {
     return params;
 }
 

@@ -52,7 +52,6 @@ namespace smtlib {
         public:
             NumeralLiteral(long value, unsigned int base);
 
-            unsigned int getBase();
             unsigned int getBase() const;
 
             void setBase(unsigned int base);

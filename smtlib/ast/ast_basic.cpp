@@ -32,7 +32,7 @@ const string &Keyword::getValue() const {
     return value;
 }
 
-string Keyword::getValue() {
+string &Keyword::getValue() {
     return value;
 }
 
@@ -54,10 +54,6 @@ MetaSpecConstant::Type MetaSpecConstant::getType() const {
     return type;
 }
 
-MetaSpecConstant::Type MetaSpecConstant::getType() {
-    return type;
-}
-
 void MetaSpecConstant::setType(MetaSpecConstant::Type type) {
     this->type = type;
 }
@@ -75,10 +71,6 @@ string MetaSpecConstant::toString() {
 /* =================================== BooleanValue =================================== */
 
 bool BooleanValue::getValue() const {
-    return value;
-}
-
-bool BooleanValue::getValue() {
     return value;
 }
 
@@ -112,10 +104,6 @@ void PropLiteral::setSymbol(shared_ptr<Symbol> symbol) {
 }
 
 bool PropLiteral::isNegated() const {
-    return negated;
-}
-
-bool PropLiteral::isNegated() {
     return negated;
 }
 

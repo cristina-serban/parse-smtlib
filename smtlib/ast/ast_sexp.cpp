@@ -8,6 +8,10 @@ CompSExpression::CompSExpression(const vector<shared_ptr<SExpression>> &exprs) {
     this->exprs.insert(this->exprs.end(), exprs.begin(), exprs.end());
 }
 
+const vector<shared_ptr<SExpression>> &CompSExpression::getExpressions() const {
+    return exprs;
+}
+
 vector<shared_ptr<SExpression>> &CompSExpression::getExpressions() {
     return exprs;
 }

@@ -18,10 +18,6 @@ unsigned int NumeralLiteral::getBase() const {
     return base;
 }
 
-unsigned int NumeralLiteral::getBase() {
-    return base;
-}
-
 void NumeralLiteral::setBase(unsigned int base) {
     this->base = base;
 }

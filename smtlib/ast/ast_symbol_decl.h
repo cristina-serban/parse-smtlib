@@ -50,12 +50,17 @@ namespace smtlib {
                                   std::shared_ptr<NumeralLiteral> arity,
                                   const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<Identifier> getIdentifier() const;
+            const std::shared_ptr<Identifier> getIdentifier() const;
+            std::shared_ptr<Identifier> getIdentifier();
+
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
-            std::shared_ptr<NumeralLiteral> getArity() const;
+            const std::shared_ptr<NumeralLiteral> getArity() const;
+            std::shared_ptr<NumeralLiteral> getArity();
+
             void setArity(std::shared_ptr<NumeralLiteral> arity);
 
+            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -105,12 +110,17 @@ namespace smtlib {
                                     std::shared_ptr<Sort> sort,
                                     const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<SpecConstant> getConstant() const;
+            const std::shared_ptr<SpecConstant> getConstant() const;
+            std::shared_ptr<SpecConstant> getConstant();
+
             void setConstant(std::shared_ptr<SpecConstant> constant);
 
-            std::shared_ptr<Sort> getSort() const ;
+            const std::shared_ptr<Sort> getSort() const;
+            std::shared_ptr<Sort> getSort();
+
             void setSort(std::shared_ptr<Sort> sort);
 
+            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -151,13 +161,17 @@ namespace smtlib {
                                         std::shared_ptr<Sort> sort,
                                         const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<MetaSpecConstant> getConstant() const;
+            const std::shared_ptr<MetaSpecConstant> getConstant() const;
+            std::shared_ptr<MetaSpecConstant> getConstant();
 
             void setConstant(std::shared_ptr<MetaSpecConstant> constant);
 
-            std::shared_ptr<Sort> getSort() const;
+            const std::shared_ptr<Sort> getSort() const;
+            std::shared_ptr<Sort> getSort();
+
             void setSort(std::shared_ptr<Sort> sort);
 
+            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -199,12 +213,15 @@ namespace smtlib {
                                   const std::vector<std::shared_ptr<Sort>> &signature,
                                   const std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            std::shared_ptr<Identifier> getIdentifier() const;
+            const std::shared_ptr<Identifier> getIdentifier() const;
+            std::shared_ptr<Identifier> getIdentifier();
+
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
+            const std::vector<std::shared_ptr<Sort>> &getSignature() const;
             std::vector<std::shared_ptr<Sort>> &getSignature();
-            std::vector<std::shared_ptr<Sort>> getSignature() const;
 
+            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
             virtual void accept(AstVisitor0* visitor) const;
@@ -246,8 +263,8 @@ namespace smtlib {
                                 const std::vector<std::shared_ptr<Sort>> &signature,
                                 const std::vector<std::shared_ptr<Attribute>> &attributes);
 
+            const std::vector<std::shared_ptr<Symbol>> &getParams() const;
             std::vector<std::shared_ptr<Symbol>> &getParams();
-            std::vector<std::shared_ptr<Symbol>> getParams() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 

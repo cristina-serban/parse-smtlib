@@ -58,7 +58,7 @@ namespace smtlib {
             Keyword(std::string value) : value(value) { }
 
             const std::string &getValue() const;
-            std::string getValue();
+            std::string &getValue();
 
             void setValue(std::string value);
 
@@ -89,7 +89,6 @@ namespace smtlib {
             MetaSpecConstant(MetaSpecConstant::Type type) : type(type) { }
 
             MetaSpecConstant::Type getType() const;
-            MetaSpecConstant::Type getType();
 
             void setType(MetaSpecConstant::Type type);
 
@@ -114,7 +113,6 @@ namespace smtlib {
             BooleanValue(bool value) : value(value) { }
 
             bool getValue() const;
-            bool getValue();
 
             void setValue(bool value);
 
@@ -143,7 +141,6 @@ namespace smtlib {
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
             bool isNegated() const;
-            bool isNegated();
 
             void setNegated(bool negated);
 

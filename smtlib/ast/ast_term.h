@@ -32,11 +32,13 @@ namespace smtlib {
             QualifiedTerm(std::shared_ptr<QIdentifier> identifier,
                           const std::vector<std::shared_ptr<Term>> &terms);
 
-            std::shared_ptr<QIdentifier> getIdentifier() const;
+            const std::shared_ptr<QIdentifier> getIdentifier() const;
+            std::shared_ptr<QIdentifier> getIdentifier();
+
             void setIdentifier(std::shared_ptr<QIdentifier> identifier);
 
+            const std::vector<std::shared_ptr<Term>> &getTerms() const;
             std::vector<std::shared_ptr<Term>> &getTerms();
-            std::vector<std::shared_ptr<Term>> getTerms() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 
@@ -61,11 +63,13 @@ namespace smtlib {
             LetTerm(const std::vector<std::shared_ptr<VarBinding>> &bindings,
                     std::shared_ptr<Term> term);
 
-            std::shared_ptr<Term> getTerm() const;
+            const std::shared_ptr<Term> getTerm() const;
+            std::shared_ptr<Term> getTerm();
+
             void setTerm(std::shared_ptr<Term> term);
 
+            const std::vector<std::shared_ptr<VarBinding>> &getBindings() const;
             std::vector<std::shared_ptr<VarBinding>> &getBindings();
-            std::vector<std::shared_ptr<VarBinding>> getBindings() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 
@@ -90,11 +94,13 @@ namespace smtlib {
             ForallTerm(const std::vector<std::shared_ptr<SortedVariable>> &bindings,
                        std::shared_ptr<Term> term);
 
-            std::shared_ptr<Term> getTerm() const;
+            const std::shared_ptr<Term> getTerm() const;
+            std::shared_ptr<Term> getTerm();
+
             void setTerm(std::shared_ptr<Term> term);
 
+            const std::vector<std::shared_ptr<SortedVariable>> &getBindings() const;
             std::vector<std::shared_ptr<SortedVariable>> &getBindings();
-            std::vector<std::shared_ptr<SortedVariable>> getBindings() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 
@@ -119,11 +125,13 @@ namespace smtlib {
             ExistsTerm(const std::vector<std::shared_ptr<SortedVariable>> &bindings,
                        std::shared_ptr<Term> term);
 
-            std::shared_ptr<Term> getTerm() const;
+            const std::shared_ptr<Term> getTerm() const;
+            std::shared_ptr<Term> getTerm();
+
             void setTerm(std::shared_ptr<Term> term);
 
+            const std::vector<std::shared_ptr<SortedVariable>> &getBindings() const;
             std::vector<std::shared_ptr<SortedVariable>> &getBindings();
-            std::vector<std::shared_ptr<SortedVariable>> getBindings() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 
@@ -148,11 +156,13 @@ namespace smtlib {
             AnnotatedTerm(std::shared_ptr<Term> term,
                           const std::vector<std::shared_ptr<Attribute>> &attrs);
 
-            std::shared_ptr<Term> getTerm() const;
+            const std::shared_ptr<Term> getTerm() const;
+            std::shared_ptr<Term> getTerm();
+
             void setTerm(std::shared_ptr<Term> term);
 
+            const std::vector<std::shared_ptr<Attribute>> &getAttrs() const;
             std::vector<std::shared_ptr<Attribute>> &getAttrs();
-            std::vector<std::shared_ptr<Attribute>> getAttrs() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 

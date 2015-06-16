@@ -6,7 +6,11 @@ using namespace smtlib::ast;
 
 /* ================================== SortedVariable ================================== */
 
-shared_ptr<Symbol> SortedVariable::getSymbol() const {
+const shared_ptr<Symbol> SortedVariable::getSymbol() const {
+    return symbol;
+}
+
+shared_ptr<Symbol> SortedVariable::getSymbol() {
     return symbol;
 }
 
@@ -14,7 +18,11 @@ void SortedVariable::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-shared_ptr<Sort> SortedVariable::getSort() const {
+const shared_ptr<Sort> SortedVariable::getSort() const {
+    return sort;
+}
+
+shared_ptr<Sort> SortedVariable::getSort() {
     return sort;
 }
 
@@ -34,7 +42,11 @@ string SortedVariable::toString() {
 
 /* ==================================== VarBinding ==================================== */
 
-shared_ptr<Symbol> VarBinding::getSymbol() const {
+const shared_ptr<Symbol> VarBinding::getSymbol() const {
+    return symbol;
+}
+
+shared_ptr<Symbol> VarBinding::getSymbol() {
     return symbol;
 }
 
@@ -42,7 +54,11 @@ void VarBinding::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-shared_ptr<Term> VarBinding::getTerm() const {
+const shared_ptr<Term> VarBinding::getTerm() const {
+    return term;
+}
+
+shared_ptr<Term> VarBinding::getTerm() {
     return term;
 }
 

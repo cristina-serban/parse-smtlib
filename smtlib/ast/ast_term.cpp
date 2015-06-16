@@ -12,7 +12,11 @@ QualifiedTerm::QualifiedTerm(shared_ptr<QIdentifier> identifier,
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
 }
 
-shared_ptr<QIdentifier> QualifiedTerm::getIdentifier() const {
+const shared_ptr<QIdentifier> QualifiedTerm::getIdentifier() const {
+    return identifier;
+}
+
+shared_ptr<QIdentifier> QualifiedTerm::getIdentifier() {
     return identifier;
 }
 
@@ -20,11 +24,11 @@ void QualifiedTerm::setIdentifier(shared_ptr<QIdentifier> identifier) {
     this->identifier = identifier;
 }
 
-vector<shared_ptr<Term>> &QualifiedTerm::getTerms() {
+const vector<shared_ptr<Term>> &QualifiedTerm::getTerms() const {
     return terms;
 }
 
-vector<shared_ptr<Term>> QualifiedTerm::getTerms() const{
+vector<shared_ptr<Term>> &QualifiedTerm::getTerms() {
     return terms;
 }
 
@@ -52,7 +56,11 @@ LetTerm::LetTerm(const vector<shared_ptr<VarBinding>> &bindings,
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
 }
 
-shared_ptr<Term> LetTerm::getTerm() const {
+const shared_ptr<Term> LetTerm::getTerm() const {
+    return term;
+}
+
+shared_ptr<Term> LetTerm::getTerm() {
     return term;
 }
 
@@ -60,11 +68,11 @@ void LetTerm::setTerm(shared_ptr<Term> term) {
     this->term = term;
 }
 
-vector<shared_ptr<VarBinding>> &LetTerm::getBindings() {
+const vector<shared_ptr<VarBinding>> &LetTerm::getBindings() const {
     return bindings;
 }
 
-vector<shared_ptr<VarBinding>> LetTerm::getBindings() const {
+vector<shared_ptr<VarBinding>> &LetTerm::getBindings() {
     return bindings;
 }
 
@@ -92,7 +100,11 @@ ForallTerm::ForallTerm(const vector<shared_ptr<SortedVariable>> &bindings,
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
 }
 
-shared_ptr<Term> ForallTerm::getTerm() const {
+const shared_ptr<Term> ForallTerm::getTerm() const {
+    return term;
+}
+
+shared_ptr<Term> ForallTerm::getTerm() {
     return term;
 }
 
@@ -100,11 +112,11 @@ void ForallTerm::setTerm(shared_ptr<Term> term) {
     this->term = term;
 }
 
-vector<shared_ptr<SortedVariable>> &ForallTerm::getBindings() {
+const vector<shared_ptr<SortedVariable>> &ForallTerm::getBindings() const {
     return bindings;
 }
 
-vector<shared_ptr<SortedVariable>> ForallTerm::getBindings() const {
+vector<shared_ptr<SortedVariable>> & ForallTerm::getBindings() {
     return bindings;
 }
 
@@ -132,7 +144,11 @@ ExistsTerm::ExistsTerm(const vector<shared_ptr<SortedVariable>> &bindings,
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
 }
 
-shared_ptr<Term> ExistsTerm::getTerm() const {
+const shared_ptr<Term> ExistsTerm::getTerm() const {
+    return term;
+}
+
+shared_ptr<Term> ExistsTerm::getTerm() {
     return term;
 }
 
@@ -140,11 +156,11 @@ void ExistsTerm::setTerm(shared_ptr<Term> term) {
     this->term = term;
 }
 
-vector<shared_ptr<SortedVariable>> &ExistsTerm::getBindings() {
+const vector<shared_ptr<SortedVariable>> &ExistsTerm::getBindings() const {
     return bindings;
 }
 
-vector<shared_ptr<SortedVariable>> ExistsTerm::getBindings() const {
+vector<shared_ptr<SortedVariable>> &ExistsTerm::getBindings() {
     return bindings;
 }
 
@@ -172,7 +188,11 @@ AnnotatedTerm::AnnotatedTerm(shared_ptr<Term> term,
     this->attrs.insert(this->attrs.end(), attrs.begin(), attrs.end());
 }
 
-shared_ptr<Term> AnnotatedTerm::getTerm() const {
+const shared_ptr<Term> AnnotatedTerm::getTerm() const {
+    return term;
+}
+
+shared_ptr<Term> AnnotatedTerm::getTerm() {
     return term;
 }
 
@@ -180,11 +200,11 @@ void AnnotatedTerm::setTerm(shared_ptr<Term> term) {
     this->term = term;
 }
 
-vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttrs() {
+const vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttrs() const {
     return attrs;
 }
 
-vector<shared_ptr<Attribute>> AnnotatedTerm::getAttrs() const{
+vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttrs() {
     return attrs;
 }
 
