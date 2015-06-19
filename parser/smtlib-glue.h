@@ -34,6 +34,8 @@ SmtList smt_listCreate();
 void smt_listAdd(SmtList list, SmtPtr item);
 void smt_listDelete(SmtList list);
 
+void smt_setLocation(SmtPtr ptr, int first_line, int last_line, int first_column, int last_column);
+
 int smt_bool_value(SmtPtr ptr);
 
 // ast_attribute.h

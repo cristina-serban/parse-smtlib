@@ -200,11 +200,11 @@ void AnnotatedTerm::setTerm(shared_ptr<Term> term) {
     this->term = term;
 }
 
-const vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttrs() const {
+const vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttributes() const {
     return attrs;
 }
 
-vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttrs() {
+vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttributes() {
     return attrs;
 }
 

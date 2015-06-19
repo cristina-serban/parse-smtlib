@@ -80,6 +80,6 @@ void StringLiteral::accept(AstVisitor0* visitor) const {
 
 string StringLiteral::toString() {
     stringstream ss;
-    ss << "\"" << value << "\"";
+    ss << value;
     return ss.str();
 }

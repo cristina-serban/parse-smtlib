@@ -161,8 +161,8 @@ namespace smtlib {
 
             void setTerm(std::shared_ptr<Term> term);
 
-            const std::vector<std::shared_ptr<Attribute>> &getAttrs() const;
-            std::vector<std::shared_ptr<Attribute>> &getAttrs();
+            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
+            std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
             virtual void accept(AstVisitor0* visitor) const;
 

@@ -637,7 +637,7 @@ void SetInfoCommand::accept(AstVisitor0* visitor) const {
 
 string SetInfoCommand::toString() {
     stringstream ss;
-    ss << "( set-option " << info->getKeyword()->toString()
+    ss << "( set-info " << info->getKeyword()->toString()
     << " " << info->getValue()->toString() << " )";
     return ss.str();
 }

@@ -53,5 +53,5 @@ set(SOURCE_FILES
 	smtlib/visitor/ast_syntax_checker.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} )
+add_executable(parse-smtlib ${SOURCE_FILES})
 target_link_libraries(parse-smtlib ${LIB_FLEX})

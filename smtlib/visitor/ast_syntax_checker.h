@@ -1,8 +1,7 @@
-#include <visitor/ast_visitor_extra.h>
-
 #ifndef PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
 #define PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
 
+#include <visitor/ast_visitor_extra.h>
 #include <regex>
 #include <string>
 #include <vector>
@@ -16,11 +15,14 @@ namespace smtlib {
 
         class AstSyntaxChecker : public AstVisitor1<bool> {
         private:
-            std::vector<SyntaxCheckError> errors;
+            std::string file;
+            std::vector<std::shared_ptr<SyntaxCheckError>> errors;
+
             const std::regex regexSymbol = std::regex("^([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
             const std::regex regexKeyword = std::regex ("^:([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
-        public:
 
+            void addError(std::string message, AstNode const *node);
+        public:
             virtual void visit(Attribute const *node);
             virtual void visit(CompoundAttributeValue const *node);
 
@@ -97,6 +99,12 @@ namespace smtlib {
                 ret = true;
                 return wrappedVisit(node);
             }
+
+            void setFilePath(std::string filePath) {
+                file = filePath;
+            }
+
+            std::string getErrors();
         };
     }
 }

@@ -30,7 +30,7 @@ vector<shared_ptr<Sort>> &Sort::getParams() {
     return params;
 }
 
-bool Sort::isParametric() const {
+bool Sort::isParametrized() const {
     return !params.empty();
 }
 
@@ -39,7 +39,7 @@ void Sort::accept(AstVisitor0* visitor) const {
 }
 
 string Sort::toString() {
-    if(!isParametric()) {
+    if(!isParametrized()) {
         return identifier->toString();
     } else {
         stringstream ss;

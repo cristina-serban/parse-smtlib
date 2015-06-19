@@ -47,9 +47,9 @@ namespace smtlib {
             std::vector<std::shared_ptr<Sort>> &getParams();
 
             /**
-             * Checks whether the sort is parametric (i.e. the list of parameters is not empty).
+             * Checks whether the sort is parametrized (i.e. the list of sort parameters is not empty).
              */
-            bool isParametric() const;
+            bool isParametrized() const;
 
             virtual void accept(AstVisitor0* visitor) const;
 
