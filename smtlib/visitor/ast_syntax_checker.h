@@ -1,7 +1,7 @@
 #ifndef PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
 #define PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
 
-#include <visitor/ast_visitor_extra.h>
+#include "ast_visitor_extra.h"
 #include <regex>
 #include <string>
 #include <vector>

@@ -1232,8 +1232,8 @@ string SyntaxChecker::getErrors() {
     for(vector<shared_ptr<SyntaxCheckError>>::iterator it = errors.begin(); it != errors.end(); it++) {
         shared_ptr<SyntaxCheckError> err = *it;
         if(err->node) {
-            ss << err->node->getRowLeft() << "." << err->node->getColLeft()
-               << " - " << err->node->getRowRight() << "." << err->node->getColRight() << "   ";
+            ss << err->node->getRowLeft() << ":" << err->node->getColLeft()
+               << " - " << err->node->getRowRight() << ":" << err->node->getColRight() << "   ";
 
             string nodestr = err->node->toString();
             if(nodestr.length() > 100)
@@ -1248,7 +1248,10 @@ string SyntaxChecker::getErrors() {
         for(std::vector<std::string>::iterator itt = err->messages.begin(); itt != err->messages.end(); itt++) {
             ss << "\t" << *itt << "." << endl;
         }
-        ss << endl;
+
+        if (it + 1 != errors.end()) {
+            ss << endl;
+        }
     }
 
     return ss.str();

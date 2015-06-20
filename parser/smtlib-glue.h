@@ -27,14 +27,14 @@ int yyparse(SmtPrsr);
 void smt_print(SmtPtr ptr);
 
 void smt_setAst(SmtPrsr parser, SmtPtr ast);
-void smt_reportError(SmtPrsr parser, unsigned int lineL, unsigned int colL,
-                     unsigned int lineR, unsigned int colR, const char* msg);
+void smt_reportError(SmtPrsr parser, unsigned int rowLeft, unsigned int colLeft,
+                     unsigned int rowRight, unsigned int colRight, const char* msg);
 
 SmtList smt_listCreate();
 void smt_listAdd(SmtList list, SmtPtr item);
 void smt_listDelete(SmtList list);
 
-void smt_setLocation(SmtPtr ptr, int first_line, int last_line, int first_column, int last_column);
+void smt_setLocation(SmtPtr ptr, int rowLeft, int colLeft, int rowRight, int colRight);
 
 int smt_bool_value(SmtPtr ptr);
 

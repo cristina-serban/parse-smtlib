@@ -77,19 +77,19 @@ void smt_setAst(SmtPrsr parser, SmtPtr ast) {
     }
 }
 
-void smt_reportError(SmtPrsr parser, unsigned int lineL, unsigned int colL,
-                     unsigned int lineR, unsigned int colR, const char* msg) {
+void smt_reportError(SmtPrsr parser, unsigned int rowLeft, unsigned int colLeft,
+                     unsigned int rowRight, unsigned int colRight, const char* msg) {
     if(parser && msg) {
         Parser *p = dynamic_cast<Parser *>(parser);
-        p->reportError(lineL, colL, lineR, colR, msg);
+        p->reportError(rowLeft, colLeft, rowRight, colRight, msg);
     }
 }
 
-void smt_setLocation(SmtPtr ptr, int first_line, int last_line, int first_column, int last_column) {
-    ptr->setRowLeft(first_line);
-    ptr->setRowRight(last_line);
-    ptr->setColLeft(first_column);
-    ptr->setColRight(last_column);
+void smt_setLocation(SmtPtr ptr, int rowLeft, int colLeft, int rowRight, int colRight) {
+    ptr->setRowLeft(rowLeft);
+    ptr->setColLeft(colLeft);
+    ptr->setRowRight(rowRight);
+    ptr->setColRight(colRight);
 }
 
 int smt_bool_value(SmtPtr ptr) {

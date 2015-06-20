@@ -13,10 +13,14 @@ namespace smtlib {
     public:
         std::shared_ptr<smtlib::ast::AstNode> parse(std::string filename);
 
+        bool checkSyntax();
+
+        bool checkSortedness();
+
         void setAst(smtlib::ast::AstNode * ast);
 
-        void reportError(unsigned int lineL, unsigned int colL,
-                         unsigned int lineR, unsigned int colR, const char *msg);
+        void reportError(unsigned int lineLeft, unsigned int colLeft,
+                         unsigned int lineRight, unsigned int colRight, const char *msg);
     };
 }
 

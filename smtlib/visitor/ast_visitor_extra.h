@@ -1,8 +1,8 @@
 #ifndef PARSE_SMTLIB_AST_VISITOR_EXTRA_H
 #define PARSE_SMTLIB_AST_VISITOR_EXTRA_H
 
-#include <visitor/ast_visitor.h>
-#include <ast/ast_abstract.h>
+#include "ast_visitor.h"
+#include "../ast/ast_abstract.h"
 
 namespace smtlib {
     namespace ast {

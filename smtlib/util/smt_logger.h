@@ -12,11 +12,13 @@ namespace smtlib {
 
         static void Warning(const char *fun, const char *msg);
 
-        static void Error(int level, const char *fun, const char *msg);
+        static void Error1(const char *fun, const char *msg);
+        
+        static void Error2(const char *fun, const char *msg);
 
-        static void ErrorParsing(unsigned int lineL, unsigned int colL,
-                                 unsigned int lineR, unsigned int colR,
-                                 const char* filename, const char *msg);
+        static void ParsingError(unsigned int rowLeft, unsigned int colLeft,
+                                 unsigned int rowRight, unsigned int colRight,
+                                 const char *filename, const char *msg);
     };
 }
 
