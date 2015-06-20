@@ -62,10 +62,12 @@ void CompoundAttributeValue::accept(AstVisitor0* visitor) const {
 
 string CompoundAttributeValue::toString() const {
     stringstream ss;
-    ss << "( ";
+    ss << "(";
     for(vector<shared_ptr<AttributeValue>>::const_iterator it = values.begin(); it != values.end(); it++) {
-        ss << (*it)->toString() << " ";
+        ss << (*it)->toString();
+        if(it + 1 != values.end())
+            ss << " ";
     }
-    ss << ") ";
+    ss << ")";
     return ss.str();
 }

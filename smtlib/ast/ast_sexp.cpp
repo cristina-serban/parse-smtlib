@@ -22,9 +22,11 @@ void CompSExpression::accept(AstVisitor0* visitor) const {
 
 string CompSExpression::toString() const {
     stringstream ss;
-    ss << "( ";
+    ss << "(";
     for(vector<shared_ptr<SExpression>>::const_iterator it = exprs.begin(); it != exprs.end(); it++) {
-        ss << (*it)->toString() << " ";
+        if(it != exprs.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
     ss <<")";
     return ss.str();

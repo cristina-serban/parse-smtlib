@@ -24,7 +24,7 @@ void AssertCommand::accept(AstVisitor0* visitor) const {
 
 string AssertCommand::toString() const {
     stringstream ss;
-    ss << "( assert " << term->toString() << " )";
+    ss << "(assert " << term->toString() << ")";
     return ss.str();
 }
 
@@ -35,7 +35,7 @@ void CheckSatCommand::accept(AstVisitor0* visitor) const {
 }
 
 string CheckSatCommand::toString() const {
-    return "( check-sat )";
+    return "(check-sat)";
 }
 
 /* =============================== CheckSatAssumCommand =============================== */
@@ -58,14 +58,15 @@ void CheckSatAssumCommand::accept(AstVisitor0* visitor) const {
 
 string CheckSatAssumCommand::toString() const {
     stringstream ss;
-    ss << "( check-sat-assuming ( ";
+    ss << "(check-sat-assuming (";
 
-    for (vector<shared_ptr<PropLiteral>>::const_iterator it = assumptions.begin();
-         it != assumptions.end(); it++) {
-        ss << (*it)->toString() << " ";
+    for (vector<shared_ptr<PropLiteral>>::const_iterator it = assumptions.begin(); it != assumptions.end(); it++) {
+        if(it != assumptions.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
-    ss << ") )";
+    ss << "))";
 
     return ss.str();
 }
@@ -102,7 +103,7 @@ void DeclareConstCommand::accept(AstVisitor0* visitor) const {
 
 string DeclareConstCommand::toString() const {
     stringstream ss;
-    ss << "( declare-const " << symbol->toString() << " " << sort->toString() << " )";
+    ss << "(declare-const " << symbol->toString() << " " << sort->toString() << ")";
     return ss.str();
 }
 
@@ -153,13 +154,15 @@ void DeclareFunCommand::accept(AstVisitor0* visitor) const {
 
 string DeclareFunCommand::toString() const {
     stringstream ss;
-    ss << "( declare-fun " << symbol->toString() << " ( ";
+    ss << "(declare-fun " << symbol->toString() << " (";
 
     for (vector<shared_ptr<Sort>>::const_iterator it = params.begin(); it != params.end(); it++) {
-        ss << (*it)->toString() << " ";
+        if(it != params.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
-    ss << " ) " << sort->toString() << " )";
+    ss << ") " << sort->toString() << ")";
 
     return ss.str();
 }
@@ -196,7 +199,7 @@ void DeclareSortCommand::accept(AstVisitor0* visitor) const {
 
 string DeclareSortCommand::toString() const {
     stringstream ss;
-    ss << "( declare-sort " << symbol->toString() << " " << arity->toString() << " )";
+    ss << "(declare-sort " << symbol->toString() << " " << arity->toString() << ")";
     return ss.str();
 }
 
@@ -233,7 +236,7 @@ void DefineFunCommand::accept(AstVisitor0* visitor) const {
 
 string DefineFunCommand::toString() const {
     stringstream ss;
-    ss << "( define-fun " << definition->toString() << " )";
+    ss << "(define-fun " << definition->toString() << ")";
     return ss.str();
 }
 
@@ -269,7 +272,7 @@ void DefineFunRecCommand::accept(AstVisitor0* visitor) const {
 
 string DefineFunRecCommand::toString() const {
     stringstream ss;
-    ss << "( define-fun-rec " << definition->toString() << " )";
+    ss << "(define-fun-rec " << definition->toString() << ")";
     return ss.str();
 }
 
@@ -304,19 +307,22 @@ void DefineFunsRecCommand::accept(AstVisitor0* visitor) const {
 
 string DefineFunsRecCommand::toString() const {
     stringstream ss;
-    ss << "( define-funs-rec ( ";
+    ss << "(define-funs-rec (";
     for (vector<shared_ptr<FunctionDeclaration>>::const_iterator it = declarations.begin();
          it != declarations.end(); it++) {
-        ss << "(" << (*it)->toString() << ") ";
+        if(it != declarations.begin())
+            ss << " ";
+        ss << "(" << (*it)->toString() << ")";
     }
 
-    ss << ") ( ";
-    for (vector<shared_ptr<Term>>::const_iterator it = bodies.begin();
-         it != bodies.end(); it++) {
-        ss << "(" << (*it)->toString() << ") ";
+    ss << ") (";
+    for (vector<shared_ptr<Term>>::const_iterator it = bodies.begin(); it != bodies.end(); it++) {
+        if(it != bodies.begin())
+            ss << " ";
+        ss << "(" << (*it)->toString() << ")";
     }
 
-    ss << ") )";
+    ss << "))";
     return ss.str();
 }
 
@@ -367,13 +373,14 @@ void DefineSortCommand::accept(AstVisitor0* visitor) const {
 
 string DefineSortCommand::toString() const {
     stringstream ss;
-    ss << "( define-sort " << symbol->toString() << " ( ";
-    for (vector<shared_ptr<Symbol>>::const_iterator it = params.begin();
-         it != params.end(); it++) {
-        ss << (*it)->toString() << " ";
+    ss << "(define-sort " << symbol->toString() << " (";
+    for (vector<shared_ptr<Symbol>>::const_iterator it = params.begin(); it != params.end(); it++) {
+        if(it != params.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
-    ss << ") " << sort->toString() << " )";
+    ss << ") " << sort->toString() << ")";
     return ss.str();
 }
 
@@ -397,7 +404,7 @@ void EchoCommand::accept(AstVisitor0* visitor) const {
 
 string EchoCommand::toString() const {
     stringstream ss;
-    ss << "( echo " << message << " )";
+    ss << "(echo " << message << ")";
     return ss.str();
 }
 
@@ -408,7 +415,7 @@ void ExitCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string ExitCommand::toString() const {
-    return "( exit )";
+    return "(exit)";
 }
 
 /* ================================ GetAssertsCommand ================================= */
@@ -418,7 +425,7 @@ void GetAssertsCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string GetAssertsCommand::toString() const {
-    return "( get-assertions )";
+    return "(get-assertions)";
 }
 
 /* ================================ GetAssignsCommand ================================= */
@@ -428,7 +435,7 @@ void GetAssignsCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string GetAssignsCommand::toString() const {
-    return "( get-assignments )";
+    return "(get-assignments)";
 }
 
 /* ================================== GetInfoCommand ================================== */
@@ -451,7 +458,7 @@ void GetInfoCommand::accept(AstVisitor0* visitor) const {
 
 string GetInfoCommand::toString() const {
     stringstream ss;
-    ss << "( get-info " << flag->toString() << " )";
+    ss << "(get-info " << flag->toString() << ")";
     return ss.str();
 }
 
@@ -462,7 +469,7 @@ void GetModelCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string GetModelCommand::toString() const {
-    return "( get-model )";
+    return "(get-model)";
 }
 
 /* ================================= GetOptionCommand ================================= */
@@ -485,7 +492,7 @@ void GetOptionCommand::accept(AstVisitor0* visitor) const {
 
 string GetOptionCommand::toString() const {
     stringstream ss;
-    ss << "( get-option " << option->toString() << " )";
+    ss << "(get-option " << option->toString() << ")";
     return ss.str();
 }
 
@@ -496,7 +503,7 @@ void GetProofCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string GetProofCommand::toString() const {
-    return "( get-proof )";
+    return "(get-proof)";
 }
 
 /* ============================== GetUnsatAssumsCommand =============================== */
@@ -506,7 +513,7 @@ void GetUnsatAssumsCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string GetUnsatAssumsCommand::toString() const {
-    return "( get-unsat-assumptions )";
+    return "(get-unsat-assumptions)";
 }
 
 /* =============================== GetUnsatCoreCommand ================================ */
@@ -516,7 +523,7 @@ void GetUnsatCoreCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string GetUnsatCoreCommand::toString() const {
-    return "( get-unsat-core )";
+    return "(get-unsat-core)";
 }
 
 /* ================================= GetValueCommand ================================== */
@@ -539,13 +546,15 @@ void GetValueCommand::accept(AstVisitor0* visitor) const {
 
 string GetValueCommand::toString() const {
     stringstream ss;
-    ss << "( get-value ( ";
+    ss << "(get-value (";
 
     for(vector<shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
-        ss << (*it)->toString() << " ";
+        if(it != terms.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
-    ss << ") )";
+    ss << "))";
     return ss.str();
 }
 
@@ -569,7 +578,7 @@ void PopCommand::accept(AstVisitor0* visitor) const {
 
 string PopCommand::toString() const {
     stringstream ss;
-    ss << "( pop " << numeral->toString() << " )";
+    ss << "(pop " << numeral->toString() << ")";
     return ss.str();
 }
 
@@ -593,7 +602,7 @@ void PushCommand::accept(AstVisitor0* visitor) const {
 
 string PushCommand::toString() const {
     stringstream ss;
-    ss << "( push " << numeral->toString() << " )";
+    ss << "(push " << numeral->toString() << ")";
     return ss.str();
 }
 
@@ -604,7 +613,7 @@ void ResetCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string ResetCommand::toString() const {
-    return "( reset )";
+    return "(reset)";
 }
 
 /* =============================== ResetAssertsCommand ================================ */
@@ -614,7 +623,7 @@ void ResetAssertsCommand::accept(AstVisitor0* visitor) const {
 } 
 
 string ResetAssertsCommand::toString() const {
-    return "( reset-assertions )";
+    return "(reset-assertions)";
 }
 
 /* ================================== SetInfoCommand ================================== */
@@ -637,8 +646,8 @@ void SetInfoCommand::accept(AstVisitor0* visitor) const {
 
 string SetInfoCommand::toString() const {
     stringstream ss;
-    ss << "( set-info " << info->getKeyword()->toString()
-    << " " << info->getValue()->toString() << " )";
+    ss << "(set-info " << info->getKeyword()->toString()
+       << " " << info->getValue()->toString() << ")";
     return ss.str();
 }
 
@@ -662,7 +671,7 @@ void SetLogicCommand::accept(AstVisitor0* visitor) const {
 
 string SetLogicCommand::toString() const {
     stringstream ss;
-    ss << "( set-logic " << logic->toString() << " )";
+    ss << "(set-logic " << logic->toString() << ")";
     return ss.str();
 }
 
@@ -686,7 +695,7 @@ void SetOptionCommand::accept(AstVisitor0* visitor) const {
 
 string SetOptionCommand::toString() const {
     stringstream ss;
-    ss << "( set-option " << option->getKeyword()->toString()
-    << " " << option->getValue()->toString() << " )";
+    ss << "(set-option " << option->getKeyword()->toString()
+       << " " << option->getValue()->toString() << ")";
     return ss.str();
 }

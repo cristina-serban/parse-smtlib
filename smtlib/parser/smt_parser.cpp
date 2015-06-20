@@ -30,9 +30,7 @@ bool Parser::checkSyntax() {
         if(chk->run(ast.get())) {
             return true;
         } else {
-            stringstream ss;
-            ss << "Syntax errors in file " + filename + ":" << endl << chk->getErrors();
-            Logger::Error2("Parser::checkSyntax()", ss.str().c_str());
+            Logger::SyntaxError("Parser::checkSyntax()", filename.c_str(), chk->getErrors().c_str());
             return false;
         }
     } else {
@@ -45,6 +43,10 @@ void Parser::setAst(AstNode * ast) {
     if(ast) {
         this->ast = shared_ptr<AstNode>(ast);
     }
+}
+
+std::shared_ptr<ast::AstNode> Parser::getAst() {
+    return ast;
 }
 
 void Parser::reportError(unsigned int lineLeft, unsigned int colLeft,

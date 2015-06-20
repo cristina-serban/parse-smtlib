@@ -11,13 +11,15 @@ namespace smtlib {
         std::shared_ptr<ast::AstNode> ast;
         std::string filename;
     public:
-        std::shared_ptr<smtlib::ast::AstNode> parse(std::string filename);
+        std::shared_ptr<ast::AstNode> parse(std::string filename);
 
         bool checkSyntax();
 
         bool checkSortedness();
 
-        void setAst(smtlib::ast::AstNode * ast);
+        void setAst(smtlib::ast::AstNode *ast);
+
+        std::shared_ptr<ast::AstNode> getAst();
 
         void reportError(unsigned int lineLeft, unsigned int colLeft,
                          unsigned int lineRight, unsigned int colRight, const char *msg);

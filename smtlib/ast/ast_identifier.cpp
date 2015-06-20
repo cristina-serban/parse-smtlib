@@ -47,7 +47,9 @@ string Identifier::toString() const {
         stringstream ss;
         ss << "( _ " << symbol->toString() << " ";
         for(vector<shared_ptr<Index>>::const_iterator it = indices.begin(); it != indices.end(); it++) {
-            ss << (*it)->toString() << " ";
+            if(it != indices.begin())
+                ss << " ";
+            ss << (*it)->toString();
         }
         ss << ")";
         return ss.str();
@@ -86,6 +88,6 @@ void QualifiedIdentifier::accept(AstVisitor0* visitor) const {
 
 string QualifiedIdentifier::toString() const {
     stringstream ss;
-    ss << "( as " << identifier->toString() << " " << sort->toString() << " )";
+    ss << "(as " << identifier->toString() << " " << sort->toString() << ")";
     return ss.str();
 }

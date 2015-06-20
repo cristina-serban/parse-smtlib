@@ -146,7 +146,7 @@ namespace smtlib {
         class AnnotatedTerm : public Term {
         private:
             std::shared_ptr<Term> term;
-            std::vector<std::shared_ptr<Attribute>> attrs;
+            std::vector<std::shared_ptr<Attribute>> attributes;
 
         public:
             /**
@@ -154,7 +154,7 @@ namespace smtlib {
              * \param attr  Attributes
              */
             AnnotatedTerm(std::shared_ptr<Term> term,
-                          const std::vector<std::shared_ptr<Attribute>> &attrs);
+                          const std::vector<std::shared_ptr<Attribute>> &attributes);
 
             const std::shared_ptr<Term> getTerm() const;
             std::shared_ptr<Term> getTerm();

@@ -38,10 +38,12 @@ void QualifiedTerm::accept(AstVisitor0* visitor) const {
 
 string QualifiedTerm::toString() const {
     stringstream ss;
-    ss << "( " << identifier->toString() << " ";
+    ss << "(" << identifier->toString() << " ";
 
     for(vector<shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
-        ss << (*it)->toString() << " ";
+        if(it != terms.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
     ss << ")";
@@ -82,13 +84,15 @@ void LetTerm::accept(AstVisitor0* visitor) const {
 
 string LetTerm::toString() const {
     stringstream ss;
-    ss << "( let ( ";
+    ss << "(let (";
 
     for(vector<shared_ptr<VarBinding>>::const_iterator it = bindings.begin(); it != bindings.end(); it++) {
-        ss << "(" << (*it)->toString() << ") ";
+        if(it != bindings.begin())
+            ss << " ";
+        ss << "(" << (*it)->toString() << ")";
     }
 
-    ss << ") " << term->toString() << " )";
+    ss << ") " << term->toString() << ")";
 
     return ss.str();
 }
@@ -126,13 +130,15 @@ void ForallTerm::accept(AstVisitor0* visitor) const {
 
 string ForallTerm::toString() const {
     stringstream ss;
-    ss << "( forall ( ";
+    ss << "(forall (";
 
     for(vector<shared_ptr<SortedVariable>>::const_iterator it = bindings.begin(); it != bindings.end(); it++) {
-        ss << "(" << (*it)->toString() << ") ";
+        if(it != bindings.begin())
+            ss << " ";
+        ss << "(" << (*it)->toString() << ")";
     }
 
-    ss << ") " << term->toString() << " )";
+    ss << ") " << term->toString() << ")";
 
     return ss.str();
 }
@@ -170,22 +176,24 @@ void ExistsTerm::accept(AstVisitor0* visitor) const {
 
 string ExistsTerm::toString() const {
     stringstream ss;
-    ss << "( exists ( ";
+    ss << "(exists (";
 
     for(vector<shared_ptr<SortedVariable>>::const_iterator it = bindings.begin(); it != bindings.end(); it++) {
-        ss << "(" << (*it)->toString() << ") ";
+        if(it != bindings.begin())
+            ss << " ";
+        ss << "(" << (*it)->toString() << ")";
     }
 
-    ss << ") " << term->toString() << " )";
+    ss << ") " << term->toString() << ")";
 
     return ss.str();
 }
 
 /* ================================== AnnotatedTerm =================================== */
 AnnotatedTerm::AnnotatedTerm(shared_ptr<Term> term,
-                             const vector<shared_ptr<Attribute>> &attrs)
+                             const vector<shared_ptr<Attribute>> &attributes)
         : term(term) {
-    this->attrs.insert(this->attrs.end(), attrs.begin(), attrs.end());
+    this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
 const shared_ptr<Term> AnnotatedTerm::getTerm() const {
@@ -201,11 +209,11 @@ void AnnotatedTerm::setTerm(shared_ptr<Term> term) {
 }
 
 const vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttributes() const {
-    return attrs;
+    return attributes;
 }
 
 vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttributes() {
-    return attrs;
+    return attributes;
 }
 
 void AnnotatedTerm::accept(AstVisitor0* visitor) const {
@@ -216,8 +224,10 @@ string AnnotatedTerm::toString() const {
     stringstream ss;
     ss << "( ! " << term->toString() << " ";
 
-    for(vector<shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
-        ss << (*it)->toString() << " ";
+    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
+        if(it != attributes.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
     ss << ")";

@@ -12,12 +12,12 @@ void Logger::Warning(const char* fun, const char* msg) {
     fprintf(stderr, "Warning in %s: %s.\n", fun, msg);
 }
 
-void Logger::Error1(const char *fun, const char *msg) {
+void Logger::Error(const char *fun, const char *msg) {
     fprintf(stderr, "Error in %s: %s.\n", fun, msg);
 }
 
-void Logger::Error2(const char *fun, const char *msg) {
-    fprintf(stderr, "In %s: %s", fun, msg);
+void Logger::SyntaxError(const char* fun, const char *file, const char *msg) {
+    fprintf(stderr, "%s: Syntax errors in file %s\n%s", fun, file, msg);
 }
 
 void Logger::ParsingError(unsigned int rowLeft, unsigned int colLeft,

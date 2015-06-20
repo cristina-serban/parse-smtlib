@@ -52,10 +52,12 @@ void FunctionDeclaration::accept(AstVisitor0* visitor) const {
 
 string FunctionDeclaration::toString() const {
     stringstream ss;
-    ss << symbol->toString() << " ( ";
+    ss << symbol->toString() << " (";
 
     for(vector<shared_ptr<SortedVariable>>::const_iterator it = params.begin(); it != params.end(); it++) {
-        ss << (*it)->toString() << " ";
+        if(it != params.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
     ss << ") " << sort->toString();

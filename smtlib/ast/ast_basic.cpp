@@ -118,7 +118,7 @@ void PropLiteral::accept(AstVisitor0* visitor) const {
 string PropLiteral::toString() const {
     if(negated) {
         stringstream ss;
-        ss << "( not " << symbol->toString() << " )";
+        ss << "(not " << symbol->toString() << ")";
         return ss.str();
     } else {
         return symbol->toString();

@@ -37,10 +37,12 @@ void Theory::accept(AstVisitor0* visitor) const {
 
 string Theory::toString() const {
     stringstream ss;
-    ss << "( theory  " << name->toString() << " ";
+    ss << "(theory  " << name->toString() << " ";
 
     for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
-        ss << (*it)->toString() << " ";
+        if(it != attributes.begin())
+            ss << " ";
+        ss << (*it)->toString();
     }
 
     ss << ")";
