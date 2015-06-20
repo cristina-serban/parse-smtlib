@@ -35,11 +35,11 @@ void Theory::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string Theory::toString() {
+string Theory::toString() const {
     stringstream ss;
     ss << "( theory  " << name->toString() << " ";
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << (*it)->toString() << " ";
     }
 

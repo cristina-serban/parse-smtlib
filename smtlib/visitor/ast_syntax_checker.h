@@ -8,20 +8,21 @@
 
 namespace smtlib {
     namespace ast {
-        struct SyntaxCheckError {
-            std::string message;
-            AstNode const *node;
-        };
-
-        class AstSyntaxChecker : public AstVisitor1<bool> {
+        class SyntaxChecker : public AstVisitor1<bool> {
         private:
+            struct SyntaxCheckError {
+                std::vector<std::string> messages;
+                AstNode const *node;
+            };
+
             std::string file;
             std::vector<std::shared_ptr<SyntaxCheckError>> errors;
 
             const std::regex regexSymbol = std::regex("^([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
             const std::regex regexKeyword = std::regex ("^:([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
 
-            void addError(std::string message, AstNode const *node);
+            std::shared_ptr<SyntaxCheckError> addError(std::string message, AstNode const *node,
+                                                       std::shared_ptr<SyntaxCheckError> err);
         public:
             virtual void visit(Attribute const *node);
             virtual void visit(CompoundAttributeValue const *node);

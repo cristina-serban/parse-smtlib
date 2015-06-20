@@ -65,7 +65,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =============================== FunSymbolDeclaration =============================== */
@@ -125,7 +125,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ========================== MetaSpecConstFunDeclaration =========================== */
@@ -176,7 +176,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ============================== IdentifierFunDeclaration =============================== */
@@ -226,7 +226,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =============================== ParametricFunDeclaration ================================ */
@@ -268,7 +268,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
     }
 }

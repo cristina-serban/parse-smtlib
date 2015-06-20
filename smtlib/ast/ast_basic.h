@@ -38,7 +38,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ====================================== Keyword ===================================== */
@@ -64,7 +64,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= MetaSpecConstant ================================= */
@@ -94,7 +94,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
 
         private:
             MetaSpecConstant::Type type;
@@ -118,7 +118,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =================================== PropLiteral ==================================== */
@@ -146,7 +146,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
     }
 }

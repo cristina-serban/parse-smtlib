@@ -34,7 +34,7 @@ void Attribute::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string Attribute::toString() {
+string Attribute::toString() const {
     stringstream ss;
     ss << keyword->toString();
     if(value)
@@ -60,10 +60,10 @@ void CompoundAttributeValue::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string CompoundAttributeValue::toString() {
+string CompoundAttributeValue::toString() const {
     stringstream ss;
     ss << "( ";
-    for(vector<shared_ptr<AttributeValue>>::iterator it = values.begin(); it != values.end(); it++) {
+    for(vector<shared_ptr<AttributeValue>>::const_iterator it = values.begin(); it != values.end(); it++) {
         ss << (*it)->toString() << " ";
     }
     ss << ") ";

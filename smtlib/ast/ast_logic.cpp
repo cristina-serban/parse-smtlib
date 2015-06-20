@@ -34,11 +34,11 @@ void Logic::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string Logic::toString() {
+string Logic::toString() const {
     stringstream ss;
     ss << "( logic  " << name->toString() << " ";
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
+    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << (*it)->toString() << " ";
     }
 

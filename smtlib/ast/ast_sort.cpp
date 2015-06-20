@@ -38,14 +38,14 @@ void Sort::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string Sort::toString() {
+string Sort::toString() const {
     if(!isParametrized()) {
         return identifier->toString();
     } else {
         stringstream ss;
         ss << "( " << identifier->toString() << " ";
 
-        for(vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
+        for(vector<shared_ptr<Sort>>::const_iterator it = params.begin(); it != params.end(); it++) {
             ss << (*it)->toString() << " ";
         }
 

@@ -24,16 +24,16 @@ int yyerror(SmtPrsr parser, const char *);
 
 %token <ptr> NUMERAL DECIMAL HEXADECIMAL BINARY
 
-%token CMD_ASSERT CMD_CHK_SAT CMD_CHK_SAT_ASSUM CMD_DECL_CONST CMD_DECL_FUN CMD_DECL_SORT
-%token CMD_DEF_FUN CMD_DEF_FUN_REC CMD_DEF_FUNS_REC CMD_DEF_SORT CMD_ECHO CMD_EXIT
-%token CMD_GET_ASSERTS CMD_GET_ASSIGNS CMD_GET_INFO CMD_GET_MODEL CMD_GET_OPT CMD_GET_PROOF
-%token CMD_GET_UNSAT_ASSUMS CMD_GET_UNSAT_CORE CMD_GET_VALUE CMD_POP CMD_PUSH
-%token CMD_RESET CMD_RESET_ASSERTS CMD_SET_INFO CMD_SET_LOGIC CMD_SET_OPT
+%token KW_CMD_ASSERT KW_CMD_CHK_SAT KW_CMD_CHK_SAT_ASSUM KW_CMD_DECL_CONST KW_CMD_DECL_FUN KW_CMD_DECL_SORT
+%token KW_CMD_DEF_FUN KW_CMD_DEF_FUN_REC KW_CMD_DEF_FUNS_REC KW_CMD_DEF_SORT KW_CMD_ECHO KW_CMD_EXIT
+%token KW_CMD_GET_ASSERTS KW_CMD_GET_ASSIGNS KW_CMD_GET_INFO KW_CMD_GET_MODEL KW_CMD_GET_OPT KW_CMD_GET_PROOF
+%token KW_CMD_GET_UNSAT_ASSUMS KW_CMD_GET_UNSAT_CORE KW_CMD_GET_VALUE KW_CMD_POP KW_CMD_PUSH
+%token KW_CMD_RESET KW_CMD_RESET_ASSERTS KW_CMD_SET_INFO KW_CMD_SET_LOGIC KW_CMD_SET_OPT
 
 %token <ptr> META_SPEC_DECIMAL META_SPEC_NUMERAL META_SPEC_STRING
 %token <ptr> KEYWORD STRING SYMBOL THEORY LOGIC
 
-%token <ptr> ATTR_SORTS ATTR_FUNS ATTR_THEORIES
+%token <ptr> KW_ATTR_SORTS KW_ATTR_FUNS KW_ATTR_THEORIES
 
 %type <ptr> smt_file script command term spec_const qual_identifier identifier index
 %type <ptr> sort var_binding sorted_var attribute attr_value s_exp prop_literal 
@@ -96,7 +96,7 @@ command_plus:
 ;
 
 command:
-	'(' CMD_ASSERT term ')'		
+	'(' KW_CMD_ASSERT term ')'		
 		{ 
 			$$ = smt_newAssertCommand($3); 
 
@@ -108,7 +108,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_CHK_SAT ')'			
+	'(' KW_CMD_CHK_SAT ')'			
 		{ 
 			$$ = smt_newCheckSatCommand(); 
 
@@ -120,7 +120,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_CHK_SAT_ASSUM '(' prop_literal_star ')' ')'		
+	'(' KW_CMD_CHK_SAT_ASSUM '(' prop_literal_star ')' ')'		
 		{ 
 			$$ = smt_newCheckSatAssumCommand($4); 
 
@@ -132,7 +132,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_DECL_CONST symbol sort ')'						
+	'(' KW_CMD_DECL_CONST symbol sort ')'						
 		{ 
 			$$ = smt_newDeclareConstCommand($3, $4); 
 
@@ -144,7 +144,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_DECL_FUN symbol '(' sort_star ')' sort ')'
+	'(' KW_CMD_DECL_FUN symbol '(' sort_star ')' sort ')'
 		{ 
 			$$ = smt_newDeclareFunCommand($3, $5, $7); 
 
@@ -156,7 +156,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_DECL_SORT symbol NUMERAL ')'
+	'(' KW_CMD_DECL_SORT symbol NUMERAL ')'
 		{ 
 			$$ = smt_newDeclareSortCommand($3, $4); 
 
@@ -168,7 +168,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_DEF_FUNS_REC '(' fun_decl_plus ')'  '(' term_plus ')' ')'
+	'(' KW_CMD_DEF_FUNS_REC '(' fun_decl_plus ')'  '(' term_plus ')' ')'
 		{ 
 			$$ = smt_newDefineFunsRecCommand($4, $7); 
 
@@ -180,7 +180,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |	
-	'(' CMD_DEF_FUN_REC fun_def ')'
+	'(' KW_CMD_DEF_FUN_REC fun_def ')'
 		{ 
 			$$ = smt_newDefineFunRecCommand($3); 
 
@@ -192,7 +192,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_DEF_FUN fun_def ')'
+	'(' KW_CMD_DEF_FUN fun_def ')'
 		{ 
 			$$ = smt_newDefineFunCommand($3); 
 
@@ -204,7 +204,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_DEF_SORT symbol '(' symbol_star ')' sort ')'
+	'(' KW_CMD_DEF_SORT symbol '(' symbol_star ')' sort ')'
 		{ 
 			$$ = smt_newDefineSortCommand($3, $5, $7); 
 
@@ -216,7 +216,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_ECHO STRING ')'
+	'(' KW_CMD_ECHO STRING ')'
 		{ 
 			$$ = smt_newEchoCommand($3); 
 
@@ -228,7 +228,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_EXIT ')'
+	'(' KW_CMD_EXIT ')'
 		{ 
 			$$ = smt_newExitCommand(); 
 
@@ -240,7 +240,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_ASSERTS ')'
+	'(' KW_CMD_GET_ASSERTS ')'
 		{ 
 			$$ = smt_newGetAssertsCommand(); 
 
@@ -252,7 +252,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_ASSIGNS ')'
+	'(' KW_CMD_GET_ASSIGNS ')'
 		{ 
 			$$ = smt_newGetAssignsCommand(); 
 
@@ -264,7 +264,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_INFO info_flag ')' 
+	'(' KW_CMD_GET_INFO info_flag ')' 
 		{ 
 			$$ = smt_newGetInfoCommand($3); 
 
@@ -276,7 +276,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_MODEL ')'
+	'(' KW_CMD_GET_MODEL ')'
 		{ 
 			$$ = smt_newGetModelCommand(); 
 			@$.first_line = @1.first_line;
@@ -287,7 +287,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_OPT KEYWORD ')'
+	'(' KW_CMD_GET_OPT KEYWORD ')'
 		{ 
 			$$ = smt_newGetOptionCommand($3); 
 
@@ -299,7 +299,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_PROOF ')'
+	'(' KW_CMD_GET_PROOF ')'
 		{ 
 			$$ = smt_newGetProofCommand(); 
 
@@ -311,7 +311,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_UNSAT_ASSUMS ')'
+	'(' KW_CMD_GET_UNSAT_ASSUMS ')'
 		{ 
 			$$ = smt_newGetModelCommand(); 
 
@@ -323,7 +323,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_UNSAT_CORE ')'
+	'(' KW_CMD_GET_UNSAT_CORE ')'
 		{ 
 			$$ = smt_newGetUnsatCoreCommand(); 
 
@@ -335,7 +335,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_GET_VALUE term_plus ')'
+	'(' KW_CMD_GET_VALUE term_plus ')'
 		{ 
 			$$ = smt_newGetValueCommand($3); 
 
@@ -347,7 +347,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_POP NUMERAL ')'
+	'(' KW_CMD_POP NUMERAL ')'
 		{ 
 			$$ = smt_newPopCommand($3); 
 
@@ -359,7 +359,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_PUSH NUMERAL ')'
+	'(' KW_CMD_PUSH NUMERAL ')'
 		{ 
 			$$ = smt_newPushCommand($3); 
 
@@ -371,7 +371,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_RESET_ASSERTS ')'
+	'(' KW_CMD_RESET_ASSERTS ')'
 		{ 
 			$$ = smt_newResetAssertsCommand(); 
 
@@ -383,7 +383,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_RESET ')'
+	'(' KW_CMD_RESET ')'
 		{ 
 			$$ = smt_newResetCommand(); 
 
@@ -395,7 +395,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_SET_INFO attribute ')'
+	'(' KW_CMD_SET_INFO attribute ')'
 		{ 
 			$$ = smt_newSetInfoCommand($3); 
 
@@ -407,7 +407,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_SET_LOGIC symbol ')'
+	'(' KW_CMD_SET_LOGIC symbol ')'
 		{ 
 			$$ = smt_newSetLogicCommand($3); 
 
@@ -419,7 +419,7 @@ command:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	'(' CMD_SET_OPT option ')'
+	'(' KW_CMD_SET_OPT option ')'
 		{ 
 			$$ = smt_newSetOptionCommand($3); 
 
@@ -625,7 +625,7 @@ symbol:
 			smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	CMD_RESET
+	KW_CMD_RESET
 		{
 			$$ = smt_newSymbol("reset");
 
@@ -1290,7 +1290,7 @@ theory_decl:
 ;
 
 theory_attr:
-	ATTR_SORTS '(' sort_symbol_decl_plus ')'
+	KW_ATTR_SORTS '(' sort_symbol_decl_plus ')'
 		{ 
 			$$ = smt_newAttribute2($1, 
 				smt_newCompoundAttributeValue($3)); 
@@ -1303,7 +1303,7 @@ theory_attr:
             smt_setLocation($$, @$.first_line, @$.last_line, @$.first_column, @$.last_column);
 		}
 |
-	ATTR_FUNS '(' par_fun_symbol_decl_plus ')'
+	KW_ATTR_FUNS '(' par_fun_symbol_decl_plus ')'
 		{ 
 			$$ = smt_newAttribute2($1, 
 				smt_newCompoundAttributeValue($3)); 
@@ -1520,7 +1520,7 @@ logic:
 ;
 
 logic_attr:
-	ATTR_THEORIES '(' symbol_plus ')'
+	KW_ATTR_THEORIES '(' symbol_plus ')'
 		{ 
 			$$ = smt_newAttribute2($1, smt_newCompoundAttributeValue($3)); 
 

@@ -26,7 +26,7 @@ void NumeralLiteral::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string NumeralLiteral::toString() {
+string NumeralLiteral::toString() const {
     stringstream ss;
 
     if (base == 2) {
@@ -34,10 +34,11 @@ string NumeralLiteral::toString() {
         if(value == 0)
             ss << 0;
         else {
+            long val = value;
             stringstream binary;
-            while(value != 0) {
-                binary <<( value & 1);
-                value >>= 1;
+            while(val != 0) {
+                binary << (val & 1);
+                val >>= 1;
             }
             string result = binary.str();
             reverse(result.begin(), result.end());
@@ -62,7 +63,7 @@ void DecimalLiteral::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string DecimalLiteral::toString() {
+string DecimalLiteral::toString() const {
     stringstream ss;
     ss << value;
     return ss.str();
@@ -78,7 +79,7 @@ void StringLiteral::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string StringLiteral::toString() {
+string StringLiteral::toString() const {
     stringstream ss;
     ss << value;
     return ss.str();

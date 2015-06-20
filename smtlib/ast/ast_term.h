@@ -42,7 +42,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ===================================== LetTerm ====================================== */
@@ -73,7 +73,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ==================================== ForallTerm ==================================== */
@@ -104,7 +104,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ==================================== ExistsTerm ==================================== */
@@ -135,7 +135,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================== AnnotatedTerm =================================== */
@@ -166,7 +166,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
     }
 }

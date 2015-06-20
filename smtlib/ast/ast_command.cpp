@@ -22,7 +22,7 @@ void AssertCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string AssertCommand::toString() {
+string AssertCommand::toString() const {
     stringstream ss;
     ss << "( assert " << term->toString() << " )";
     return ss.str();
@@ -34,7 +34,7 @@ void CheckSatCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string CheckSatCommand::toString() {
+string CheckSatCommand::toString() const {
     return "( check-sat )";
 }
 
@@ -56,11 +56,11 @@ void CheckSatAssumCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string CheckSatAssumCommand::toString() {
+string CheckSatAssumCommand::toString() const {
     stringstream ss;
     ss << "( check-sat-assuming ( ";
 
-    for (vector<shared_ptr<PropLiteral>>::iterator it = assumptions.begin();
+    for (vector<shared_ptr<PropLiteral>>::const_iterator it = assumptions.begin();
          it != assumptions.end(); it++) {
         ss << (*it)->toString() << " ";
     }
@@ -100,7 +100,7 @@ void DeclareConstCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string DeclareConstCommand::toString() {
+string DeclareConstCommand::toString() const {
     stringstream ss;
     ss << "( declare-const " << symbol->toString() << " " << sort->toString() << " )";
     return ss.str();
@@ -151,11 +151,11 @@ void DeclareFunCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string DeclareFunCommand::toString() {
+string DeclareFunCommand::toString() const {
     stringstream ss;
     ss << "( declare-fun " << symbol->toString() << " ( ";
 
-    for (vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
+    for (vector<shared_ptr<Sort>>::const_iterator it = params.begin(); it != params.end(); it++) {
         ss << (*it)->toString() << " ";
     }
 
@@ -194,7 +194,7 @@ void DeclareSortCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string DeclareSortCommand::toString() {
+string DeclareSortCommand::toString() const {
     stringstream ss;
     ss << "( declare-sort " << symbol->toString() << " " << arity->toString() << " )";
     return ss.str();
@@ -231,7 +231,7 @@ void DefineFunCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string DefineFunCommand::toString() {
+string DefineFunCommand::toString() const {
     stringstream ss;
     ss << "( define-fun " << definition->toString() << " )";
     return ss.str();
@@ -267,7 +267,7 @@ void DefineFunRecCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string DefineFunRecCommand::toString() {
+string DefineFunRecCommand::toString() const {
     stringstream ss;
     ss << "( define-fun-rec " << definition->toString() << " )";
     return ss.str();
@@ -302,16 +302,16 @@ void DefineFunsRecCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string DefineFunsRecCommand::toString() {
+string DefineFunsRecCommand::toString() const {
     stringstream ss;
     ss << "( define-funs-rec ( ";
-    for (vector<shared_ptr<FunctionDeclaration>>::iterator it = declarations.begin();
+    for (vector<shared_ptr<FunctionDeclaration>>::const_iterator it = declarations.begin();
          it != declarations.end(); it++) {
         ss << "(" << (*it)->toString() << ") ";
     }
 
     ss << ") ( ";
-    for (vector<shared_ptr<Term>>::iterator it = bodies.begin();
+    for (vector<shared_ptr<Term>>::const_iterator it = bodies.begin();
          it != bodies.end(); it++) {
         ss << "(" << (*it)->toString() << ") ";
     }
@@ -365,10 +365,10 @@ void DefineSortCommand::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string DefineSortCommand::toString() {
+string DefineSortCommand::toString() const {
     stringstream ss;
     ss << "( define-sort " << symbol->toString() << " ( ";
-    for (vector<shared_ptr<Symbol>>::iterator it = params.begin();
+    for (vector<shared_ptr<Symbol>>::const_iterator it = params.begin();
          it != params.end(); it++) {
         ss << (*it)->toString() << " ";
     }
@@ -395,7 +395,7 @@ void EchoCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string EchoCommand::toString() {
+string EchoCommand::toString() const {
     stringstream ss;
     ss << "( echo " << message << " )";
     return ss.str();
@@ -407,7 +407,7 @@ void ExitCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string ExitCommand::toString() {
+string ExitCommand::toString() const {
     return "( exit )";
 }
 
@@ -417,7 +417,7 @@ void GetAssertsCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetAssertsCommand::toString() {
+string GetAssertsCommand::toString() const {
     return "( get-assertions )";
 }
 
@@ -427,7 +427,7 @@ void GetAssignsCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetAssignsCommand::toString() {
+string GetAssignsCommand::toString() const {
     return "( get-assignments )";
 }
 
@@ -449,7 +449,7 @@ void GetInfoCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetInfoCommand::toString() {
+string GetInfoCommand::toString() const {
     stringstream ss;
     ss << "( get-info " << flag->toString() << " )";
     return ss.str();
@@ -461,7 +461,7 @@ void GetModelCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetModelCommand::toString() {
+string GetModelCommand::toString() const {
     return "( get-model )";
 }
 
@@ -483,7 +483,7 @@ void GetOptionCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetOptionCommand::toString() {
+string GetOptionCommand::toString() const {
     stringstream ss;
     ss << "( get-option " << option->toString() << " )";
     return ss.str();
@@ -495,7 +495,7 @@ void GetProofCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetProofCommand::toString() {
+string GetProofCommand::toString() const {
     return "( get-proof )";
 }
 
@@ -505,7 +505,7 @@ void GetUnsatAssumsCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetUnsatAssumsCommand::toString() {
+string GetUnsatAssumsCommand::toString() const {
     return "( get-unsat-assumptions )";
 }
 
@@ -515,7 +515,7 @@ void GetUnsatCoreCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetUnsatCoreCommand::toString() {
+string GetUnsatCoreCommand::toString() const {
     return "( get-unsat-core )";
 }
 
@@ -537,11 +537,11 @@ void GetValueCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string GetValueCommand::toString() {
+string GetValueCommand::toString() const {
     stringstream ss;
     ss << "( get-value ( ";
 
-    for(vector<shared_ptr<Term>>::iterator it = terms.begin(); it != terms.end(); it++) {
+    for(vector<shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
         ss << (*it)->toString() << " ";
     }
 
@@ -567,7 +567,7 @@ void PopCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string PopCommand::toString() {
+string PopCommand::toString() const {
     stringstream ss;
     ss << "( pop " << numeral->toString() << " )";
     return ss.str();
@@ -591,7 +591,7 @@ void PushCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string PushCommand::toString() {
+string PushCommand::toString() const {
     stringstream ss;
     ss << "( push " << numeral->toString() << " )";
     return ss.str();
@@ -603,7 +603,7 @@ void ResetCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string ResetCommand::toString() {
+string ResetCommand::toString() const {
     return "( reset )";
 }
 
@@ -613,7 +613,7 @@ void ResetAssertsCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string ResetAssertsCommand::toString() {
+string ResetAssertsCommand::toString() const {
     return "( reset-assertions )";
 }
 
@@ -635,7 +635,7 @@ void SetInfoCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string SetInfoCommand::toString() {
+string SetInfoCommand::toString() const {
     stringstream ss;
     ss << "( set-info " << info->getKeyword()->toString()
     << " " << info->getValue()->toString() << " )";
@@ -660,7 +660,7 @@ void SetLogicCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string SetLogicCommand::toString() {
+string SetLogicCommand::toString() const {
     stringstream ss;
     ss << "( set-logic " << logic->toString() << " )";
     return ss.str();
@@ -684,7 +684,7 @@ void SetOptionCommand::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 } 
 
-string SetOptionCommand::toString() {
+string SetOptionCommand::toString() const {
     stringstream ss;
     ss << "( set-option " << option->getKeyword()->toString()
     << " " << option->getValue()->toString() << " )";

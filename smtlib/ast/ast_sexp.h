@@ -31,7 +31,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
     }
 }

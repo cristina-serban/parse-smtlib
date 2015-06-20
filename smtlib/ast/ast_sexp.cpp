@@ -20,10 +20,10 @@ void CompSExpression::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string CompSExpression::toString() {
+string CompSExpression::toString() const {
     stringstream ss;
     ss << "( ";
-    for(vector<shared_ptr<SExpression>>::iterator it = exprs.begin(); it != exprs.end(); it++) {
+    for(vector<shared_ptr<SExpression>>::const_iterator it = exprs.begin(); it != exprs.end(); it++) {
         ss << (*it)->toString() << " ";
     }
     ss <<")";

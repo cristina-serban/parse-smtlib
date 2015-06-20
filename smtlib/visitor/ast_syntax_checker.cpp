@@ -8,6 +8,7 @@
 #include "../ast/ast_term.h"
 #include "../ast/ast_theory.h"
 
+#include <iostream>
 #include <memory>
 #include <regex>
 #include <vector>
@@ -15,22 +16,31 @@
 using namespace std;
 using namespace smtlib::ast;
 
-void AstSyntaxChecker::addError(string message, AstNode const *node) {
-    shared_ptr<SyntaxCheckError> err = make_shared<SyntaxCheckError>();
-    err->message = message;
-    err->node = node;
-    errors.push_back(err);
+shared_ptr<SyntaxChecker::SyntaxCheckError> SyntaxChecker::addError(string message, AstNode const *node,
+                                                                    shared_ptr<SyntaxChecker::SyntaxCheckError> err) {
+    if(!err) {
+        err = make_shared<SyntaxCheckError>();
+        err->messages.push_back(message);
+        err->node = node;
+        errors.push_back(err);
+    } else {
+        err->messages.push_back(message);
+    }
+
+    return err;
 }
 
-void AstSyntaxChecker::visit(Attribute const *node) {
+void SyntaxChecker::visit(Attribute const *node) {
+    shared_ptr<SyntaxCheckError> err;
+
     if(!node) {
-        addError("Attempt to visit NULL node", node);
+        err = err = addError("Attempt to visit NULL node", node, err);
         return;
     }
 
     if(!node->getKeyword()) {
         ret = false;
-        addError("Missing keyword from attribute", node);
+            err = err = addError("Missing keyword from attribute", node, err);
     } else {
         node->getKeyword()->accept(this);
     }
@@ -39,9 +49,11 @@ void AstSyntaxChecker::visit(Attribute const *node) {
         node->getValue()->accept(this);
 }
 
-void AstSyntaxChecker::visit(CompoundAttributeValue const *node) {
+void SyntaxChecker::visit(CompoundAttributeValue const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
     if(!node) {
-        addError("Attempt to visit NULL node", node);
+        err = addError("Attempt to visit NULL node", node, err);
         return;
     }
 
@@ -51,77 +63,93 @@ void AstSyntaxChecker::visit(CompoundAttributeValue const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(Symbol const *node) {
+void SyntaxChecker::visit(Symbol const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
     if(!node) {
-        addError("Attempt to visit NULL node", node);
+        err = addError("Attempt to visit NULL node", node, err);
         return;
     }
 
     if(!std::regex_match(node->getValue(), regexSymbol)) {
         ret = false;
-        addError("Malformed symbol", node);
+        err = addError("Malformed symbol", node, err);
     }
 }
 
-void AstSyntaxChecker::visit(Keyword const *node) {
+void SyntaxChecker::visit(Keyword const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(MetaSpecConstant const *node) {
+void SyntaxChecker::visit(MetaSpecConstant const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(BooleanValue const *node) {
+void SyntaxChecker::visit(BooleanValue const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(PropLiteral const *node) {
+void SyntaxChecker::visit(PropLiteral const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing symbol from propositional literal", node);
+        err = addError("Missing symbol from propositional literal", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(AssertCommand const *node) {
+void SyntaxChecker::visit(AssertCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getTerm()) {
         ret = false;
-        addError("Missing term from assert command", node);
+        err = addError("Missing term from assert command", node, err);
     } else {
         node->getTerm()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(CheckSatCommand const *node) {
+void SyntaxChecker::visit(CheckSatCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 }
 
-void AstSyntaxChecker::visit(CheckSatAssumCommand const *node) {
+void SyntaxChecker::visit(CheckSatAssumCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
@@ -131,36 +159,40 @@ void AstSyntaxChecker::visit(CheckSatAssumCommand const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(DeclareConstCommand const *node) {
+void SyntaxChecker::visit(DeclareConstCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing constant name from declare-const command", node);
+        err = addError("Missing constant name from declare-const command", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing constant sort from declare-const command", node);
+        err = addError("Missing constant sort from declare-const command", node, err);
     } else {
         node->getSort()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(DeclareFunCommand const *node) {
+void SyntaxChecker::visit(DeclareFunCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing function name from declare-fun command", node);
+        err = addError("Missing function name from declare-fun command", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
@@ -172,80 +204,88 @@ void AstSyntaxChecker::visit(DeclareFunCommand const *node) {
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing function sort from declare-fun command", node);
+        err = addError("Missing function sort from declare-fun command", node, err);
     } else {
         node->getSort()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(DeclareSortCommand const *node) {
+void SyntaxChecker::visit(DeclareSortCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing sort name from declare-sort command", node);
+        err = addError("Missing sort name from declare-sort command", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
 
     if(!node->getArity()) {
         ret = false;
-        addError("Missing sort arity from declare-sort command", node);
+        err = addError("Missing sort arity from declare-sort command", node, err);
     } else {
         node->getArity()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(DefineFunCommand const *node) {
+void SyntaxChecker::visit(DefineFunCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getDefinition()) {
         ret = false;
-        addError("Missing function definition from define-fun command", node);
+        err = addError("Missing function definition from define-fun command", node, err);
     } else {
         node->getDefinition()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(DefineFunRecCommand const *node) {
+void SyntaxChecker::visit(DefineFunRecCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getDefinition()) {
         ret = false;
-        addError("Missing function definition from define-fun-rec command", node);
+        err = addError("Missing function definition from define-fun-rec command", node, err);
     } else {
         node->getDefinition()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(DefineFunsRecCommand const *node) {
+void SyntaxChecker::visit(DefineFunsRecCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(node->getDeclarations().empty()) {
         ret = false;
-        addError("Missing function declarations from define-funs-rec command", node);
+        err = addError("Missing function declarations from define-funs-rec command", node, err);
     }
 
     if(node->getBodies().empty()) {
         ret = false;
-        addError("Missing function bodies from define-funs-rec command", node);
+        err = addError("Missing function bodies from define-funs-rec command", node, err);
     }
 
     if(node->getBodies().size() != node->getDeclarations().size()) {
         ret = false;
-        addError("Number of function declarations is not equal to the number of function bodies in define-funs-rec command", node);
+        err = addError("Number of function declarations is not equal to the number of function bodies in define-funs-rec command", node, err);
     }
 
     const std::vector<std::shared_ptr<FunctionDeclaration>> &decls = node->getDeclarations();
@@ -261,15 +301,17 @@ void AstSyntaxChecker::visit(DefineFunsRecCommand const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(DefineSortCommand const *node) {
+void SyntaxChecker::visit(DefineSortCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing sort name from define-sort command", node);
+        err = addError("Missing sort name from define-sort command", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
@@ -281,111 +323,133 @@ void AstSyntaxChecker::visit(DefineSortCommand const *node) {
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing sort from define-sort command", node);
+        err = addError("Missing sort from define-sort command", node, err);
     } else {
         node->getSort()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(EchoCommand const *node) {
+void SyntaxChecker::visit(EchoCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(node->getMessage() == "") {
-        addError("Attempting to echo empty string", node);
+        err = addError("Attempting to echo empty string", node, err);
         ret = false;
     }
 
 }
 
-void AstSyntaxChecker::visit(ExitCommand const *node) {
+void SyntaxChecker::visit(ExitCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(GetAssertsCommand const *node) {
+void SyntaxChecker::visit(GetAssertsCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(GetAssignsCommand const *node) {
+void SyntaxChecker::visit(GetAssignsCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(GetInfoCommand const *node) {
+void SyntaxChecker::visit(GetInfoCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getFlag()) {
         ret = false;
-        addError("Missing flag in get-info command", node);
+        err = addError("Missing flag in get-info command", node, err);
     } else {
         node->getFlag()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(GetModelCommand const *node) {
+void SyntaxChecker::visit(GetModelCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(GetOptionCommand const *node) {
+void SyntaxChecker::visit(GetOptionCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getOption()) {
         ret = false;
-        addError("Missing option in get-option command", node);
+        err = addError("Missing option in get-option command", node, err);
     } else {
         node->getOption()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(GetProofCommand const *node) {
+void SyntaxChecker::visit(GetProofCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(GetUnsatAssumsCommand const *node) {
+void SyntaxChecker::visit(GetUnsatAssumsCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(GetUnsatCoreCommand const *node) {
+void SyntaxChecker::visit(GetUnsatCoreCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(GetValueCommand const *node) {
+void SyntaxChecker::visit(GetValueCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(node->getTerms().empty()) {
         ret = false;
-        addError("Missing terms in get-value command", node);
+        err = addError("Missing terms in get-value command", node, err);
     } else {
         const std::vector<std::shared_ptr<Term>> &terms = node->getTerms();
         for (std::vector<std::shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
@@ -394,96 +458,110 @@ void AstSyntaxChecker::visit(GetValueCommand const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(PopCommand const *node) {
+void SyntaxChecker::visit(PopCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getNumeral()) {
         ret = false;
-        addError("Missing numeral in pop command", node);
+        err = addError("Missing numeral in pop command", node, err);
     } else {
         node->getNumeral()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(PushCommand const *node) {
+void SyntaxChecker::visit(PushCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getNumeral()) {
         ret = false;
-        addError("Missing numeral in push command", node);
+        err = addError("Missing numeral in push command", node, err);
     } else {
         node->getNumeral()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(ResetCommand const *node) {
+void SyntaxChecker::visit(ResetCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(ResetAssertsCommand const *node) {
+void SyntaxChecker::visit(ResetAssertsCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(SetInfoCommand const *node) {
+void SyntaxChecker::visit(SetInfoCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getInfo()) {
         ret = false;
-        addError("Missing info in set-info command", node);
+        err = addError("Missing info in set-info command", node, err);
     } else {
         node->getInfo()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(SetLogicCommand const *node) {
+void SyntaxChecker::visit(SetLogicCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getLogic()) {
         ret = false;
-        addError("Missing logic in set-logic command", node);
+        err = addError("Missing logic in set-logic command", node, err);
     }
 }
 
-void AstSyntaxChecker::visit(SetOptionCommand const *node) {
+void SyntaxChecker::visit(SetOptionCommand const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getOption()) {
         ret = false;
-        addError("Missing option in set-option command", node);
+        err = addError("Missing option in set-option command", node, err);
     } else {
         shared_ptr<Attribute> option = node->getOption();
         if((option->getKeyword()->getValue() == ":diagnostic-output-channel"
             || option->getKeyword()->getValue() == ":regular-output-channel")
            && !dynamic_cast<StringLiteral*>(option->getValue().get())) {
             ret = false;
-            addError("Option value should be string literal", option.get());
+            err = addError("Option value should be string literal", option.get(), err);
         } else if((option->getKeyword()->getValue() == ":random-seed"
                    || option->getKeyword()->getValue() == ":verbosity"
                    || option->getKeyword()->getValue() == ":reproducible-resource-limit")
                   && !dynamic_cast<NumeralLiteral*>(option->getValue().get())) {
             ret = false;
-            addError("Option value should be numeral literal", option.get());
+            err = addError("Option value should be numeral literal", option.get(), err);
         } else if((option->getKeyword()->getValue() == ":expand-definitions"
                    || option->getKeyword()->getValue() == ":global-declarations"
                    || option->getKeyword()->getValue() == ":interactive-mode"
@@ -496,22 +574,24 @@ void AstSyntaxChecker::visit(SetOptionCommand const *node) {
                    || option->getKeyword()->getValue() == ":produce-unsat-cores")
                   && !dynamic_cast<BooleanValue*>(option->getValue().get())) {
             ret = false;
-            addError("Option value should be boolean", option.get());
+            err = addError("Option value should be boolean", option.get(), err);
         }
 
         node->getOption()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(FunctionDeclaration const *node) {
+void SyntaxChecker::visit(FunctionDeclaration const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing name from function declaration", node);
+        err = addError("Missing name from function declaration", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
@@ -523,49 +603,53 @@ void AstSyntaxChecker::visit(FunctionDeclaration const *node) {
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing return sort from function declaration", node);
+        err = addError("Missing return sort from function declaration", node, err);
     } else {
         node->getSort()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(FunctionDefinition const *node) {
+void SyntaxChecker::visit(FunctionDefinition const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getSignature()) {
         ret = false;
-        addError("Missing signature from function definition", node);
+        err = addError("Missing signature from function definition", node, err);
     } else {
         node->getSignature()->accept(this);
     }
 
     if(!node->getBody()) {
         ret = false;
-        addError("Missing body from function definition", node);
+        err = addError("Missing body from function definition", node, err);
     } else {
         node->getBody()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(Identifier const *node) {
+void SyntaxChecker::visit(Identifier const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing symbol from identifier", node);
+        err = addError("Missing symbol from identifier", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
 
     if(node->isIndexed() && node->getIndices().empty()) {
         ret = false;
-        addError("Indexed identifier has no indices", node);
+        err = addError("Indexed identifier has no indices", node, err);
     }
 
     const std::vector<std::shared_ptr<Index>> &indices = node->getIndices();
@@ -574,51 +658,61 @@ void AstSyntaxChecker::visit(Identifier const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(QualifiedIdentifier const *node) {
+void SyntaxChecker::visit(QualifiedIdentifier const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getIdentifier()) {
         ret = false;
-        addError("Missing identifier from qualified identifier", node);
+        err = addError("Missing identifier from qualified identifier", node, err);
     } else {
         node->getIdentifier()->accept(this);
     }
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing sort from qualified identifier", node);
+        err = addError("Missing sort from qualified identifier", node, err);
     } else {
         node->getSort()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(DecimalLiteral const *node) {
+void SyntaxChecker::visit(DecimalLiteral const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(NumeralLiteral const *node) {
+void SyntaxChecker::visit(NumeralLiteral const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(StringLiteral const *node) {
+void SyntaxChecker::visit(StringLiteral const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
  }
 
-void AstSyntaxChecker::visit(Logic const *node) {
+void SyntaxChecker::visit(Logic const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
@@ -626,15 +720,15 @@ void AstSyntaxChecker::visit(Logic const *node) {
 
     if(!node->getName()) {
         ret = false;
-        addError("Missing logic name", node);
+        err = addError("Missing logic name", node, err);
     }
 
     if(attrs.empty()) {
         ret = false;
-        addError("Logic has no attributes", node);
+        err = addError("Logic has no attributes", node, err);
     }
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.begin(); it++) {
+    for(vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         shared_ptr<Attribute> attr = *it;
         if((attr->getKeyword()->getValue() == ":language"
             || attr->getKeyword()->getValue() == ":extensions"
@@ -642,26 +736,26 @@ void AstSyntaxChecker::visit(Logic const *node) {
             || attr->getKeyword()->getValue() == ":notes")
            && !dynamic_cast<StringLiteral*>(attr->getValue().get())) {
             ret = false;
-            addError("Attribute value should be string literal", attr.get());
+            err = addError("Attribute value should be string literal", attr.get(), err);
         }
 
         if(attr->getKeyword()->getValue() == ":theories"
            && !dynamic_cast<CompoundAttributeValue*>(attr->getValue().get())) {
             ret = false;
-            addError("Attribute value should be a list of theory names", attr.get());
+            err = addError("Attribute value should be a list of theory names", attr.get(), err);
         } else {
             CompoundAttributeValue *val = dynamic_cast<CompoundAttributeValue*>(attr->getValue().get());
             vector<shared_ptr<AttributeValue>> values = val->getValues();
 
             if(values.empty()) {
                 ret = false;
-                addError("Empty list of theory names", attr.get());
+                err = addError("Empty list of theory names", attr.get(), err);
             }
 
             for(vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
                 if(!dynamic_cast<Symbol*>((*itt).get())) {
                     ret = false;
-                    addError("Attribute value should be a symbol", (*itt).get());
+                    err = addError("Attribute value should be a symbol", (*itt).get(), err);
                 }
             }
         }
@@ -670,9 +764,11 @@ void AstSyntaxChecker::visit(Logic const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(Theory const *node) {
+void SyntaxChecker::visit(Theory const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
@@ -680,15 +776,15 @@ void AstSyntaxChecker::visit(Theory const *node) {
 
     if(!node->getName()) {
         ret = false;
-        addError("Missing theory name", node);
+        err = addError("Missing theory name", node, err);
     }
 
     if(attrs.empty()) {
         ret = false;
-        addError("Theory has no attributes", node);
+        err = addError("Theory has no attributes", node, err);
     }
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.begin(); it++) {
+    for(vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         shared_ptr<Attribute> attr = *it;
         if((attr->getKeyword()->getValue() == ":sorts-description"
             || attr->getKeyword()->getValue() == ":funs-description"
@@ -697,7 +793,7 @@ void AstSyntaxChecker::visit(Theory const *node) {
             || attr->getKeyword()->getValue() == ":notes")
            && !dynamic_cast<StringLiteral*>(attr->getValue().get())) {
             ret = false;
-            addError("Attribute value should be string literal", attr.get());
+            err = addError("Attribute value should be string literal", attr.get(), err);
         }
 
         if((attr->getKeyword()->getValue() == ":sorts"
@@ -705,9 +801,9 @@ void AstSyntaxChecker::visit(Theory const *node) {
            && !dynamic_cast<CompoundAttributeValue*>(attr->getValue().get())) {
             ret = false;
             if(attr->getKeyword()->getValue() == ":sorts")
-                addError("Attribute value should be a list of sort symbol declarations", attr.get());
+                err = addError("Attribute value should be a list of sort symbol declarations", attr.get(), err);
             else
-                addError("Attribute value should be a list of function symbol declarations", attr.get());
+                err = addError("Attribute value should be a list of function symbol declarations", attr.get(), err);
 
         } else if(attr->getKeyword()->getValue() == ":sorts") {
             CompoundAttributeValue *val = dynamic_cast<CompoundAttributeValue*>(attr->getValue().get());
@@ -715,13 +811,13 @@ void AstSyntaxChecker::visit(Theory const *node) {
 
             if(values.empty()) {
                 ret = false;
-                addError("Empty list of sort symbol declarations", attr.get());
+                err = addError("Empty list of sort symbol declarations", attr.get(), err);
             }
 
             for(vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
                 if(!dynamic_cast<SortSymbolDeclaration*>((*itt).get())) {
                     ret = false;
-                    addError("Attribute value should be a sort symbol declaration", (*itt).get());
+                    err = addError("Attribute value should be a sort symbol declaration", (*itt).get(), err);
                 }
             }
         } else if(attr->getKeyword()->getValue() == ":funs") {
@@ -730,13 +826,13 @@ void AstSyntaxChecker::visit(Theory const *node) {
 
             if(values.empty()) {
                 ret = false;
-                addError("Empty list of function symbol declarations", attr.get());
+                err = addError("Empty list of function symbol declarations", attr.get(), err);
             }
 
             for(vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
                 if(!dynamic_cast<FunSymbolDeclaration*>((*itt).get())) {
                     ret = false;
-                    addError("Attribute value should be a function symbol declaration", (*itt).get());
+                    err = addError("Attribute value should be a function symbol declaration", (*itt).get(), err);
                 }
             }
         }
@@ -745,9 +841,11 @@ void AstSyntaxChecker::visit(Theory const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(Script const *node) {
+void SyntaxChecker::visit(Script const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
@@ -757,22 +855,24 @@ void AstSyntaxChecker::visit(Script const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(Sort const *node) {
+void SyntaxChecker::visit(Sort const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
     if(!node->getIdentifier()) {
         ret = false;
-        addError("Missing identifier from sort", node);
+        err = addError("Missing identifier from sort", node, err);
     } else {
         node->getIdentifier()->accept(this);
     }
 
     if(node->isParametrized() && node->getParams().empty()) {
         ret = false;
-        addError("Parametrized sort has no parameters", node);
+        err = addError("Parametrized sort has no parameters", node, err);
     } else {
         const std::vector<std::shared_ptr<Sort>> &params = node->getParams();
         for (std::vector<std::shared_ptr<Sort>>::const_iterator it = params.begin(); it != params.end(); it++) {
@@ -781,9 +881,11 @@ void AstSyntaxChecker::visit(Sort const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(CompSExpression const *node) {
+void SyntaxChecker::visit(CompSExpression const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	} 
 
@@ -793,22 +895,24 @@ void AstSyntaxChecker::visit(CompSExpression const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(SortSymbolDeclaration const *node) {
+void SyntaxChecker::visit(SortSymbolDeclaration const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getIdentifier()) {
         ret = false;
-        addError("Missing identifier from sort symbol declaration", node);
+        err = addError("Missing identifier from sort symbol declaration", node, err);
     } else {
         node->getIdentifier()->accept(this);
     }
 
     if(!node->getArity()) {
         ret = false;
-        addError("Missing arity from sort symbol declaration", node);
+        err = addError("Missing arity from sort symbol declaration", node, err);
     } else {
         node->getArity()->accept(this);
     }
@@ -819,22 +923,24 @@ void AstSyntaxChecker::visit(SortSymbolDeclaration const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(SpecConstFunDeclaration const *node) {
+void SyntaxChecker::visit(SpecConstFunDeclaration const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getConstant()) {
         ret = false;
-        addError("Missing constant from spec constant function symbol declaration", node);
+        err = addError("Missing constant from spec constant function symbol declaration", node, err);
     } else {
         node->getConstant()->accept(this);
     }
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing sort from spec constant function symbol declaration", node);
+        err = addError("Missing sort from spec constant function symbol declaration", node, err);
     } else {
         node->getSort()->accept(this);
     }
@@ -845,22 +951,24 @@ void AstSyntaxChecker::visit(SpecConstFunDeclaration const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(MetaSpecConstFunDeclaration const *node) {
+void SyntaxChecker::visit(MetaSpecConstFunDeclaration const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getConstant()) {
         ret = false;
-        addError("Missing constant from meta spec constant function symbol declaration", node);
+        err = addError("Missing constant from meta spec constant function symbol declaration", node, err);
     } else {
         node->getConstant()->accept(this);
     }
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing sort from meta spec constant function symbol declaration", node);
+        err = addError("Missing sort from meta spec constant function symbol declaration", node, err);
     } else {
         node->getSort()->accept(this);
     }
@@ -871,22 +979,24 @@ void AstSyntaxChecker::visit(MetaSpecConstFunDeclaration const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(IdentifierFunDeclaration const *node) {
+void SyntaxChecker::visit(IdentifierFunDeclaration const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getIdentifier()) {
         ret = false;
-        addError("Missing identifier from function symbol declaration", node);
+        err = addError("Missing identifier from function symbol declaration", node, err);
     } else {
         node->getIdentifier()->accept(this);
     }
 
     if(node->getSignature().empty()) {
         ret = false;
-        addError("Empty signature for function symbol declaration", node);
+        err = addError("Empty signature for function symbol declaration", node, err);
     } else {
         const std::vector<std::shared_ptr<Sort>> &sig = node->getSignature();
         for(std::vector<std::shared_ptr<Sort>>::const_iterator it = sig.begin(); it != sig.end(); it++) {
@@ -900,22 +1010,24 @@ void AstSyntaxChecker::visit(IdentifierFunDeclaration const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(ParametricFunDeclaration const *node) {
+void SyntaxChecker::visit(ParametricFunDeclaration const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getIdentifier()) {
         ret = false;
-        addError("Missing identifier from parametric function symbol declaration", node);
+        err = addError("Missing identifier from parametric function symbol declaration", node, err);
     } else {
         node->getIdentifier()->accept(this);
     }
 
     if(node->getSignature().empty()) {
         ret = false;
-        addError("Empty signature for parametric function symbol declaration", node);
+        err = addError("Empty signature for parametric function symbol declaration", node, err);
     } else {
         const std::vector<std::shared_ptr<Sort>> &sig = node->getSignature();
         for(std::vector<std::shared_ptr<Sort>>::const_iterator it = sig.begin(); it != sig.end(); it++) {
@@ -925,7 +1037,7 @@ void AstSyntaxChecker::visit(ParametricFunDeclaration const *node) {
 
     if(node->getParams().empty()) {
         ret = false;
-        addError("Empty parameter list for parametric function symbol declaration", node);
+        err = addError("Empty parameter list for parametric function symbol declaration", node, err);
     } else {
         const std::vector<std::shared_ptr<Symbol>> &params = node->getParams();
         for(std::vector<std::shared_ptr<Symbol>>::const_iterator it = params.begin(); it != params.end(); it++) {
@@ -939,22 +1051,24 @@ void AstSyntaxChecker::visit(ParametricFunDeclaration const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(QualifiedTerm const *node) {
+void SyntaxChecker::visit(QualifiedTerm const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getIdentifier()) {
         ret = false;
-        addError("Missing identifier from qualified term", node);
+        err = addError("Missing identifier from qualified term", node, err);
     } else {
         node->getIdentifier()->accept(this);
     }
 
     if(node->getTerms().empty()) {
         ret = false;
-        addError("Empty term list for qualified term", node);
+        err = addError("Empty term list for qualified term", node, err);
     } else {
         const std::vector<std::shared_ptr<Term>> &terms = node->getTerms();
         for(std::vector<std::shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
@@ -963,22 +1077,24 @@ void AstSyntaxChecker::visit(QualifiedTerm const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(LetTerm const *node) {
+void SyntaxChecker::visit(LetTerm const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getTerm()) {
         ret = false;
-        addError("Missing term from let term", node);
+        err = addError("Missing term from let term", node, err);
     } else {
         node->getTerm()->accept(this);
     }
 
     if(node->getBindings().empty()) {
         ret = false;
-        addError("Empty variable binding list for let term", node);
+        err = addError("Empty variable binding list for let term", node, err);
     } else {
         const std::vector<std::shared_ptr<VarBinding>> &bindings = node->getBindings();
         for(std::vector<std::shared_ptr<VarBinding>>::const_iterator it = bindings.begin(); it != bindings.end(); it++) {
@@ -987,22 +1103,24 @@ void AstSyntaxChecker::visit(LetTerm const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(ForallTerm const *node) {
+void SyntaxChecker::visit(ForallTerm const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getTerm()) {
         ret = false;
-        addError("Missing term from forall term", node);
+        err = addError("Missing term from forall term", node, err);
     } else {
         node->getTerm()->accept(this);
     }
 
     if(node->getBindings().empty()) {
         ret = false;
-        addError("Empty variable binding list for forall term", node);
+        err = addError("Empty variable binding list for forall term", node, err);
     } else {
         const std::vector<std::shared_ptr<SortedVariable>> &bindings = node->getBindings();
         for(std::vector<std::shared_ptr<SortedVariable>>::const_iterator it = bindings.begin(); it != bindings.end(); it++) {
@@ -1011,22 +1129,24 @@ void AstSyntaxChecker::visit(ForallTerm const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(ExistsTerm const *node) {
+void SyntaxChecker::visit(ExistsTerm const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getTerm()) {
         ret = false;
-        addError("Missing term from exists term", node);
+        err = addError("Missing term from exists term", node, err);
     } else {
         node->getTerm()->accept(this);
     }
 
     if(node->getBindings().empty()) {
         ret = false;
-        addError("Empty variable binding list for exists term", node);
+        err = addError("Empty variable binding list for exists term", node, err);
     } else {
         const std::vector<std::shared_ptr<SortedVariable>> &bindings = node->getBindings();
         for(std::vector<std::shared_ptr<SortedVariable>>::const_iterator it = bindings.begin(); it != bindings.end(); it++) {
@@ -1035,22 +1155,24 @@ void AstSyntaxChecker::visit(ExistsTerm const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(AnnotatedTerm const *node) {
+void SyntaxChecker::visit(AnnotatedTerm const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getTerm()) {
         ret = false;
-        addError("Missing term from annotated term", node);
+        err = addError("Missing term from annotated term", node, err);
     } else {
         node->getTerm()->accept(this);
     }
 
     if(node->getAttributes().empty()) {
         ret = false;
-        addError("Empty attribute list for exists term", node);
+        err = addError("Empty attribute list for exists term", node, err);
     } else {
         const std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
         for(std::vector<std::shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
@@ -1059,44 +1181,75 @@ void AstSyntaxChecker::visit(AnnotatedTerm const *node) {
     }
 }
 
-void AstSyntaxChecker::visit(SortedVariable const *node) {
+void SyntaxChecker::visit(SortedVariable const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing symbol from sorted variable", node);
+        err = addError("Missing symbol from sorted variable", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
 
     if(!node->getSort()) {
         ret = false;
-        addError("Missing sort from sorted variable", node);
+        err = addError("Missing sort from sorted variable", node, err);
     } else {
         node->getSort()->accept(this);
     }
 }
 
-void AstSyntaxChecker::visit(VarBinding const *node) {
+void SyntaxChecker::visit(VarBinding const *node) {
+	shared_ptr<SyntaxCheckError> err;
+
 	if(!node) {
-		addError("Attempt to visit NULL node", node);
+		err = addError("Attempt to visit NULL node", node, err);
 		return;
 	}
 
     if(!node->getSymbol()) {
         ret = false;
-        addError("Missing symbol from variable binding", node);
+        err = addError("Missing symbol from variable binding", node, err);
     } else {
         node->getSymbol()->accept(this);
     }
 
     if(!node->getTerm()) {
         ret = false;
-        addError("Missing sort from variable binding", node);
+        err = addError("Missing sort from variable binding", node, err);
     } else {
         node->getTerm()->accept(this);
     }
+}
+
+string SyntaxChecker::getErrors() {
+    stringstream ss;
+    for(vector<shared_ptr<SyntaxCheckError>>::iterator it = errors.begin(); it != errors.end(); it++) {
+        shared_ptr<SyntaxCheckError> err = *it;
+        if(err->node) {
+            ss << err->node->getRowLeft() << "." << err->node->getColLeft()
+               << " - " << err->node->getRowRight() << "." << err->node->getColRight() << "   ";
+
+            string nodestr = err->node->toString();
+            if(nodestr.length() > 100)
+                ss << string(nodestr, 100);
+            else
+                ss << nodestr;
+        } else {
+            ss << "NULL";
+        }
+
+        ss << endl;
+        for(std::vector<std::string>::iterator itt = err->messages.begin(); itt != err->messages.end(); itt++) {
+            ss << "\t" << *itt << "." << endl;
+        }
+        ss << endl;
+    }
+
+    return ss.str();
 }

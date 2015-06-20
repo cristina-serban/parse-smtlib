@@ -23,7 +23,7 @@ namespace smtlib {
             int colLeft;
             int colRight;
         public:
-            virtual std::string toString() = 0;
+            virtual std::string toString() const = 0;
 
             virtual void accept(AstVisitor0 *visitor) const = 0;
 

@@ -20,9 +20,9 @@ void Script::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string Script::toString() {
+string Script::toString() const {
     stringstream ss;
-    for(vector<shared_ptr<Command>>::iterator it = commands.begin(); it != commands.end(); it++) {
+    for(vector<shared_ptr<Command>>::const_iterator it = commands.begin(); it != commands.end(); it++) {
         ss << (*it)->toString() << "\n";
     }
     return ss.str();

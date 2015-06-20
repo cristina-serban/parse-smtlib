@@ -73,34 +73,34 @@ simple_symbol  {sym_begin}{sym_continue}*
 					}
 "not"					{ SET_LOCATION; return NOT; }
 
-"assert"		   		{ SET_LOCATION; return CMD_ASSERT; }
-"check-sat-assuming"	{ SET_LOCATION; return CMD_CHK_SAT_ASSUM; }
-"check-sat"		   		{ SET_LOCATION; return CMD_CHK_SAT; }
-"declare-const"		   	{ SET_LOCATION; return CMD_DECL_CONST; }
-"declare-fun"			{ SET_LOCATION; return CMD_DECL_FUN; }
-"declare-sort"	   		{ SET_LOCATION; return CMD_DECL_SORT; }
-"define-funs-rec"		{ SET_LOCATION; return CMD_DEF_FUNS_REC; }
-"define-fun-rec"		{ SET_LOCATION; return CMD_DEF_FUN_REC; }
-"define-fun"			{ SET_LOCATION; return CMD_DEF_FUN; }
-"define-sort"			{ SET_LOCATION; return CMD_DEF_SORT; }
-"echo"					{ SET_LOCATION; return CMD_ECHO; }
-"exit"					{ SET_LOCATION; return CMD_EXIT; }
-"get-assertions"		{ SET_LOCATION; return CMD_GET_ASSERTS; }
-"get-assignment"		{ SET_LOCATION; return CMD_GET_ASSIGNS; }
-"get-info"				{ SET_LOCATION; return CMD_GET_INFO; }
-"get-model"				{ SET_LOCATION; return CMD_GET_MODEL; }
-"get-option"			{ SET_LOCATION; return CMD_GET_OPT; }
-"get-proof"				{ SET_LOCATION; return CMD_GET_PROOF; }
-"get-unsat-assumptions"	{ SET_LOCATION; return CMD_GET_UNSAT_ASSUMS; }
-"get-unsat-core"		{ SET_LOCATION; return CMD_GET_UNSAT_CORE; }
-"get-value"				{ SET_LOCATION; return CMD_GET_VALUE; }
-"pop"					{ SET_LOCATION; return CMD_POP; }
-"push"					{ SET_LOCATION; return CMD_PUSH; }
-"reset-assertions"		{ SET_LOCATION; return CMD_RESET_ASSERTS; }
-"reset"					{ SET_LOCATION; return CMD_RESET; }
-"set-info"				{ SET_LOCATION; return CMD_SET_INFO; }
-"set-logic"				{ SET_LOCATION; return CMD_SET_LOGIC; }
-"set-option"			{ SET_LOCATION; return CMD_SET_OPT; }
+"assert"		   		{ SET_LOCATION; return KW_CMD_ASSERT; }
+"check-sat-assuming"	{ SET_LOCATION; return KW_CMD_CHK_SAT_ASSUM; }
+"check-sat"		   		{ SET_LOCATION; return KW_CMD_CHK_SAT; }
+"declare-const"		   	{ SET_LOCATION; return KW_CMD_DECL_CONST; }
+"declare-fun"			{ SET_LOCATION; return KW_CMD_DECL_FUN; }
+"declare-sort"	   		{ SET_LOCATION; return KW_CMD_DECL_SORT; }
+"define-funs-rec"		{ SET_LOCATION; return KW_CMD_DEF_FUNS_REC; }
+"define-fun-rec"		{ SET_LOCATION; return KW_CMD_DEF_FUN_REC; }
+"define-fun"			{ SET_LOCATION; return KW_CMD_DEF_FUN; }
+"define-sort"			{ SET_LOCATION; return KW_CMD_DEF_SORT; }
+"echo"					{ SET_LOCATION; return KW_CMD_ECHO; }
+"exit"					{ SET_LOCATION; return KW_CMD_EXIT; }
+"get-assertions"		{ SET_LOCATION; return KW_CMD_GET_ASSERTS; }
+"get-assignment"		{ SET_LOCATION; return KW_CMD_GET_ASSIGNS; }
+"get-info"				{ SET_LOCATION; return KW_CMD_GET_INFO; }
+"get-model"				{ SET_LOCATION; return KW_CMD_GET_MODEL; }
+"get-option"			{ SET_LOCATION; return KW_CMD_GET_OPT; }
+"get-proof"				{ SET_LOCATION; return KW_CMD_GET_PROOF; }
+"get-unsat-assumptions"	{ SET_LOCATION; return KW_CMD_GET_UNSAT_ASSUMS; }
+"get-unsat-core"		{ SET_LOCATION; return KW_CMD_GET_UNSAT_CORE; }
+"get-value"				{ SET_LOCATION; return KW_CMD_GET_VALUE; }
+"pop"					{ SET_LOCATION; return KW_CMD_POP; }
+"push"					{ SET_LOCATION; return KW_CMD_PUSH; }
+"reset-assertions"		{ SET_LOCATION; return KW_CMD_RESET_ASSERTS; }
+"reset"					{ SET_LOCATION; return KW_CMD_RESET; }
+"set-info"				{ SET_LOCATION; return KW_CMD_SET_INFO; }
+"set-logic"				{ SET_LOCATION; return KW_CMD_SET_LOGIC; }
+"set-option"			{ SET_LOCATION; return KW_CMD_SET_OPT; }
 
 "DECIMAL"	{ 
 				SET_LOCATION;
@@ -132,17 +132,17 @@ simple_symbol  {sym_begin}{sym_continue}*
 ":sorts"				{ 
 							SET_LOCATION;
 							yylval.ptr = smt_newKeyword(yytext);
-							return ATTR_SORTS; 
+							return KW_ATTR_SORTS; 
 						}
 ":funs"					{ 
 							SET_LOCATION;
 							yylval.ptr = smt_newKeyword(yytext);
-							return ATTR_FUNS; 
+							return KW_ATTR_FUNS; 
 						}
 ":theories" 			{
 							SET_LOCATION;
 							yylval.ptr = smt_newKeyword(yytext); 
-							return ATTR_THEORIES; 
+							return KW_ATTR_THEORIES; 
 						}
 
 {simple_symbol}		{

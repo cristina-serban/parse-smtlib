@@ -50,15 +50,15 @@ void FunctionDeclaration::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string FunctionDeclaration::toString() {
+string FunctionDeclaration::toString() const {
     stringstream ss;
     ss << symbol->toString() << " ( ";
 
-    for(vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
+    for(vector<shared_ptr<SortedVariable>>::const_iterator it = params.begin(); it != params.end(); it++) {
         ss << (*it)->toString() << " ";
     }
 
-    ss << " ) " << sort->toString();
+    ss << ") " << sort->toString();
 
     return ss.str();
 }
@@ -101,7 +101,7 @@ void FunctionDefinition::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string FunctionDefinition::toString() {
+string FunctionDefinition::toString() const {
     stringstream ss;
     ss << signature->toString() << " " << body->toString();
     return ss.str();

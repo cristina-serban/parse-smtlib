@@ -22,7 +22,7 @@ void Symbol::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string Symbol::toString() {
+string Symbol::toString() const {
     return value;
 }
 
@@ -44,7 +44,7 @@ void Keyword::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string Keyword::toString() {
+string Keyword::toString() const {
     return value;
 }
 
@@ -62,7 +62,7 @@ void MetaSpecConstant::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string MetaSpecConstant::toString() {
+string MetaSpecConstant::toString() const {
     return (type == Type::META_SPEC_STRING) ? "STRING"
                                             : (type == Type::META_SPEC_NUMERAL ? "NUMERAL"
                                                                                : "DECIMAL");
@@ -82,7 +82,7 @@ void BooleanValue::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string BooleanValue::toString() {
+string BooleanValue::toString() const {
     if(value)
         return "true";
     else
@@ -115,7 +115,7 @@ void PropLiteral::accept(AstVisitor0* visitor) const {
     visitor->visit(this);
 }
 
-string PropLiteral::toString() {
+string PropLiteral::toString() const {
     if(negated) {
         stringstream ss;
         ss << "( not " << symbol->toString() << " )";

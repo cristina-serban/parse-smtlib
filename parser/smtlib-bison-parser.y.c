@@ -118,34 +118,34 @@ extern int yydebug;
     DECIMAL = 265,
     HEXADECIMAL = 266,
     BINARY = 267,
-    CMD_ASSERT = 268,
-    CMD_CHK_SAT = 269,
-    CMD_CHK_SAT_ASSUM = 270,
-    CMD_DECL_CONST = 271,
-    CMD_DECL_FUN = 272,
-    CMD_DECL_SORT = 273,
-    CMD_DEF_FUN = 274,
-    CMD_DEF_FUN_REC = 275,
-    CMD_DEF_FUNS_REC = 276,
-    CMD_DEF_SORT = 277,
-    CMD_ECHO = 278,
-    CMD_EXIT = 279,
-    CMD_GET_ASSERTS = 280,
-    CMD_GET_ASSIGNS = 281,
-    CMD_GET_INFO = 282,
-    CMD_GET_MODEL = 283,
-    CMD_GET_OPT = 284,
-    CMD_GET_PROOF = 285,
-    CMD_GET_UNSAT_ASSUMS = 286,
-    CMD_GET_UNSAT_CORE = 287,
-    CMD_GET_VALUE = 288,
-    CMD_POP = 289,
-    CMD_PUSH = 290,
-    CMD_RESET = 291,
-    CMD_RESET_ASSERTS = 292,
-    CMD_SET_INFO = 293,
-    CMD_SET_LOGIC = 294,
-    CMD_SET_OPT = 295,
+    KW_CMD_ASSERT = 268,
+    KW_CMD_CHK_SAT = 269,
+    KW_CMD_CHK_SAT_ASSUM = 270,
+    KW_CMD_DECL_CONST = 271,
+    KW_CMD_DECL_FUN = 272,
+    KW_CMD_DECL_SORT = 273,
+    KW_CMD_DEF_FUN = 274,
+    KW_CMD_DEF_FUN_REC = 275,
+    KW_CMD_DEF_FUNS_REC = 276,
+    KW_CMD_DEF_SORT = 277,
+    KW_CMD_ECHO = 278,
+    KW_CMD_EXIT = 279,
+    KW_CMD_GET_ASSERTS = 280,
+    KW_CMD_GET_ASSIGNS = 281,
+    KW_CMD_GET_INFO = 282,
+    KW_CMD_GET_MODEL = 283,
+    KW_CMD_GET_OPT = 284,
+    KW_CMD_GET_PROOF = 285,
+    KW_CMD_GET_UNSAT_ASSUMS = 286,
+    KW_CMD_GET_UNSAT_CORE = 287,
+    KW_CMD_GET_VALUE = 288,
+    KW_CMD_POP = 289,
+    KW_CMD_PUSH = 290,
+    KW_CMD_RESET = 291,
+    KW_CMD_RESET_ASSERTS = 292,
+    KW_CMD_SET_INFO = 293,
+    KW_CMD_SET_LOGIC = 294,
+    KW_CMD_SET_OPT = 295,
     META_SPEC_DECIMAL = 296,
     META_SPEC_NUMERAL = 297,
     META_SPEC_STRING = 298,
@@ -154,9 +154,9 @@ extern int yydebug;
     SYMBOL = 301,
     THEORY = 302,
     LOGIC = 303,
-    ATTR_SORTS = 304,
-    ATTR_FUNS = 305,
-    ATTR_THEORIES = 306
+    KW_ATTR_SORTS = 304,
+    KW_ATTR_FUNS = 305,
+    KW_ATTR_THEORIES = 306
   };
 #endif
 
@@ -526,25 +526,27 @@ static const char *const yytname[] =
 {
   "$end", "error", "$undefined", "KW_AS", "KW_LET", "KW_FORALL",
   "KW_EXISTS", "KW_PAR", "NOT", "NUMERAL", "DECIMAL", "HEXADECIMAL",
-  "BINARY", "CMD_ASSERT", "CMD_CHK_SAT", "CMD_CHK_SAT_ASSUM",
-  "CMD_DECL_CONST", "CMD_DECL_FUN", "CMD_DECL_SORT", "CMD_DEF_FUN",
-  "CMD_DEF_FUN_REC", "CMD_DEF_FUNS_REC", "CMD_DEF_SORT", "CMD_ECHO",
-  "CMD_EXIT", "CMD_GET_ASSERTS", "CMD_GET_ASSIGNS", "CMD_GET_INFO",
-  "CMD_GET_MODEL", "CMD_GET_OPT", "CMD_GET_PROOF", "CMD_GET_UNSAT_ASSUMS",
-  "CMD_GET_UNSAT_CORE", "CMD_GET_VALUE", "CMD_POP", "CMD_PUSH",
-  "CMD_RESET", "CMD_RESET_ASSERTS", "CMD_SET_INFO", "CMD_SET_LOGIC",
-  "CMD_SET_OPT", "META_SPEC_DECIMAL", "META_SPEC_NUMERAL",
-  "META_SPEC_STRING", "KEYWORD", "STRING", "SYMBOL", "THEORY", "LOGIC",
-  "ATTR_SORTS", "ATTR_FUNS", "ATTR_THEORIES", "'('", "')'", "'!'", "'_'",
-  "$accept", "smt_file", "script", "command_plus", "command", "term",
-  "term_plus", "spec_const", "symbol", "qual_identifier", "identifier",
-  "index", "index_plus", "sort", "sort_plus", "sort_star", "var_binding",
-  "var_binding_plus", "sorted_var", "sorted_var_plus", "sorted_var_star",
-  "attribute", "attribute_star", "attribute_plus", "attr_value", "s_exp",
-  "s_exp_plus", "prop_literal", "prop_literal_star", "fun_decl",
-  "fun_decl_plus", "fun_def", "symbol_star", "symbol_plus", "info_flag",
-  "option", "theory_decl", "theory_attr", "theory_attr_plus",
-  "sort_symbol_decl", "sort_symbol_decl_plus", "par_fun_symbol_decl",
+  "BINARY", "KW_CMD_ASSERT", "KW_CMD_CHK_SAT", "KW_CMD_CHK_SAT_ASSUM",
+  "KW_CMD_DECL_CONST", "KW_CMD_DECL_FUN", "KW_CMD_DECL_SORT",
+  "KW_CMD_DEF_FUN", "KW_CMD_DEF_FUN_REC", "KW_CMD_DEF_FUNS_REC",
+  "KW_CMD_DEF_SORT", "KW_CMD_ECHO", "KW_CMD_EXIT", "KW_CMD_GET_ASSERTS",
+  "KW_CMD_GET_ASSIGNS", "KW_CMD_GET_INFO", "KW_CMD_GET_MODEL",
+  "KW_CMD_GET_OPT", "KW_CMD_GET_PROOF", "KW_CMD_GET_UNSAT_ASSUMS",
+  "KW_CMD_GET_UNSAT_CORE", "KW_CMD_GET_VALUE", "KW_CMD_POP", "KW_CMD_PUSH",
+  "KW_CMD_RESET", "KW_CMD_RESET_ASSERTS", "KW_CMD_SET_INFO",
+  "KW_CMD_SET_LOGIC", "KW_CMD_SET_OPT", "META_SPEC_DECIMAL",
+  "META_SPEC_NUMERAL", "META_SPEC_STRING", "KEYWORD", "STRING", "SYMBOL",
+  "THEORY", "LOGIC", "KW_ATTR_SORTS", "KW_ATTR_FUNS", "KW_ATTR_THEORIES",
+  "'('", "')'", "'!'", "'_'", "$accept", "smt_file", "script",
+  "command_plus", "command", "term", "term_plus", "spec_const", "symbol",
+  "qual_identifier", "identifier", "index", "index_plus", "sort",
+  "sort_plus", "sort_star", "var_binding", "var_binding_plus",
+  "sorted_var", "sorted_var_plus", "sorted_var_star", "attribute",
+  "attribute_star", "attribute_plus", "attr_value", "s_exp", "s_exp_plus",
+  "prop_literal", "prop_literal_star", "fun_decl", "fun_decl_plus",
+  "fun_def", "symbol_star", "symbol_plus", "info_flag", "option",
+  "theory_decl", "theory_attr", "theory_attr_plus", "sort_symbol_decl",
+  "sort_symbol_decl_plus", "par_fun_symbol_decl",
   "par_fun_symbol_decl_plus", "fun_symbol_decl", "meta_spec_const",
   "logic", "logic_attr", "logic_attr_plus", YY_NULLPTR
 };
@@ -1614,19 +1616,19 @@ yyreduce:
         case 2:
 #line 53 "smtlib-bison-parser.y" /* yacc.c:1646  */
     { (yyval.ptr) = (yyvsp[0].ptr); smt_setAst(parser, (yyvsp[0].ptr)); }
-#line 1618 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1620 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
 #line 55 "smtlib-bison-parser.y" /* yacc.c:1646  */
     { (yyval.ptr) = (yyvsp[0].ptr); smt_setAst(parser, (yyvsp[0].ptr)); }
-#line 1624 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1626 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
 #line 57 "smtlib-bison-parser.y" /* yacc.c:1646  */
     { (yyval.ptr) = (yyvsp[0].ptr); smt_setAst(parser, (yyvsp[0].ptr)); }
-#line 1630 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1632 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
@@ -1641,7 +1643,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1645 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1647 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
@@ -1655,7 +1657,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 1659 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1661 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
@@ -1669,7 +1671,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 1673 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1675 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
@@ -1684,7 +1686,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1688 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1690 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
@@ -1699,7 +1701,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1703 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1705 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
@@ -1714,7 +1716,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1718 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1720 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
@@ -1729,7 +1731,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1733 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1735 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
@@ -1744,7 +1746,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1748 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1750 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
@@ -1759,7 +1761,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1763 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1765 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
@@ -1774,7 +1776,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1778 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1780 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
@@ -1789,7 +1791,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1793 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1795 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
@@ -1804,7 +1806,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1808 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1810 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
@@ -1819,7 +1821,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1823 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1825 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
@@ -1834,7 +1836,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1838 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1840 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
@@ -1849,7 +1851,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1853 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1855 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
@@ -1864,7 +1866,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1868 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1870 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
@@ -1879,7 +1881,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1883 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1885 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
@@ -1894,7 +1896,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1898 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1900 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
@@ -1908,7 +1910,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1912 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1914 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
@@ -1923,7 +1925,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1927 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1929 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
@@ -1938,7 +1940,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1942 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1944 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
@@ -1953,7 +1955,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1957 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1959 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
@@ -1968,7 +1970,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1972 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1974 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
@@ -1983,7 +1985,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 1987 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 1989 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
@@ -1998,7 +2000,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2002 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2004 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
@@ -2013,7 +2015,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2017 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2019 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 31:
@@ -2028,7 +2030,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2032 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2034 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 32:
@@ -2043,7 +2045,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2047 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2049 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 33:
@@ -2058,7 +2060,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2062 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2064 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 34:
@@ -2073,7 +2075,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2077 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2079 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 35:
@@ -2088,7 +2090,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2092 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2094 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 36:
@@ -2101,7 +2103,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2105 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2107 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 37:
@@ -2114,7 +2116,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2118 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2120 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 38:
@@ -2129,7 +2131,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2133 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2135 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 39:
@@ -2144,7 +2146,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2148 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2150 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 40:
@@ -2159,7 +2161,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2163 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2165 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 41:
@@ -2174,7 +2176,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2178 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2180 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 42:
@@ -2189,7 +2191,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2193 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2195 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 43:
@@ -2204,7 +2206,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2208 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2210 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 44:
@@ -2218,7 +2220,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2222 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2224 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 45:
@@ -2232,7 +2234,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2236 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2238 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 46:
@@ -2247,7 +2249,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2251 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2253 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 47:
@@ -2262,7 +2264,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2266 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2268 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 48:
@@ -2277,7 +2279,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2281 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2283 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 49:
@@ -2292,7 +2294,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2296 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2298 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 50:
@@ -2307,7 +2309,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2311 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2313 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 51:
@@ -2322,7 +2324,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2326 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2328 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 52:
@@ -2337,7 +2339,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2341 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2343 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 53:
@@ -2352,7 +2354,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2356 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2358 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 54:
@@ -2367,7 +2369,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2371 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2373 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 55:
@@ -2382,7 +2384,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2386 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2388 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 56:
@@ -2397,7 +2399,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2401 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2403 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 57:
@@ -2412,7 +2414,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2416 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2418 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 58:
@@ -2427,7 +2429,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2431 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2433 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 59:
@@ -2442,7 +2444,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2446 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2448 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 60:
@@ -2456,7 +2458,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2460 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2462 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 61:
@@ -2470,7 +2472,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2474 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2476 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 62:
@@ -2485,7 +2487,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2489 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2491 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 63:
@@ -2500,7 +2502,7 @@ yyreduce:
 
 			smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2504 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2506 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 64:
@@ -2514,7 +2516,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2518 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2520 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 65:
@@ -2528,7 +2530,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2532 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2534 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 66:
@@ -2536,7 +2538,7 @@ yyreduce:
     { 
 			(yyval.list) = smt_listCreate();
 		}
-#line 2540 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2542 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 67:
@@ -2557,7 +2559,7 @@ yyreduce:
             	(yyloc).last_column = (yylsp[0]).last_column;
 			}
 		}
-#line 2561 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2563 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 68:
@@ -2572,7 +2574,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2576 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2578 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 69:
@@ -2586,7 +2588,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2590 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2592 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 70:
@@ -2600,7 +2602,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2604 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2606 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 71:
@@ -2615,7 +2617,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2619 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2621 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 72:
@@ -2629,7 +2631,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2633 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2635 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 73:
@@ -2643,13 +2645,13 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2647 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2649 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 74:
 #line 908 "smtlib-bison-parser.y" /* yacc.c:1646  */
     { (yyval.list) = smt_listCreate(); }
-#line 2653 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2655 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 75:
@@ -2670,7 +2672,7 @@ yyreduce:
             	(yyloc).last_column = (yylsp[0]).last_column;
         	}
 		}
-#line 2674 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2676 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 76:
@@ -2685,7 +2687,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2689 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2691 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 77:
@@ -2700,13 +2702,13 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2704 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2706 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 78:
 #line 957 "smtlib-bison-parser.y" /* yacc.c:1646  */
     { (yyval.list) = smt_listCreate(); }
-#line 2710 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2712 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 79:
@@ -2727,7 +2729,7 @@ yyreduce:
             	(yyloc).last_column = (yylsp[0]).last_column;
         	}
 		}
-#line 2731 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2733 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 80:
@@ -2741,7 +2743,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2745 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2747 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 81:
@@ -2755,7 +2757,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
         	(yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2759 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2761 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 82:
@@ -2768,7 +2770,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2772 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2774 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 83:
@@ -2781,7 +2783,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2785 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2787 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 84:
@@ -2796,7 +2798,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2800 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2802 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 85:
@@ -2809,7 +2811,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2813 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2815 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 86:
@@ -2822,7 +2824,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2826 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2828 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 87:
@@ -2835,7 +2837,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2839 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2841 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 88:
@@ -2848,7 +2850,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2852 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2854 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 89:
@@ -2862,7 +2864,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2866 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2868 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 90:
@@ -2876,7 +2878,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2880 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2882 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 91:
@@ -2891,7 +2893,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2895 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2897 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 92:
@@ -2906,13 +2908,13 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2910 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2912 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 93:
 #line 1130 "smtlib-bison-parser.y" /* yacc.c:1646  */
     { (yyval.list) = smt_listCreate(); }
-#line 2916 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2918 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 94:
@@ -2933,7 +2935,7 @@ yyreduce:
             	(yyloc).last_column = (yylsp[0]).last_column;
         	}
 		}
-#line 2937 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2939 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 95:
@@ -2948,7 +2950,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2952 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2954 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 96:
@@ -2962,7 +2964,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2966 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2968 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 97:
@@ -2976,7 +2978,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 2980 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2982 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 98:
@@ -2992,13 +2994,13 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 2996 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 2998 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 99:
 #line 1207 "smtlib-bison-parser.y" /* yacc.c:1646  */
     { (yyval.list) = smt_listCreate(); }
-#line 3002 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3004 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 100:
@@ -3019,7 +3021,7 @@ yyreduce:
             	(yyloc).last_column = (yylsp[0]).last_column;
         	}
 		}
-#line 3023 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3025 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 101:
@@ -3033,7 +3035,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3037 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3039 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 102:
@@ -3047,7 +3049,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3051 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3053 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 103:
@@ -3062,7 +3064,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3066 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3068 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 104:
@@ -3075,7 +3077,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3079 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3081 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 105:
@@ -3090,7 +3092,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3094 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3096 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 106:
@@ -3106,7 +3108,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3110 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3112 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 107:
@@ -3122,7 +3124,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3126 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3128 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 108:
@@ -3135,7 +3137,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3139 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3141 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 109:
@@ -3149,7 +3151,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3153 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3155 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 110:
@@ -3163,7 +3165,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3167 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3169 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 111:
@@ -3178,7 +3180,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3182 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3184 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 112:
@@ -3192,7 +3194,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3196 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3198 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 113:
@@ -3206,7 +3208,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3210 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3212 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 115:
@@ -3221,7 +3223,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3225 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3227 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 116:
@@ -3235,7 +3237,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3239 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3241 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 117:
@@ -3249,7 +3251,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column; 
 		}
-#line 3253 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3255 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 118:
@@ -3264,7 +3266,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3268 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3270 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 119:
@@ -3279,7 +3281,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3283 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3285 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 120:
@@ -3294,7 +3296,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3298 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3300 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 121:
@@ -3309,7 +3311,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3313 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3315 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 122:
@@ -3324,7 +3326,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3328 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3330 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 123:
@@ -3339,7 +3341,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3343 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3345 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 124:
@@ -3354,7 +3356,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3358 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3360 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 125:
@@ -3369,7 +3371,7 @@ yyreduce:
 
             smt_setLocation((yyval.ptr), (yyloc).first_line, (yyloc).last_line, (yyloc).first_column, (yyloc).last_column);
 		}
-#line 3373 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3375 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 126:
@@ -3382,7 +3384,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3386 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3388 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 127:
@@ -3396,7 +3398,7 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3400 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3402 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
   case 128:
@@ -3410,11 +3412,11 @@ yyreduce:
 			(yyloc).last_line = (yylsp[0]).last_line;
             (yyloc).last_column = (yylsp[0]).last_column;
 		}
-#line 3414 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3416 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 3418 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
+#line 3420 "smtlib-bison-parser.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires

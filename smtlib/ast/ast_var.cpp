@@ -34,7 +34,7 @@ void SortedVariable::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string SortedVariable::toString() {
+string SortedVariable::toString() const {
     stringstream ss;
     ss << symbol->toString() << " " << sort->toString();
     return ss.str();
@@ -70,7 +70,7 @@ void VarBinding::accept(AstVisitor0* visitor) const {
      visitor->visit(this);
 }
 
-string VarBinding::toString() {
+string VarBinding::toString() const {
     stringstream ss;
     ss << symbol->toString() << " (" << term->toString() << ")";
     return ss.str();

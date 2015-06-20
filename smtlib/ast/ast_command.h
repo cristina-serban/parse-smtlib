@@ -47,7 +47,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= CheckSatCommand ================================== */
@@ -61,7 +61,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =============================== CheckSatAssumCommand =============================== */
@@ -84,7 +84,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =============================== DeclareConstCommand ================================ */
@@ -116,7 +116,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================ DeclareFunCommand ================================= */
@@ -154,7 +154,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================ DeclareSortCommand ================================ */
@@ -187,7 +187,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= DefineFunCommand ================================= */
@@ -230,7 +230,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================ DefineFunRecCommand =============================== */
@@ -273,7 +273,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =============================== DefineFunsRecCommand =============================== */
@@ -301,7 +301,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================ DefineSortCommand ================================= */
@@ -338,7 +338,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =================================== EchoCommand ==================================== */
@@ -362,7 +362,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =================================== ExitCommand ==================================== */
@@ -376,7 +376,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================ GetAssertsCommand ================================= */
@@ -390,7 +390,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================ GetAssignsCommand ================================= */
@@ -404,7 +404,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================== GetInfoCommand ================================== */
@@ -428,7 +428,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= GetModelCommand ================================== */
@@ -442,7 +442,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= GetOptionCommand ================================= */
@@ -466,7 +466,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= GetProofCommand ================================== */
@@ -480,7 +480,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ============================== GetUnsatAssumsCommand =============================== */
@@ -494,7 +494,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =============================== GetUnsatCoreCommand ================================ */
@@ -508,7 +508,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= GetValueCommand ================================== */
@@ -531,7 +531,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ==================================== PopCommand ==================================== */
@@ -552,7 +552,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =================================== PushCommand ==================================== */
@@ -573,7 +573,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =================================== ResetCommand =================================== */
@@ -587,7 +587,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* =============================== ResetAssertsCommand ================================ */
@@ -601,7 +601,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================== SetInfoCommand ================================== */
@@ -625,7 +625,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= SetLogicCommand ================================== */
@@ -649,7 +649,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
 
         /* ================================= SetOptionCommand ================================= */
@@ -673,7 +673,7 @@ namespace smtlib {
 
             virtual void accept(AstVisitor0* visitor) const;
 
-            virtual std::string toString();
+            virtual std::string toString() const;
         };
     }
 }

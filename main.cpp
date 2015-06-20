@@ -12,8 +12,8 @@ int main() {
     Parser *parser = new Parser;
     shared_ptr<AstNode> ast = parser->parse("test.smt");
     cout << ast->toString() << endl;
-    cout << ast->getRowLeft() << "." << ast->getColLeft() << " - " << ast->getRowRight() << "." << ast->getColRight() << endl;
-    AstSyntaxChecker *chk = new AstSyntaxChecker();
-    cout << chk->run(ast.get());
+    SyntaxChecker *chk = new SyntaxChecker();
+    cout << chk->run(ast.get()) << endl;
+    cout << chk->getErrors();
     return 0;
 }
