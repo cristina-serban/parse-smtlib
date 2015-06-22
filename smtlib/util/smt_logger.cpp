@@ -4,23 +4,23 @@
 
 using namespace smtlib;
 
-void Logger::Message(const char* msg) {
+void Logger::message(const char *msg) {
     fprintf(stdout, "%s\n", msg);
 }
 
-void Logger::Warning(const char* fun, const char* msg) {
+void Logger::warning(const char *fun, const char *msg) {
     fprintf(stderr, "Warning in %s: %s.\n", fun, msg);
 }
 
-void Logger::Error(const char *fun, const char *msg) {
+void Logger::error(const char *fun, const char *msg) {
     fprintf(stderr, "Error in %s: %s.\n", fun, msg);
 }
 
-void Logger::SyntaxError(const char* fun, const char *file, const char *msg) {
+void Logger::syntaxError(const char *fun, const char *file, const char *msg) {
     fprintf(stderr, "%s: Syntax errors in file %s\n%s", fun, file, msg);
 }
 
-void Logger::ParsingError(unsigned int rowLeft, unsigned int colLeft,
+void Logger::parsingError(unsigned int rowLeft, unsigned int colLeft,
                           unsigned int rowRight, unsigned int colRight,
                           const char *filename, const char *msg) {
 

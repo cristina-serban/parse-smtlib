@@ -6,10 +6,11 @@
 #ifndef PARSE_SMTLIB_AST_LOGIC_H
 #define PARSE_SMTLIB_AST_LOGIC_H
 
-#include <memory>
-#include <vector>
 #include "ast_abstract.h"
 #include "ast_attribute.h"
+
+#include <memory>
+#include <vector>
 
 namespace smtlib {
     namespace ast {

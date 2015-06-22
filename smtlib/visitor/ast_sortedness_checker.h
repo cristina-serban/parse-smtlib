@@ -1,29 +1,26 @@
-#ifndef PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
-#define PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
+#ifndef PARSE_SMTLIB_AST_SORTEDNESS_CHECKER_H
+#define PARSE_SMTLIB_AST_SORTEDNESS_CHECKER_H
 
 #include "ast_visitor_extra.h"
-
-#include <regex>
-#include <string>
-#include <vector>
+#include "../parser/smt_symbol_stack.h"
 
 namespace smtlib {
     namespace ast {
-        class SyntaxChecker : public AstVisitor1<bool> {
+        class SortednessChecker : public AstVisitor2<bool, std::shared_ptr<SymbolStack>> {
         private:
-            struct SyntaxCheckError {
+            struct SortednessCheckError {
                 std::vector<std::string> messages;
                 AstNode const *node;
             };
 
-            std::vector<std::shared_ptr<SyntaxCheckError>> errors;
+            std::unordered_map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
+            std::string currentFile;
 
-            const std::regex regexSymbol = std::regex("^([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
-            const std::regex regexKeyword = std::regex ("^:([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
+            std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
+                                                           std::shared_ptr<SortednessCheckError> err);
 
-            std::shared_ptr<SyntaxCheckError> addError(std::string message, AstNode const *node,
-                                                       std::shared_ptr<SyntaxCheckError> err);
         public:
+
             virtual void visit(Attribute const *node);
             virtual void visit(CompoundAttributeValue const *node);
 
@@ -96,14 +93,12 @@ namespace smtlib {
             virtual void visit(SortedVariable const *node);
             virtual void visit(VarBinding const *node);
 
-            virtual bool run (AstNode const *node) {
+            virtual bool run (std::shared_ptr<SymbolStack> stack, AstNode const *node) {
                 ret = true;
-                return wrappedVisit(node);
+                return wrappedVisit(stack, node);
             }
-
-            std::string getErrors();
         };
     }
 }
 
-#endif //PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
+#endif //PARSE_SMTLIB_AST_SORTEDNESS_CHECKER_H

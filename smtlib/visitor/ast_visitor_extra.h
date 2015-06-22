@@ -27,7 +27,11 @@ namespace smtlib {
             ArgT arg;
             RetT ret;
 
-            RetT wrappedVisit(ArgT arg, AstNode const *node);
+            RetT wrappedVisit(ArgT arg, AstNode const *node) {
+                this->arg = arg;
+                node->accept(this);
+                return this->ret;
+            }
         public:
             virtual RetT run(ArgT arg, AstNode const *node);
         };

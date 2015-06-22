@@ -6,15 +6,16 @@
 #ifndef PARSE_SMTLIB_AST_SYMBOL_DECL_H
 #define PARSE_SMTLIB_AST_SYMBOL_DECL_H
 
-#include <memory>
-#include <vector>
 #include "ast_abstract.h"
 #include "ast_attribute.h"
 #include "ast_basic.h"
 #include "ast_identifier.h"
 #include "ast_interfaces.h"
-#include "ast_sort.h"
 #include "ast_literal.h"
+#include "ast_sort.h"
+
+#include <memory>
+#include <vector>
 
 namespace smtlib {
     namespace ast {

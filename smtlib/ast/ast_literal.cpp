@@ -1,9 +1,10 @@
+#include "ast_literal.h"
+
 #include <algorithm>
 #include <bitset>
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <sstream>
-#include "ast_literal.h"
 
 using namespace smtlib::ast;
 using namespace std;

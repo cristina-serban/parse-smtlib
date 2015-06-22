@@ -6,15 +6,16 @@
 #ifndef PARSE_SMTLIB_AST_COMMAND_H
 #define PARSE_SMTLIB_AST_COMMAND_H
 
+#include "ast_abstract.h"
+#include "ast_attribute.h"
+#include "ast_basic.h"
+#include "ast_interfaces.h"
+#include "ast_fun.h"
+#include "ast_literal.h"
+#include "ast_sort.h"
+
 #include <memory>
 #include <vector>
-#include "ast_abstract.h"
-#include "ast_interfaces.h"
-#include "ast_basic.h"
-#include "ast_sort.h"
-#include "ast_literal.h"
-#include "ast_fun.h"
-#include "ast_attribute.h"
 
 namespace smtlib {
 	namespace ast {

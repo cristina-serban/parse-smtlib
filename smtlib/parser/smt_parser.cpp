@@ -30,11 +30,11 @@ bool Parser::checkSyntax() {
         if(chk->run(ast.get())) {
             return true;
         } else {
-            Logger::SyntaxError("Parser::checkSyntax()", filename.c_str(), chk->getErrors().c_str());
+            Logger::syntaxError("Parser::checkSyntax()", filename.c_str(), chk->getErrors().c_str());
             return false;
         }
     } else {
-        Logger::Warning("Parser::checkSyntax()", "Attempting to check an empty abstract syntax tree");
+        Logger::warning("Parser::checkSyntax()", "Attempting to check an empty abstract syntax tree");
         return false;
     }
 }
@@ -51,5 +51,5 @@ std::shared_ptr<ast::AstNode> Parser::getAst() {
 
 void Parser::reportError(unsigned int lineLeft, unsigned int colLeft,
                  unsigned int lineRight, unsigned int colRight, const char *msg) {
-    Logger::ParsingError(lineLeft, colLeft, lineRight, colRight, filename.c_str(), msg);
+    Logger::parsingError(lineLeft, colLeft, lineRight, colRight, filename.c_str(), msg);
 }

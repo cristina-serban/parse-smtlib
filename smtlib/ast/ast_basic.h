@@ -6,10 +6,11 @@
 #ifndef PARSE_SMTLIB_AST_BASIC_H
 #define PARSE_SMTLIB_AST_BASIC_H
 
-#include <memory>
-#include <string>
 #include "ast_abstract.h"
 #include "ast_interfaces.h"
+
+#include <memory>
+#include <string>
 
 namespace smtlib {
     namespace ast {

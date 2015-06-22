@@ -69,7 +69,6 @@ void smt_print(SmtPtr ptr) {
     std::cout << ptr->toString();
 }
 
-
 void smt_setAst(SmtPrsr parser, SmtPtr ast) {
     if(parser && ast) {
         Parser *p = dynamic_cast<Parser *>(parser);

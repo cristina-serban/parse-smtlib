@@ -34,13 +34,13 @@ void SyntaxChecker::visit(Attribute const *node) {
     shared_ptr<SyntaxCheckError> err;
 
     if(!node) {
-        err = err = addError("Attempt to visit NULL node", node, err);
+        err = addError("Attempt to visit NULL node", node, err);
         return;
     }
 
     if(!node->getKeyword()) {
         ret = false;
-            err = err = addError("Missing keyword from attribute", node, err);
+            err = addError("Missing keyword from attribute", node, err);
     } else {
         node->getKeyword()->accept(this);
     }

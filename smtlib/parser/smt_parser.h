@@ -1,9 +1,10 @@
 #ifndef PARSE_SMTLIB_SMT_PARSER_H
 #define PARSE_SMTLIB_SMT_PARSER_H
 
+#include "../ast/ast_abstract.h"
+
 #include <memory>
 #include <string>
-#include "../ast/ast_abstract.h"
 
 namespace smtlib {
     class Parser {

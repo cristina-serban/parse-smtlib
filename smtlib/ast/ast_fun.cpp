@@ -1,5 +1,4 @@
 #include "ast_fun.h"
-
 #include <sstream>
 
 using namespace std;

@@ -6,9 +6,9 @@
 #ifndef PARSE_SMTLIB_AST_ABSTRACT_H
 #define PARSE_SMTLIB_AST_ABSTRACT_H
 
+#include "../visitor/ast_visitor.h"
 #include <memory>
 #include <string>
-#include "../visitor/ast_visitor.h"
 
 namespace smtlib {
     namespace ast {

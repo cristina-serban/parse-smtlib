@@ -6,11 +6,12 @@
 #ifndef PARSE_SMTLIB_AST_VAR_H
 #define PARSE_SMTLIB_AST_VAR_H
 
-#include <memory>
 #include "ast_abstract.h"
 #include "ast_basic.h"
 #include "ast_interfaces.h"
 #include "ast_sort.h"
+
+#include <memory>
 
 namespace smtlib {
     namespace ast {

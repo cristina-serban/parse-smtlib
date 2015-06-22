@@ -1,5 +1,5 @@
-#include <sstream>
 #include "ast_command.h"
+#include <sstream>
 
 using namespace std;
 using namespace smtlib::ast;
@@ -224,7 +224,6 @@ const shared_ptr<FunctionDefinition> DefineFunCommand::getDefinition() const {
 shared_ptr<FunctionDefinition> DefineFunCommand::getDefinition() {
     return definition;
 }
-
 
 void DefineFunCommand::setDefinition(shared_ptr<FunctionDefinition> definition) {
     this->definition = definition;

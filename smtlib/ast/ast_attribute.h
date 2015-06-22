@@ -6,13 +6,14 @@
 #ifndef PARSE_SMTLIB_AST_ATTR_H
 #define PARSE_SMTLIB_AST_ATTR_H
 
-#include <memory>
-#include <string>
-#include <vector>
 #include "ast_abstract.h"
 #include "ast_basic.h"
 #include "ast_interfaces.h"
 #include "../visitor/ast_visitor.h"
+
+#include <memory>
+#include <string>
+#include <vector>
 
 namespace smtlib {
     namespace ast {

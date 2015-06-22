@@ -1,5 +1,5 @@
-#include <sstream>
 #include "ast_logic.h"
+#include <sstream>
 
 using namespace smtlib::ast;
 using namespace std;

@@ -6,10 +6,11 @@
 #ifndef PARSE_SMTLIB_AST_SORT_H
 #define PARSE_SMTLIB_AST_SORT_H
 
-#include <memory>
-#include <vector>
 #include "ast_basic.h"
 #include "ast_identifier.h"
+
+#include <memory>
+#include <vector>
 
 namespace smtlib {
     namespace ast {
