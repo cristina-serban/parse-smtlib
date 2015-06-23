@@ -601,11 +601,11 @@ string SortednessChecker::getErrors() {
         string file = it->first;
         vector<shared_ptr<SortednessCheckError>> errs = it->second;
 
-        ss << "In file " << file << endl;
+        ss << "In file '" << file << "'" << endl;
 
         for(vector<shared_ptr<SortednessCheckError>>::iterator itt = errs.begin(); itt != errs.end(); itt++) {
             shared_ptr<SortednessCheckError> err = *itt;
-            ss << "\t" << err->node->getRowLeft() << ":" << err->node->getColLeft()
+            ss << err->node->getRowLeft() << ":" << err->node->getColLeft()
             << " - " << err->node->getRowRight() << ":" << err->node->getColRight() << "   ";
 
             string nodestr = err->node->toString();
@@ -620,21 +620,16 @@ string SortednessChecker::getErrors() {
                  info != err->infos.end(); info++) {
                 ss << "\t" << (*info)->message << endl;
 
+                shared_ptr<AstNode> source;
+
                 if((*info)->sortInfo) {
-                    shared_ptr<AstNode> source = (*info)->sortInfo->source;
-                    ss << "Previously, in file " << source->getFilename() << " "
-                       << source->getRowLeft() << ":" << source->getColLeft() << " - "
-                       << source->getRowRight() << ":" << source->getColRight() << "   ";
-
-                    string sourcestr = source->toString();
-                    if (sourcestr.length() > 100)
-                        ss << string(sourcestr, 100);
-                    else
-                        ss << sourcestr;
-
+                    source = (*info)->sortInfo->source;
                 } else if((*info)->funInfo) {
-                    shared_ptr<AstNode> source = (*info)->sortInfo->source;
-                    ss << "Previously, in file " << source->getFilename() << " "
+                    source = (*info)->funInfo->source;
+                }
+
+                if(source) {
+                    ss << "\t\tPreviously, in file '" << source->getFilename()->c_str() << "'\n\t\t"
                     << source->getRowLeft() << ":" << source->getColLeft() << " - "
                     << source->getRowRight() << ":" << source->getColRight() << "   ";
 
@@ -645,10 +640,12 @@ string SortednessChecker::getErrors() {
                         ss << sourcestr;
                 }
 
-                ss << endl << endl;
+                ss << endl;
             }
         }
     }
+
+    ss << endl;
 
     return ss.str();
 }

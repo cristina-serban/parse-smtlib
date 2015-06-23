@@ -55,9 +55,7 @@ bool Parser::checkSortedness() {
         if(chk->run(stack, ast.get())) {
             return true;
         } else {
-            string msg = "File '" + string(filename->c_str()) +
-                    "' contains syntax errors. Cannot check well-sortedness";
-            Logger::error("Parser::checkSortedness()", msg.c_str());
+            Logger::sortednessError("Parser::checkSortedness()", filename->c_str(), chk->getErrors().c_str());
             return false;
         }
     } else {

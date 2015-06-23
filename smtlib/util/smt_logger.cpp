@@ -20,6 +20,10 @@ void Logger::syntaxError(const char *fun, const char *file, const char *msg) {
     fprintf(stderr, "%s: Syntax errors in file '%s'\n%s", fun, file, msg);
 }
 
+void Logger::sortednessError(const char *fun, const char *file, const char *msg) {
+    fprintf(stderr, "%s: Well-sortedness errors when checking file '%s'\n\n%s", fun, file, msg);
+}
+
 void Logger::parsingError(unsigned int rowLeft, unsigned int colLeft,
                           unsigned int rowRight, unsigned int colRight,
                           const char *filename, const char *msg) {

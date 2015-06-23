@@ -119,6 +119,9 @@ namespace smtlib {
                         return wrappedVisit(stack, node);
                     } else {
                         Logger::syntaxError("SortednessChecker::run()", node->getFilename()->c_str(), chk->getErrors().c_str());
+                        std::string msg = "File '" + std::string(node->getFilename()->c_str()) +
+                                     "' contains syntax errors. Cannot check well-sortedness";
+                        Logger::error("SortednessChecker::run()", msg.c_str());
                         return false;
                     }
                 } else {
