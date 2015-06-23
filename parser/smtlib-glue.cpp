@@ -71,20 +71,21 @@ void smt_print(SmtPtr ptr) {
 
 void smt_setAst(SmtPrsr parser, SmtPtr ast) {
     if(parser && ast) {
-        Parser *p = dynamic_cast<Parser *>(parser);
-        p->setAst(dynamic_cast<AstNode *>(ast));
+        //Parser *p = dynamic_cast<Parser *>(parser);
+        parser->setAst(dynamic_cast<AstNode *>(ast));
     }
 }
 
 void smt_reportError(SmtPrsr parser, unsigned int rowLeft, unsigned int colLeft,
                      unsigned int rowRight, unsigned int colRight, const char* msg) {
     if(parser && msg) {
-        Parser *p = dynamic_cast<Parser *>(parser);
-        p->reportError(rowLeft, colLeft, rowRight, colRight, msg);
+        //Parser *p = dynamic_cast<Parser *>(parser);
+        parser->reportError(rowLeft, colLeft, rowRight, colRight, msg);
     }
 }
 
-void smt_setLocation(SmtPtr ptr, int rowLeft, int colLeft, int rowRight, int colRight) {
+void smt_setLocation(SmtPrsr parser, SmtPtr ptr, int rowLeft, int colLeft, int rowRight, int colRight) {
+    ptr->setFilename(parser->getFilename());
     ptr->setRowLeft(rowLeft);
     ptr->setColLeft(colLeft);
     ptr->setRowRight(rowRight);

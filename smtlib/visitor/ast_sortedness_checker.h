@@ -6,33 +6,52 @@
 
 namespace smtlib {
     namespace ast {
-        class SortednessChecker : public AstVisitor2<bool, std::shared_ptr<SymbolStack>> {
+        class SortednessChecker : public DummyAstVisitor2<bool, std::shared_ptr<SymbolStack>> {
         private:
             struct SortednessCheckError {
                 std::vector<std::string> messages;
                 AstNode const *node;
+                std::shared_ptr<SortInfo> sortInfo;
+                std::shared_ptr<FunInfo> funInfo;
             };
 
             std::unordered_map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
-            std::string currentFile;
 
             std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
                                                            std::shared_ptr<SortednessCheckError> err);
+            std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
+                                                           std::shared_ptr<SortInfo> sortInfo,
+                                                           std::shared_ptr<SortednessCheckError> err);
+            std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
+                                                           std::shared_ptr<FunInfo> funInfo,
+                                                           std::shared_ptr<SortednessCheckError> err);
+
+            void addError(std::string message, AstNode const *node);
+            void addError(std::string message, AstNode const *node, std::shared_ptr<SortInfo> sortInfo);
+            void addError(std::string message, AstNode const *node, std::shared_ptr<FunInfo> funInfo);
+
+            bool equalSignatures(const std::vector<std::shared_ptr<ast::Sort>> &sig1,
+                                 const std::vector<std::shared_ptr<ast::Sort>> &sig2);
+
+            bool equalParamSignatures(const std::vector<std::shared_ptr<ast::Symbol>> &params1,
+                                      const std::vector<std::shared_ptr<ast::Sort>> &sig1,
+                                      const std::vector<std::shared_ptr<ast::Symbol>> &params,
+                                      const std::vector<std::shared_ptr<ast::Sort>> &sig2);
+
+            bool equalParamSorts(const std::vector<std::shared_ptr<ast::Symbol>> &params1,
+                                 const std::shared_ptr<ast::Sort> sort1,
+                                 const std::vector<std::shared_ptr<ast::Symbol>> &params2,
+                                 const std::shared_ptr<ast::Sort> sort2,
+                                 std::unordered_map<std::string, std::string> &mapping);
+
+            std::shared_ptr<SortInfo> duplicate(SortSymbolDeclaration const *node);
+            std::shared_ptr<FunInfo> duplicate(SpecConstFunDeclaration const *node);
+            std::shared_ptr<FunInfo> duplicate(MetaSpecConstFunDeclaration const *node);
+            std::shared_ptr<FunInfo> duplicate(IdentifierFunDeclaration const *node);
+            std::shared_ptr<FunInfo> duplicate(ParametricFunDeclaration const *node);
 
         public:
-
-            virtual void visit(Attribute const *node);
-            virtual void visit(CompoundAttributeValue const *node);
-
-            virtual void visit(Symbol const *node);
-            virtual void visit(Keyword const *node);
-            virtual void visit(MetaSpecConstant const *node);
-            virtual void visit(BooleanValue const *node);
-            virtual void visit(PropLiteral const *node);
-
             virtual void visit(AssertCommand const *node);
-            virtual void visit(CheckSatCommand const *node);
-            virtual void visit(CheckSatAssumCommand const *node);
             virtual void visit(DeclareConstCommand const *node);
             virtual void visit(DeclareFunCommand const *node);
             virtual void visit(DeclareSortCommand const *node);
@@ -40,24 +59,10 @@ namespace smtlib {
             virtual void visit(DefineFunRecCommand const *node);
             virtual void visit(DefineFunsRecCommand const *node);
             virtual void visit(DefineSortCommand const *node);
-            virtual void visit(EchoCommand const *node);
-            virtual void visit(ExitCommand const *node);
-            virtual void visit(GetAssertsCommand const *node);
-            virtual void visit(GetAssignsCommand const *node);
-            virtual void visit(GetInfoCommand const *node);
-            virtual void visit(GetModelCommand const *node);
-            virtual void visit(GetOptionCommand const *node);
-            virtual void visit(GetProofCommand const *node);
-            virtual void visit(GetUnsatAssumsCommand const *node);
-            virtual void visit(GetUnsatCoreCommand const *node);
             virtual void visit(GetValueCommand const *node);
             virtual void visit(PopCommand const *node);
             virtual void visit(PushCommand const *node);
             virtual void visit(ResetCommand const *node);
-            virtual void visit(ResetAssertsCommand const *node);
-            virtual void visit(SetInfoCommand const *node);
-            virtual void visit(SetLogicCommand const *node);
-            virtual void visit(SetOptionCommand const *node);
 
             virtual void visit(FunctionDeclaration const *node);
             virtual void visit(FunctionDefinition const *node);

@@ -10,13 +10,14 @@ namespace smtlib {
     class Parser {
     private:
         std::shared_ptr<ast::AstNode> ast;
-        std::string filename;
+        std::shared_ptr<std::string> filename;
     public:
         std::shared_ptr<ast::AstNode> parse(std::string filename);
 
         bool checkSyntax();
 
-        bool checkSortedness();
+        const std::shared_ptr<std::string> getFilename() const;
+        std::shared_ptr<std::string> getFilename();
 
         void setAst(smtlib::ast::AstNode *ast);
 

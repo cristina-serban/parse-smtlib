@@ -34,7 +34,7 @@ SmtList smt_listCreate();
 void smt_listAdd(SmtList list, SmtPtr item);
 void smt_listDelete(SmtList list);
 
-void smt_setLocation(SmtPtr ptr, int rowLeft, int colLeft, int rowRight, int colRight);
+void smt_setLocation(SmtPrsr parser, SmtPtr ptr, int rowLeft, int colLeft, int rowRight, int colRight);
 
 int smt_bool_value(SmtPtr ptr);
 

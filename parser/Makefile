@@ -4,8 +4,8 @@ smtlib-parser:
 	mv smtlib-bison-parser.tab.c smtlib-bison-parser.y.c
 	flex smtlib-flex-lexer.l
 	mv lex.yy.c smtlib-flex-lexer.l.c
-	g++ -g -c smtlib-flex-lexer.l.c -o smtlib-flex-lexer.l.o
-	g++ -g -c smtlib-bison-parser.y.c -o smtlib-bison-parser.y.o
+	g++ -g -c -std=c++11 smtlib-flex-lexer.l.c -o smtlib-flex-lexer.l.o
+	g++ -g -c -std=c++11 smtlib-bison-parser.y.c -o smtlib-bison-parser.y.o
 	g++ -g -c -std=c++11 smtlib-glue.cpp -o smtlib-glue.o
 	g++ -g -c -std=c++11 ../smtlib/ast/ast_attribute.cpp -o ast_attribute.o
 	g++ -g -c -std=c++11 ../smtlib/ast/ast_basic.cpp -o ast_basic.o

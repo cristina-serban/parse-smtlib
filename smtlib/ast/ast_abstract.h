@@ -7,8 +7,9 @@
 #define PARSE_SMTLIB_AST_ABSTRACT_H
 
 #include "../visitor/ast_visitor.h"
-#include <memory>
+
 #include <string>
+#include <memory>
 
 namespace smtlib {
     namespace ast {
@@ -22,6 +23,7 @@ namespace smtlib {
             int rowRight;
             int colLeft;
             int colRight;
+            std::shared_ptr<std::string> filename;
         public:
             virtual std::string toString() const = 0;
 
@@ -57,6 +59,18 @@ namespace smtlib {
 
             void setColRight(int colRight) {
                 this->colRight = colRight;
+            }
+
+            const std::shared_ptr<std::string> getFilename() const {
+                return filename;
+            }
+
+            std::shared_ptr<std::string> getFilename() {
+                return filename;
+            }
+
+            void setFilename(std::shared_ptr<std::string> filename) {
+                this->filename = filename;
             }
         };
 

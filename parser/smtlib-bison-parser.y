@@ -67,7 +67,7 @@ script:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -105,7 +105,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_CHK_SAT ')'			
@@ -117,7 +117,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_CHK_SAT_ASSUM '(' prop_literal_star ')' ')'		
@@ -129,7 +129,7 @@ command:
 			@$.last_line = @6.last_line;
             @$.last_column = @6.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_DECL_CONST symbol sort ')'						
@@ -141,7 +141,7 @@ command:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_DECL_FUN symbol '(' sort_star ')' sort ')'
@@ -153,7 +153,7 @@ command:
 			@$.last_line = @8.last_line;
             @$.last_column = @8.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_DECL_SORT symbol NUMERAL ')'
@@ -165,7 +165,7 @@ command:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_DEF_FUNS_REC '(' fun_decl_plus ')'  '(' term_plus ')' ')'
@@ -177,7 +177,7 @@ command:
 			@$.last_line = @9.last_line;
             @$.last_column = @9.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |	
 	'(' KW_CMD_DEF_FUN_REC fun_def ')'
@@ -189,7 +189,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_DEF_FUN fun_def ')'
@@ -201,7 +201,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_DEF_SORT symbol '(' symbol_star ')' sort ')'
@@ -213,7 +213,7 @@ command:
 			@$.last_line = @8.last_line;
             @$.last_column = @8.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_ECHO STRING ')'
@@ -225,7 +225,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_EXIT ')'
@@ -237,7 +237,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_ASSERTS ')'
@@ -249,7 +249,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_ASSIGNS ')'
@@ -261,7 +261,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_INFO info_flag ')' 
@@ -273,7 +273,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_MODEL ')'
@@ -284,7 +284,7 @@ command:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_OPT KEYWORD ')'
@@ -296,7 +296,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_PROOF ')'
@@ -308,7 +308,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_UNSAT_ASSUMS ')'
@@ -320,7 +320,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_UNSAT_CORE ')'
@@ -332,7 +332,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_GET_VALUE term_plus ')'
@@ -344,7 +344,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_POP NUMERAL ')'
@@ -356,7 +356,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_PUSH NUMERAL ')'
@@ -368,7 +368,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_RESET_ASSERTS ')'
@@ -380,7 +380,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_RESET ')'
@@ -392,7 +392,7 @@ command:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_SET_INFO attribute ')'
@@ -404,7 +404,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_SET_LOGIC symbol ')'
@@ -416,7 +416,7 @@ command:
             @$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_CMD_SET_OPT option ')'
@@ -428,7 +428,7 @@ command:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -462,7 +462,7 @@ term:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_LET '(' var_binding_plus ')' term ')'
@@ -474,7 +474,7 @@ term:
 			@$.last_line = @7.last_line;
             @$.last_column = @7.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_FORALL '(' sorted_var_plus ')' term ')'
@@ -486,7 +486,7 @@ term:
 			@$.last_line = @7.last_line;
             @$.last_column = @7.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_EXISTS '(' sorted_var_plus ')' term ')'
@@ -498,7 +498,7 @@ term:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' '!' term attribute_plus ')'
@@ -510,7 +510,7 @@ term:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' term ')' 
@@ -522,7 +522,7 @@ term:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -560,7 +560,7 @@ spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	DECIMAL 		
@@ -572,7 +572,7 @@ spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	HEXADECIMAL 	
@@ -584,7 +584,7 @@ spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	BINARY 			
@@ -596,7 +596,7 @@ spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	STRING 			
@@ -608,7 +608,7 @@ spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -622,7 +622,7 @@ symbol:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	KW_CMD_RESET
@@ -634,7 +634,7 @@ symbol:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	NOT
@@ -646,7 +646,7 @@ symbol:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -660,7 +660,7 @@ qual_identifier:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_AS identifier sort ')'
@@ -672,7 +672,7 @@ qual_identifier:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -686,7 +686,7 @@ identifier:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' '_' symbol index_plus ')'
@@ -698,7 +698,7 @@ identifier:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -712,7 +712,7 @@ index:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	symbol 		
@@ -724,7 +724,7 @@ index:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -762,7 +762,7 @@ sort:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' identifier sort_plus ')'
@@ -774,7 +774,7 @@ sort:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-			smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -837,7 +837,7 @@ var_binding:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -875,7 +875,7 @@ sorted_var:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -936,7 +936,7 @@ attribute:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	KEYWORD attr_value
@@ -948,7 +948,7 @@ attribute:
 			@$.last_line = @2.last_line;
             @$.last_column = @2.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1029,7 +1029,7 @@ attr_value:
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1109,7 +1109,7 @@ prop_literal:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' NOT SYMBOL ')'
@@ -1121,7 +1121,7 @@ prop_literal:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1159,7 +1159,7 @@ fun_decl:
 			@$.last_line = @7.last_line;
             @$.last_column = @7.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1198,7 +1198,7 @@ fun_def:
 			@$.last_line = @6.last_line;
             @$.last_column = @6.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1259,7 +1259,7 @@ info_flag:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1285,7 +1285,7 @@ theory_decl:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1300,7 +1300,7 @@ theory_attr:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	KW_ATTR_FUNS '(' par_fun_symbol_decl_plus ')'
@@ -1313,7 +1313,7 @@ theory_attr:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	attribute 	
@@ -1361,7 +1361,7 @@ sort_symbol_decl:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1401,7 +1401,7 @@ par_fun_symbol_decl:
 			@$.last_line = @11.last_line;
             @$.last_column = @11.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1439,7 +1439,7 @@ fun_symbol_decl:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' meta_spec_const sort attribute_star ')'
@@ -1451,7 +1451,7 @@ fun_symbol_decl:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' identifier sort_plus attribute_star ')'
@@ -1463,7 +1463,7 @@ fun_symbol_decl:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1477,7 +1477,7 @@ meta_spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	META_SPEC_DECIMAL
@@ -1489,7 +1489,7 @@ meta_spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	META_SPEC_STRING
@@ -1501,7 +1501,7 @@ meta_spec_const:
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1515,7 +1515,7 @@ logic:
 			@$.last_line = @5.last_line;
             @$.last_column = @5.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1529,7 +1529,7 @@ logic_attr:
 			@$.last_line = @4.last_line;
             @$.last_column = @4.last_column;
 
-            smt_setLocation($$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	attribute 	

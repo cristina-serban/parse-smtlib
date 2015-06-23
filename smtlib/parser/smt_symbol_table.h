@@ -3,79 +3,88 @@
 
 #include "../ast/ast_basic.h"
 #include "../ast/ast_symbol_decl.h"
+#include "../ast/ast_term.h"
 
+#include <memory>
 #include <string>
 #include <unordered_map>
 
 namespace smtlib {
+    struct SortDefinition {
+        std::vector<std::shared_ptr<ast::Symbol>> params;
+        std::shared_ptr<ast::Sort> sort;
+
+        SortDefinition(std::vector<std::shared_ptr<ast::Symbol>> params,
+                       std::shared_ptr<ast::Sort> sort) {
+            this->params = params;
+            this->sort = sort;
+        }
+    };
+
+    struct SortInfo{
+        std::shared_ptr<ast::SortSymbolDeclaration> declaration;
+        std::shared_ptr<SortDefinition> definition;
+        std::shared_ptr<ast::AstNode> source;
+
+        SortInfo(std::shared_ptr<ast::SortSymbolDeclaration> declaration,
+                 std::shared_ptr<ast::AstNode> source) {
+            this->declaration = declaration;
+            this->source = source;
+        }
+
+        SortInfo(std::shared_ptr<ast::SortSymbolDeclaration> declaration,
+                 std::vector<std::shared_ptr<ast::Symbol>> parameters,
+                 std::shared_ptr<ast::Sort> sort,
+                 std::shared_ptr<ast::AstNode> source) {
+            this->declaration = declaration;
+            this->definition = std::make_shared<SortDefinition>(parameters, sort);
+            this->source = source;
+        }
+    };
+
+    struct FunInfo {
+        std::shared_ptr<ast::FunSymbolDeclaration> declaration;
+        std::shared_ptr<ast::Term> body;
+        std::shared_ptr<ast::AstNode> source;
+
+        FunInfo(std::shared_ptr<ast::FunSymbolDeclaration> declaration,
+                std::shared_ptr<ast::AstNode> source) {
+            this->declaration = declaration;
+            this->source = source;
+        }
+
+        FunInfo(std::shared_ptr<ast::FunSymbolDeclaration> declaration,
+                std::shared_ptr<ast::Term> body,
+                std::shared_ptr<ast::AstNode> source) {
+            this->declaration = declaration;
+            this->body = body;
+            this->source = source;
+        }
+    };
+
     class SymbolTable {
     private:
-        std::unordered_map<std::string,
-                std::shared_ptr<ast::SortSymbolDeclaration>> sortDeclarations;
+        std::unordered_map<std::string, std::shared_ptr<SortInfo>> sorts;
 
         std::unordered_map<std::string,
-                std::pair<std::vector<std::shared_ptr<ast::Symbol>>,
-                        std::shared_ptr<ast::Sort>>> sortDefinitions;
-
-        std::unordered_map<std::string,
-                std::vector<std::shared_ptr<ast::FunSymbolDeclaration>>> funs;
+                std::vector<std::shared_ptr<FunInfo>>> funs;
 
         std::unordered_map<std::string,
                 std::shared_ptr<ast::SortedVariable>> vars;
 
-        bool equalSignatures(std::vector<std::shared_ptr<ast::Sort>> &sig1,
-                             std::vector<std::shared_ptr<ast::Sort>> &sig2);
-
-        bool equalParamSignatures(std::vector<std::shared_ptr<ast::Symbol>> &params1,
-                                  std::vector<std::shared_ptr<ast::Sort>> &sig1,
-                                  std::vector<std::shared_ptr<ast::Symbol>> &params,
-                                  std::vector<std::shared_ptr<ast::Sort>> &sig2);
-
-        bool equalParamSorts(std::vector<std::shared_ptr<ast::Symbol>> &params1,
-                             std::shared_ptr<ast::Sort> sort1,
-                             std::vector<std::shared_ptr<ast::Symbol>> &params2,
-                             std::shared_ptr<ast::Sort> sort2,
-                             std::unordered_map<std::string, std::string> &mapping);
-
     public:
-        const std::unordered_map<std::string,
-                std::shared_ptr<ast::SortSymbolDeclaration>> &getSortDeclarations() const;
+        const std::unordered_map<std::string, std::shared_ptr<SortInfo>> &getSorts() const;
+        std::unordered_map<std::string, std::shared_ptr<SortInfo>> &getSorts();
 
-        std::unordered_map<std::string,
-                std::shared_ptr<ast::SortSymbolDeclaration>> &getSortDeclarations();
+        const std::unordered_map<std::string, std::vector<std::shared_ptr<FunInfo>>> &getFuns() const;
+        std::unordered_map<std::string, std::vector<std::shared_ptr<FunInfo>>> &getFuns();
 
-        const std::unordered_map<std::string,
-                std::pair<std::vector<std::shared_ptr<ast::Symbol>>,
-                        std::shared_ptr<ast::Sort>>> &getSortDefinitions() const;
+        const std::unordered_map<std::string, std::shared_ptr<ast::SortedVariable>> &getVars() const;
+        std::unordered_map<std::string, std::shared_ptr<ast::SortedVariable>> &getVars();
 
-        std::unordered_map<std::string,
-                std::pair<std::vector<std::shared_ptr<ast::Symbol>>,
-                        std::shared_ptr<ast::Sort>>> &getSortDefinitions();
+        bool addSort(std::string name, std::shared_ptr<SortInfo> info);
 
-        const std::unordered_map<std::string,
-                std::vector<std::shared_ptr<ast::FunSymbolDeclaration>>> &getFuns() const;
-
-        std::unordered_map<std::string,
-                std::vector<std::shared_ptr<ast::FunSymbolDeclaration>>> &getFuns();
-
-        const std::unordered_map<std::string,
-                std::shared_ptr<ast::SortedVariable>> &getVars() const;
-        std::unordered_map<std::string,
-                std::shared_ptr<ast::SortedVariable>> &getVars();
-
-        bool addSort(std::shared_ptr<ast::SortSymbolDeclaration> node);
-        bool addSort(std::shared_ptr<ast::DeclareSortCommand> node);
-        bool addSort(std::shared_ptr<ast::DefineSortCommand> node);
-
-        bool addFun(std::shared_ptr<ast::SpecConstFunDeclaration> node);
-        bool addFun(std::shared_ptr<ast::MetaSpecConstFunDeclaration> node);
-        bool addFun(std::shared_ptr<ast::IdentifierFunDeclaration> node);
-        bool addFun(std::shared_ptr<ast::ParametricFunDeclaration> node);
-        bool addFun(std::shared_ptr<ast::DeclareConstCommand> node);
-        bool addFun(std::shared_ptr<ast::DeclareFunCommand> node);
-        bool addFun(std::shared_ptr<ast::DefineFunCommand> node);
-        bool addFun(std::shared_ptr<ast::DefineFunRecCommand> node);
-        bool addFun(std::shared_ptr<ast::DefineFunsRecCommand> node);
+        bool addFun(std::string name, std::shared_ptr<FunInfo> info);
 
         bool addVariable(std::shared_ptr<ast::SortedVariable> node);
     };
