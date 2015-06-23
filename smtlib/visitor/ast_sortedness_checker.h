@@ -2,20 +2,28 @@
 #define PARSE_SMTLIB_AST_SORTEDNESS_CHECKER_H
 
 #include "ast_visitor_extra.h"
+#include "ast_syntax_checker.h"
 #include "../parser/smt_symbol_stack.h"
+#include "../util/smt_logger.h"
+
+#include <map>
 
 namespace smtlib {
     namespace ast {
         class SortednessChecker : public DummyAstVisitor2<bool, std::shared_ptr<SymbolStack>> {
         private:
-            struct SortednessCheckError {
-                std::vector<std::string> messages;
-                AstNode const *node;
+            struct SortednessCheckErrorInfo {
+                std::string message;
                 std::shared_ptr<SortInfo> sortInfo;
                 std::shared_ptr<FunInfo> funInfo;
             };
 
-            std::unordered_map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
+            struct SortednessCheckError {
+                std::vector<std::shared_ptr<SortednessCheckErrorInfo>> infos;
+                AstNode const *node;
+            };
+
+            std::map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
 
             std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
                                                            std::shared_ptr<SortednessCheckError> err);
@@ -50,6 +58,8 @@ namespace smtlib {
             std::shared_ptr<FunInfo> duplicate(IdentifierFunDeclaration const *node);
             std::shared_ptr<FunInfo> duplicate(ParametricFunDeclaration const *node);
 
+            void loadTheory(std::string theory);
+            void loadLogic(std::string logic);
         public:
             virtual void visit(AssertCommand const *node);
             virtual void visit(DeclareConstCommand const *node);
@@ -63,6 +73,7 @@ namespace smtlib {
             virtual void visit(PopCommand const *node);
             virtual void visit(PushCommand const *node);
             virtual void visit(ResetCommand const *node);
+            virtual void visit(SetLogicCommand const *node);
 
             virtual void visit(FunctionDeclaration const *node);
             virtual void visit(FunctionDefinition const *node);
@@ -99,9 +110,24 @@ namespace smtlib {
             virtual void visit(VarBinding const *node);
 
             virtual bool run (std::shared_ptr<SymbolStack> stack, AstNode const *node) {
-                ret = true;
-                return wrappedVisit(stack, node);
+                if(node) {
+                    SyntaxChecker *chk = new SyntaxChecker();
+                    if(chk->run(node)) {
+                        ret = true;
+                        arg = stack;
+                        loadTheory("Core");
+                        return wrappedVisit(stack, node);
+                    } else {
+                        Logger::syntaxError("SortednessChecker::run()", node->getFilename()->c_str(), chk->getErrors().c_str());
+                        return false;
+                    }
+                } else {
+                    Logger::warning("SortednessChecker::run()", "Attempting to check an empty abstract syntax tree");
+                    return false;
+                }
             }
+
+            std::string getErrors();
         };
     }
 }

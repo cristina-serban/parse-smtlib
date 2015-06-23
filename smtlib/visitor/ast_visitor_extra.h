@@ -33,7 +33,9 @@ namespace smtlib {
                 return this->ret;
             }
         public:
-            virtual RetT run(ArgT arg, AstNode const *node);
+            virtual RetT run(ArgT arg, AstNode const *node) {
+                return wrappedVisit(arg, node);
+            }
         };
 
         template<class RetT>

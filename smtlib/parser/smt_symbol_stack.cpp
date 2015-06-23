@@ -1,7 +1,10 @@
 #include "smt_symbol_stack.h"
-
 using namespace std;
 using namespace smtlib;
+
+SymbolStack::SymbolStack() {
+    pushLevel();
+}
 
 bool SymbolStack::pushLevel() {
     unsigned long size = stack.size();

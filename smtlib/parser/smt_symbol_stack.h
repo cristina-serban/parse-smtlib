@@ -10,6 +10,8 @@ namespace smtlib {
     private:
         std::vector<std::shared_ptr<SymbolTable>> stack;
     public:
+        SymbolStack();
+
         bool pushLevel();
         bool popLevel();
 

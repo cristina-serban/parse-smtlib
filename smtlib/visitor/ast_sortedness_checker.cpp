@@ -1,5 +1,14 @@
 #include "ast_sortedness_checker.h"
+#include "ast_syntax_checker.h"
 #include "../ast/ast_command.h"
+#include "../ast/ast_logic.h"
+#include "../ast/ast_script.h"
+#include "../ast/ast_theory.h"
+#include "../parser/smt_parser.h"
+#include "../util/smt_logger.h"
+
+
+#include <sstream>
 
 using namespace std;
 using namespace smtlib;
@@ -9,12 +18,18 @@ shared_ptr<SortednessChecker::SortednessCheckError>
 SortednessChecker::addError(string message, AstNode const *node,
                             shared_ptr<SortednessChecker::SortednessCheckError> err) {
     if(!err) {
+        shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+        errInfo->message = message;
+
         err = make_shared<SortednessCheckError>();
-        err->messages.push_back(message);
+        err->infos.push_back(errInfo);
         err->node = node;
+
         errors[string(node->getFilename()->c_str())].push_back(err);
     } else {
-        err->messages.push_back(message);
+        shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+        errInfo->message = message;
+        err->infos.push_back(errInfo);
     }
 
     return err;
@@ -22,16 +37,24 @@ SortednessChecker::addError(string message, AstNode const *node,
 
 shared_ptr<SortednessChecker::SortednessCheckError>
 SortednessChecker::addError(string message, AstNode const *node,
-                            std::shared_ptr<SortInfo> sortInfo,
+                            shared_ptr<SortInfo> sortInfo,
                             shared_ptr<SortednessChecker::SortednessCheckError> err) {
     if(!err) {
+        shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+        errInfo->message = message;
+        errInfo->sortInfo = sortInfo;
+
         err = make_shared<SortednessCheckError>();
-        err->messages.push_back(message);
+        err->infos.push_back(errInfo);
         err->node = node;
-        err->sortInfo = sortInfo;
+
         errors[string(node->getFilename()->c_str())].push_back(err);
     } else {
-        err->messages.push_back(message);
+        shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+        errInfo->message = message;
+        errInfo->sortInfo = sortInfo;
+
+        err->infos.push_back(errInfo);
     }
 
     return err;
@@ -39,43 +62,66 @@ SortednessChecker::addError(string message, AstNode const *node,
 
 shared_ptr<SortednessChecker::SortednessCheckError>
 SortednessChecker::addError(string message, AstNode const *node,
-                            std::shared_ptr<FunInfo> funInfo,
+                            shared_ptr<FunInfo> funInfo,
                             shared_ptr<SortednessChecker::SortednessCheckError> err) {
     if(!err) {
+        shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+        errInfo->message = message;
+        errInfo->funInfo = funInfo;
+
         err = make_shared<SortednessCheckError>();
-        err->messages.push_back(message);
+        err->infos.push_back(errInfo);
         err->node = node;
-        err->funInfo = funInfo;
+
         errors[string(node->getFilename()->c_str())].push_back(err);
     } else {
-        err->messages.push_back(message);
+        shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+        errInfo->message = message;
+        errInfo->funInfo = funInfo;
+
+        err->infos.push_back(errInfo);
     }
 
     return err;
 }
 
-void SortednessChecker::addError(std::string message, AstNode const *node) {
+void SortednessChecker::addError(string message, AstNode const *node) {
+    shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+    errInfo->message = message;
+
     shared_ptr<SortednessCheckError> err = make_shared<SortednessCheckError>();
-    err->messages.push_back(message);
+    err = make_shared<SortednessCheckError>();
+    err->infos.push_back(errInfo);
     err->node = node;
+
     errors[string(node->getFilename()->c_str())].push_back(err);
 }
 
-void SortednessChecker::addError(std::string message, AstNode const *node,
-                                 std::shared_ptr<SortInfo> sortInfo) {
+void SortednessChecker::addError(string message, AstNode const *node,
+                                 shared_ptr<SortInfo> sortInfo) {
+    shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+    errInfo->message = message;
+    errInfo->sortInfo = sortInfo;
+
     shared_ptr<SortednessCheckError> err = make_shared<SortednessCheckError>();
-    err->messages.push_back(message);
+    err = make_shared<SortednessCheckError>();
+    err->infos.push_back(errInfo);
     err->node = node;
-    err->sortInfo = sortInfo;
+
     errors[string(node->getFilename()->c_str())].push_back(err);
 }
 
-void SortednessChecker::addError(std::string message, AstNode const *node,
-                                 std::shared_ptr<FunInfo> funInfo) {
+void SortednessChecker::addError(string message, AstNode const *node,
+                                 shared_ptr<FunInfo> funInfo) {
+    shared_ptr<SortednessCheckErrorInfo> errInfo = make_shared<SortednessCheckErrorInfo>();
+    errInfo->message = message;
+    errInfo->funInfo = funInfo;
+
     shared_ptr<SortednessCheckError> err = make_shared<SortednessCheckError>();
-    err->messages.push_back(message);
+    err = make_shared<SortednessCheckError>();
+    err->infos.push_back(errInfo);
     err->node = node;
-    err->funInfo = funInfo;
+
     errors[string(node->getFilename()->c_str())].push_back(err);
 }
 
@@ -251,7 +297,18 @@ shared_ptr<FunInfo> SortednessChecker::duplicate(ParametricFunDeclaration const 
 
         return null;
     }
+}
 
+void SortednessChecker::loadTheory(string theory) {
+    Parser *parser = new Parser;
+    shared_ptr<AstNode> ast = parser->parse("input/Theories/" + theory + ".smt2");
+    ast->accept(this);
+}
+
+void SortednessChecker::loadLogic(string logic) {
+    Parser *parser = new Parser;
+    shared_ptr<AstNode> ast = parser->parse("input/Logics/" + logic + ".smt2");
+    ast->accept(this);
 }
 
 void SortednessChecker::visit(AssertCommand const *node) { }
@@ -402,6 +459,9 @@ void SortednessChecker::visit(GetValueCommand const *node) { }
 void SortednessChecker::visit(PopCommand const *node) { }
 void SortednessChecker::visit(PushCommand const *node) { }
 void SortednessChecker::visit(ResetCommand const *node) { }
+void SortednessChecker::visit(SetLogicCommand const *node) {
+    loadLogic(node->getLogic()->toString());
+}
 
 void SortednessChecker::visit(FunctionDeclaration const *node) { }
 void SortednessChecker::visit(FunctionDefinition const *node) { }
@@ -413,9 +473,42 @@ void SortednessChecker::visit(DecimalLiteral const *node) { }
 void SortednessChecker::visit(NumeralLiteral const *node) { }
 void SortednessChecker::visit(StringLiteral const *node) { }
 
-void SortednessChecker::visit(Logic const *node) { }
-void SortednessChecker::visit(Theory const *node) { }
-void SortednessChecker::visit(Script const *node) { }
+void SortednessChecker::visit(Logic const *node) {
+    vector<shared_ptr<Attribute>> attrs = node->getAttributes();
+    for(vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
+        shared_ptr<Attribute> attr = *it;
+        if(attr->getKeyword()->getValue() == ":theories") {
+            CompoundAttributeValue* val = dynamic_cast<CompoundAttributeValue*>(attr->getValue().get());
+            for(vector<shared_ptr<AttributeValue>>::iterator v = val->getValues().begin();
+                v != val->getValues().end(); v++) {
+                string theory = dynamic_cast<Symbol*>((*v).get())->toString();
+                loadTheory(theory);
+            }
+        }
+    }
+}
+
+void SortednessChecker::visit(Theory const *node) {
+    vector<shared_ptr<Attribute>> attrs = node->getAttributes();
+    for(vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
+        shared_ptr<Attribute> attr = *it;
+
+        if(attr->getKeyword()->getValue() == ":sorts" || attr->getKeyword()->getValue() == ":funs") {
+            CompoundAttributeValue* val = dynamic_cast<CompoundAttributeValue*>(attr->getValue().get());
+            for(vector<shared_ptr<AttributeValue>>::iterator v = val->getValues().begin();
+                    v != val->getValues().end(); v++) {
+                (*v)->accept(this);
+            }
+        }
+    }
+}
+
+void SortednessChecker::visit(Script const *node) {
+    const vector<shared_ptr<Command>> &commands = node->getCommands();
+    for(vector<shared_ptr<Command>>::const_iterator it = commands.begin(); it != commands.end(); it++) {
+        (*it)->accept(this);
+    }
+}
 
 void SortednessChecker::visit(Sort const *node) { }
 
@@ -499,3 +592,63 @@ void SortednessChecker::visit(AnnotatedTerm const *node) { }
 
 void SortednessChecker::visit(SortedVariable const *node) { }
 void SortednessChecker::visit(VarBinding const *node) { }
+
+string SortednessChecker::getErrors() {
+    stringstream ss;
+
+    for(map<string, vector<shared_ptr<SortednessCheckError>>>::iterator it = errors.begin();
+        it != errors.end(); it++) {
+        string file = it->first;
+        vector<shared_ptr<SortednessCheckError>> errs = it->second;
+
+        ss << "In file " << file << endl;
+
+        for(vector<shared_ptr<SortednessCheckError>>::iterator itt = errs.begin(); itt != errs.end(); itt++) {
+            shared_ptr<SortednessCheckError> err = *itt;
+            ss << "\t" << err->node->getRowLeft() << ":" << err->node->getColLeft()
+            << " - " << err->node->getRowRight() << ":" << err->node->getColRight() << "   ";
+
+            string nodestr = err->node->toString();
+            if (nodestr.length() > 100)
+                ss << string(nodestr, 100);
+            else
+                ss << nodestr;
+
+            ss <<  endl;
+
+            for (vector<shared_ptr<SortednessCheckErrorInfo>>::iterator info = err->infos.begin();
+                 info != err->infos.end(); info++) {
+                ss << "\t" << (*info)->message << endl;
+
+                if((*info)->sortInfo) {
+                    shared_ptr<AstNode> source = (*info)->sortInfo->source;
+                    ss << "Previously, in file " << source->getFilename() << " "
+                       << source->getRowLeft() << ":" << source->getColLeft() << " - "
+                       << source->getRowRight() << ":" << source->getColRight() << "   ";
+
+                    string sourcestr = source->toString();
+                    if (sourcestr.length() > 100)
+                        ss << string(sourcestr, 100);
+                    else
+                        ss << sourcestr;
+
+                } else if((*info)->funInfo) {
+                    shared_ptr<AstNode> source = (*info)->sortInfo->source;
+                    ss << "Previously, in file " << source->getFilename() << " "
+                    << source->getRowLeft() << ":" << source->getColLeft() << " - "
+                    << source->getRowRight() << ":" << source->getColRight() << "   ";
+
+                    string sourcestr = source->toString();
+                    if (sourcestr.length() > 100)
+                        ss << string(sourcestr, 100);
+                    else
+                        ss << sourcestr;
+                }
+
+                ss << endl << endl;
+            }
+        }
+    }
+
+    return ss.str();
+}

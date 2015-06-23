@@ -17,7 +17,7 @@ void Logger::error(const char *fun, const char *msg) {
 }
 
 void Logger::syntaxError(const char *fun, const char *file, const char *msg) {
-    fprintf(stderr, "%s: Syntax errors in file %s\n%s", fun, file, msg);
+    fprintf(stderr, "%s: Syntax errors in file '%s'\n%s", fun, file, msg);
 }
 
 void Logger::parsingError(unsigned int rowLeft, unsigned int colLeft,

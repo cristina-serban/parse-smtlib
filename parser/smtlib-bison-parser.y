@@ -1520,7 +1520,7 @@ logic:
 ;
 
 logic_attr:
-	KW_ATTR_THEORIES '(' symbol_plus ')'
+	KW_ATTR_THEORIES '(' symbol_star ')'
 		{ 
 			$$ = smt_newAttribute2($1, smt_newCompoundAttributeValue($3)); 
 

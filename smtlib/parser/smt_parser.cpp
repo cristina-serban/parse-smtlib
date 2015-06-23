@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <visitor/ast_sortedness_checker.h>
 
 extern "C" {
     extern FILE* yyin;
@@ -17,7 +18,7 @@ using namespace smtlib::ast;
 shared_ptr<AstNode> Parser::parse(std::string filename) {
     yyin = fopen(filename.c_str(), "r");
     if(yyin) {
-        shared_ptr<string> shared = make_shared<string>(filename.c_str());
+        this->filename = make_shared<string>(filename.c_str());
         yyparse(this);
         fclose(yyin);
     }
@@ -43,6 +44,24 @@ bool Parser::checkSyntax() {
         }
     } else {
         Logger::warning("Parser::checkSyntax()", "Attempting to check an empty abstract syntax tree");
+        return false;
+    }
+}
+
+bool Parser::checkSortedness() {
+    if(ast) {
+        SortednessChecker *chk = new SortednessChecker();
+        shared_ptr<SymbolStack> stack = make_shared<SymbolStack>();
+        if(chk->run(stack, ast.get())) {
+            return true;
+        } else {
+            string msg = "File '" + string(filename->c_str()) +
+                    "' contains syntax errors. Cannot check well-sortedness";
+            Logger::error("Parser::checkSortedness()", msg.c_str());
+            return false;
+        }
+    } else {
+        Logger::warning("Parser::checkSortedness()", "Attempting to check an empty abstract syntax tree");
         return false;
     }
 }

@@ -16,6 +16,8 @@ namespace smtlib {
 
         bool checkSyntax();
 
+        bool checkSortedness();
+
         const std::shared_ptr<std::string> getFilename() const;
         std::shared_ptr<std::string> getFilename();
 

@@ -29,7 +29,6 @@ simple_symbol  {sym_begin}{sym_continue}*
 
 %x string
 %x quoted
-%x comment
 
 %option yylineno
 
