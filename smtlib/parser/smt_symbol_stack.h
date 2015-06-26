@@ -12,14 +12,17 @@ namespace smtlib {
     public:
         SymbolStack();
 
+        std::shared_ptr<SymbolTable> getTopLevel();
+
+        std::vector<std::shared_ptr<SymbolTable>> &getStack();
+
         bool pushLevel();
         bool popLevel();
 
-        const std::shared_ptr<SymbolTable> getTopLevel() const;
-        std::shared_ptr<SymbolTable> getTopLevel();
+        /*bool equal(std::shared_ptr<ast::Sort> sort1, std::shared_ptr<ast::Sort> sort2);*/
 
-        const std::vector<std::shared_ptr<SymbolTable>> &getStack() const;
-        std::vector<std::shared_ptr<SymbolTable>> &getStack();
+        std::shared_ptr<SortInfo> getSortInfo(std::string name);
+        std::vector<std::shared_ptr<FunInfo>> getFunInfo(std::string name);
     };
 }
 

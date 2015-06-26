@@ -20,96 +20,90 @@ namespace smtlib {
 
             struct SortednessCheckError {
                 std::vector<std::shared_ptr<SortednessCheckErrorInfo>> infos;
-                AstNode const *node;
+                std::shared_ptr<AstNode> node;
             };
 
             std::map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
 
-            std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
+            std::shared_ptr<SortednessCheckError> addError(std::string message, std::shared_ptr<AstNode> node,
                                                            std::shared_ptr<SortednessCheckError> err);
-            std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
+            std::shared_ptr<SortednessCheckError> addError(std::string message, std::shared_ptr<AstNode> node,
                                                            std::shared_ptr<SortInfo> sortInfo,
                                                            std::shared_ptr<SortednessCheckError> err);
-            std::shared_ptr<SortednessCheckError> addError(std::string message, AstNode const *node,
+            std::shared_ptr<SortednessCheckError> addError(std::string message, std::shared_ptr<AstNode> node,
                                                            std::shared_ptr<FunInfo> funInfo,
                                                            std::shared_ptr<SortednessCheckError> err);
 
-            void addError(std::string message, AstNode const *node);
-            void addError(std::string message, AstNode const *node, std::shared_ptr<SortInfo> sortInfo);
-            void addError(std::string message, AstNode const *node, std::shared_ptr<FunInfo> funInfo);
+            void addError(std::string message, std::shared_ptr<AstNode> node);
+            void addError(std::string message, std::shared_ptr<AstNode> node, std::shared_ptr<SortInfo> sortInfo);
+            void addError(std::string message, std::shared_ptr<AstNode> node, std::shared_ptr<FunInfo> funInfo);
 
-            bool equalSignatures(const std::vector<std::shared_ptr<ast::Sort>> &sig1,
-                                 const std::vector<std::shared_ptr<ast::Sort>> &sig2);
+            bool equalSignatures(std::vector<std::shared_ptr<ast::Sort>> &sig1,
+                                 std::vector<std::shared_ptr<ast::Sort>> &sig2);
 
-            bool equalParamSignatures(const std::vector<std::shared_ptr<ast::Symbol>> &params1,
-                                      const std::vector<std::shared_ptr<ast::Sort>> &sig1,
-                                      const std::vector<std::shared_ptr<ast::Symbol>> &params,
-                                      const std::vector<std::shared_ptr<ast::Sort>> &sig2);
+            bool equalParamSignatures(std::vector<std::shared_ptr<ast::Symbol>> &params1,
+                                      std::vector<std::shared_ptr<ast::Sort>> &sig1,
+                                      std::vector<std::shared_ptr<ast::Symbol>> &params,
+                                      std::vector<std::shared_ptr<ast::Sort>> &sig2);
 
-            bool equalParamSorts(const std::vector<std::shared_ptr<ast::Symbol>> &params1,
-                                 const std::shared_ptr<ast::Sort> sort1,
-                                 const std::vector<std::shared_ptr<ast::Symbol>> &params2,
-                                 const std::shared_ptr<ast::Sort> sort2,
+            bool equalParamSorts(std::vector<std::shared_ptr<ast::Symbol>> &params1,
+                                 std::shared_ptr<ast::Sort> sort1,
+                                 std::vector<std::shared_ptr<ast::Symbol>> &params2,
+                                 std::shared_ptr<ast::Sort> sort2,
                                  std::unordered_map<std::string, std::string> &mapping);
-
-            std::shared_ptr<SortInfo> duplicate(SortSymbolDeclaration const *node);
-            std::shared_ptr<FunInfo> duplicate(SpecConstFunDeclaration const *node);
-            std::shared_ptr<FunInfo> duplicate(MetaSpecConstFunDeclaration const *node);
-            std::shared_ptr<FunInfo> duplicate(IdentifierFunDeclaration const *node);
-            std::shared_ptr<FunInfo> duplicate(ParametricFunDeclaration const *node);
 
             void loadTheory(std::string theory);
             void loadLogic(std::string logic);
         public:
-            virtual void visit(AssertCommand const *node);
-            virtual void visit(DeclareConstCommand const *node);
-            virtual void visit(DeclareFunCommand const *node);
-            virtual void visit(DeclareSortCommand const *node);
-            virtual void visit(DefineFunCommand const *node);
-            virtual void visit(DefineFunRecCommand const *node);
-            virtual void visit(DefineFunsRecCommand const *node);
-            virtual void visit(DefineSortCommand const *node);
-            virtual void visit(GetValueCommand const *node);
-            virtual void visit(PopCommand const *node);
-            virtual void visit(PushCommand const *node);
-            virtual void visit(ResetCommand const *node);
-            virtual void visit(SetLogicCommand const *node);
+            virtual void visit(std::shared_ptr<AssertCommand> node);
+            virtual void visit(std::shared_ptr<DeclareConstCommand> node);
+            virtual void visit(std::shared_ptr<DeclareFunCommand> node);
+            virtual void visit(std::shared_ptr<DeclareSortCommand> node);
+            virtual void visit(std::shared_ptr<DefineFunCommand> node);
+            virtual void visit(std::shared_ptr<DefineFunRecCommand> node);
+            virtual void visit(std::shared_ptr<DefineFunsRecCommand> node);
+            virtual void visit(std::shared_ptr<DefineSortCommand> node);
+            virtual void visit(std::shared_ptr<GetValueCommand> node);
+            virtual void visit(std::shared_ptr<PopCommand> node);
+            virtual void visit(std::shared_ptr<PushCommand> node);
+            virtual void visit(std::shared_ptr<ResetCommand> node);
+            virtual void visit(std::shared_ptr<SetLogicCommand> node);
 
-            virtual void visit(FunctionDeclaration const *node);
-            virtual void visit(FunctionDefinition const *node);
+            virtual void visit(std::shared_ptr<FunctionDeclaration> node);
+            virtual void visit(std::shared_ptr<FunctionDefinition> node);
 
-            virtual void visit(Identifier const *node);
-            virtual void visit(QualifiedIdentifier const *node);
+            virtual void visit(std::shared_ptr<Identifier> node);
+            virtual void visit(std::shared_ptr<QualifiedIdentifier> node);
 
-            virtual void visit(DecimalLiteral const *node);
-            virtual void visit(NumeralLiteral const *node);
-            virtual void visit(StringLiteral const *node);
+            virtual void visit(std::shared_ptr<DecimalLiteral> node);
+            virtual void visit(std::shared_ptr<NumeralLiteral> node);
+            virtual void visit(std::shared_ptr<StringLiteral> node);
 
-            virtual void visit(Logic const *node);
-            virtual void visit(Theory const *node);
-            virtual void visit(Script const *node);
+            virtual void visit(std::shared_ptr<Logic> node);
+            virtual void visit(std::shared_ptr<Theory> node);
+            virtual void visit(std::shared_ptr<Script> node);
 
-            virtual void visit(Sort const *node);
+            virtual void visit(std::shared_ptr<Sort> node);
 
-            virtual void visit(CompSExpression const *node);
+            virtual void visit(std::shared_ptr<CompSExpression> node);
 
-            virtual void visit(SortSymbolDeclaration const *node);
+            virtual void visit(std::shared_ptr<SortSymbolDeclaration> node);
 
-            virtual void visit(SpecConstFunDeclaration const *node);
-            virtual void visit(MetaSpecConstFunDeclaration const *node);
-            virtual void visit(IdentifierFunDeclaration const *node);
-            virtual void visit(ParametricFunDeclaration const *node);
+            virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node);
+            virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node);
+            virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node);
+            virtual void visit(std::shared_ptr<ParametricFunDeclaration> node);
 
-            virtual void visit(QualifiedTerm const *node);
-            virtual void visit(LetTerm const *node);
-            virtual void visit(ForallTerm const *node);
-            virtual void visit(ExistsTerm const *node);
-            virtual void visit(AnnotatedTerm const *node);
+            virtual void visit(std::shared_ptr<QualifiedTerm> node);
+            virtual void visit(std::shared_ptr<LetTerm> node);
+            virtual void visit(std::shared_ptr<ForallTerm> node);
+            virtual void visit(std::shared_ptr<ExistsTerm> node);
+            virtual void visit(std::shared_ptr<AnnotatedTerm> node);
 
-            virtual void visit(SortedVariable const *node);
-            virtual void visit(VarBinding const *node);
+            virtual void visit(std::shared_ptr<SortedVariable> node);
+            virtual void visit(std::shared_ptr<VarBinding> node);
 
-            virtual bool run (std::shared_ptr<SymbolStack> stack, AstNode const *node) {
+            virtual bool run (std::shared_ptr<SymbolStack> stack, std::shared_ptr<AstNode> node) {
                 if(node) {
                     SyntaxChecker *chk = new SyntaxChecker();
                     if(chk->run(node)) {
@@ -120,7 +114,7 @@ namespace smtlib {
                     } else {
                         Logger::syntaxError("SortednessChecker::run()", node->getFilename()->c_str(), chk->getErrors().c_str());
                         std::string msg = "File '" + std::string(node->getFilename()->c_str()) +
-                                     "' contains syntax errors. Cannot check well-sortedness";
+                                          "' contains syntax errors. Cannot check well-sortedness";
                         Logger::error("SortednessChecker::run()", msg.c_str());
                         return false;
                     }

@@ -25,11 +25,11 @@ namespace smtlib {
             int colRight;
             std::shared_ptr<std::string> filename;
         public:
-            virtual std::string toString() const = 0;
+            virtual std::string toString() = 0;
 
-            virtual void accept(AstVisitor0 *visitor) const = 0;
+            virtual void accept(AstVisitor0* visitor) = 0;
 
-            int getRowLeft() const {
+            int getRowLeft() {
                 return rowLeft;
             }
 
@@ -37,7 +37,7 @@ namespace smtlib {
                 this->rowLeft = rowLeft;
             }
 
-            int getRowRight() const {
+            int getRowRight() {
                 return rowRight;
             }
 
@@ -45,7 +45,7 @@ namespace smtlib {
                 this->rowRight = rowRight;
             }
 
-            int getColLeft() const {
+            int getColLeft() {
                 return colLeft;
             }
 
@@ -53,16 +53,12 @@ namespace smtlib {
                 this->colLeft = colLeft;
             }
 
-            int getColRight() const {
+            int getColRight() {
                 return colRight;
             }
 
             void setColRight(int colRight) {
                 this->colRight = colRight;
-            }
-
-            const std::shared_ptr<std::string> getFilename() const {
-                return filename;
             }
 
             std::shared_ptr<std::string> getFilename() {

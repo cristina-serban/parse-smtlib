@@ -6,63 +6,31 @@ using namespace std;
 
 /* ====================================== Symbol ====================================== */
 
-const string &Symbol::getValue() const {
-    return value;
+void Symbol::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string &Symbol::getValue() {
-    return value;
-}
-
-void Symbol::setValue(string value) {
-    this->value = value;
-}
-
-void Symbol::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string Symbol::toString() const {
+string Symbol::toString() {
     return value;
 }
 
 /* ====================================== Keyword ===================================== */
 
-const string &Keyword::getValue() const {
-    return value;
+void Keyword::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string &Keyword::getValue() {
-    return value;
-}
-
-void Keyword::setValue(string value) {
-    this->value = value;
-}
-
-void Keyword::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string Keyword::toString() const {
+string Keyword::toString() {
     return value;
 }
 
 /* ================================= MetaSpecConstant ================================= */
 
-MetaSpecConstant::Type MetaSpecConstant::getType() const {
-    return type;
+void MetaSpecConstant::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-void MetaSpecConstant::setType(MetaSpecConstant::Type type) {
-    this->type = type;
-}
-
-void MetaSpecConstant::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string MetaSpecConstant::toString() const {
+string MetaSpecConstant::toString() {
     return (type == Type::META_SPEC_STRING) ? "STRING"
                                             : (type == Type::META_SPEC_NUMERAL ? "NUMERAL"
                                                                                : "DECIMAL");
@@ -70,19 +38,11 @@ string MetaSpecConstant::toString() const {
 
 /* =================================== BooleanValue =================================== */
 
-bool BooleanValue::getValue() const {
-    return value;
+void BooleanValue::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-void BooleanValue::setValue(bool value) {
-    this->value = value;
-}
-
-void BooleanValue::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string BooleanValue::toString() const {
+string BooleanValue::toString() {
     if(value)
         return "true";
     else
@@ -91,31 +51,11 @@ string BooleanValue::toString() const {
 
 /* =================================== PropLiteral ==================================== */
 
-const shared_ptr<Symbol> PropLiteral::getSymbol() const {
-    return symbol;
+void PropLiteral::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<Symbol> PropLiteral::getSymbol() {
-    return symbol;
-}
-
-void PropLiteral::setSymbol(shared_ptr<Symbol> symbol) {
-    this->symbol = symbol;
-}
-
-bool PropLiteral::isNegated() const {
-    return negated;
-}
-
-void PropLiteral::setNegated(bool negated) {
-    this->negated = negated;
-}
-
-void PropLiteral::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string PropLiteral::toString() const {
+string PropLiteral::toString() {
     if(negated) {
         stringstream ss;
         ss << "(not " << symbol->toString() << ")";

@@ -23,7 +23,7 @@ namespace smtlib {
          * An SMT-LIB function declaration.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class FunctionDeclaration : public AstNode {
+        class FunctionDeclaration : public AstNode, public std::enable_shared_from_this<FunctionDeclaration> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::vector<std::shared_ptr<SortedVariable>> params;
@@ -35,25 +35,22 @@ namespace smtlib {
              * \param sort      Sort of the return value
              */
             FunctionDeclaration(std::shared_ptr<Symbol> symbol,
-                                const std::vector<std::shared_ptr<SortedVariable>> &params,
+                                std::vector<std::shared_ptr<SortedVariable>> &params,
                                 std::shared_ptr<Sort> sort);
 
-            const std::shared_ptr<Symbol> getSymbol() const;
             std::shared_ptr<Symbol> getSymbol();
 
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
-            const std::vector<std::shared_ptr<SortedVariable>> &getParams() const;
             std::vector<std::shared_ptr<SortedVariable>> &getParams();
 
-            const std::shared_ptr<Sort> getSort() const;
             std::shared_ptr<Sort> getSort();
 
             void setSort(std::shared_ptr<Sort> sort);
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================ FunctionDefinition ================================ */
@@ -61,7 +58,7 @@ namespace smtlib {
          * An SMT-LIB function definition.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class FunctionDefinition : public AstNode {
+        class FunctionDefinition : public AstNode, public std::enable_shared_from_this<FunctionDefinition> {
         private:
             std::shared_ptr<FunctionDeclaration> signature;
             std::shared_ptr<Term> body;
@@ -81,23 +78,21 @@ namespace smtlib {
              * \param body      Function body
              */
             FunctionDefinition(std::shared_ptr<Symbol> symbol,
-                               const std::vector<std::shared_ptr<SortedVariable>> &params,
+                               std::vector<std::shared_ptr<SortedVariable>> &params,
                                std::shared_ptr<Sort> sort,
                                std::shared_ptr<Term> body);
 
-            const std::shared_ptr<FunctionDeclaration> getSignature() const;
             std::shared_ptr<FunctionDeclaration> getSignature();
 
             void setSignature(std::shared_ptr<FunctionDeclaration> signature);
 
-            const std::shared_ptr<Term> getBody() const;
             std::shared_ptr<Term> getBody();
 
             void setBody(std::shared_ptr<Term> body);
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

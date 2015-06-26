@@ -18,10 +18,9 @@ namespace smtlib {
 
         bool checkSortedness();
 
-        const std::shared_ptr<std::string> getFilename() const;
         std::shared_ptr<std::string> getFilename();
 
-        void setAst(smtlib::ast::AstNode *ast);
+        void setAst(std::shared_ptr<ast::AstNode> ast);
 
         std::shared_ptr<ast::AstNode> getAst();
 

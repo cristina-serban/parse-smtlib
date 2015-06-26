@@ -23,23 +23,23 @@ namespace smtlib {
         class Symbol : public virtual AstNode,
                        public SExpression,
                        public Index,
-                       public AttributeValue {
+                       public AttributeValue,
+                       public std::enable_shared_from_this<Symbol> {
         private:
             std::string value;
         public:
             /**
              * \param value     Textual value of the symbol
              */
-            Symbol(std::string value) : value(value) { }
+            inline Symbol(std::string value) : value(value) { }
 
-            const std::string &getValue() const;
-            std::string &getValue();
+            inline std::string &getValue() { return value; }
 
-            void setValue(std::string value);
+            inline void setValue(std::string value) { this->value = value; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ====================================== Keyword ===================================== */
@@ -49,23 +49,23 @@ namespace smtlib {
      * Can act as an S-expression.
      */
         class Keyword : public virtual AstNode,
-                        public SExpression {
+                        public SExpression,
+                        public std::enable_shared_from_this<Keyword> {
         private:
             std::string value;
         public:
             /**
              * \param value     Textual value of the keyword
              */
-            Keyword(std::string value) : value(value) { }
+            inline Keyword(std::string value) : value(value) { }
 
-            const std::string &getValue() const;
-            std::string &getValue();
+            inline std::string &getValue() { return value; }
 
-            void setValue(std::string value);
+            inline void setValue(std::string value) { this->value = value; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= MetaSpecConstant ================================= */
@@ -73,7 +73,8 @@ namespace smtlib {
      * An SMT-LIB meta specification constant ("NUMERAL", "DECIMAL" or "STRING").
      * Node of the SMT-LIB abstract syntax tree.
      */
-        class MetaSpecConstant : public AstNode {
+        class MetaSpecConstant : public AstNode,
+                                 public std::enable_shared_from_this<MetaSpecConstant> {
         public:
             /**
              * Types of meta specification constants
@@ -87,16 +88,15 @@ namespace smtlib {
             /**
              * \param type  Meta specification constant type
              */
-            MetaSpecConstant(MetaSpecConstant::Type type) : type(type) { }
+            inline MetaSpecConstant(MetaSpecConstant::Type type) : type(type) { }
 
-            MetaSpecConstant::Type getType() const;
+            inline MetaSpecConstant::Type getType() { return type; }
 
-            void setType(MetaSpecConstant::Type type);
+            inline void setType(MetaSpecConstant::Type type) { this->type = type; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
-
+            virtual std::string toString();
         private:
             MetaSpecConstant::Type type;
         };
@@ -107,19 +107,20 @@ namespace smtlib {
      * Node of the SMT-LIB abstract syntax tree.
      */
         class BooleanValue : public virtual AstNode,
-                             public AttributeValue {
+                             public AttributeValue,
+                             public std::enable_shared_from_this<BooleanValue> {
         private:
             bool value;
         public:
-            BooleanValue(bool value) : value(value) { }
+            inline BooleanValue(bool value) : value(value) { }
 
-            bool getValue() const;
+            inline bool getValue() { return value; }
 
-            void setValue(bool value);
+            inline void setValue(bool value) { this->value = value; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =================================== PropLiteral ==================================== */
@@ -127,27 +128,27 @@ namespace smtlib {
      * Propositional literal (used for check-sat-assuming).
      * Node of the SMT-LIB abstract syntax tree.
      */
-        class PropLiteral : public AstNode {
+        class PropLiteral : public AstNode,
+                            public std::enable_shared_from_this<PropLiteral> {
         private:
             std::shared_ptr<Symbol> symbol;
             bool negated;
 
         public:
-            PropLiteral(std::shared_ptr<Symbol> symbol, bool negated)
+            inline PropLiteral(std::shared_ptr<Symbol> symbol, bool negated)
                     : symbol(symbol), negated(negated) { }
 
-            const std::shared_ptr<Symbol> getSymbol() const;
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            bool isNegated() const;
+            inline bool isNegated() { return negated; }
 
-            void setNegated(bool negated);
+            inline void setNegated(bool negated) { this->negated = negated; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

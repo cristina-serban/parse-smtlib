@@ -6,12 +6,13 @@
 namespace smtlib {
     namespace ast {
         class AstNode;
-        class ParserInternalList;
     }
     class Parser;
 }
+class ParserInternalList;
+
 typedef class smtlib::ast::AstNode *SmtPtr;
-typedef class smtlib::ast::ParserInternalList *SmtList;
+typedef class ParserInternalList *SmtList;
 typedef class smtlib::Parser *SmtPrsr;
 #else
 typedef void *SmtPtr, *SmtList, *SmtPrsr;

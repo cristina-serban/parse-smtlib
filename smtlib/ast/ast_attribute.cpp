@@ -6,35 +6,11 @@ using namespace std;
 
 /* ==================================== Attribute ===================================== */
 
-const shared_ptr<Keyword> Attribute::getKeyword() const {
-    return keyword;
+void Attribute::accept(AstVisitor0* visitor) {
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<Keyword> Attribute::getKeyword() {
-    return keyword;
-}
-
-void Attribute::setKeyword(shared_ptr<Keyword> keyword) {
-    this->keyword = keyword;
-}
-
-const shared_ptr<AttributeValue> Attribute::getValue() const {
-    return value;
-}
-
-shared_ptr<AttributeValue> Attribute::getValue() {
-    return value;
-}
-
-void Attribute::setValue(std::shared_ptr<AttributeValue> value) {
-    this->value = value;
-}
-
-void Attribute::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string Attribute::toString() const {
+string Attribute::toString() {
     stringstream ss;
     ss << keyword->toString();
     if(value)
@@ -42,28 +18,20 @@ string Attribute::toString() const {
     return ss.str();
 }
 
-/* ============================== CompoundAttributeValue ============================== */
+/* ============================== CompAttributeValue ============================== */
 
-CompoundAttributeValue::CompoundAttributeValue(const vector<shared_ptr<AttributeValue>> values) {
+CompAttributeValue::CompAttributeValue(vector<shared_ptr<AttributeValue>> values) {
     this->values.insert(this->values.begin(), values.begin(), values.end());
 }
 
-const vector<shared_ptr<AttributeValue>> &CompoundAttributeValue::getValues() const {
-    return values;
+void CompAttributeValue::accept(AstVisitor0* visitor) {
+    visitor->visit(shared_from_this());
 }
 
-vector<shared_ptr<AttributeValue>> &CompoundAttributeValue::getValues() {
-    return values;
-}
-
-void CompoundAttributeValue::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string CompoundAttributeValue::toString() const {
+string CompAttributeValue::toString() {
     stringstream ss;
     ss << "(";
-    for(vector<shared_ptr<AttributeValue>>::const_iterator it = values.begin(); it != values.end(); it++) {
+    for(vector<shared_ptr<AttributeValue>>::iterator it = values.begin(); it != values.end(); it++) {
         ss << (*it)->toString();
         if(it + 1 != values.end())
             ss << " ";

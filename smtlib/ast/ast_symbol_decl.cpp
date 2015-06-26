@@ -8,13 +8,9 @@ using namespace smtlib::ast;
 
 SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
                                              std::shared_ptr<NumeralLiteral> arity,
-                                             const vector<shared_ptr<Attribute>> &attributes)
+                                             vector<shared_ptr<Attribute>> &attributes)
         : identifier(identifier), arity(arity){
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
-}
-
-const shared_ptr<Identifier> SortSymbolDeclaration::getIdentifier() const {
-    return identifier;
 }
 
 shared_ptr<Identifier> SortSymbolDeclaration::getIdentifier() {
@@ -25,10 +21,6 @@ void SortSymbolDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
-const shared_ptr<NumeralLiteral> SortSymbolDeclaration::getArity() const {
-    return arity;
-}
-
 shared_ptr<NumeralLiteral> SortSymbolDeclaration::getArity() {
     return arity;
 }
@@ -37,23 +29,19 @@ void SortSymbolDeclaration::setArity(shared_ptr<NumeralLiteral> arity) {
     this->arity = arity;
 }
 
-const vector<shared_ptr<Attribute>> &SortSymbolDeclaration::getAttributes() const {
-    return attributes;
-}
-
 vector<shared_ptr<Attribute>> &SortSymbolDeclaration::getAttributes() {
     return attributes;
 }
 
-void SortSymbolDeclaration::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void SortSymbolDeclaration::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string SortSymbolDeclaration::toString() const {
+string SortSymbolDeclaration::toString() {
     stringstream ss;
     ss << "(" << identifier->toString() << " " << arity->toString();
 
-    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
          ss << " " << (*it)->toString();
     }
 
@@ -65,13 +53,9 @@ string SortSymbolDeclaration::toString() const {
 /* ============================= SpecConstFunDeclaration ============================== */
 SpecConstFunDeclaration::SpecConstFunDeclaration(shared_ptr<SpecConstant> constant,
                                                  shared_ptr<Sort> sort,
-                                                 const vector<shared_ptr<Attribute>> &attributes)
+                                                 vector<shared_ptr<Attribute>> &attributes)
         : constant(constant), sort(sort) {
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
-}
-
-const shared_ptr<SpecConstant> SpecConstFunDeclaration::getConstant() const {
-    return constant;
 }
 
 shared_ptr<SpecConstant> SpecConstFunDeclaration::getConstant() {
@@ -82,10 +66,6 @@ void SpecConstFunDeclaration::setConstant(shared_ptr<SpecConstant> constant) {
     this->constant = constant;
 }
 
-const shared_ptr<Sort> SpecConstFunDeclaration::getSort() const {
-    return sort;
-}
-
 shared_ptr<Sort> SpecConstFunDeclaration::getSort() {
     return sort;
 }
@@ -94,23 +74,19 @@ void SpecConstFunDeclaration::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }
 
-const vector<shared_ptr<Attribute>> &SpecConstFunDeclaration::getAttributes() const {
-    return attributes;
-}
-
 vector<shared_ptr<Attribute>> &SpecConstFunDeclaration::getAttributes() {
     return attributes;
 }
 
-void SpecConstFunDeclaration::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void SpecConstFunDeclaration::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string SpecConstFunDeclaration::toString() const {
+string SpecConstFunDeclaration::toString() {
     stringstream ss;
     ss << "(" << constant->toString() << " " << sort->toString();
 
-    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << " " << (*it)->toString();
     }
 
@@ -123,13 +99,9 @@ string SpecConstFunDeclaration::toString() const {
 
 MetaSpecConstFunDeclaration::MetaSpecConstFunDeclaration(shared_ptr<MetaSpecConstant> constant,
                                                          shared_ptr<Sort> sort,
-                                                         const vector<shared_ptr<Attribute>> &attributes)
+                                                         vector<shared_ptr<Attribute>> &attributes)
         : constant(constant), sort(sort) {
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
-}
-
-const shared_ptr<MetaSpecConstant> MetaSpecConstFunDeclaration::getConstant() const {
-    return constant;
 }
 
 shared_ptr<MetaSpecConstant> MetaSpecConstFunDeclaration::getConstant() {
@@ -140,10 +112,6 @@ void MetaSpecConstFunDeclaration::setConstant(shared_ptr<MetaSpecConstant> const
     this->constant = constant;
 }
 
-const shared_ptr<Sort> MetaSpecConstFunDeclaration::getSort() const {
-    return sort;
-}
-
 shared_ptr<Sort> MetaSpecConstFunDeclaration::getSort() {
     return sort;
 }
@@ -152,23 +120,19 @@ void MetaSpecConstFunDeclaration::setSort(shared_ptr<Sort> sort) {
     this->sort = sort;
 }
 
-const vector<shared_ptr<Attribute>> &MetaSpecConstFunDeclaration::getAttributes() const {
-    return attributes;
-}
-
 vector<shared_ptr<Attribute>> &MetaSpecConstFunDeclaration::getAttributes() {
     return attributes;
 }
 
-void MetaSpecConstFunDeclaration::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void MetaSpecConstFunDeclaration::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string MetaSpecConstFunDeclaration::toString() const {
+string MetaSpecConstFunDeclaration::toString() {
     stringstream ss;
     ss << "(" << constant->toString() << " " << sort->toString();
 
-    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << " " << (*it)->toString();
     }
 
@@ -180,22 +144,18 @@ string MetaSpecConstFunDeclaration::toString() const {
 /* ============================== IdentifierFunDeclaration =============================== */
 
 IdentifierFunDeclaration::IdentifierFunDeclaration(shared_ptr<Identifier> identifier,
-                                             const vector<shared_ptr<Sort>> &signature)
+                                             vector<shared_ptr<Sort>> &signature)
         : identifier(identifier) {
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
 }
 
 IdentifierFunDeclaration::IdentifierFunDeclaration(shared_ptr<Identifier> identifier,
-                                             const vector<shared_ptr<Sort>> &signature,
-                                             const vector<shared_ptr<Attribute>> &attributes)
+                                             vector<shared_ptr<Sort>> &signature,
+                                             vector<shared_ptr<Attribute>> &attributes)
         : identifier(identifier) {
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 
-}
-
-const shared_ptr<Identifier> IdentifierFunDeclaration::getIdentifier() const{
-    return identifier;
 }
 
 shared_ptr<Identifier> IdentifierFunDeclaration::getIdentifier() {
@@ -206,35 +166,27 @@ void IdentifierFunDeclaration::setIdentifier(shared_ptr<Identifier> identifier) 
     this->identifier = identifier;
 }
 
-const vector<shared_ptr<Sort>> &IdentifierFunDeclaration::getSignature() const {
-    return signature;
-}
-
 vector<shared_ptr<Sort>> &IdentifierFunDeclaration::getSignature() {
     return signature;
-}
-
-const vector<shared_ptr<Attribute>> &IdentifierFunDeclaration::getAttributes() const {
-    return attributes;
 }
 
 vector<shared_ptr<Attribute>> &IdentifierFunDeclaration::getAttributes() {
     return attributes;
 }
 
-void IdentifierFunDeclaration::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void IdentifierFunDeclaration::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string IdentifierFunDeclaration::toString() const {
+string IdentifierFunDeclaration::toString() {
     stringstream ss;
     ss << "(" << identifier->toString();
 
-    for(vector<shared_ptr<Sort>>::const_iterator it = signature.begin(); it != signature.end(); it++) {
+    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
         ss << " " << (*it)->toString();
     }
 
-    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << " " << (*it)->toString();
     }
 
@@ -245,51 +197,63 @@ string IdentifierFunDeclaration::toString() const {
 
 /* =============================== ParametricFunDeclaration ================================ */
 
-ParametricFunDeclaration::ParametricFunDeclaration(const vector<shared_ptr<Symbol>> &params,
+ParametricFunDeclaration::ParametricFunDeclaration(vector<shared_ptr<Symbol>> &params,
                                          shared_ptr<Identifier> identifier,
-                                         const vector<shared_ptr<Sort>> &signature) {
+                                         vector<shared_ptr<Sort>> &signature) {
     this->params.insert(this->params.end(), params.begin(), params.end());
     setIdentifier(identifier);
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
 }
 
-ParametricFunDeclaration::ParametricFunDeclaration(const vector<shared_ptr<Symbol>> &params,
+ParametricFunDeclaration::ParametricFunDeclaration(vector<shared_ptr<Symbol>> &params,
                                          shared_ptr<Identifier> identifier,
-                                         const vector<shared_ptr<Sort>> &signature,
-                                         const vector<shared_ptr<Attribute>> &attributes) {
+                                         vector<shared_ptr<Sort>> &signature,
+                                         vector<shared_ptr<Attribute>> &attributes) {
     this->params.insert(this->params.end(), params.begin(), params.end());
     setIdentifier(identifier);
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
-const vector<shared_ptr<Symbol>> &ParametricFunDeclaration::getParams() const {
-    return params;
-}
-
 vector<shared_ptr<Symbol>> &ParametricFunDeclaration::getParams() {
     return params;
 }
 
-void ParametricFunDeclaration::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+shared_ptr<Identifier> ParametricFunDeclaration::getIdentifier() {
+    return identifier;
 }
 
-string ParametricFunDeclaration::toString() const {
+void ParametricFunDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
+    this->identifier = identifier;
+}
+
+vector<shared_ptr<Sort>> &ParametricFunDeclaration::getSignature() {
+    return signature;
+}
+
+vector<shared_ptr<Attribute>> &ParametricFunDeclaration::getAttributes() {
+    return attributes;
+}
+
+void ParametricFunDeclaration::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
+}
+
+string ParametricFunDeclaration::toString() {
     stringstream ss;
     ss << "(par (";
-    for(vector<shared_ptr<Symbol>>::const_iterator it = params.begin(); it != params.end(); it++) {
+    for(vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
         if(it != params.begin())
             ss << " ";
         ss << (*it)->toString();
     }
 
     ss << ") (" << identifier->toString();
-    for(vector<shared_ptr<Sort>>::const_iterator it = signature.begin(); it != signature.end(); it++) {
+    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
         ss << " " << (*it)->toString();
     }
 
-    for(vector<shared_ptr<Attribute>>::const_iterator it = attributes.begin(); it != attributes.end(); it++) {
+    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
         ss << " " << (*it)->toString();
     }
 

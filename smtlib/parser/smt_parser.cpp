@@ -25,10 +25,6 @@ shared_ptr<AstNode> Parser::parse(std::string filename) {
     return ast;
 }
 
-const std::shared_ptr<std::string> Parser::getFilename() const {
-    return filename;
-}
-
 std::shared_ptr<std::string> Parser::getFilename() {
     return filename;
 }
@@ -36,7 +32,7 @@ std::shared_ptr<std::string> Parser::getFilename() {
 bool Parser::checkSyntax() {
     if(ast) {
         SyntaxChecker *chk = new SyntaxChecker();
-        if(chk->run(ast.get())) {
+        if(chk->run(ast)) {
             return true;
         } else {
             Logger::syntaxError("Parser::checkSyntax()", filename->c_str(), chk->getErrors().c_str());
@@ -52,7 +48,7 @@ bool Parser::checkSortedness() {
     if(ast) {
         SortednessChecker *chk = new SortednessChecker();
         shared_ptr<SymbolStack> stack = make_shared<SymbolStack>();
-        if(chk->run(stack, ast.get())) {
+        if(chk->run(stack, ast)) {
             return true;
         } else {
             Logger::sortednessError("Parser::checkSortedness()", filename->c_str(), chk->getErrors().c_str());
@@ -64,9 +60,9 @@ bool Parser::checkSortedness() {
     }
 }
 
-void Parser::setAst(AstNode * ast) {
+void Parser::setAst(shared_ptr<AstNode> ast) {
     if(ast) {
-        this->ast = shared_ptr<AstNode>(ast);
+        this->ast = ast;
     }
 }
 

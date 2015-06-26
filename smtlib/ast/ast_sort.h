@@ -19,7 +19,7 @@ namespace smtlib {
          * An SMT-LIB sort.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class Sort : public AstNode {
+        class Sort : public AstNode, public std::enable_shared_from_this<Sort> {
         protected:
             std::shared_ptr<Identifier> identifier;
             std::vector<std::shared_ptr<Sort>> params;
@@ -37,24 +37,22 @@ namespace smtlib {
              * \param params        Sort parameters
              */
             Sort(std::shared_ptr<Identifier> identifier,
-                 const std::vector<std::shared_ptr<Sort>> &params);
+                 std::vector<std::shared_ptr<Sort>> &params);
 
-            const std::shared_ptr<Identifier> getIdentifier() const;
             std::shared_ptr<Identifier> getIdentifier();
 
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
-            const std::vector<std::shared_ptr<Sort>> &getParams() const;
             std::vector<std::shared_ptr<Sort>> &getParams();
 
             /**
              * Checks whether the sort is parametrized (i.e. the list of sort parameters is not empty).
              */
-            bool isParametrized() const;
+            bool isParametrized();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

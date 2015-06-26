@@ -20,7 +20,7 @@ namespace smtlib {
          * A list of terms preceded by a qualified identifier.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class QualifiedTerm : public Term {
+        class QualifiedTerm : public Term, public std::enable_shared_from_this<QualifiedTerm> {
         private:
             std::shared_ptr<QIdentifier> identifier;
             std::vector<std::shared_ptr<Term>> terms;
@@ -31,19 +31,17 @@ namespace smtlib {
              * \param terms         List of terms
              */
             QualifiedTerm(std::shared_ptr<QIdentifier> identifier,
-                          const std::vector<std::shared_ptr<Term>> &terms);
+                          std::vector<std::shared_ptr<Term>> &terms);
 
-            const std::shared_ptr<QIdentifier> getIdentifier() const;
             std::shared_ptr<QIdentifier> getIdentifier();
 
             void setIdentifier(std::shared_ptr<QIdentifier> identifier);
 
-            const std::vector<std::shared_ptr<Term>> &getTerms() const;
             std::vector<std::shared_ptr<Term>> &getTerms();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ===================================== LetTerm ====================================== */
@@ -51,7 +49,7 @@ namespace smtlib {
          * Term preceded by a let binder.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class LetTerm : public Term {
+        class LetTerm : public Term, public std::enable_shared_from_this<LetTerm> {
         private:
             std::vector<std::shared_ptr<VarBinding>> bindings;
             std::shared_ptr<Term> term;
@@ -61,20 +59,18 @@ namespace smtlib {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            LetTerm(const std::vector<std::shared_ptr<VarBinding>> &bindings,
+            LetTerm(std::vector<std::shared_ptr<VarBinding>> &bindings,
                     std::shared_ptr<Term> term);
 
-            const std::shared_ptr<Term> getTerm() const;
             std::shared_ptr<Term> getTerm();
 
             void setTerm(std::shared_ptr<Term> term);
 
-            const std::vector<std::shared_ptr<VarBinding>> &getBindings() const;
             std::vector<std::shared_ptr<VarBinding>> &getBindings();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ==================================== ForallTerm ==================================== */
@@ -82,7 +78,7 @@ namespace smtlib {
          * Term preceded by a forall binder.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class ForallTerm : public Term {
+        class ForallTerm : public Term, public std::enable_shared_from_this<ForallTerm> {
         private:
             std::vector<std::shared_ptr<SortedVariable>> bindings;
             std::shared_ptr<Term> term;
@@ -92,20 +88,18 @@ namespace smtlib {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            ForallTerm(const std::vector<std::shared_ptr<SortedVariable>> &bindings,
+            ForallTerm(std::vector<std::shared_ptr<SortedVariable>> &bindings,
                        std::shared_ptr<Term> term);
 
-            const std::shared_ptr<Term> getTerm() const;
             std::shared_ptr<Term> getTerm();
 
             void setTerm(std::shared_ptr<Term> term);
 
-            const std::vector<std::shared_ptr<SortedVariable>> &getBindings() const;
             std::vector<std::shared_ptr<SortedVariable>> &getBindings();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ==================================== ExistsTerm ==================================== */
@@ -113,7 +107,7 @@ namespace smtlib {
          * Term preceded by an exists binder.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class ExistsTerm : public Term {
+        class ExistsTerm : public Term, public std::enable_shared_from_this<ExistsTerm> {
         private:
             std::vector<std::shared_ptr<SortedVariable>> bindings;
             std::shared_ptr<Term> term;
@@ -123,20 +117,18 @@ namespace smtlib {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            ExistsTerm(const std::vector<std::shared_ptr<SortedVariable>> &bindings,
+            ExistsTerm(std::vector<std::shared_ptr<SortedVariable>> &bindings,
                        std::shared_ptr<Term> term);
 
-            const std::shared_ptr<Term> getTerm() const;
             std::shared_ptr<Term> getTerm();
 
             void setTerm(std::shared_ptr<Term> term);
 
-            const std::vector<std::shared_ptr<SortedVariable>> &getBindings() const;
             std::vector<std::shared_ptr<SortedVariable>> &getBindings();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================== AnnotatedTerm =================================== */
@@ -144,7 +136,7 @@ namespace smtlib {
          * An annotated term.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class AnnotatedTerm : public Term {
+        class AnnotatedTerm : public Term, public std::enable_shared_from_this<AnnotatedTerm> {
         private:
             std::shared_ptr<Term> term;
             std::vector<std::shared_ptr<Attribute>> attributes;
@@ -155,19 +147,17 @@ namespace smtlib {
              * \param attr  Attributes
              */
             AnnotatedTerm(std::shared_ptr<Term> term,
-                          const std::vector<std::shared_ptr<Attribute>> &attributes);
+                          std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            const std::shared_ptr<Term> getTerm() const;
             std::shared_ptr<Term> getTerm();
 
             void setTerm(std::shared_ptr<Term> term);
 
-            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

@@ -20,7 +20,7 @@ namespace smtlib {
          * Node and (possible) root of the SMT abstract syntax tree.
          * Represents the contents of a query file.
          */
-        class Script : public AstRoot {
+        class Script : public AstRoot, public std::enable_shared_from_this<Script> {
         private:
             std::vector<std::shared_ptr<Command>> commands;
 
@@ -33,14 +33,13 @@ namespace smtlib {
             /**
              * \param cmds    Command list
              */
-            Script(const std::vector<std::shared_ptr<Command>> &cmds);
+            Script(std::vector<std::shared_ptr<Command>> &cmds);
 
-            const std::vector<std::shared_ptr<Command>> &getCommands() const;
             std::vector<std::shared_ptr<Command>> &getCommands();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

@@ -15,7 +15,7 @@ NumeralLiteral::NumeralLiteral(long value, unsigned int base) : base(base) {
     setValue(value);
 }
 
-unsigned int NumeralLiteral::getBase() const {
+unsigned int NumeralLiteral::getBase() {
     return base;
 }
 
@@ -23,11 +23,11 @@ void NumeralLiteral::setBase(unsigned int base) {
     this->base = base;
 }
 
-void NumeralLiteral::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void NumeralLiteral::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string NumeralLiteral::toString() const {
+string NumeralLiteral::toString() {
     stringstream ss;
 
     if (base == 2) {
@@ -60,11 +60,11 @@ DecimalLiteral::DecimalLiteral(double value) {
     setValue(value);
 }
 
-void DecimalLiteral::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void DecimalLiteral::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string DecimalLiteral::toString() const {
+string DecimalLiteral::toString() {
     stringstream ss;
     ss << value;
     return ss.str();
@@ -76,11 +76,11 @@ StringLiteral::StringLiteral(string value) {
     setValue(value);
 }
 
-void StringLiteral::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void StringLiteral::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string StringLiteral::toString() const {
+string StringLiteral::toString() {
     stringstream ss;
     ss << value;
     return ss.str();

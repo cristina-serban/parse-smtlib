@@ -8,152 +8,152 @@ namespace smtlib {
     namespace ast {
         class AstVisitor0 {
         public:
-            virtual void visit(Attribute const *node) = 0;
-            virtual void visit(CompoundAttributeValue const *node) = 0;
+            virtual void visit(std::shared_ptr<Attribute> node) = 0;
+            virtual void visit(std::shared_ptr<CompAttributeValue> node) = 0;
 
-            virtual void visit(Symbol const *node) = 0;
-            virtual void visit(Keyword const *node) = 0;
-            virtual void visit(MetaSpecConstant const *node) = 0;
-            virtual void visit(BooleanValue const *node) = 0;
-            virtual void visit(PropLiteral const *node) = 0;
+            virtual void visit(std::shared_ptr<Symbol> node) = 0;
+            virtual void visit(std::shared_ptr<Keyword> node) = 0;
+            virtual void visit(std::shared_ptr<MetaSpecConstant> node) = 0;
+            virtual void visit(std::shared_ptr<BooleanValue> node) = 0;
+            virtual void visit(std::shared_ptr<PropLiteral> node) = 0;
 
-            virtual void visit(AssertCommand const *node) = 0;
-            virtual void visit(CheckSatCommand const *node) = 0;
-            virtual void visit(CheckSatAssumCommand const *node) = 0;
-            virtual void visit(DeclareConstCommand const *node) = 0;
-            virtual void visit(DeclareFunCommand const *node) = 0;
-            virtual void visit(DeclareSortCommand const *node) = 0;
-            virtual void visit(DefineFunCommand const *node) = 0;
-            virtual void visit(DefineFunRecCommand const *node) = 0;
-            virtual void visit(DefineFunsRecCommand const *node) = 0;
-            virtual void visit(DefineSortCommand const *node) = 0;
-            virtual void visit(EchoCommand const *node) = 0;
-            virtual void visit(ExitCommand const *node) = 0;
-            virtual void visit(GetAssertsCommand const *node) = 0;
-            virtual void visit(GetAssignsCommand const *node) = 0;
-            virtual void visit(GetInfoCommand const *node) = 0;
-            virtual void visit(GetModelCommand const *node) = 0;
-            virtual void visit(GetOptionCommand const *node) = 0;
-            virtual void visit(GetProofCommand const *node) = 0;
-            virtual void visit(GetUnsatAssumsCommand const *node) = 0;
-            virtual void visit(GetUnsatCoreCommand const *node) = 0;
-            virtual void visit(GetValueCommand const *node) = 0;
-            virtual void visit(PopCommand const *node) = 0;
-            virtual void visit(PushCommand const *node) = 0;
-            virtual void visit(ResetCommand const *node) = 0;
-            virtual void visit(ResetAssertsCommand const *node) = 0;
-            virtual void visit(SetInfoCommand const *node) = 0;
-            virtual void visit(SetLogicCommand const *node) = 0;
-            virtual void visit(SetOptionCommand const *node) = 0;
+            virtual void visit(std::shared_ptr<AssertCommand> node) = 0;
+            virtual void visit(std::shared_ptr<CheckSatCommand> node) = 0;
+            virtual void visit(std::shared_ptr<CheckSatAssumCommand> node) = 0;
+            virtual void visit(std::shared_ptr<DeclareConstCommand> node) = 0;
+            virtual void visit(std::shared_ptr<DeclareFunCommand> node) = 0;
+            virtual void visit(std::shared_ptr<DeclareSortCommand> node) = 0;
+            virtual void visit(std::shared_ptr<DefineFunCommand> node) = 0;
+            virtual void visit(std::shared_ptr<DefineFunRecCommand> node) = 0;
+            virtual void visit(std::shared_ptr<DefineFunsRecCommand> node) = 0;
+            virtual void visit(std::shared_ptr<DefineSortCommand> node) = 0;
+            virtual void visit(std::shared_ptr<EchoCommand> node) = 0;
+            virtual void visit(std::shared_ptr<ExitCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetAssertsCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetAssignsCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetInfoCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetModelCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetOptionCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetProofCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetUnsatAssumsCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetUnsatCoreCommand> node) = 0;
+            virtual void visit(std::shared_ptr<GetValueCommand> node) = 0;
+            virtual void visit(std::shared_ptr<PopCommand> node) = 0;
+            virtual void visit(std::shared_ptr<PushCommand> node) = 0;
+            virtual void visit(std::shared_ptr<ResetCommand> node) = 0;
+            virtual void visit(std::shared_ptr<ResetAssertsCommand> node) = 0;
+            virtual void visit(std::shared_ptr<SetInfoCommand> node) = 0;
+            virtual void visit(std::shared_ptr<SetLogicCommand> node) = 0;
+            virtual void visit(std::shared_ptr<SetOptionCommand> node) = 0;
 
-            virtual void visit(FunctionDeclaration const *node) = 0;
-            virtual void visit(FunctionDefinition const *node) = 0;
+            virtual void visit(std::shared_ptr<FunctionDeclaration> node) = 0;
+            virtual void visit(std::shared_ptr<FunctionDefinition> node) = 0;
 
-            virtual void visit(Identifier const *node) = 0;
-            virtual void visit(QualifiedIdentifier const *node) = 0;
+            virtual void visit(std::shared_ptr<Identifier> node) = 0;
+            virtual void visit(std::shared_ptr<QualifiedIdentifier> node) = 0;
 
-            virtual void visit(DecimalLiteral const *node) = 0;
-            virtual void visit(NumeralLiteral const *node) = 0;
-            virtual void visit(StringLiteral const *node) = 0;
+            virtual void visit(std::shared_ptr<DecimalLiteral> node) = 0;
+            virtual void visit(std::shared_ptr<NumeralLiteral> node) = 0;
+            virtual void visit(std::shared_ptr<StringLiteral> node) = 0;
 
-            virtual void visit(Logic const *node) = 0;
-            virtual void visit(Theory const *node) = 0;
-            virtual void visit(Script const *node) = 0;
+            virtual void visit(std::shared_ptr<Logic> node) = 0;
+            virtual void visit(std::shared_ptr<Theory> node) = 0;
+            virtual void visit(std::shared_ptr<Script> node) = 0;
 
-            virtual void visit(Sort const *node) = 0;
+            virtual void visit(std::shared_ptr<Sort> node) = 0;
 
-            virtual void visit(CompSExpression const *node) = 0;
+            virtual void visit(std::shared_ptr<CompSExpression> node) = 0;
 
-            virtual void visit(SortSymbolDeclaration const *node) = 0;
+            virtual void visit(std::shared_ptr<SortSymbolDeclaration> node) = 0;
 
-            virtual void visit(SpecConstFunDeclaration const *node) = 0;
-            virtual void visit(MetaSpecConstFunDeclaration const *node) = 0;
-            virtual void visit(IdentifierFunDeclaration const *node) = 0;
-            virtual void visit(ParametricFunDeclaration const *node) = 0;
+            virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node) = 0;
+            virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node) = 0;
+            virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node) = 0;
+            virtual void visit(std::shared_ptr<ParametricFunDeclaration> node) = 0;
 
-            virtual void visit(QualifiedTerm const *node) = 0;
-            virtual void visit(LetTerm const *node) = 0;
-            virtual void visit(ForallTerm const *node) = 0;
-            virtual void visit(ExistsTerm const *node) = 0;
-            virtual void visit(AnnotatedTerm const *node) = 0;
+            virtual void visit(std::shared_ptr<QualifiedTerm> node) = 0;
+            virtual void visit(std::shared_ptr<LetTerm> node) = 0;
+            virtual void visit(std::shared_ptr<ForallTerm> node) = 0;
+            virtual void visit(std::shared_ptr<ExistsTerm> node) = 0;
+            virtual void visit(std::shared_ptr<AnnotatedTerm> node) = 0;
 
-            virtual void visit(SortedVariable const *node) = 0;
-            virtual void visit(VarBinding const *node) = 0;
+            virtual void visit(std::shared_ptr<SortedVariable> node) = 0;
+            virtual void visit(std::shared_ptr<VarBinding> node) = 0;
         };
-        
+
         class DummyVisitor0 : public AstVisitor0 {
         public:
-            virtual void visit(Attribute const *node) { }
-            virtual void visit(CompoundAttributeValue const *node) { }
+            virtual void visit(std::shared_ptr<Attribute> node) { }
+            virtual void visit(std::shared_ptr<CompAttributeValue> node) { }
 
-            virtual void visit(Symbol const *node) { }
-            virtual void visit(Keyword const *node) { }
-            virtual void visit(MetaSpecConstant const *node) { }
-            virtual void visit(BooleanValue const *node) { }
-            virtual void visit(PropLiteral const *node) { }
+            virtual void visit(std::shared_ptr<Symbol> node) { }
+            virtual void visit(std::shared_ptr<Keyword> node) { }
+            virtual void visit(std::shared_ptr<MetaSpecConstant> node) { }
+            virtual void visit(std::shared_ptr<BooleanValue> node) { }
+            virtual void visit(std::shared_ptr<PropLiteral> node) { }
 
-            virtual void visit(AssertCommand const *node) { }
-            virtual void visit(CheckSatCommand const *node) { }
-            virtual void visit(CheckSatAssumCommand const *node) { }
-            virtual void visit(DeclareConstCommand const *node) { }
-            virtual void visit(DeclareFunCommand const *node) { }
-            virtual void visit(DeclareSortCommand const *node) { }
-            virtual void visit(DefineFunCommand const *node) { }
-            virtual void visit(DefineFunRecCommand const *node) { }
-            virtual void visit(DefineFunsRecCommand const *node) { }
-            virtual void visit(DefineSortCommand const *node) { }
-            virtual void visit(EchoCommand const *node) { }
-            virtual void visit(ExitCommand const *node) { }
-            virtual void visit(GetAssertsCommand const *node) { }
-            virtual void visit(GetAssignsCommand const *node) { }
-            virtual void visit(GetInfoCommand const *node) { }
-            virtual void visit(GetModelCommand const *node) { }
-            virtual void visit(GetOptionCommand const *node) { }
-            virtual void visit(GetProofCommand const *node) { }
-            virtual void visit(GetUnsatAssumsCommand const *node) { }
-            virtual void visit(GetUnsatCoreCommand const *node) { }
-            virtual void visit(GetValueCommand const *node) { }
-            virtual void visit(PopCommand const *node) { }
-            virtual void visit(PushCommand const *node) { }
-            virtual void visit(ResetCommand const *node) { }
-            virtual void visit(ResetAssertsCommand const *node) { }
-            virtual void visit(SetInfoCommand const *node) { }
-            virtual void visit(SetLogicCommand const *node) { }
-            virtual void visit(SetOptionCommand const *node) { }
+            virtual void visit(std::shared_ptr<AssertCommand> node) { }
+            virtual void visit(std::shared_ptr<CheckSatCommand> node) { }
+            virtual void visit(std::shared_ptr<CheckSatAssumCommand> node) { }
+            virtual void visit(std::shared_ptr<DeclareConstCommand> node) { }
+            virtual void visit(std::shared_ptr<DeclareFunCommand> node) { }
+            virtual void visit(std::shared_ptr<DeclareSortCommand> node) { }
+            virtual void visit(std::shared_ptr<DefineFunCommand> node) { }
+            virtual void visit(std::shared_ptr<DefineFunRecCommand> node) { }
+            virtual void visit(std::shared_ptr<DefineFunsRecCommand> node) { }
+            virtual void visit(std::shared_ptr<DefineSortCommand> node) { }
+            virtual void visit(std::shared_ptr<EchoCommand> node) { }
+            virtual void visit(std::shared_ptr<ExitCommand> node) { }
+            virtual void visit(std::shared_ptr<GetAssertsCommand> node) { }
+            virtual void visit(std::shared_ptr<GetAssignsCommand> node) { }
+            virtual void visit(std::shared_ptr<GetInfoCommand> node) { }
+            virtual void visit(std::shared_ptr<GetModelCommand> node) { }
+            virtual void visit(std::shared_ptr<GetOptionCommand> node) { }
+            virtual void visit(std::shared_ptr<GetProofCommand> node) { }
+            virtual void visit(std::shared_ptr<GetUnsatAssumsCommand> node) { }
+            virtual void visit(std::shared_ptr<GetUnsatCoreCommand> node) { }
+            virtual void visit(std::shared_ptr<GetValueCommand> node) { }
+            virtual void visit(std::shared_ptr<PopCommand> node) { }
+            virtual void visit(std::shared_ptr<PushCommand> node) { }
+            virtual void visit(std::shared_ptr<ResetCommand> node) { }
+            virtual void visit(std::shared_ptr<ResetAssertsCommand> node) { }
+            virtual void visit(std::shared_ptr<SetInfoCommand> node) { }
+            virtual void visit(std::shared_ptr<SetLogicCommand> node) { }
+            virtual void visit(std::shared_ptr<SetOptionCommand> node) { }
 
-            virtual void visit(FunctionDeclaration const *node) { }
-            virtual void visit(FunctionDefinition const *node) { }
+            virtual void visit(std::shared_ptr<FunctionDeclaration> node) { }
+            virtual void visit(std::shared_ptr<FunctionDefinition> node) { }
 
-            virtual void visit(Identifier const *node) { }
-            virtual void visit(QualifiedIdentifier const *node) { }
+            virtual void visit(std::shared_ptr<Identifier> node) { }
+            virtual void visit(std::shared_ptr<QualifiedIdentifier> node) { }
 
-            virtual void visit(DecimalLiteral const *node) { }
-            virtual void visit(NumeralLiteral const *node) { }
-            virtual void visit(StringLiteral const *node) { }
+            virtual void visit(std::shared_ptr<DecimalLiteral> node) { }
+            virtual void visit(std::shared_ptr<NumeralLiteral> node) { }
+            virtual void visit(std::shared_ptr<StringLiteral> node) { }
 
-            virtual void visit(Logic const *node) { }
-            virtual void visit(Theory const *node) { }
-            virtual void visit(Script const *node) { }
+            virtual void visit(std::shared_ptr<Logic> node) { }
+            virtual void visit(std::shared_ptr<Theory> node) { }
+            virtual void visit(std::shared_ptr<Script> node) { }
 
-            virtual void visit(Sort const *node) { }
+            virtual void visit(std::shared_ptr<Sort> node) { }
 
-            virtual void visit(CompSExpression const *node) { }
+            virtual void visit(std::shared_ptr<CompSExpression> node) { }
 
-            virtual void visit(SortSymbolDeclaration const *node) { }
+            virtual void visit(std::shared_ptr<SortSymbolDeclaration> node) { }
 
-            virtual void visit(SpecConstFunDeclaration const *node) { }
-            virtual void visit(MetaSpecConstFunDeclaration const *node) { }
-            virtual void visit(IdentifierFunDeclaration const *node) { }
-            virtual void visit(ParametricFunDeclaration const *node) { }
+            virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node) { }
+            virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node) { }
+            virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node) { }
+            virtual void visit(std::shared_ptr<ParametricFunDeclaration> node) { }
 
-            virtual void visit(QualifiedTerm const *node) { }
-            virtual void visit(LetTerm const *node) { }
-            virtual void visit(ForallTerm const *node) { }
-            virtual void visit(ExistsTerm const *node) { }
-            virtual void visit(AnnotatedTerm const *node) { }
+            virtual void visit(std::shared_ptr<QualifiedTerm> node) { }
+            virtual void visit(std::shared_ptr<LetTerm> node) { }
+            virtual void visit(std::shared_ptr<ForallTerm> node) { }
+            virtual void visit(std::shared_ptr<ExistsTerm> node) { }
+            virtual void visit(std::shared_ptr<AnnotatedTerm> node) { }
 
-            virtual void visit(SortedVariable const *node) { }
-            virtual void visit(VarBinding const *node) { }
+            virtual void visit(std::shared_ptr<SortedVariable> node) { }
+            virtual void visit(std::shared_ptr<VarBinding> node) { }
         };
     }
 }

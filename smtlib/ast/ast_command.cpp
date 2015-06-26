@@ -6,23 +6,11 @@ using namespace smtlib::ast;
 
 /* ================================== AssertCommand =================================== */
 
-const shared_ptr<Term> AssertCommand::getTerm() const {
-    return term;
+void AssertCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<Term> AssertCommand::getTerm() {
-    return term;
-}
-
-void AssertCommand::setTerm(shared_ptr<Term> term) {
-    this->term = term;
-}
-
-void AssertCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string AssertCommand::toString() const {
+string AssertCommand::toString() {
     stringstream ss;
     ss << "(assert " << term->toString() << ")";
     return ss.str();
@@ -30,37 +18,29 @@ string AssertCommand::toString() const {
 
 /* ================================= CheckSatCommand ================================== */
 
-void CheckSatCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
+void CheckSatCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-string CheckSatCommand::toString() const {
+string CheckSatCommand::toString() {
     return "(check-sat)";
 }
 
 /* =============================== CheckSatAssumCommand =============================== */
 
-CheckSatAssumCommand::CheckSatAssumCommand(const vector<shared_ptr<PropLiteral>> &assumptions) {
+CheckSatAssumCommand::CheckSatAssumCommand(vector<shared_ptr<PropLiteral>> &assumptions) {
     this->assumptions.insert(this->assumptions.end(), assumptions.begin(), assumptions.end());
 }
 
-const vector<shared_ptr<PropLiteral>> &CheckSatAssumCommand::getAssumptions() const {
-    return assumptions;
+void CheckSatAssumCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-vector<shared_ptr<PropLiteral>> &CheckSatAssumCommand::getAssumptions() {
-    return assumptions;
-}
-
-void CheckSatAssumCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string CheckSatAssumCommand::toString() const {
+string CheckSatAssumCommand::toString() {
     stringstream ss;
     ss << "(check-sat-assuming (";
 
-    for (vector<shared_ptr<PropLiteral>>::const_iterator it = assumptions.begin(); it != assumptions.end(); it++) {
+    for (vector<shared_ptr<PropLiteral>>::iterator it = assumptions.begin(); it != assumptions.end(); it++) {
         if(it != assumptions.begin())
             ss << " ";
         ss << (*it)->toString();
@@ -73,35 +53,11 @@ string CheckSatAssumCommand::toString() const {
 
 /* =============================== DeclareConstCommand ================================ */
 
-const shared_ptr<Symbol> DeclareConstCommand::getSymbol() const {
-    return symbol;
+void DeclareConstCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<Symbol> DeclareConstCommand::getSymbol() {
-    return symbol;
-}
-
-void DeclareConstCommand::setSymbol(shared_ptr<Symbol> symbol) {
-    this->symbol = symbol;
-}
-
-const shared_ptr<Sort> DeclareConstCommand::getSort() const {
-    return sort;
-}
-
-shared_ptr<Sort> DeclareConstCommand::getSort() {
-    return sort;
-}
-
-void DeclareConstCommand::setSort(shared_ptr<Sort> sort) {
-    this->sort = sort;
-}
-
-void DeclareConstCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string DeclareConstCommand::toString() const {
+string DeclareConstCommand::toString() {
     stringstream ss;
     ss << "(declare-const " << symbol->toString() << " " << sort->toString() << ")";
     return ss.str();
@@ -110,53 +66,21 @@ string DeclareConstCommand::toString() const {
 /* =============================== DeclareFunCommand ================================ */
 
 DeclareFunCommand::DeclareFunCommand(shared_ptr<Symbol> symbol,
-                                     const vector<shared_ptr<Sort>> &params,
+                                     vector<shared_ptr<Sort>> params,
                                      shared_ptr<Sort> sort)
         : symbol(symbol), sort(sort) {
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
-const shared_ptr<Symbol> DeclareFunCommand::getSymbol() const {
-    return symbol;
+void DeclareFunCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<Symbol> DeclareFunCommand::getSymbol() {
-    return symbol;
-}
-
-void DeclareFunCommand::setSymbol(shared_ptr<Symbol> symbol) {
-    this->symbol = symbol;
-}
-
-const vector<shared_ptr<Sort>> &DeclareFunCommand::getParams() const {
-    return params;
-}
-
-vector<shared_ptr<Sort>> &DeclareFunCommand::getParams() {
-    return params;
-}
-
-const shared_ptr<Sort> DeclareFunCommand::getSort() const {
-    return sort;
-}
-
-shared_ptr<Sort> DeclareFunCommand::getSort() {
-    return sort;
-}
-
-void DeclareFunCommand::setSort(shared_ptr<Sort> sort) {
-    this->sort = sort;
-}
-
-void DeclareFunCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string DeclareFunCommand::toString() const {
+string DeclareFunCommand::toString() {
     stringstream ss;
     ss << "(declare-fun " << symbol->toString() << " (";
 
-    for (vector<shared_ptr<Sort>>::const_iterator it = params.begin(); it != params.end(); it++) {
+    for (vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
         if(it != params.begin())
             ss << " ";
         ss << (*it)->toString();
@@ -169,35 +93,11 @@ string DeclareFunCommand::toString() const {
 
 /* =============================== DeclareSortCommand ================================ */
 
-const shared_ptr<Symbol> DeclareSortCommand::getSymbol() const {
-    return symbol;
+void DeclareSortCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<Symbol> DeclareSortCommand::getSymbol() {
-    return symbol;
-}
-
-void DeclareSortCommand::setSymbol(shared_ptr<Symbol> symbol) {
-    this->symbol = symbol;
-}
-
-const shared_ptr<NumeralLiteral> DeclareSortCommand::getArity() const {
-    return arity;
-}
-
-shared_ptr<NumeralLiteral> DeclareSortCommand::getArity() {
-    return arity;
-}
-
-void DeclareSortCommand::setArity(shared_ptr<NumeralLiteral> arity) {
-    this->arity = arity;
-}
-
-void DeclareSortCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string DeclareSortCommand::toString() const {
+string DeclareSortCommand::toString() {
     stringstream ss;
     ss << "(declare-sort " << symbol->toString() << " " << arity->toString() << ")";
     return ss.str();
@@ -205,35 +105,18 @@ string DeclareSortCommand::toString() const {
 
 /* ================================= DefineFunCommand ================================= */
 
-DefineFunCommand::DefineFunCommand(shared_ptr<FunctionDeclaration> signature,
-                                   shared_ptr<Term> body) {
-    definition = make_shared<FunctionDefinition>(signature, body);
-}
-
 DefineFunCommand::DefineFunCommand(shared_ptr<Symbol> symbol,
-                                   const vector<shared_ptr<SortedVariable>> &params,
+                                   vector<shared_ptr<SortedVariable>> &params,
                                    shared_ptr<Sort> sort,
                                    shared_ptr<Term> body) {
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
 }
 
-const shared_ptr<FunctionDefinition> DefineFunCommand::getDefinition() const {
-    return definition;
+void DefineFunCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<FunctionDefinition> DefineFunCommand::getDefinition() {
-    return definition;
-}
-
-void DefineFunCommand::setDefinition(shared_ptr<FunctionDefinition> definition) {
-    this->definition = definition;
-}
-
-void DefineFunCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string DefineFunCommand::toString() const {
+string DefineFunCommand::toString() {
     stringstream ss;
     ss << "(define-fun " << definition->toString() << ")";
     return ss.str();
@@ -241,35 +124,18 @@ string DefineFunCommand::toString() const {
 
 /* ================================ DefineFunRecCommand =============================== */
 
-DefineFunRecCommand::DefineFunRecCommand(shared_ptr<FunctionDeclaration> signature,
-                                         shared_ptr<Term> body) {
-    definition = make_shared<FunctionDefinition>(signature, body);
-}
-
 DefineFunRecCommand::DefineFunRecCommand(shared_ptr<Symbol> symbol,
-                                         const vector<shared_ptr<SortedVariable>> &params,
+                                         vector<shared_ptr<SortedVariable>> &params,
                                          shared_ptr<Sort> sort,
                                          shared_ptr<Term> body) {
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
 }
 
-const shared_ptr<FunctionDefinition> DefineFunRecCommand::getDefinition() const {
-    return definition;
+void DefineFunRecCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<FunctionDefinition> DefineFunRecCommand::getDefinition() {
-    return definition;
-}
-
-void DefineFunRecCommand::setDefinition(shared_ptr<FunctionDefinition> definition) {
-    this->definition = definition;
-}
-
-void DefineFunRecCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string DefineFunRecCommand::toString() const {
+string DefineFunRecCommand::toString() {
     stringstream ss;
     ss << "(define-fun-rec " << definition->toString() << ")";
     return ss.str();
@@ -278,36 +144,20 @@ string DefineFunRecCommand::toString() const {
 /* =============================== DefineFunsRecCommand =============================== */
 
 DefineFunsRecCommand::DefineFunsRecCommand(
-        const std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
-        const std::vector<std::shared_ptr<Term>> &bodies) {
+        std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
+        std::vector<std::shared_ptr<Term>> &bodies) {
     this->declarations.insert(this->declarations.end(), declarations.begin(), declarations.end());
     this->bodies.insert(this->bodies.end(), bodies.begin(), bodies.end());
 }
 
-const std::vector<std::shared_ptr<FunctionDeclaration>> &DefineFunsRecCommand::getDeclarations() const {
-    return declarations;
+void DefineFunsRecCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-std::vector<std::shared_ptr<FunctionDeclaration>> &DefineFunsRecCommand::getDeclarations() {
-    return declarations;
-}
-
-const std::vector<std::shared_ptr<Term>> &DefineFunsRecCommand::getBodies() const {
-    return bodies;
-}
-
-std::vector<std::shared_ptr<Term>> &DefineFunsRecCommand::getBodies() {
-    return bodies;
-}
-
-void DefineFunsRecCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string DefineFunsRecCommand::toString() const {
+string DefineFunsRecCommand::toString() {
     stringstream ss;
     ss << "(define-funs-rec (";
-    for (vector<shared_ptr<FunctionDeclaration>>::const_iterator it = declarations.begin();
+    for (vector<shared_ptr<FunctionDeclaration>>::iterator it = declarations.begin();
          it != declarations.end(); it++) {
         if(it != declarations.begin())
             ss << " ";
@@ -315,7 +165,7 @@ string DefineFunsRecCommand::toString() const {
     }
 
     ss << ") (";
-    for (vector<shared_ptr<Term>>::const_iterator it = bodies.begin(); it != bodies.end(); it++) {
+    for (vector<shared_ptr<Term>>::iterator it = bodies.begin(); it != bodies.end(); it++) {
         if(it != bodies.begin())
             ss << " ";
         ss << "(" << (*it)->toString() << ")";
@@ -328,52 +178,20 @@ string DefineFunsRecCommand::toString() const {
 /* ================================ DefineSortCommand ================================= */
 
 DefineSortCommand::DefineSortCommand(shared_ptr<Symbol> symbol,
-                                     const vector<shared_ptr<Symbol>> &params,
+                                     vector<shared_ptr<Symbol>> &params,
                                      shared_ptr<Sort> sort)
         : symbol(symbol), sort(sort) {
     this->params.insert(this->params.end(), params.begin(), params.end());
 }
 
-const shared_ptr<Symbol> DefineSortCommand::getSymbol() const {
-    return symbol;
+void DefineSortCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 }
 
-shared_ptr<Symbol> DefineSortCommand::getSymbol() {
-    return symbol;
-}
-
-void DefineSortCommand::setSymbol(shared_ptr<Symbol> symbol) {
-    this->symbol = symbol;
-}
-
-const vector<shared_ptr<Symbol>> &DefineSortCommand::getParams() const {
-    return params;
-}
-
-vector<shared_ptr<Symbol>> &DefineSortCommand::getParams() {
-    return params;
-}
-
-const shared_ptr<Sort> DefineSortCommand::getSort() const {
-    return sort;
-}
-
-shared_ptr<Sort> DefineSortCommand::getSort() {
-    return sort;
-}
-
-void DefineSortCommand::setSort(shared_ptr<Sort> sort) {
-    this->sort = sort;
-}
-
-void DefineSortCommand::accept(AstVisitor0* visitor) const {
-    visitor->visit(this);
-}
-
-string DefineSortCommand::toString() const {
+string DefineSortCommand::toString() {
     stringstream ss;
     ss << "(define-sort " << symbol->toString() << " (";
-    for (vector<shared_ptr<Symbol>>::const_iterator it = params.begin(); it != params.end(); it++) {
+    for (vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
         if(it != params.begin())
             ss << " ";
         ss << (*it)->toString();
@@ -385,23 +203,11 @@ string DefineSortCommand::toString() const {
 
 /* =================================== EchoCommand ==================================== */
 
-const string &EchoCommand::getMessage() const {
-    return message;
-}
-
-string &EchoCommand::getMessage() {
-    return message;
-}
-
-void EchoCommand::setMessage(string message) {
-    this->message = message;
-}
-
-void EchoCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void EchoCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string EchoCommand::toString() const {
+string EchoCommand::toString() {
     stringstream ss;
     ss << "(echo " << message << ")";
     return ss.str();
@@ -409,53 +215,41 @@ string EchoCommand::toString() const {
 
 /* =================================== ExitCommand ==================================== */
 
-void ExitCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void ExitCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string ExitCommand::toString() const {
+string ExitCommand::toString() {
     return "(exit)";
 }
 
 /* ================================ GetAssertsCommand ================================= */
 
-void GetAssertsCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetAssertsCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetAssertsCommand::toString() const {
+string GetAssertsCommand::toString() {
     return "(get-assertions)";
 }
 
 /* ================================ GetAssignsCommand ================================= */
 
-void GetAssignsCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetAssignsCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetAssignsCommand::toString() const {
+string GetAssignsCommand::toString() {
     return "(get-assignments)";
 }
 
 /* ================================== GetInfoCommand ================================== */
 
-const shared_ptr<Keyword> GetInfoCommand::getFlag() const {
-    return flag;
-}
-
-shared_ptr<Keyword> GetInfoCommand::getFlag() {
-    return flag;
-}
-
-void GetInfoCommand::setFlag(shared_ptr<Keyword> flag) {
-    this->flag = flag;
-}
-
-void GetInfoCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetInfoCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetInfoCommand::toString() const {
+string GetInfoCommand::toString() {
     stringstream ss;
     ss << "(get-info " << flag->toString() << ")";
     return ss.str();
@@ -463,33 +257,21 @@ string GetInfoCommand::toString() const {
 
 /* ================================= GetModelCommand ================================== */
 
-void GetModelCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetModelCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetModelCommand::toString() const {
+string GetModelCommand::toString() {
     return "(get-model)";
 }
 
 /* ================================= GetOptionCommand ================================= */
 
-const shared_ptr<Keyword> GetOptionCommand::getOption() const {
-    return option;
-}
-
-shared_ptr<Keyword> GetOptionCommand::getOption() {
-    return option;
-}
-
-void GetOptionCommand::setOption(shared_ptr<Keyword> option) {
-    this->option = option;
-}
-
-void GetOptionCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetOptionCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetOptionCommand::toString() const {
+string GetOptionCommand::toString() {
     stringstream ss;
     ss << "(get-option " << option->toString() << ")";
     return ss.str();
@@ -497,57 +279,49 @@ string GetOptionCommand::toString() const {
 
 /* ================================= GetProofCommand ================================== */
 
-void GetProofCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetProofCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetProofCommand::toString() const {
+string GetProofCommand::toString() {
     return "(get-proof)";
 }
 
 /* ============================== GetUnsatAssumsCommand =============================== */
 
-void GetUnsatAssumsCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetUnsatAssumsCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetUnsatAssumsCommand::toString() const {
+string GetUnsatAssumsCommand::toString() {
     return "(get-unsat-assumptions)";
 }
 
 /* =============================== GetUnsatCoreCommand ================================ */
 
-void GetUnsatCoreCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetUnsatCoreCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetUnsatCoreCommand::toString() const {
+string GetUnsatCoreCommand::toString() {
     return "(get-unsat-core)";
 }
 
 /* ================================= GetValueCommand ================================== */
 
-GetValueCommand::GetValueCommand(const vector<shared_ptr<Term>> &terms) {
+GetValueCommand::GetValueCommand(vector<shared_ptr<Term>> &terms) {
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
 }
 
-const vector<shared_ptr<Term>> GetValueCommand::getTerms() const {
-    return terms;
-}
-
-vector<shared_ptr<Term>> &GetValueCommand::getTerms() {
-    return terms;
-}
-
-void GetValueCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void GetValueCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string GetValueCommand::toString() const {
+string GetValueCommand::toString() {
     stringstream ss;
     ss << "(get-value (";
 
-    for(vector<shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
+    for(vector<shared_ptr<Term>>::iterator it = terms.begin(); it != terms.end(); it++) {
         if(it != terms.begin())
             ss << " ";
         ss << (*it)->toString();
@@ -559,23 +333,11 @@ string GetValueCommand::toString() const {
 
 /* =================================== PopCommand ==================================== */
 
-const shared_ptr<NumeralLiteral> PopCommand::getNumeral() const {
-    return numeral;
-}
-
-shared_ptr<NumeralLiteral> PopCommand::getNumeral() {
-    return numeral;
-}
-
-void PopCommand::setNumeral(shared_ptr<NumeralLiteral> numeral) {
-    this->numeral = numeral;
-}
-
-void PopCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void PopCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string PopCommand::toString() const {
+string PopCommand::toString() {
     stringstream ss;
     ss << "(pop " << numeral->toString() << ")";
     return ss.str();
@@ -583,23 +345,11 @@ string PopCommand::toString() const {
 
 /* =================================== PushCommand ==================================== */
 
-const shared_ptr<NumeralLiteral> PushCommand::getNumeral() const {
-    return numeral;
-}
-
-shared_ptr<NumeralLiteral> PushCommand::getNumeral() {
-    return numeral;
-}
-
-void PushCommand::setNumeral(shared_ptr<NumeralLiteral> numeral) {
-    this->numeral = numeral;
-}
-
-void PushCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void PushCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string PushCommand::toString() const {
+string PushCommand::toString() {
     stringstream ss;
     ss << "(push " << numeral->toString() << ")";
     return ss.str();
@@ -607,43 +357,31 @@ string PushCommand::toString() const {
 
 /* =================================== ResetCommand =================================== */
 
-void ResetCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void ResetCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string ResetCommand::toString() const {
+string ResetCommand::toString() {
     return "(reset)";
 }
 
 /* =============================== ResetAssertsCommand ================================ */
 
-void ResetAssertsCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void ResetAssertsCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string ResetAssertsCommand::toString() const {
+string ResetAssertsCommand::toString() {
     return "(reset-assertions)";
 }
 
 /* ================================== SetInfoCommand ================================== */
 
-const shared_ptr<Attribute> SetInfoCommand::getInfo() const {
-    return info;
-}
-
-shared_ptr<Attribute> SetInfoCommand::getInfo() {
-    return info;
-}
-
-void SetInfoCommand::setInfo(shared_ptr<Attribute> info) {
-    this->info = info;
-}
-
-void SetInfoCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void SetInfoCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string SetInfoCommand::toString() const {
+string SetInfoCommand::toString() {
     stringstream ss;
     ss << "(set-info " << info->getKeyword()->toString()
        << " " << info->getValue()->toString() << ")";
@@ -652,23 +390,11 @@ string SetInfoCommand::toString() const {
 
 /* ================================= SetLogicCommand ================================== */
 
-const shared_ptr<Symbol> SetLogicCommand::getLogic() const {
-    return logic;
-}
-
-shared_ptr<Symbol> SetLogicCommand::getLogic() {
-    return logic;
-}
-
-void SetLogicCommand::setLogic(shared_ptr<Symbol> logic) {
-    this->logic = logic;
-}
-
-void SetLogicCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void SetLogicCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string SetLogicCommand::toString() const {
+string SetLogicCommand::toString() {
     stringstream ss;
     ss << "(set-logic " << logic->toString() << ")";
     return ss.str();
@@ -676,23 +402,11 @@ string SetLogicCommand::toString() const {
 
 /* ================================= SetOptionCommand ================================= */
 
-const shared_ptr<Attribute> SetOptionCommand::getOption() const {
-    return option;
-}
-
-shared_ptr<Attribute> SetOptionCommand::getOption() {
-    return option;
-}
-
-void SetOptionCommand::setOption(shared_ptr<Attribute> option) {
-    this->option = option;
-}
-
-void SetOptionCommand::accept(AstVisitor0* visitor) const {
-     visitor->visit(this);
+void SetOptionCommand::accept(AstVisitor0* visitor){
+    visitor->visit(shared_from_this());
 } 
 
-string SetOptionCommand::toString() const {
+string SetOptionCommand::toString() {
     stringstream ss;
     ss << "(set-option " << option->getKeyword()->toString()
        << " " << option->getValue()->toString() << ")";

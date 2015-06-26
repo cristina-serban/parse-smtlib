@@ -6,7 +6,7 @@ namespace smtlib {
         class AstNode;
 
         class Attribute;
-        class CompoundAttributeValue;
+        class CompAttributeValue;
 
         class Symbol;
         class Keyword;

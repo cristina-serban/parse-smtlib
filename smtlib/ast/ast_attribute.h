@@ -21,7 +21,8 @@ namespace smtlib {
         /**
          * An SMT-LIB attribute
          */
-        class Attribute : public AstNode {
+        class Attribute : public AstNode,
+                          public std::enable_shared_from_this<Attribute> {
         private:
             std::shared_ptr<Keyword> keyword;
             std::shared_ptr<AttributeValue> value;
@@ -30,54 +31,52 @@ namespace smtlib {
             /**
              * Default constructor.
              */
-            Attribute() { }
+            inline Attribute() { }
 
             /**
              * Constructs keyword without attribute value.
              * \param keyword   Keyword of the attribute
              */
-            Attribute(std::shared_ptr<Keyword> keyword) : keyword(keyword) { }
+            inline Attribute(std::shared_ptr<Keyword> keyword) : keyword(keyword) { }
 
             /**
              * Constructs keyword with attribute value.
              * \param keyword   Keyword of the attribute
              * \param value     Value of the attribute
              */
-            Attribute(std::shared_ptr<Keyword> keyword,
+            inline Attribute(std::shared_ptr<Keyword> keyword,
                       std::shared_ptr<AttributeValue> value)
                     : keyword(keyword), value(value) { }
 
-            const std::shared_ptr<Keyword> getKeyword() const;
-            std::shared_ptr<Keyword> getKeyword();
+            inline std::shared_ptr<Keyword> getKeyword() { return keyword; }
 
-            void setKeyword(std::shared_ptr<Keyword> keyword);
+            inline void setKeyword(std::shared_ptr<Keyword> keyword) { this->keyword = keyword; }
 
-            const std::shared_ptr<AttributeValue> getValue() const;
-            std::shared_ptr<AttributeValue> getValue();
+            inline std::shared_ptr<AttributeValue> getValue() { return value; }
 
-            void setValue(std::shared_ptr<AttributeValue> value);
+            inline void setValue(std::shared_ptr<AttributeValue> value) { this->value = value; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
-        /* ============================== CompoundAttributeValue ============================== */
+        /* ============================== CompAttributeValue ============================== */
         /**
          * A compound value for an SMT-LIB attribute
          */
-        class CompoundAttributeValue : public AttributeValue {
+        class CompAttributeValue : public AttributeValue,
+                                       public std::enable_shared_from_this<CompAttributeValue> {
         private:
             std::vector<std::shared_ptr<AttributeValue>> values;
         public:
-            CompoundAttributeValue(const std::vector<std::shared_ptr<AttributeValue>> values);
+            CompAttributeValue(std::vector<std::shared_ptr<AttributeValue>> values);
 
-            const std::vector<std::shared_ptr<AttributeValue>> &getValues() const;
-            std::vector<std::shared_ptr<AttributeValue>> &getValues();
+            inline std::vector<std::shared_ptr<AttributeValue>> &getValues() { return values; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

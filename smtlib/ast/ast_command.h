@@ -31,7 +31,8 @@ namespace smtlib {
          * An 'assert' command containing a term.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class AssertCommand : public Command {
+        class AssertCommand : public Command,
+                              public std::enable_shared_from_this<AssertCommand> {
         private:
             std::shared_ptr<Term> term;
 
@@ -39,16 +40,15 @@ namespace smtlib {
             /**
              * \param term  Asserted term
              */
-            AssertCommand(std::shared_ptr<Term> term) : term(term) { }
+            inline AssertCommand(std::shared_ptr<Term> term) : term(term) { }
 
-            const std::shared_ptr<Term> getTerm() const;
-            std::shared_ptr<Term> getTerm();
+            inline std::shared_ptr<Term> getTerm() { return term; }
 
-            void setTerm(std::shared_ptr<Term> term);
+            inline void setTerm(std::shared_ptr<Term> term) { this->term = term; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= CheckSatCommand ================================== */
@@ -56,13 +56,14 @@ namespace smtlib {
          * A 'check-sat' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class CheckSatCommand : public Command {
+        class CheckSatCommand : public Command,
+                                public std::enable_shared_from_this<CheckSatCommand> {
         public:
             CheckSatCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =============================== CheckSatAssumCommand =============================== */
@@ -70,7 +71,8 @@ namespace smtlib {
          * A 'check-sat-assuming' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class CheckSatAssumCommand : public Command {
+        class CheckSatAssumCommand : public Command,
+                                     public std::enable_shared_from_this<CheckSatAssumCommand> {
         private:
             std::vector<std::shared_ptr<PropLiteral>> assumptions;
 
@@ -78,14 +80,13 @@ namespace smtlib {
             /**
              * \param assumptions   List of assumptions
              */
-            CheckSatAssumCommand(const std::vector<std::shared_ptr<PropLiteral>> &assumptions);
+            CheckSatAssumCommand(std::vector<std::shared_ptr<PropLiteral>> &assumptions);
 
-            const std::vector<std::shared_ptr<PropLiteral>> &getAssumptions() const;
-            std::vector<std::shared_ptr<PropLiteral>> &getAssumptions();
+            inline std::vector<std::shared_ptr<PropLiteral>> &getAssumptions() { return assumptions; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =============================== DeclareConstCommand ================================ */
@@ -93,7 +94,8 @@ namespace smtlib {
          * A 'declare-const' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class DeclareConstCommand : public Command {
+        class DeclareConstCommand : public Command,
+                                    public std::enable_shared_from_this<DeclareConstCommand> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::shared_ptr<Sort> sort;
@@ -102,22 +104,20 @@ namespace smtlib {
              * \param name  Name of the constant
              * \param sort  Sort of the constant
              */
-            DeclareConstCommand(std::shared_ptr<Symbol> symbol, std::shared_ptr<Sort> sort)
+            inline DeclareConstCommand(std::shared_ptr<Symbol> symbol, std::shared_ptr<Sort> sort)
                     : symbol(symbol), sort(sort) { }
 
-            const std::shared_ptr<Symbol> getSymbol() const;
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            const std::shared_ptr<Sort> getSort() const;
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================ DeclareFunCommand ================================= */
@@ -125,7 +125,8 @@ namespace smtlib {
          * A 'declare-fun' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class DeclareFunCommand : public Command {
+        class DeclareFunCommand : public Command,
+                                  public std::enable_shared_from_this<DeclareFunCommand> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::vector<std::shared_ptr<Sort>> params;
@@ -137,25 +138,22 @@ namespace smtlib {
              * \param sort      Sort of the return value
              */
             DeclareFunCommand(std::shared_ptr<Symbol> symbol,
-                              const std::vector<std::shared_ptr<Sort>> &params,
+                              std::vector<std::shared_ptr<Sort>> params,
                               std::shared_ptr<Sort> sort);
 
-            const std::shared_ptr<Symbol> getSymbol() const;
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            const std::vector<std::shared_ptr<Sort>> &getParams() const;
-            std::vector<std::shared_ptr<Sort>> &getParams();
+            inline std::vector<std::shared_ptr<Sort>> &getParams() { return params; }
 
-            const std::shared_ptr<Sort> getSort() const;
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================ DeclareSortCommand ================================ */
@@ -163,7 +161,8 @@ namespace smtlib {
          * A 'declare-sort' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class DeclareSortCommand : public Command {
+        class DeclareSortCommand : public Command,
+                                   public std::enable_shared_from_this<DeclareSortCommand> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::shared_ptr<NumeralLiteral> arity;
@@ -172,23 +171,21 @@ namespace smtlib {
              * \param name      Name of the sort
              * \param arity     Arity of the sort
              */
-            DeclareSortCommand(std::shared_ptr<Symbol> symbol,
+            inline DeclareSortCommand(std::shared_ptr<Symbol> symbol,
                                std::shared_ptr<NumeralLiteral> arity)
                     : symbol(symbol), arity(arity) { }
 
-            const std::shared_ptr<Symbol> getSymbol() const;
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            const std::shared_ptr<NumeralLiteral> getArity() const;
-            std::shared_ptr<NumeralLiteral> getArity();
+            inline std::shared_ptr<NumeralLiteral> getArity() { return arity; }
 
-            void setArity(std::shared_ptr<NumeralLiteral> arity);
+            inline void setArity(std::shared_ptr<NumeralLiteral> arity) { this->arity = arity; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= DefineFunCommand ================================= */
@@ -196,22 +193,25 @@ namespace smtlib {
          * A 'define-fun' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class DefineFunCommand : public Command {
+        class DefineFunCommand : public Command,
+                                 public std::enable_shared_from_this<DefineFunCommand> {
         private:
             std::shared_ptr<FunctionDefinition> definition;
         public:
             /**
              * \param definition    Function definition
              */
-            DefineFunCommand(std::shared_ptr<FunctionDefinition> definition)
+            inline DefineFunCommand(std::shared_ptr<FunctionDefinition> definition)
                     : definition(definition) { }
 
             /**
              * \param signature    Function signature
              * \param body         Function body
              */
-            DefineFunCommand(std::shared_ptr<FunctionDeclaration> signature,
-                             std::shared_ptr<Term> body);
+            inline DefineFunCommand(std::shared_ptr<FunctionDeclaration> signature,
+                                    std::shared_ptr<Term> body) {
+                definition = std::make_shared<FunctionDefinition>(signature, body);
+            }
 
             /**
              * \param symbol    Name of the function
@@ -220,18 +220,17 @@ namespace smtlib {
              * \param body      Function body
              */
             DefineFunCommand(std::shared_ptr<Symbol> symbol,
-                             const  std::vector<std::shared_ptr<SortedVariable>> &params,
+                             std::vector<std::shared_ptr<SortedVariable>> &params,
                              std::shared_ptr<Sort> sort,
                              std::shared_ptr<Term> body);
 
-            const std::shared_ptr<FunctionDefinition> getDefinition() const;
-            std::shared_ptr<FunctionDefinition> getDefinition();
+            inline std::shared_ptr<FunctionDefinition> getDefinition() { return definition; }
 
-            void setDefinition(std::shared_ptr<FunctionDefinition> definition);
+            inline void setDefinition(std::shared_ptr<FunctionDefinition> definition) { this->definition = definition; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================ DefineFunRecCommand =============================== */
@@ -239,22 +238,25 @@ namespace smtlib {
          * A 'define-fun-rec' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class DefineFunRecCommand : public Command {
+        class DefineFunRecCommand : public Command,
+                                    public std::enable_shared_from_this<DefineFunRecCommand> {
         private:
             std::shared_ptr<FunctionDefinition> definition;
         public:
             /**
              * \param definition    Function definition
              */
-            DefineFunRecCommand(std::shared_ptr<FunctionDefinition> definition)
+            inline DefineFunRecCommand(std::shared_ptr<FunctionDefinition> definition)
                     : definition(definition) { }
 
             /**
              * \param signature    Function signature
              * \param body         Function body
              */
-            DefineFunRecCommand(std::shared_ptr<FunctionDeclaration> signature,
-                                std::shared_ptr<Term> body);
+            inline DefineFunRecCommand(std::shared_ptr<FunctionDeclaration> signature,
+                                       std::shared_ptr<Term> body) {
+                definition = std::make_shared<FunctionDefinition>(signature, body);
+            }
 
             /**
              * \param symbol    Name of the function
@@ -263,18 +265,17 @@ namespace smtlib {
              * \param body      Function body
              */
             DefineFunRecCommand(std::shared_ptr<Symbol> symbol,
-                                const std::vector<std::shared_ptr<SortedVariable>> &params,
+                                std::vector<std::shared_ptr<SortedVariable>> &params,
                                 std::shared_ptr<Sort> sort,
                                 std::shared_ptr<Term> body);
 
-            const std::shared_ptr<FunctionDefinition> getDefinition() const;
-            std::shared_ptr<FunctionDefinition> getDefinition();
+            inline std::shared_ptr<FunctionDefinition> getDefinition() { return definition; }
 
-            void setDefinition(std::shared_ptr<FunctionDefinition> definition);
+            inline void setDefinition(std::shared_ptr<FunctionDefinition> definition) { this->definition = definition; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =============================== DefineFunsRecCommand =============================== */
@@ -282,7 +283,8 @@ namespace smtlib {
          * A 'define-funs-rec' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class DefineFunsRecCommand : public Command {
+        class DefineFunsRecCommand : public Command,
+                                     public std::enable_shared_from_this<DefineFunsRecCommand> {
         private:
             std::vector<std::shared_ptr<FunctionDeclaration>> declarations;
             std::vector<std::shared_ptr<Term>> bodies;
@@ -291,18 +293,16 @@ namespace smtlib {
              * \param declarations    Function declarations
              * \param bodies          Function bodies
              */
-            DefineFunsRecCommand(const std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
-                                 const std::vector<std::shared_ptr<Term>> &bodies);
+            DefineFunsRecCommand(std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
+                                 std::vector<std::shared_ptr<Term>> &bodies);
 
-            const std::vector<std::shared_ptr<FunctionDeclaration>> &getDeclarations() const;
-            std::vector<std::shared_ptr<FunctionDeclaration>> &getDeclarations();
+            inline std::vector<std::shared_ptr<FunctionDeclaration>> &getDeclarations() { return declarations; }
 
-            const std::vector<std::shared_ptr<Term>> &getBodies() const;
-            std::vector<std::shared_ptr<Term>> &getBodies();
+            inline std::vector<std::shared_ptr<Term>> &getBodies() { return bodies; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================ DefineSortCommand ================================= */
@@ -310,7 +310,8 @@ namespace smtlib {
          * A 'define-sort' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class DefineSortCommand : public Command {
+        class DefineSortCommand : public Command,
+                                  public std::enable_shared_from_this<DefineSortCommand> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::vector<std::shared_ptr<Symbol>> params;
@@ -321,25 +322,22 @@ namespace smtlib {
              * \param arity     Arity of the sort
              */
             DefineSortCommand(std::shared_ptr<Symbol> symbol,
-                              const std::vector<std::shared_ptr<Symbol>> &params,
+                              std::vector<std::shared_ptr<Symbol>> &params,
                               std::shared_ptr<Sort> sort);
 
-            const std::shared_ptr<Symbol> getSymbol() const;
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            const std::vector<std::shared_ptr<Symbol>> &getParams() const;
-            std::vector<std::shared_ptr<Symbol>> &getParams();
+            inline std::vector<std::shared_ptr<Symbol>> &getParams() { return params; }
 
-            const std::shared_ptr<Sort> getSort() const;
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =================================== EchoCommand ==================================== */
@@ -347,23 +345,23 @@ namespace smtlib {
          * An 'echo' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class EchoCommand : public Command {
+        class EchoCommand : public Command,
+                            public std::enable_shared_from_this<EchoCommand> {
         private:
             std::string message;
         public:
             /**
              * \param   Message to print
              */
-            EchoCommand(std::string message) : message(message) {}
+            inline EchoCommand(std::string message) : message(message) {}
 
-            const std::string &getMessage() const;
-            std::string &getMessage();
+            inline std::string &getMessage() { return message; }
 
-            void setMessage(std::string message);
+            inline void setMessage(std::string message) { this->message = message; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =================================== ExitCommand ==================================== */
@@ -371,13 +369,14 @@ namespace smtlib {
          * An 'exit' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class ExitCommand : public Command {
+        class ExitCommand : public Command,
+                            public std::enable_shared_from_this<ExitCommand> {
         public:
-            ExitCommand() { }
+            inline ExitCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================ GetAssertsCommand ================================= */
@@ -385,13 +384,14 @@ namespace smtlib {
          * A 'get-assertions' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetAssertsCommand : public Command {
+        class GetAssertsCommand : public Command,
+                                  public std::enable_shared_from_this<GetAssertsCommand> {
         public:
-            GetAssertsCommand() { }
+            inline GetAssertsCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================ GetAssignsCommand ================================= */
@@ -399,13 +399,14 @@ namespace smtlib {
          * A 'get-assignments' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetAssignsCommand : public Command {
+        class GetAssignsCommand : public Command,
+                                  public std::enable_shared_from_this<GetAssignsCommand> {
         public:
-            GetAssignsCommand() { }
+            inline GetAssignsCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================== GetInfoCommand ================================== */
@@ -413,23 +414,23 @@ namespace smtlib {
          * A 'get-info' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetInfoCommand : public Command {
+        class GetInfoCommand : public Command,
+                               public std::enable_shared_from_this<GetInfoCommand> {
         private:
             std::shared_ptr<Keyword> flag;
         public:
             /**
              * \param flag  Flag name
              */
-            GetInfoCommand(std::shared_ptr<Keyword> flag) : flag(flag) { }
+            inline GetInfoCommand(std::shared_ptr<Keyword> flag) : flag(flag) { }
 
-            const std::shared_ptr<Keyword> getFlag() const;
-            std::shared_ptr<Keyword> getFlag();
+            inline std::shared_ptr<Keyword> getFlag() { return flag; }
 
-            void setFlag(std::shared_ptr<Keyword> flag);
+            inline void setFlag(std::shared_ptr<Keyword> flag) { this->flag = flag; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= GetModelCommand ================================== */
@@ -437,13 +438,14 @@ namespace smtlib {
          * A 'get-model' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetModelCommand : public Command {
+        class GetModelCommand : public Command,
+                                public std::enable_shared_from_this<GetModelCommand> {
         public:
-            GetModelCommand() { }
+            inline GetModelCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= GetOptionCommand ================================= */
@@ -451,23 +453,23 @@ namespace smtlib {
          * A 'get-option' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetOptionCommand : public Command {
+        class GetOptionCommand : public Command,
+                                 public std::enable_shared_from_this<GetOptionCommand> {
         private:
             std::shared_ptr<Keyword> option;
         public:
             /**
              * \param option    Option name
              */
-            GetOptionCommand(std::shared_ptr<Keyword> option) : option(option) { }
+            inline GetOptionCommand(std::shared_ptr<Keyword> option) : option(option) { }
 
-            const std::shared_ptr<Keyword> getOption() const;
-            std::shared_ptr<Keyword> getOption();
+            inline std::shared_ptr<Keyword> getOption() { return option; }
 
-            void setOption(std::shared_ptr<Keyword> option);
+            inline void setOption(std::shared_ptr<Keyword> option) { this->option = option; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= GetProofCommand ================================== */
@@ -475,13 +477,14 @@ namespace smtlib {
          * A 'get-proof' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetProofCommand : public Command {
+        class GetProofCommand : public Command,
+                                public std::enable_shared_from_this<GetProofCommand> {
         public:
-            GetProofCommand() { }
+            inline GetProofCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ============================== GetUnsatAssumsCommand =============================== */
@@ -489,13 +492,14 @@ namespace smtlib {
          * A 'get-unsat-assumptions' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetUnsatAssumsCommand : public Command {
+        class GetUnsatAssumsCommand : public Command,
+                                      public std::enable_shared_from_this<GetUnsatAssumsCommand> {
         public:
-            GetUnsatAssumsCommand() { }
+            inline GetUnsatAssumsCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =============================== GetUnsatCoreCommand ================================ */
@@ -503,13 +507,14 @@ namespace smtlib {
          * A 'get-unsat-core' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetUnsatCoreCommand : public Command {
+        class GetUnsatCoreCommand : public Command,
+                                    public std::enable_shared_from_this<GetUnsatCoreCommand> {
         public:
-            GetUnsatCoreCommand() { }
+            inline GetUnsatCoreCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= GetValueCommand ================================== */
@@ -517,22 +522,21 @@ namespace smtlib {
          * A 'get-value' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class GetValueCommand : public Command {
+        class GetValueCommand : public Command,
+                                public std::enable_shared_from_this<GetValueCommand> {
         private:
             std::vector<std::shared_ptr<Term>> terms;
         public:
             /**
              * \param terms Terms to evaluate
              */
-            GetValueCommand(const std::vector<std::shared_ptr<Term>> &terms);
+            GetValueCommand(std::vector<std::shared_ptr<Term>> &terms);
 
-            const std::vector<std::shared_ptr<Term>> getTerms() const;
+            inline std::vector<std::shared_ptr<Term>> &getTerms() { return terms; }
 
-            std::vector<std::shared_ptr<Term>> &getTerms();
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual void accept(AstVisitor0* visitor) const;
-
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ==================================== PopCommand ==================================== */
@@ -540,20 +544,20 @@ namespace smtlib {
          * A 'push' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class PopCommand : public Command {
+        class PopCommand : public Command,
+                           public std::enable_shared_from_this<PopCommand> {
         private:
             std::shared_ptr<NumeralLiteral> numeral;
         public:
-            PopCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
+            inline PopCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
-            const std::shared_ptr<NumeralLiteral> getNumeral() const;
-            std::shared_ptr<NumeralLiteral> getNumeral();
+            inline std::shared_ptr<NumeralLiteral> getNumeral() { return numeral; }
 
-            void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
+            inline void setNumeral(std::shared_ptr<NumeralLiteral> numeral) { this->numeral = numeral; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =================================== PushCommand ==================================== */
@@ -561,20 +565,20 @@ namespace smtlib {
          * A 'push' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class PushCommand : public Command {
+        class PushCommand : public Command,
+                            public std::enable_shared_from_this<PushCommand> {
         private:
             std::shared_ptr<NumeralLiteral> numeral;
         public:
-            PushCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
+            inline PushCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
-            const std::shared_ptr<NumeralLiteral> getNumeral() const;
-            std::shared_ptr<NumeralLiteral> getNumeral();
+            inline std::shared_ptr<NumeralLiteral> getNumeral() { return numeral; }
 
-            void setNumeral(std::shared_ptr<NumeralLiteral> numeral);
+            inline void setNumeral(std::shared_ptr<NumeralLiteral> numeral) { this->numeral = numeral; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =================================== ResetCommand =================================== */
@@ -582,13 +586,14 @@ namespace smtlib {
          * A 'reset' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class ResetCommand : public Command {
+        class ResetCommand : public Command,
+                             public std::enable_shared_from_this<ResetCommand> {
         public:
-            ResetCommand() { }
+            inline ResetCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* =============================== ResetAssertsCommand ================================ */
@@ -596,13 +601,14 @@ namespace smtlib {
          * A 'reset-assertions' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class ResetAssertsCommand : public Command {
+        class ResetAssertsCommand : public Command,
+                                    public std::enable_shared_from_this<ResetAssertsCommand> {
         public:
-            ResetAssertsCommand() { }
+            inline ResetAssertsCommand() { }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================== SetInfoCommand ================================== */
@@ -610,23 +616,23 @@ namespace smtlib {
          * A 'set-info' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class SetInfoCommand : public Command {
+        class SetInfoCommand : public Command,
+                               public std::enable_shared_from_this<SetInfoCommand> {
         private:
             std::shared_ptr<Attribute> info;
         public:
             /**
              * \param info    Info to set
              */
-            SetInfoCommand(std::shared_ptr<Attribute> info) : info(info) { }
+            inline SetInfoCommand(std::shared_ptr<Attribute> info) : info(info) { }
 
-            const std::shared_ptr<Attribute> getInfo() const;
-            std::shared_ptr<Attribute> getInfo();
+            inline std::shared_ptr<Attribute> getInfo() { return info; }
 
-            void setInfo(std::shared_ptr<Attribute> info);
+            inline void setInfo(std::shared_ptr<Attribute> info) { this->info = info; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= SetLogicCommand ================================== */
@@ -634,23 +640,23 @@ namespace smtlib {
          * A 'set-logic' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class SetLogicCommand : public Command {
+        class SetLogicCommand : public Command,
+                                public std::enable_shared_from_this<SetLogicCommand> {
         private:
             std::shared_ptr<Symbol> logic;
         public:
             /**
              * \param name  Name of the logic to set
              */
-            SetLogicCommand(std::shared_ptr<Symbol> logic) : logic(logic) { }
+            inline SetLogicCommand(std::shared_ptr<Symbol> logic) : logic(logic) { }
 
-            const std::shared_ptr<Symbol> getLogic() const;
-            std::shared_ptr<Symbol> getLogic();
+            inline std::shared_ptr<Symbol> getLogic() { return logic; }
 
-            void setLogic(std::shared_ptr<Symbol> logic);
+            inline void setLogic(std::shared_ptr<Symbol> logic) { this->logic = logic; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================= SetOptionCommand ================================= */
@@ -658,23 +664,23 @@ namespace smtlib {
          * A 'set-option' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class SetOptionCommand : public Command {
+        class SetOptionCommand : public Command,
+                                 public std::enable_shared_from_this<SetOptionCommand> {
         private:
             std::shared_ptr<Attribute> option;
         public:
             /**
              * \param option    Option to set
              */
-            SetOptionCommand(std::shared_ptr<Attribute> option) : option(option) { }
+            inline SetOptionCommand(std::shared_ptr<Attribute> option) : option(option) { }
 
-            const std::shared_ptr<Attribute> getOption() const;
-            std::shared_ptr<Attribute> getOption();
+            inline std::shared_ptr<Attribute> getOption() { return option; }
 
-            void setOption(std::shared_ptr<Attribute> option);
+            inline void setOption(std::shared_ptr<Attribute> option) { this->option = option; }
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

@@ -19,7 +19,7 @@ namespace smtlib {
          * Node and (possible) root of the SMT abstract syntax tree.
          * Represents the contents of a logic file.
          */
-        class Logic : public AstRoot {
+        class Logic : public AstRoot, public std::enable_shared_from_this<Logic> {
         private:
             std::shared_ptr<Symbol> name;
             std::vector<std::shared_ptr<Attribute>> attributes;
@@ -37,19 +37,17 @@ namespace smtlib {
              * \param attributes    Logic attributes
              */
             Logic(std::shared_ptr<Symbol> name,
-                     const std::vector<std::shared_ptr<Attribute>> &attributes);
+                     std::vector<std::shared_ptr<Attribute>> &attributes);
 
-            const std::shared_ptr<Symbol> getName() const;
             std::shared_ptr<Symbol> getName();
 
             void setName(std::shared_ptr<Symbol> name);
 
-            const std::vector<std::shared_ptr<Attribute>> &getAttributes() const;
             std::vector<std::shared_ptr<Attribute>> &getAttributes();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

@@ -21,7 +21,7 @@ namespace smtlib {
         };
 
         class QIdentifier : public virtual AstNode,
-                                public Term {
+                            public Term {
         };
 
         class Index : public virtual AstNode {

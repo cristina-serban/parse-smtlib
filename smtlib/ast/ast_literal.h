@@ -47,19 +47,19 @@ namespace smtlib {
          */
         class NumeralLiteral : public Literal<long>,
                                public Index,
-                               public SpecConstant {
+                               public SpecConstant, public std::enable_shared_from_this<NumeralLiteral> {
         private:
             unsigned int base;
         public:
             NumeralLiteral(long value, unsigned int base);
 
-            unsigned int getBase() const;
+            unsigned int getBase();
 
             void setBase(unsigned int base);
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================== DecimalLiteral ================================== */
@@ -69,13 +69,13 @@ namespace smtlib {
          * Can act as a specification constant.
          */
         class DecimalLiteral : public Literal<double>,
-                               public SpecConstant {
+                               public SpecConstant, public std::enable_shared_from_this<DecimalLiteral> {
         public:
             DecimalLiteral(double value);
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ================================== StringLiteral =================================== */
@@ -85,13 +85,13 @@ namespace smtlib {
          * Can act as a specification constant.
          */
         class StringLiteral : public Literal<std::string>,
-                              public SpecConstant {
+                              public SpecConstant, public std::enable_shared_from_this<StringLiteral> {
         public:
             StringLiteral(std::string value);
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

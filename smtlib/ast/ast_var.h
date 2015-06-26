@@ -20,7 +20,7 @@ namespace smtlib {
          * A sorted variable.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class SortedVariable : public AstNode {
+        class SortedVariable : public AstNode, public std::enable_shared_from_this<SortedVariable> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::shared_ptr<Sort> sort;
@@ -34,19 +34,17 @@ namespace smtlib {
                            std::shared_ptr<Sort> sort)
                     : symbol(symbol), sort(sort) { }
 
-            const std::shared_ptr<Symbol> getSymbol() const;
             std::shared_ptr<Symbol> getSymbol();
 
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
-            const std::shared_ptr<Sort> getSort() const;
             std::shared_ptr<Sort> getSort();
 
             void setSort(std::shared_ptr<Sort> sort);
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
 
         /* ==================================== VarBinding ==================================== */
@@ -54,7 +52,7 @@ namespace smtlib {
          * A variable binding.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class VarBinding : public AstNode {
+        class VarBinding : public AstNode, public std::enable_shared_from_this<VarBinding> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::shared_ptr<Term> term;
@@ -69,19 +67,17 @@ namespace smtlib {
                     : symbol(symbol), term(term) {
             }
 
-            const std::shared_ptr<Symbol> getSymbol() const;
             std::shared_ptr<Symbol> getSymbol();
 
             void setSymbol(std::shared_ptr<Symbol> symbol);
 
-            const std::shared_ptr<Term> getTerm() const;
             std::shared_ptr<Term> getTerm();
 
             void setTerm(std::shared_ptr<Term> term);
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }

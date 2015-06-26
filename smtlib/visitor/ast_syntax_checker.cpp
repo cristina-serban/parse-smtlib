@@ -16,7 +16,7 @@
 using namespace std;
 using namespace smtlib::ast;
 
-shared_ptr<SyntaxChecker::SyntaxCheckError> SyntaxChecker::addError(string message, AstNode const *node,
+shared_ptr<SyntaxChecker::SyntaxCheckError> SyntaxChecker::addError(string message, std::shared_ptr<AstNode> node,
                                                                     shared_ptr<SyntaxChecker::SyntaxCheckError> err) {
     if (!err) {
         err = make_shared<SyntaxCheckError>();
@@ -30,7 +30,7 @@ shared_ptr<SyntaxChecker::SyntaxCheckError> SyntaxChecker::addError(string messa
     return err;
 }
 
-void SyntaxChecker::visit(Attribute const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Attribute> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -49,7 +49,7 @@ void SyntaxChecker::visit(Attribute const *node) {
         node->getValue()->accept(this);
 }
 
-void SyntaxChecker::visit(CompoundAttributeValue const *node) {
+void SyntaxChecker::visit(std::shared_ptr<CompAttributeValue> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -57,13 +57,13 @@ void SyntaxChecker::visit(CompoundAttributeValue const *node) {
         return;
     }
 
-    const std::vector<std::shared_ptr<AttributeValue>> &vals = node->getValues();
-    for (std::vector<std::shared_ptr<AttributeValue>>::const_iterator it = vals.begin(); it != vals.end(); it++) {
+    std::vector<std::shared_ptr<AttributeValue>> &vals = node->getValues();
+    for (std::vector<std::shared_ptr<AttributeValue>>::iterator it = vals.begin(); it != vals.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(Symbol const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Symbol> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -77,7 +77,7 @@ void SyntaxChecker::visit(Symbol const *node) {
     }
 }
 
-void SyntaxChecker::visit(Keyword const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Keyword> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -86,7 +86,7 @@ void SyntaxChecker::visit(Keyword const *node) {
     }
 }
 
-void SyntaxChecker::visit(MetaSpecConstant const *node) {
+void SyntaxChecker::visit(std::shared_ptr<MetaSpecConstant> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -95,7 +95,7 @@ void SyntaxChecker::visit(MetaSpecConstant const *node) {
     }
 }
 
-void SyntaxChecker::visit(BooleanValue const *node) {
+void SyntaxChecker::visit(std::shared_ptr<BooleanValue> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -104,7 +104,7 @@ void SyntaxChecker::visit(BooleanValue const *node) {
     }
 }
 
-void SyntaxChecker::visit(PropLiteral const *node) {
+void SyntaxChecker::visit(std::shared_ptr<PropLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -120,7 +120,7 @@ void SyntaxChecker::visit(PropLiteral const *node) {
     }
 }
 
-void SyntaxChecker::visit(AssertCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<AssertCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -136,7 +136,7 @@ void SyntaxChecker::visit(AssertCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(CheckSatCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<CheckSatCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -145,7 +145,7 @@ void SyntaxChecker::visit(CheckSatCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(CheckSatAssumCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<CheckSatAssumCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -153,13 +153,13 @@ void SyntaxChecker::visit(CheckSatAssumCommand const *node) {
         return;
     }
 
-    const std::vector<std::shared_ptr<PropLiteral>> &assums = node->getAssumptions();
-    for (std::vector<std::shared_ptr<PropLiteral>>::const_iterator it = assums.begin(); it != assums.end(); it++) {
+    std::vector<std::shared_ptr<PropLiteral>> &assums = node->getAssumptions();
+    for (std::vector<std::shared_ptr<PropLiteral>>::iterator it = assums.begin(); it != assums.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(DeclareConstCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DeclareConstCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -182,7 +182,7 @@ void SyntaxChecker::visit(DeclareConstCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(DeclareFunCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DeclareFunCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -197,8 +197,8 @@ void SyntaxChecker::visit(DeclareFunCommand const *node) {
         node->getSymbol()->accept(this);
     }
 
-    const std::vector<std::shared_ptr<Sort>> &params = node->getParams();
-    for (std::vector<std::shared_ptr<Sort>>::const_iterator it = params.begin(); it != params.end(); it++) {
+    std::vector<std::shared_ptr<Sort>> &params = node->getParams();
+    for (std::vector<std::shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
         (*it)->accept(this);
     }
 
@@ -210,7 +210,7 @@ void SyntaxChecker::visit(DeclareFunCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(DeclareSortCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DeclareSortCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -233,7 +233,7 @@ void SyntaxChecker::visit(DeclareSortCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(DefineFunCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DefineFunCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -249,7 +249,7 @@ void SyntaxChecker::visit(DefineFunCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(DefineFunRecCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DefineFunRecCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -265,7 +265,7 @@ void SyntaxChecker::visit(DefineFunRecCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(DefineFunsRecCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DefineFunsRecCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -290,20 +290,20 @@ void SyntaxChecker::visit(DefineFunsRecCommand const *node) {
                 node, err);
     }
 
-    const std::vector<std::shared_ptr<FunctionDeclaration>> &decls = node->getDeclarations();
-    for (std::vector<std::shared_ptr<FunctionDeclaration>>::const_iterator it = decls.begin();
+    std::vector<std::shared_ptr<FunctionDeclaration>> &decls = node->getDeclarations();
+    for (std::vector<std::shared_ptr<FunctionDeclaration>>::iterator it = decls.begin();
          it != decls.end(); it++) {
         (*it)->accept(this);
     }
 
-    const std::vector<std::shared_ptr<FunctionDeclaration>> &bodies = node->getDeclarations();
-    for (std::vector<std::shared_ptr<FunctionDeclaration>>::const_iterator it = bodies.begin();
+    std::vector<std::shared_ptr<FunctionDeclaration>> &bodies = node->getDeclarations();
+    for (std::vector<std::shared_ptr<FunctionDeclaration>>::iterator it = bodies.begin();
          it != bodies.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(DefineSortCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DefineSortCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -318,8 +318,8 @@ void SyntaxChecker::visit(DefineSortCommand const *node) {
         node->getSymbol()->accept(this);
     }
 
-    const std::vector<std::shared_ptr<Symbol>> &params = node->getParams();
-    for (std::vector<std::shared_ptr<Symbol>>::const_iterator it = params.begin(); it != params.end(); it++) {
+    std::vector<std::shared_ptr<Symbol>> &params = node->getParams();
+    for (std::vector<std::shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
         (*it)->accept(this);
     }
 
@@ -331,7 +331,7 @@ void SyntaxChecker::visit(DefineSortCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(EchoCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<EchoCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -346,7 +346,7 @@ void SyntaxChecker::visit(EchoCommand const *node) {
 
 }
 
-void SyntaxChecker::visit(ExitCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<ExitCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -355,7 +355,7 @@ void SyntaxChecker::visit(ExitCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetAssertsCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetAssertsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -364,7 +364,7 @@ void SyntaxChecker::visit(GetAssertsCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetAssignsCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetAssignsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -373,7 +373,7 @@ void SyntaxChecker::visit(GetAssignsCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetInfoCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetInfoCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -389,7 +389,7 @@ void SyntaxChecker::visit(GetInfoCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetModelCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetModelCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -398,7 +398,7 @@ void SyntaxChecker::visit(GetModelCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetOptionCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetOptionCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -414,7 +414,7 @@ void SyntaxChecker::visit(GetOptionCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetProofCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetProofCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -423,7 +423,7 @@ void SyntaxChecker::visit(GetProofCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetUnsatAssumsCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetUnsatAssumsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -432,7 +432,7 @@ void SyntaxChecker::visit(GetUnsatAssumsCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetUnsatCoreCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetUnsatCoreCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -441,7 +441,7 @@ void SyntaxChecker::visit(GetUnsatCoreCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(GetValueCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<GetValueCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -453,14 +453,14 @@ void SyntaxChecker::visit(GetValueCommand const *node) {
         ret = false;
         err = addError("Missing terms in get-value command", node, err);
     } else {
-        const std::vector<std::shared_ptr<Term>> &terms = node->getTerms();
-        for (std::vector<std::shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
+        std::vector<std::shared_ptr<Term>> &terms = node->getTerms();
+        for (std::vector<std::shared_ptr<Term>>::iterator it = terms.begin(); it != terms.end(); it++) {
             (*it)->accept(this);
         }
     }
 }
 
-void SyntaxChecker::visit(PopCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<PopCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -476,7 +476,7 @@ void SyntaxChecker::visit(PopCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(PushCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<PushCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -492,7 +492,7 @@ void SyntaxChecker::visit(PushCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(ResetCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<ResetCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -501,7 +501,7 @@ void SyntaxChecker::visit(ResetCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(ResetAssertsCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<ResetAssertsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -510,7 +510,7 @@ void SyntaxChecker::visit(ResetAssertsCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(SetInfoCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<SetInfoCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -526,7 +526,7 @@ void SyntaxChecker::visit(SetInfoCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(SetLogicCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<SetLogicCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -540,7 +540,7 @@ void SyntaxChecker::visit(SetLogicCommand const *node) {
     }
 }
 
-void SyntaxChecker::visit(SetOptionCommand const *node) {
+void SyntaxChecker::visit(std::shared_ptr<SetOptionCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -555,15 +555,15 @@ void SyntaxChecker::visit(SetOptionCommand const *node) {
         shared_ptr<Attribute> option = node->getOption();
         if ((option->getKeyword()->getValue() == ":diagnostic-output-channel"
              || option->getKeyword()->getValue() == ":regular-output-channel")
-            && !dynamic_cast<StringLiteral *>(option->getValue().get())) {
+            && !dynamic_cast<StringLiteral const*>(option->getValue().get())) {
             ret = false;
-            err = addError("Option value should be string literal", option.get(), err);
+            err = addError("Option value should be string literal", option, err);
         } else if ((option->getKeyword()->getValue() == ":random-seed"
                     || option->getKeyword()->getValue() == ":verbosity"
                     || option->getKeyword()->getValue() == ":reproducible-resource-limit")
-                   && !dynamic_cast<NumeralLiteral *>(option->getValue().get())) {
+                   && !dynamic_cast<NumeralLiteral const*>(option->getValue().get())) {
             ret = false;
-            err = addError("Option value should be numeral literal", option.get(), err);
+            err = addError("Option value should be numeral literal", option, err);
         } else if ((option->getKeyword()->getValue() == ":expand-definitions"
                     || option->getKeyword()->getValue() == ":global-declarations"
                     || option->getKeyword()->getValue() == ":interactive-mode"
@@ -574,16 +574,16 @@ void SyntaxChecker::visit(SetOptionCommand const *node) {
                     || option->getKeyword()->getValue() == ":produce-proofs"
                     || option->getKeyword()->getValue() == ":produce-unsat-assumptions"
                     || option->getKeyword()->getValue() == ":produce-unsat-cores")
-                   && !dynamic_cast<BooleanValue *>(option->getValue().get())) {
+                   && !dynamic_cast<BooleanValue const*>(option->getValue().get())) {
             ret = false;
-            err = addError("Option value should be boolean", option.get(), err);
+            err = addError("Option value should be boolean", option, err);
         }
 
         node->getOption()->accept(this);
     }
 }
 
-void SyntaxChecker::visit(FunctionDeclaration const *node) {
+void SyntaxChecker::visit(std::shared_ptr<FunctionDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -598,8 +598,8 @@ void SyntaxChecker::visit(FunctionDeclaration const *node) {
         node->getSymbol()->accept(this);
     }
 
-    const std::vector<std::shared_ptr<SortedVariable>> &params = node->getParams();
-    for (std::vector<std::shared_ptr<SortedVariable>>::const_iterator it = params.begin(); it != params.end(); it++) {
+    std::vector<std::shared_ptr<SortedVariable>> &params = node->getParams();
+    for (std::vector<std::shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
         (*it)->accept(this);
     }
 
@@ -611,7 +611,7 @@ void SyntaxChecker::visit(FunctionDeclaration const *node) {
     }
 }
 
-void SyntaxChecker::visit(FunctionDefinition const *node) {
+void SyntaxChecker::visit(std::shared_ptr<FunctionDefinition> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -634,7 +634,7 @@ void SyntaxChecker::visit(FunctionDefinition const *node) {
     }
 }
 
-void SyntaxChecker::visit(Identifier const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Identifier> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -654,13 +654,13 @@ void SyntaxChecker::visit(Identifier const *node) {
         err = addError("Indexed identifier has no indices", node, err);
     }
 
-    const std::vector<std::shared_ptr<Index>> &indices = node->getIndices();
-    for (std::vector<std::shared_ptr<Index>>::const_iterator it = indices.begin(); it != indices.end(); it++) {
+    std::vector<std::shared_ptr<Index>> &indices = node->getIndices();
+    for (std::vector<std::shared_ptr<Index>>::iterator it = indices.begin(); it != indices.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(QualifiedIdentifier const *node) {
+void SyntaxChecker::visit(std::shared_ptr<QualifiedIdentifier> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -683,7 +683,7 @@ void SyntaxChecker::visit(QualifiedIdentifier const *node) {
     }
 }
 
-void SyntaxChecker::visit(DecimalLiteral const *node) {
+void SyntaxChecker::visit(std::shared_ptr<DecimalLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -692,7 +692,7 @@ void SyntaxChecker::visit(DecimalLiteral const *node) {
     }
 }
 
-void SyntaxChecker::visit(NumeralLiteral const *node) {
+void SyntaxChecker::visit(std::shared_ptr<NumeralLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -701,7 +701,7 @@ void SyntaxChecker::visit(NumeralLiteral const *node) {
     }
 }
 
-void SyntaxChecker::visit(StringLiteral const *node) {
+void SyntaxChecker::visit(std::shared_ptr<StringLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -710,7 +710,7 @@ void SyntaxChecker::visit(StringLiteral const *node) {
     }
 }
 
-void SyntaxChecker::visit(Logic const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Logic> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -738,27 +738,27 @@ void SyntaxChecker::visit(Logic const *node) {
             || attr->getKeyword()->getValue() == ":values"
             || attr->getKeyword()->getValue() == ":notes") {
 
-            if (!dynamic_cast<StringLiteral *>(attr->getValue().get())) {
+            if (!dynamic_cast<StringLiteral const*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be string literal", attr.get(), err);
+                err = addError("Attribute value should be string literal", attr, err);
             }
         } else if (attr->getKeyword()->getValue() == ":theories") {
-            if (!dynamic_cast<CompoundAttributeValue *>(attr->getValue().get())) {
+            if (!dynamic_cast<CompAttributeValue const*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be a list of theory names", attr.get(), err);
+                err = addError("Attribute value should be a list of theory names", attr, err);
             } else {
-                CompoundAttributeValue *val = dynamic_cast<CompoundAttributeValue *>(attr->getValue().get());
+                CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 /*if (values.empty()) {
                     ret = false;
-                    err = addError("Empty list of theory names", attr.get(), err);
+                    err = addError("Empty list of theory names", attr, err);
                 }*/
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
-                    if (!dynamic_cast<Symbol *>((*itt).get())) {
+                    if (!dynamic_cast<Symbol const*>((*itt).get())) {
                         ret = false;
-                        err = addError("Attribute value should be a symbol", (*itt).get(), err);
+                        err = addError("Attribute value should be a symbol", (*itt), err);
                     }
                 }
             }
@@ -768,7 +768,7 @@ void SyntaxChecker::visit(Logic const *node) {
     }
 }
 
-void SyntaxChecker::visit(Theory const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Theory> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -791,51 +791,51 @@ void SyntaxChecker::visit(Theory const *node) {
     for (vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         shared_ptr<Attribute> attr = *it;
         if (attr->getKeyword()->getValue() == ":sorts-description"
-             || attr->getKeyword()->getValue() == ":funs-description"
-             || attr->getKeyword()->getValue() == ":definition"
-             || attr->getKeyword()->getValue() == ":values"
-             || attr->getKeyword()->getValue() == ":notes") {
-            if(dynamic_cast<StringLiteral *>(attr->getValue().get())) {
+            || attr->getKeyword()->getValue() == ":funs-description"
+            || attr->getKeyword()->getValue() == ":definition"
+            || attr->getKeyword()->getValue() == ":values"
+            || attr->getKeyword()->getValue() == ":notes") {
+            if(dynamic_cast<StringLiteral const*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be string literal", attr.get(), err);
+                err = addError("Attribute value should be string literal", attr, err);
             }
         } else if (attr->getKeyword()->getValue() == ":sorts") {
-            if(!dynamic_cast<CompoundAttributeValue *>(attr->getValue().get())) {
+            if(!dynamic_cast<CompAttributeValue const*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be a list of sort symbol declarations", attr.get(), err);
+                err = addError("Attribute value should be a list of sort symbol declarations", attr, err);
             } else {
-                CompoundAttributeValue *val = dynamic_cast<CompoundAttributeValue *>(attr->getValue().get());
+                CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
                     ret = false;
-                    err = addError("Empty list of sort symbol declarations", attr.get(), err);
+                    err = addError("Empty list of sort symbol declarations", attr, err);
                 }
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
-                    if (!dynamic_cast<SortSymbolDeclaration *>((*itt).get())) {
+                    if (!dynamic_cast<SortSymbolDeclaration const*>((*itt).get())) {
                         ret = false;
-                        err = addError("Attribute value should be a sort symbol declaration", (*itt).get(), err);
+                        err = addError("Attribute value should be a sort symbol declaration", (*itt), err);
                     }
                 }
             }
         } else if (attr->getKeyword()->getValue() == ":funs") {
-            if(!dynamic_cast<CompoundAttributeValue *>(attr->getValue().get())) {
+            if(!dynamic_cast<CompAttributeValue const*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be a list of function symbol declarations", attr.get(), err);
+                err = addError("Attribute value should be a list of function symbol declarations", attr, err);
             } else {
-                CompoundAttributeValue *val = dynamic_cast<CompoundAttributeValue *>(attr->getValue().get());
+                CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
                     ret = false;
-                    err = addError("Empty list of function symbol declarations", attr.get(), err);
+                    err = addError("Empty list of function symbol declarations", attr, err);
                 }
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
-                    if (!dynamic_cast<FunSymbolDeclaration *>((*itt).get())) {
+                    if (!dynamic_cast<FunSymbolDeclaration*>((*itt).get())) {
                         ret = false;
-                        err = addError("Attribute value should be a function symbol declaration", (*itt).get(), err);
+                        err = addError("Attribute value should be a function symbol declaration", (*itt), err);
                     }
                 }
             }
@@ -845,7 +845,7 @@ void SyntaxChecker::visit(Theory const *node) {
     }
 }
 
-void SyntaxChecker::visit(Script const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Script> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -853,13 +853,13 @@ void SyntaxChecker::visit(Script const *node) {
         return;
     }
 
-    const std::vector<std::shared_ptr<Command>> &commands = node->getCommands();
-    for (std::vector<std::shared_ptr<Command>>::const_iterator it = commands.begin(); it != commands.end(); it++) {
+    std::vector<std::shared_ptr<Command>> &commands = node->getCommands();
+    for (std::vector<std::shared_ptr<Command>>::iterator it = commands.begin(); it != commands.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(Sort const *node) {
+void SyntaxChecker::visit(std::shared_ptr<Sort> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -878,14 +878,14 @@ void SyntaxChecker::visit(Sort const *node) {
         ret = false;
         err = addError("Parametrized sort has no parameters", node, err);
     } else {
-        const std::vector<std::shared_ptr<Sort>> &params = node->getParams();
-        for (std::vector<std::shared_ptr<Sort>>::const_iterator it = params.begin(); it != params.end(); it++) {
+        std::vector<std::shared_ptr<Sort>> &params = node->getParams();
+        for (std::vector<std::shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
             (*it)->accept(this);
         }
     }
 }
 
-void SyntaxChecker::visit(CompSExpression const *node) {
+void SyntaxChecker::visit(std::shared_ptr<CompSExpression> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -893,13 +893,13 @@ void SyntaxChecker::visit(CompSExpression const *node) {
         return;
     }
 
-    const std::vector<std::shared_ptr<SExpression>> &exprs = node->getExpressions();
-    for (std::vector<std::shared_ptr<SExpression>>::const_iterator it = exprs.begin(); it != exprs.end(); it++) {
+    std::vector<std::shared_ptr<SExpression>> &exprs = node->getExpressions();
+    for (std::vector<std::shared_ptr<SExpression>>::iterator it = exprs.begin(); it != exprs.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(SortSymbolDeclaration const *node) {
+void SyntaxChecker::visit(std::shared_ptr<SortSymbolDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -921,13 +921,13 @@ void SyntaxChecker::visit(SortSymbolDeclaration const *node) {
         node->getArity()->accept(this);
     }
 
-    const std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
-    for (std::vector<std::shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
+    std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
+    for (std::vector<std::shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(SpecConstFunDeclaration const *node) {
+void SyntaxChecker::visit(std::shared_ptr<SpecConstFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -949,13 +949,13 @@ void SyntaxChecker::visit(SpecConstFunDeclaration const *node) {
         node->getSort()->accept(this);
     }
 
-    const std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
-    for (std::vector<std::shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
+    std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
+    for (std::vector<std::shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(MetaSpecConstFunDeclaration const *node) {
+void SyntaxChecker::visit(std::shared_ptr<MetaSpecConstFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -977,13 +977,13 @@ void SyntaxChecker::visit(MetaSpecConstFunDeclaration const *node) {
         node->getSort()->accept(this);
     }
 
-    const std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
-    for (std::vector<std::shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
+    std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
+    for (std::vector<std::shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(IdentifierFunDeclaration const *node) {
+void SyntaxChecker::visit(std::shared_ptr<IdentifierFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1002,19 +1002,19 @@ void SyntaxChecker::visit(IdentifierFunDeclaration const *node) {
         ret = false;
         err = addError("Empty signature for function symbol declaration", node, err);
     } else {
-        const std::vector<std::shared_ptr<Sort>> &sig = node->getSignature();
-        for (std::vector<std::shared_ptr<Sort>>::const_iterator it = sig.begin(); it != sig.end(); it++) {
+        std::vector<std::shared_ptr<Sort>> &sig = node->getSignature();
+        for (std::vector<std::shared_ptr<Sort>>::iterator it = sig.begin(); it != sig.end(); it++) {
             (*it)->accept(this);
         }
     }
 
-    const std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
-    for (std::vector<std::shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
+    std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
+    for (std::vector<std::shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(ParametricFunDeclaration const *node) {
+void SyntaxChecker::visit(std::shared_ptr<ParametricFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1033,8 +1033,8 @@ void SyntaxChecker::visit(ParametricFunDeclaration const *node) {
         ret = false;
         err = addError("Empty signature for parametric function symbol declaration", node, err);
     } else {
-        const std::vector<std::shared_ptr<Sort>> &sig = node->getSignature();
-        for (std::vector<std::shared_ptr<Sort>>::const_iterator it = sig.begin(); it != sig.end(); it++) {
+        std::vector<std::shared_ptr<Sort>> &sig = node->getSignature();
+        for (std::vector<std::shared_ptr<Sort>>::iterator it = sig.begin(); it != sig.end(); it++) {
             (*it)->accept(this);
         }
     }
@@ -1043,19 +1043,19 @@ void SyntaxChecker::visit(ParametricFunDeclaration const *node) {
         ret = false;
         err = addError("Empty parameter list for parametric function symbol declaration", node, err);
     } else {
-        const std::vector<std::shared_ptr<Symbol>> &params = node->getParams();
-        for (std::vector<std::shared_ptr<Symbol>>::const_iterator it = params.begin(); it != params.end(); it++) {
+        std::vector<std::shared_ptr<Symbol>> &params = node->getParams();
+        for (std::vector<std::shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
             (*it)->accept(this);
         }
     }
 
-    const std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
-    for (std::vector<std::shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
+    std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
+    for (std::vector<std::shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         (*it)->accept(this);
     }
 }
 
-void SyntaxChecker::visit(QualifiedTerm const *node) {
+void SyntaxChecker::visit(std::shared_ptr<QualifiedTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1074,14 +1074,14 @@ void SyntaxChecker::visit(QualifiedTerm const *node) {
         ret = false;
         err = addError("Empty term list for qualified term", node, err);
     } else {
-        const std::vector<std::shared_ptr<Term>> &terms = node->getTerms();
-        for (std::vector<std::shared_ptr<Term>>::const_iterator it = terms.begin(); it != terms.end(); it++) {
+        std::vector<std::shared_ptr<Term>> &terms = node->getTerms();
+        for (std::vector<std::shared_ptr<Term>>::iterator it = terms.begin(); it != terms.end(); it++) {
             (*it)->accept(this);
         }
     }
 }
 
-void SyntaxChecker::visit(LetTerm const *node) {
+void SyntaxChecker::visit(std::shared_ptr<LetTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1100,15 +1100,15 @@ void SyntaxChecker::visit(LetTerm const *node) {
         ret = false;
         err = addError("Empty variable binding list for let term", node, err);
     } else {
-        const std::vector<std::shared_ptr<VarBinding>> &bindings = node->getBindings();
-        for (std::vector<std::shared_ptr<VarBinding>>::const_iterator it = bindings.begin();
+        std::vector<std::shared_ptr<VarBinding>> &bindings = node->getBindings();
+        for (std::vector<std::shared_ptr<VarBinding>>::iterator it = bindings.begin();
              it != bindings.end(); it++) {
             (*it)->accept(this);
         }
     }
 }
 
-void SyntaxChecker::visit(ForallTerm const *node) {
+void SyntaxChecker::visit(std::shared_ptr<ForallTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1127,15 +1127,15 @@ void SyntaxChecker::visit(ForallTerm const *node) {
         ret = false;
         err = addError("Empty variable binding list for forall term", node, err);
     } else {
-        const std::vector<std::shared_ptr<SortedVariable>> &bindings = node->getBindings();
-        for (std::vector<std::shared_ptr<SortedVariable>>::const_iterator it = bindings.begin();
+        std::vector<std::shared_ptr<SortedVariable>> &bindings = node->getBindings();
+        for (std::vector<std::shared_ptr<SortedVariable>>::iterator it = bindings.begin();
              it != bindings.end(); it++) {
             (*it)->accept(this);
         }
     }
 }
 
-void SyntaxChecker::visit(ExistsTerm const *node) {
+void SyntaxChecker::visit(std::shared_ptr<ExistsTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1154,15 +1154,15 @@ void SyntaxChecker::visit(ExistsTerm const *node) {
         ret = false;
         err = addError("Empty variable binding list for exists term", node, err);
     } else {
-        const std::vector<std::shared_ptr<SortedVariable>> &bindings = node->getBindings();
-        for (std::vector<std::shared_ptr<SortedVariable>>::const_iterator it = bindings.begin();
+        std::vector<std::shared_ptr<SortedVariable>> &bindings = node->getBindings();
+        for (std::vector<std::shared_ptr<SortedVariable>>::iterator it = bindings.begin();
              it != bindings.end(); it++) {
             (*it)->accept(this);
         }
     }
 }
 
-void SyntaxChecker::visit(AnnotatedTerm const *node) {
+void SyntaxChecker::visit(std::shared_ptr<AnnotatedTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1181,14 +1181,14 @@ void SyntaxChecker::visit(AnnotatedTerm const *node) {
         ret = false;
         err = addError("Empty attribute list for exists term", node, err);
     } else {
-        const std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
-        for (std::vector<std::shared_ptr<Attribute>>::const_iterator it = attrs.begin(); it != attrs.end(); it++) {
+        std::vector<std::shared_ptr<Attribute>> &attrs = node->getAttributes();
+        for (std::vector<std::shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
             (*it)->accept(this);
         }
     }
 }
 
-void SyntaxChecker::visit(SortedVariable const *node) {
+void SyntaxChecker::visit(std::shared_ptr<SortedVariable> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -1211,7 +1211,7 @@ void SyntaxChecker::visit(SortedVariable const *node) {
     }
 }
 
-void SyntaxChecker::visit(VarBinding const *node) {
+void SyntaxChecker::visit(std::shared_ptr<VarBinding> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {

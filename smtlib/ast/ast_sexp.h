@@ -18,21 +18,20 @@ namespace smtlib {
          * Node of the SMT-LIB abstract syntax tree.
          */
         class CompSExpression : public SExpression,
-                                public AttributeValue {
+                                public AttributeValue, public std::enable_shared_from_this<CompSExpression> {
         private:
             std::vector<std::shared_ptr<SExpression>> exprs;
         public:
             /**
              * \param exprs     Subexpressions
              */
-            CompSExpression(const std::vector<std::shared_ptr<SExpression>> &exprs);
+            CompSExpression(std::vector<std::shared_ptr<SExpression>> &exprs);
 
-            const std::vector<std::shared_ptr<SExpression>> &getExpressions() const;
             std::vector<std::shared_ptr<SExpression>> &getExpressions();
 
-            virtual void accept(AstVisitor0* visitor) const;
+            virtual void accept(AstVisitor0* visitor);
 
-            virtual std::string toString() const;
+            virtual std::string toString();
         };
     }
 }
