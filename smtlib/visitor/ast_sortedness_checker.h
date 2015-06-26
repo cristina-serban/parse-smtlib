@@ -7,6 +7,8 @@
 #include "../util/smt_logger.h"
 
 #include <map>
+#include <ast/ast_symbol_decl.h>
+#include <ast/ast_command.h>
 
 namespace smtlib {
     namespace ast {
@@ -38,19 +40,19 @@ namespace smtlib {
             void addError(std::string message, std::shared_ptr<AstNode> node, std::shared_ptr<SortInfo> sortInfo);
             void addError(std::string message, std::shared_ptr<AstNode> node, std::shared_ptr<FunInfo> funInfo);
 
-            bool equalSignatures(std::vector<std::shared_ptr<ast::Sort>> &sig1,
-                                 std::vector<std::shared_ptr<ast::Sort>> &sig2);
+            std::shared_ptr<SortInfo> getInfo(std::shared_ptr<SortSymbolDeclaration> node);
+            std::shared_ptr<SortInfo> getInfo(std::shared_ptr<DeclareSortCommand> node);
+            std::shared_ptr<SortInfo> getInfo(std::shared_ptr<DefineSortCommand> node);
 
-            bool equalParamSignatures(std::vector<std::shared_ptr<ast::Symbol>> &params1,
-                                      std::vector<std::shared_ptr<ast::Sort>> &sig1,
-                                      std::vector<std::shared_ptr<ast::Symbol>> &params,
-                                      std::vector<std::shared_ptr<ast::Sort>> &sig2);
-
-            bool equalParamSorts(std::vector<std::shared_ptr<ast::Symbol>> &params1,
-                                 std::shared_ptr<ast::Sort> sort1,
-                                 std::vector<std::shared_ptr<ast::Symbol>> &params2,
-                                 std::shared_ptr<ast::Sort> sort2,
-                                 std::unordered_map<std::string, std::string> &mapping);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<SpecConstFunDeclaration> node);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<MetaSpecConstFunDeclaration> nodetd);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<IdentifierFunDeclaration> node);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<ParametricFunDeclaration> node);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<DeclareConstCommand> node);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<DeclareFunCommand> node);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<DefineFunCommand> node);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<DefineFunRecCommand> node);
+            std::vector<std::shared_ptr<FunInfo>> getInfo(std::shared_ptr<DefineFunsRecCommand> node);
 
             void loadTheory(std::string theory);
             void loadLogic(std::string logic);

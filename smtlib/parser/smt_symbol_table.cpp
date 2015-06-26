@@ -20,7 +20,22 @@ unordered_map<string, shared_ptr<VariableInfo>> &SymbolTable::getVars() {
     return vars;
 }
 
-bool SymbolTable::addSort(shared_ptr<SortInfo> info) {
+shared_ptr<SortInfo> SymbolTable::duplicate (shared_ptr<SortInfo> info) {
+    std::shared_ptr<SortInfo> dupInfo;
+    return dupInfo;
+}
+
+shared_ptr<FunInfo> SymbolTable::duplicate (shared_ptr<FunInfo> info) {
+    std::shared_ptr<FunInfo> dupInfo;
+    return dupInfo;
+}
+
+shared_ptr<VariableInfo> SymbolTable::duplicate (shared_ptr<VariableInfo> info) {
+    std::shared_ptr<VariableInfo> dupInfo;
+    return dupInfo;
+}
+
+bool SymbolTable::add(shared_ptr<SortInfo> info) {
     if(sorts.find(info->name) == sorts.end()) {
         sorts[info->name] = info;
         return true;
@@ -29,12 +44,12 @@ bool SymbolTable::addSort(shared_ptr<SortInfo> info) {
     }
 }
 
-bool SymbolTable::addFun(shared_ptr<FunInfo> info) {
+bool SymbolTable::add(shared_ptr<FunInfo> info) {
     funs[info->name].push_back(info);
     return true;
 }
 
-bool SymbolTable::addVariable(shared_ptr<VariableInfo> info) {
+bool SymbolTable::add(shared_ptr<VariableInfo> info) {
     if(vars.find(info->name) == vars.end()) {
         vars[info->name] = info;
         return true;

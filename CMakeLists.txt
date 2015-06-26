@@ -51,7 +51,16 @@ set(SOURCE_FILES
 	smtlib/visitor/ast_visitor_extra.h
 	smtlib/visitor/ast_syntax_checker.h
 	smtlib/visitor/ast_syntax_checker.cpp
+	smtlib/parser/smt_symbol_table.h
+	smtlib/parser/smt_symbol_table.cpp
+	smtlib/parser/smt_symbol_stack.h
+	smtlib/parser/smt_symbol_stack.cpp
+	smtlib/parser/smt_symbol_util.h
+    smtlib/parser/smt_symbol_util.cpp
+	smtlib/visitor/ast_sortedness_checker.h
+	smtlib/visitor/ast_sortedness_checker.cpp
+
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} smtlib/parser/smt_symbol_table.h smtlib/parser/smt_symbol_table.cpp smtlib/parser/smt_symbol_stack.h smtlib/parser/smt_symbol_stack.cpp smtlib/visitor/ast_sortedness_checker.h smtlib/visitor/ast_sortedness_checker.cpp smtlib/visitor/ast_term_sorter.h smtlib/visitor/ast_term_sorter.cpp smtlib/parser/smt_symbol_util.h smtlib/parser/smt_symbol_util.cpp)
+add_executable(parse-smtlib ${SOURCE_FILES})
 target_link_libraries(parse-smtlib ${LIB_FLEX})

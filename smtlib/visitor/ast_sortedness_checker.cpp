@@ -126,14 +126,54 @@ void SortednessChecker::addError(string message, shared_ptr<AstNode> node,
     errors[string(node->getFilename()->c_str())].push_back(err);
 }
 
-shared_ptr<FunInfo> getInfo(shared_ptr<DeclareConstCommand> node) {
+shared_ptr<SortInfo> SortednessChecker::getInfo(shared_ptr<DeclareSortCommand> node) {
+    return make_shared<SortInfo>(node->getSymbol()->toString(), node->getArity()->getValue(), node);
+}
+
+shared_ptr<SortInfo> SortednessChecker::getInfo(shared_ptr<DefineSortCommand> node) {
+    return make_shared<SortInfo>(node->getSymbol()->toString(), node->getParams().size(),
+                                 node->getParams(), node->getSort(), node);
+}
+
+
+shared_ptr<SortInfo> SortednessChecker::getInfo(shared_ptr<SortSymbolDeclaration> node) {
+    return make_shared<SortInfo>(node->getIdentifier()->toString(),
+                                 node->getArity()->getValue(),
+                                 node->getAttributes(), node);
+}
+
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<SpecConstFunDeclaration> node) {
+    vector<shared_ptr<Sort>> sig;
+    sig.push_back(node->getSort());
+
+    return make_shared<FunInfo>(node->getConstant()->toString(), sig, node->getAttributes(), node);
+}
+
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<MetaSpecConstFunDeclaration> node) {
+    vector<shared_ptr<Sort>> sig;
+    sig.push_back(node->getSort());
+
+    return make_shared<FunInfo>(node->getConstant()->toString(), sig, node->getAttributes(), node);
+}
+
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<IdentifierFunDeclaration> node) {
+    return make_shared<FunInfo>(node->getIdentifier()->toString(), node->getSignature(),
+                                node->getAttributes(), node);
+}
+
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<ParametricFunDeclaration> node) {
+    return make_shared<FunInfo>(node->getIdentifier()->toString(), node->getSignature(),
+                                node->getParams(), node->getAttributes(), node);
+}
+
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DeclareConstCommand> node) {
     vector<shared_ptr<Sort>> sig;
     sig.push_back(node->getSort());
 
     return make_shared<FunInfo>(node->getSymbol()->toString(), sig, node);
 }
 
-shared_ptr<FunInfo> getInfo(shared_ptr<DeclareFunCommand> node) {
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DeclareFunCommand> node) {
     vector<shared_ptr<Sort>> sig;
     sig.insert(sig.begin(), node->getParams().begin(), node->getParams().end());
     sig.push_back(node->getSort());
@@ -141,11 +181,7 @@ shared_ptr<FunInfo> getInfo(shared_ptr<DeclareFunCommand> node) {
     return make_shared<FunInfo>(node->getSymbol()->toString(), sig, node);
 }
 
-shared_ptr<SortInfo> getInfo(shared_ptr<DeclareSortCommand> node) {
-    return make_shared<SortInfo>(node->getSymbol()->toString(), node->getArity()->getValue(), node);
-}
-
-shared_ptr<FunInfo> getInfo(shared_ptr<DefineFunCommand> node) {
+shared_ptr<FunInfo>SortednessChecker:: getInfo(shared_ptr<DefineFunCommand> node) {
     vector<shared_ptr<Sort>> sig;
     vector<shared_ptr<SortedVariable>> &params = node->getDefinition()->getSignature()->getParams();
     for (vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
@@ -157,7 +193,7 @@ shared_ptr<FunInfo> getInfo(shared_ptr<DefineFunCommand> node) {
                                 sig, node->getDefinition()->getBody(), node);
 }
 
-shared_ptr<FunInfo> getInfo(shared_ptr<DefineFunRecCommand> node) {
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DefineFunRecCommand> node) {
     vector<shared_ptr<Sort>> sig;
     vector<shared_ptr<SortedVariable>> &params = node->getDefinition()->getSignature()->getParams();
     for (vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
@@ -169,7 +205,7 @@ shared_ptr<FunInfo> getInfo(shared_ptr<DefineFunRecCommand> node) {
                                 sig, node->getDefinition()->getBody(), node);
 }
 
-vector<shared_ptr<FunInfo>> getInfo(shared_ptr<DefineFunsRecCommand> node) {
+vector<shared_ptr<FunInfo>> SortednessChecker::getInfo(shared_ptr<DefineFunsRecCommand> node) {
     vector<shared_ptr<FunInfo>> infos;
     for (unsigned long i = 0; i < node->getDeclarations().size(); i++) {
         vector<shared_ptr<Sort>> sig;
@@ -184,118 +220,6 @@ vector<shared_ptr<FunInfo>> getInfo(shared_ptr<DefineFunsRecCommand> node) {
     }
 
     return infos;
-}
-
-shared_ptr<SortInfo> getInfo(shared_ptr<DefineSortCommand> node) {
-    return make_shared<SortInfo>(node->getSymbol()->toString(), node->getParams().size(),
-                                 node->getParams(), node->getSort(), node);
-}
-
-shared_ptr<SortInfo> getInfo(shared_ptr<SortSymbolDeclaration> node) {
-    return make_shared<SortInfo>(node->getIdentifier()->toString(),
-                                 node->getArity()->getValue(),
-                                 node->getAttributes(), node);
-}
-
-shared_ptr<FunInfo> getInfo(shared_ptr<SpecConstFunDeclaration> node) {
-    vector<shared_ptr<Sort>> sig;
-    sig.push_back(node->getSort());
-
-    return make_shared<FunInfo>(node->getConstant()->toString(), sig, node->getAttributes(), node);
-}
-
-shared_ptr<FunInfo> getInfo(shared_ptr<MetaSpecConstFunDeclaration> node) {
-    vector<shared_ptr<Sort>> sig;
-    sig.push_back(node->getSort());
-
-    return make_shared<FunInfo>(node->getConstant()->toString(), sig, node->getAttributes(), node);
-}
-
-shared_ptr<FunInfo> getInfo(shared_ptr<IdentifierFunDeclaration> node) {
-    return make_shared<FunInfo>(node->getIdentifier()->toString(), node->getSignature(),
-                                node->getAttributes(), node);
-}
-
-shared_ptr<FunInfo> getInfo(shared_ptr<ParametricFunDeclaration> node) {
-    return make_shared<FunInfo>(node->getIdentifier()->toString(), node->getSignature(),
-                                node->getParams(), node->getAttributes(), node);
-}
-
-bool SortednessChecker::equalSignatures(vector<shared_ptr<Sort>> &sig1, vector<shared_ptr<Sort>> &sig2) {
-    if (sig1.size() != sig2.size())
-        return false;
-
-    for (unsigned long i = 0; i < sig1.size(); i++) {
-        if (sig1[i]->toString() != sig2[i]->toString())
-            return false;
-    }
-
-    return true;
-}
-
-bool SortednessChecker::equalParamSignatures(vector<shared_ptr<Symbol>> &params1,
-                                             vector<shared_ptr<Sort>> &sig1,
-                                             vector<shared_ptr<Symbol>> &params2,
-                                             vector<shared_ptr<Sort>> &sig2) {
-    if (params1.size() != params2.size() || sig1.size() != sig2.size())
-        return false;
-
-    unordered_map<string, string> mapping;
-    for (unsigned long i = 0; i < sig1.size(); i++) {
-        shared_ptr<Sort> sort1 = sig1[i];
-        shared_ptr<Sort> sort2 = sig2[i];
-
-        if (!equalParamSorts(params1, sort1, params2, sort2, mapping))
-            return false;
-    }
-
-    return mapping.size() == params1.size();
-}
-
-bool SortednessChecker::equalParamSorts(vector<shared_ptr<Symbol>> &params1, shared_ptr<Sort> sort1,
-                                        vector<shared_ptr<Symbol>> &params2, shared_ptr<Sort> sort2,
-                                        unordered_map<string, string> &mapping) {
-
-    if (sort1->getParams().size() != sort2->getParams().size())
-        return false;
-
-    if (sort1->getParams().size() == 0) {
-        bool isParam1 = false;
-        bool isParam2 = false;
-
-        string str1 = sort1->toString();
-        string str2 = sort2->toString();
-
-        for (unsigned long j = 0; j < params1.size(); j++) {
-            if (params1[j]->toString() == str1)
-                isParam1 = true;
-            if (params2[j]->toString() == str2)
-                isParam2 = true;
-        }
-
-        if ((isParam1 && !isParam2) || (!isParam1 && isParam2)) {
-            return false;
-        } else if (isParam1) {
-            if (mapping.find(str1) != mapping.end()) {
-                return mapping[str1] == str2;
-            } else {
-                mapping[str1] = str2;
-                return true;
-            }
-        } else {
-            return str1 == str2;
-        }
-    } else {
-        if (sort1->getIdentifier()->toString() != sort2->getIdentifier()->toString())
-            return false;
-
-        for (unsigned long k = 0; k < sort1->getParams().size(); k++) {
-            if (!equalParamSorts(params1, sort1->getParams()[k], params2, sort2->getParams()[k], mapping))
-                return false;
-        }
-
-        return true;
-    }
 }
 
 void SortednessChecker::loadTheory(string theory) {
@@ -314,61 +238,61 @@ void SortednessChecker::visit(shared_ptr<AssertCommand> node) { }
 
 void SortednessChecker::visit(shared_ptr<DeclareConstCommand> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Constant '" + nodeInfo->name + "' already exists", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<DeclareFunCommand> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Function '" + nodeInfo->name + "' already exists with the same signature", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<DeclareSortCommand> node) {
     shared_ptr<SortInfo> nodeInfo = getInfo(node);
-    shared_ptr<SortInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<SortInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Sort symbol '" + nodeInfo->name + "' already exists", node, dupInfo);
     } else {
-        arg->getTopLevel()->addSort(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<DefineFunCommand> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Function '" + nodeInfo->name + "' already exists with the same signature", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<DefineFunRecCommand> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Function '" + nodeInfo->name + "' already exists with the same signature", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
@@ -376,25 +300,25 @@ void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
     vector<shared_ptr<FunInfo>> infos = getInfo(node);
 
     for (vector<shared_ptr<FunInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
-        shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+        shared_ptr<FunInfo> dupInfo = arg->duplicate(*it);
         if (dupInfo) {
             ret = false;
             addError("Function '" + (*it)->name + "' already exists with the same signature", node, *it);
         } else {
-            arg->getTopLevel()->addFun(*it);
+            arg->getTopLevel()->add(*it);
         }
     }
 }
 
 void SortednessChecker::visit(shared_ptr<DefineSortCommand> node) {
     shared_ptr<SortInfo> nodeInfo = getInfo(node);
-    shared_ptr<SortInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<SortInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Sort symbol '" + nodeInfo->name + "' already exists", node, dupInfo);
     } else {
-        arg->getTopLevel()->addSort(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
@@ -467,61 +391,61 @@ void SortednessChecker::visit(shared_ptr<CompSExpression> node) { }
 
 void SortednessChecker::visit(shared_ptr<SortSymbolDeclaration> node) {
     shared_ptr<SortInfo> nodeInfo = getInfo(node);
-    shared_ptr<SortInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<SortInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Sort symbol '" + nodeInfo->name + "' already exists", node, dupInfo);
     } else {
-        arg->getTopLevel()->addSort(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<SpecConstFunDeclaration> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Specification constant '" + nodeInfo->name + "' already exists", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<MetaSpecConstFunDeclaration> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Sort for meta specification constant '" + nodeInfo->name + "' already declared", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<IdentifierFunDeclaration> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Function '" + nodeInfo->name + "' already existis with the same signature", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 
 void SortednessChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
-    shared_ptr<FunInfo> dupInfo /* TODO = duplicate(decl.get())*/;
+    shared_ptr<FunInfo> dupInfo = arg->duplicate(nodeInfo);
 
     if (dupInfo) {
         ret = false;
         addError("Function '" + nodeInfo->name + "' already existis with the same signature", node, dupInfo);
     } else {
-        arg->getTopLevel()->addFun(nodeInfo);
+        arg->getTopLevel()->add(nodeInfo);
     }
 }
 

@@ -20,16 +20,16 @@ namespace smtlib {
 
     public:
         std::unordered_map<std::string, std::shared_ptr<SortInfo>> &getSorts();
-
         std::unordered_map<std::string, std::vector<std::shared_ptr<FunInfo>>> &getFuns();
-
         std::unordered_map<std::string, std::shared_ptr<VariableInfo>> &getVars();
 
-        bool addSort(std::shared_ptr<SortInfo> info);
+        std::shared_ptr<SortInfo> duplicate (std::shared_ptr<SortInfo> info);
+        std::shared_ptr<FunInfo> duplicate (std::shared_ptr<FunInfo> info);
+        std::shared_ptr<VariableInfo> duplicate (std::shared_ptr<VariableInfo> info);
 
-        bool addFun(std::shared_ptr<FunInfo> info);
-
-        bool addVariable(std::shared_ptr<VariableInfo> node);
+        bool add(std::shared_ptr<SortInfo> info);
+        bool add(std::shared_ptr<FunInfo> info);
+        bool add(std::shared_ptr<VariableInfo> info);
     };
 }
 
