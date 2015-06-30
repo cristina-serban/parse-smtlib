@@ -1,11 +1,11 @@
 #include "smt_parser.h"
 #include "../util/smt_logger.h"
 #include "../visitor/ast_syntax_checker.h"
+#include "../visitor/ast_sortedness_checker.h"
 #include "../../parser/smtlib-glue.h"
 
 #include <iostream>
 #include <sstream>
-#include <visitor/ast_sortedness_checker.h>
 
 extern "C" {
     extern FILE* yyin;

@@ -5,9 +5,9 @@ using namespace std;
 using namespace smtlib::ast;
 
 Sort::Sort(shared_ptr<Identifier> identifier,
-           vector<shared_ptr<Sort>> &params)
+           vector<shared_ptr<Sort>> &args)
         : identifier(identifier) {
-    this->params.insert(this->params.end(), params.begin(), params.end());
+    this->args.insert(this->args.end(), args.begin(), args.end());
 }
 
 shared_ptr<Identifier> Sort::getIdentifier() {
@@ -18,12 +18,12 @@ void Sort::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
-vector<shared_ptr<Sort>> &Sort::getParams() {
-    return params;
+vector<shared_ptr<Sort>> &Sort::getArgs() {
+    return args;
 }
 
-bool Sort::isParametrized() {
-    return !params.empty();
+bool Sort::hasArgs() {
+    return !args.empty();
 }
 
 void Sort::accept(AstVisitor0* visitor) {
@@ -31,14 +31,14 @@ void Sort::accept(AstVisitor0* visitor) {
 }
 
 string Sort::toString() {
-    if(!isParametrized()) {
+    if(!hasArgs()) {
         return identifier->toString();
     } else {
         stringstream ss;
         ss << "(" << identifier->toString() << " ";
 
-        for(vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
-            if(it != params.begin())
+        for(vector<shared_ptr<Sort>>::iterator it = args.begin(); it != args.end(); it++) {
+            if(it != args.begin())
                 ss << " ";
             ss << (*it)->toString();
         }

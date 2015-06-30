@@ -22,7 +22,7 @@ namespace smtlib {
         class Sort : public AstNode, public std::enable_shared_from_this<Sort> {
         protected:
             std::shared_ptr<Identifier> identifier;
-            std::vector<std::shared_ptr<Sort>> params;
+            std::vector<std::shared_ptr<Sort>> args;
         public:
 
             /**
@@ -34,21 +34,21 @@ namespace smtlib {
             /**
              * Constructor for a parametric sort
              * \param identifier    Sort name
-             * \param params        Sort parameters
+             * \param args          Sort arguments
              */
             Sort(std::shared_ptr<Identifier> identifier,
-                 std::vector<std::shared_ptr<Sort>> &params);
+                 std::vector<std::shared_ptr<Sort>> &args);
 
             std::shared_ptr<Identifier> getIdentifier();
 
             void setIdentifier(std::shared_ptr<Identifier> identifier);
 
-            std::vector<std::shared_ptr<Sort>> &getParams();
+            std::vector<std::shared_ptr<Sort>> &getArgs();
 
             /**
              * Checks whether the sort is parametrized (i.e. the list of sort parameters is not empty).
              */
-            bool isParametrized();
+            bool hasArgs();
 
             virtual void accept(AstVisitor0* visitor);
 

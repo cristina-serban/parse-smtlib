@@ -1212,7 +1212,7 @@ YY_RULE_SETUP
 #line 104 "smtlib-flex-lexer.l"
 { 
 				SET_LOCATION;
-				yylval.ptr = smt_newMetaSpecConstant(0);
+				yylval.ptr = smt_newMetaSpecConstant(1);
 				return META_SPEC_DECIMAL; 
 			}
 	YY_BREAK
@@ -1221,7 +1221,7 @@ YY_RULE_SETUP
 #line 109 "smtlib-flex-lexer.l"
 { 
 				SET_LOCATION;
-				yylval.ptr = smt_newMetaSpecConstant(1);
+				yylval.ptr = smt_newMetaSpecConstant(0);
 				return META_SPEC_NUMERAL; 
 			}
 	YY_BREAK

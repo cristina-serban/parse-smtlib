@@ -874,11 +874,11 @@ void SyntaxChecker::visit(std::shared_ptr<Sort> node) {
         node->getIdentifier()->accept(this);
     }
 
-    if (node->isParametrized() && node->getParams().empty()) {
+    if (node->hasArgs() && node->getArgs().empty()) {
         ret = false;
         err = addError("Parametrized sort has no parameters", node, err);
     } else {
-        std::vector<std::shared_ptr<Sort>> &params = node->getParams();
+        std::vector<std::shared_ptr<Sort>> &params = node->getArgs();
         for (std::vector<std::shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
             (*it)->accept(this);
         }
@@ -1244,7 +1244,7 @@ string SyntaxChecker::getErrors() {
 
             string nodestr = err->node->toString();
             if (nodestr.length() > 100)
-                ss << string(nodestr, 100);
+                ss << string(nodestr, 100) << "[...]";
             else
                 ss << nodestr;
         } else {

@@ -103,12 +103,12 @@ simple_symbol  {sym_begin}{sym_continue}*
 
 "DECIMAL"	{ 
 				SET_LOCATION;
-				yylval.ptr = smt_newMetaSpecConstant(0);
+				yylval.ptr = smt_newMetaSpecConstant(1);
 				return META_SPEC_DECIMAL; 
 			}
 "NUMERAL"	{ 
 				SET_LOCATION;
-				yylval.ptr = smt_newMetaSpecConstant(1);
+				yylval.ptr = smt_newMetaSpecConstant(0);
 				return META_SPEC_NUMERAL; 
 			}
 "STRING"	{ 

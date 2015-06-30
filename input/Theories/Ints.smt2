@@ -10,7 +10,7 @@
  
  :sorts ((Int 0))
 
- :funs ((NUMERAL Int) 
+ :funs ((NUMERAL Int)
         (- Int Int)                 ; negation
         (- Int Int Int :left-assoc) ; subtraction
         (+ Int Int Int :left-assoc) 

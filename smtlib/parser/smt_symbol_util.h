@@ -166,23 +166,28 @@ namespace smtlib {
         }
     };
 
-    struct VariableInfo {
+    struct VarInfo {
         std::string name;
         std::shared_ptr<ast::Sort> sort;
         std::shared_ptr<ast::Term> term;
+        std::shared_ptr<ast::AstNode> source;
 
-        VariableInfo(std::string name,
-                     std::shared_ptr<ast::Sort> sort) {
+        VarInfo(std::string name,
+                std::shared_ptr<ast::Sort> sort,
+                std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->sort = sort;
+            this->source = source;
         }
 
-        VariableInfo(std::string name,
-                     std::shared_ptr<ast::Sort> sort,
-                     std::shared_ptr<ast::Term> term) {
+        VarInfo(std::string name,
+                std::shared_ptr<ast::Sort> sort,
+                std::shared_ptr<ast::Term> term,
+                std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->sort = sort;
             this->term = term;
+            this->source = source;
         }
     };
 }

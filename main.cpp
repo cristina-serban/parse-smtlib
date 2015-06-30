@@ -12,7 +12,6 @@ using namespace smtlib::ast;
 int main() {
     Parser *parser = new Parser;
     shared_ptr<AstNode> ast = parser->parse("test.smt");
-    cout << ast->toString();
-    cout << parser->checkSortedness() << endl;
+    parser->checkSortedness();
     return 0;
 }

@@ -11,7 +11,7 @@
 
  :sorts ((Bool 0))
 
- :funs ((true Bool)  
+ :funs ((true Bool)
         (false Bool)
         (not Bool Bool)
         (=> Bool Bool Bool :right-assoc)
@@ -20,7 +20,6 @@
         (xor Bool Bool Bool :left-assoc)
         (par (A) (= A A Bool :chainable))
         (par (A) (distinct A A Bool :pairwise))
-        (par (B) (distinct B B Bool :pairwise))
         (par (A) (ite Bool A A A))
        )
 

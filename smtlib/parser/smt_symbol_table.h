@@ -16,20 +16,22 @@ namespace smtlib {
                 std::vector<std::shared_ptr<FunInfo>>> funs;
 
         std::unordered_map<std::string,
-                std::shared_ptr<VariableInfo>> vars;
+                std::shared_ptr<VarInfo>> vars;
 
     public:
         std::unordered_map<std::string, std::shared_ptr<SortInfo>> &getSorts();
         std::unordered_map<std::string, std::vector<std::shared_ptr<FunInfo>>> &getFuns();
-        std::unordered_map<std::string, std::shared_ptr<VariableInfo>> &getVars();
+        std::unordered_map<std::string, std::shared_ptr<VarInfo>> &getVars();
 
-        std::shared_ptr<SortInfo> duplicate (std::shared_ptr<SortInfo> info);
-        std::shared_ptr<FunInfo> duplicate (std::shared_ptr<FunInfo> info);
-        std::shared_ptr<VariableInfo> duplicate (std::shared_ptr<VariableInfo> info);
+        std::shared_ptr<SortInfo> getSortInfo(std::string name);
+        std::vector<std::shared_ptr<FunInfo>> getFunInfo(std::string name);
+        std::shared_ptr<VarInfo> getVarInfo(std::string name);
 
         bool add(std::shared_ptr<SortInfo> info);
         bool add(std::shared_ptr<FunInfo> info);
-        bool add(std::shared_ptr<VariableInfo> info);
+        bool add(std::shared_ptr<VarInfo> info);
+
+        void reset();
     };
 }
 

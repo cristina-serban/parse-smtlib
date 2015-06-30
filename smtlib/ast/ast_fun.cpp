@@ -44,7 +44,7 @@ string FunctionDeclaration::toString() {
     for(vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
         if(it != params.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << "(" << (*it)->toString() << ")";
     }
 
     ss << ") " << sort->toString();

@@ -3,12 +3,12 @@
 
 #include "ast_visitor_extra.h"
 #include "ast_syntax_checker.h"
+#include "../ast/ast_symbol_decl.h"
+#include "../ast/ast_command.h"
 #include "../parser/smt_symbol_stack.h"
 #include "../util/smt_logger.h"
 
 #include <map>
-#include <ast/ast_symbol_decl.h>
-#include <ast/ast_command.h>
 
 namespace smtlib {
     namespace ast {
@@ -23,6 +23,20 @@ namespace smtlib {
             struct SortednessCheckError {
                 std::vector<std::shared_ptr<SortednessCheckErrorInfo>> infos;
                 std::shared_ptr<AstNode> node;
+            };
+
+            struct TermSorterInfo {
+                std::shared_ptr<SymbolStack> stack;
+                SortednessChecker* checker;
+                std::shared_ptr<AstNode> source;
+
+                TermSorterInfo(std::shared_ptr<SymbolStack> stack,
+                               SortednessChecker *checker,
+                               std::shared_ptr<AstNode> source) {
+                    this->stack = stack;
+                    this->checker = checker;
+                    this->source = source;
+                }
             };
 
             std::map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
@@ -56,6 +70,34 @@ namespace smtlib {
 
             void loadTheory(std::string theory);
             void loadLogic(std::string logic);
+
+            std::shared_ptr<SortednessCheckError> checkSort(std::shared_ptr<Sort> sort,
+                                                            std::shared_ptr<AstNode> source,
+                                                            std::shared_ptr<SortednessCheckError> err);
+
+            std::shared_ptr<SortednessCheckError> checkSort(std::vector<std::shared_ptr<Symbol>> params,
+                                                            std::unordered_map<std::string, bool>& paramUsage,
+                                                            std::shared_ptr<Sort> sort,
+                                                            std::shared_ptr<AstNode> source,
+                                                            std::shared_ptr<SortednessCheckError> err);
+
+            class TermSorter : public DummyAstVisitor2<std::shared_ptr<Sort>, std::shared_ptr<TermSorterInfo>> {
+
+            public:
+                virtual void visit(std::shared_ptr<Identifier> node);
+                virtual void visit(std::shared_ptr<QualifiedIdentifier> node);
+
+                virtual void visit(std::shared_ptr<DecimalLiteral> node);
+                virtual void visit(std::shared_ptr<NumeralLiteral> node);
+                virtual void visit(std::shared_ptr<StringLiteral> node);
+
+                virtual void visit(std::shared_ptr<QualifiedTerm> node);
+                virtual void visit(std::shared_ptr<LetTerm> node);
+                virtual void visit(std::shared_ptr<ForallTerm> node);
+                virtual void visit(std::shared_ptr<ExistsTerm> node);
+                virtual void visit(std::shared_ptr<AnnotatedTerm> node);
+            };
+
         public:
             virtual void visit(std::shared_ptr<AssertCommand> node);
             virtual void visit(std::shared_ptr<DeclareConstCommand> node);
@@ -71,39 +113,15 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<ResetCommand> node);
             virtual void visit(std::shared_ptr<SetLogicCommand> node);
 
-            virtual void visit(std::shared_ptr<FunctionDeclaration> node);
-            virtual void visit(std::shared_ptr<FunctionDefinition> node);
-
-            virtual void visit(std::shared_ptr<Identifier> node);
-            virtual void visit(std::shared_ptr<QualifiedIdentifier> node);
-
-            virtual void visit(std::shared_ptr<DecimalLiteral> node);
-            virtual void visit(std::shared_ptr<NumeralLiteral> node);
-            virtual void visit(std::shared_ptr<StringLiteral> node);
-
             virtual void visit(std::shared_ptr<Logic> node);
             virtual void visit(std::shared_ptr<Theory> node);
             virtual void visit(std::shared_ptr<Script> node);
 
-            virtual void visit(std::shared_ptr<Sort> node);
-
-            virtual void visit(std::shared_ptr<CompSExpression> node);
-
             virtual void visit(std::shared_ptr<SortSymbolDeclaration> node);
-
             virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node);
             virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node);
             virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node);
             virtual void visit(std::shared_ptr<ParametricFunDeclaration> node);
-
-            virtual void visit(std::shared_ptr<QualifiedTerm> node);
-            virtual void visit(std::shared_ptr<LetTerm> node);
-            virtual void visit(std::shared_ptr<ForallTerm> node);
-            virtual void visit(std::shared_ptr<ExistsTerm> node);
-            virtual void visit(std::shared_ptr<AnnotatedTerm> node);
-
-            virtual void visit(std::shared_ptr<SortedVariable> node);
-            virtual void visit(std::shared_ptr<VarBinding> node);
 
             virtual bool run (std::shared_ptr<SymbolStack> stack, std::shared_ptr<AstNode> node) {
                 if(node) {
