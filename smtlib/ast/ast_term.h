@@ -9,6 +9,7 @@
 #include "ast_attribute.h"
 #include "ast_interfaces.h"
 #include "ast_var.h"
+#include "ast_match.h"
 
 #include <memory>
 #include <vector>
@@ -22,7 +23,7 @@ namespace smtlib {
          */
         class QualifiedTerm : public Term, public std::enable_shared_from_this<QualifiedTerm> {
         private:
-            std::shared_ptr<QIdentifier> identifier;
+            std::shared_ptr<Identifier> identifier;
             std::vector<std::shared_ptr<Term>> terms;
 
         public:
@@ -30,12 +31,12 @@ namespace smtlib {
              * \param identifier    Qualified identifier
              * \param terms         List of terms
              */
-            QualifiedTerm(std::shared_ptr<QIdentifier> identifier,
+            QualifiedTerm(std::shared_ptr<Identifier> identifier,
                           std::vector<std::shared_ptr<Term>> &terms);
 
-            std::shared_ptr<QIdentifier> getIdentifier();
+            std::shared_ptr<Identifier> getIdentifier();
 
-            void setIdentifier(std::shared_ptr<QIdentifier> identifier);
+            void setIdentifier(std::shared_ptr<Identifier> identifier);
 
             std::vector<std::shared_ptr<Term>> &getTerms();
 
@@ -125,6 +126,27 @@ namespace smtlib {
             void setTerm(std::shared_ptr<Term> term);
 
             std::vector<std::shared_ptr<SortedVariable>> &getBindings();
+
+            virtual void accept(AstVisitor0* visitor);
+
+            virtual std::string toString();
+        };
+
+        /* ==================================== MatchTerm ===================================== */
+        class MatchTerm : public Term,
+                          public std::enable_shared_from_this<MatchTerm> {
+        private:
+            std::shared_ptr<Term> term;
+            std::vector<std::shared_ptr<MatchCase>> cases;
+        public:
+            MatchTerm(std::shared_ptr<Term> term,
+                      std::vector<std::shared_ptr<MatchCase>>& cases);
+
+            inline std::shared_ptr<Term> getTerm() { return term; }
+
+            void setTerm(std::shared_ptr<Term> term) { this->term = term; }
+
+            std::vector<std::shared_ptr<MatchCase>> &getCases() { return cases; }
 
             virtual void accept(AstVisitor0* visitor);
 

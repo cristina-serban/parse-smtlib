@@ -24,6 +24,7 @@ namespace smtlib {
                        public SExpression,
                        public Index,
                        public AttributeValue,
+                       public Constructor,
                        public std::enable_shared_from_this<Symbol> {
         private:
             std::string value;

@@ -56,6 +56,8 @@ SmtPtr smt_newAssertCommand(SmtPtr term);
 SmtPtr smt_newCheckSatCommand();
 SmtPtr smt_newCheckSatAssumCommand(SmtList assumptions);
 SmtPtr smt_newDeclareConstCommand(SmtPtr symbol, SmtPtr sort);
+SmtPtr smt_newDeclareDatatypeCommand(SmtPtr declarations);
+SmtPtr smt_newDeclareDatatypesCommand(SmtList sorts, SmtList declarations);
 SmtPtr smt_newDeclareFunCommand(SmtPtr symbol, SmtList params, SmtPtr sort);
 SmtPtr smt_newDeclareSortCommand(SmtPtr symbol, SmtPtr arity);
 SmtPtr smt_newDefineFunCommand(SmtPtr definition);
@@ -81,13 +83,20 @@ SmtPtr smt_newSetInfoCommand(SmtPtr info);
 SmtPtr smt_newSetLogicCommand(SmtPtr logic);
 SmtPtr smt_newSetOptionCommand(SmtPtr option);
 
+//smt_datatype.h
+SmtPtr smt_newSortDeclaration(SmtPtr symbol, SmtPtr numeral);
+SmtPtr smt_newSelectorDeclaration(SmtPtr symbol, SmtPtr sort);
+SmtPtr smt_newConstructorDeclaration(SmtPtr symbol, SmtList selectors);
+SmtPtr smt_newSimpleDatatypeDeclaration(SmtList constructors);
+SmtPtr smt_newParametricDatatypeDeclaration(SmtList params, SmtList constructors);
+
 // smt_fun.h
 SmtPtr smt_newFunctionDeclaration(SmtPtr symbol, SmtList params, SmtPtr sort);
 SmtPtr smt_newFunctionDefinition(SmtPtr signature, SmtPtr body);
 
 // smt_identifier.h
-SmtPtr smt_newIdentifier1(SmtPtr symbol);
-SmtPtr smt_newIdentifier2(SmtPtr symbol, SmtList indices);
+SmtPtr smt_newSimpleIdentifier1(SmtPtr symbol);
+SmtPtr smt_newSimpleIdentifier2(SmtPtr symbol, SmtList indices);
 SmtPtr smt_newQualifiedIdentifier(SmtPtr identifier, SmtPtr sort);
 
 // smt_literal.h
@@ -98,7 +107,12 @@ SmtPtr smt_newStringLiteral(char const* value);
 // smt_logic.h
 SmtPtr smt_newLogic(SmtPtr name, SmtList attributes);
 
-// smt_s_expr.h
+// smt_match.h
+SmtPtr smt_newQualifiedConstructor(SmtPtr symbol, SmtPtr sort);
+SmtPtr smt_newQualifiedPattern(SmtPtr constructor, SmtList symbols);
+SmtPtr smt_newMatchCase(SmtPtr pattern, SmtPtr term);
+
+// smt_s_exp.h
 SmtPtr smt_newCompSExpression(SmtList exprs);
 
 // smt_script.h
@@ -112,14 +126,15 @@ SmtPtr smt_newSort2(SmtPtr identifier, SmtList params);
 SmtPtr smt_newSortSymbolDeclaration(SmtPtr identifier, SmtPtr arity, SmtList attributes);
 SmtPtr smt_newSpecConstFunDeclaration(SmtPtr constant, SmtPtr sort, SmtList attributes);
 SmtPtr smt_newMetaSpecConstFunDeclaration(SmtPtr constant, SmtPtr sort, SmtList attributes);
-SmtPtr smt_newIdentifFunDeclaration(SmtPtr identifier, SmtList signature, SmtList attributes);
-SmtPtr smt_newParamFunDeclaration(SmtList params, SmtPtr identifier, SmtList signature, SmtList attributes);
+SmtPtr smt_newSimpleFunDeclaration(SmtPtr identifier, SmtList signature, SmtList attributes);
+SmtPtr smt_newParametricFunDeclaration(SmtList params, SmtPtr identifier, SmtList signature, SmtList attributes);
 
 // smt_term.h
 SmtPtr smt_newQualifiedTerm(SmtPtr identifier, SmtList terms);
 SmtPtr smt_newLetTerm(SmtList bindings, SmtPtr term);
 SmtPtr smt_newForallTerm(SmtList bindings, SmtPtr term);
 SmtPtr smt_newExistsTerm(SmtList bindings, SmtPtr term);
+SmtPtr smt_newMatchTerm(SmtPtr term, SmtList cases);
 SmtPtr smt_newAnnotatedTerm(SmtPtr term, SmtList attrs);
 
 // smt_theory.h

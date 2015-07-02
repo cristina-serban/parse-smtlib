@@ -6,17 +6,17 @@ using namespace smtlib::ast;
 
 /* ================================== QualifiedTerm =================================== */
 
-QualifiedTerm::QualifiedTerm(shared_ptr<QIdentifier> identifier,
+QualifiedTerm::QualifiedTerm(shared_ptr<Identifier> identifier,
                              vector<shared_ptr<Term>> &terms)
         : identifier(identifier) {
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
 }
 
-shared_ptr<QIdentifier> QualifiedTerm::getIdentifier() {
+shared_ptr<Identifier> QualifiedTerm::getIdentifier() {
     return identifier;
 }
 
-void QualifiedTerm::setIdentifier(shared_ptr<QIdentifier> identifier) {
+void QualifiedTerm::setIdentifier(shared_ptr<Identifier> identifier) {
     this->identifier = identifier;
 }
 
@@ -154,6 +154,26 @@ string ExistsTerm::toString() {
 
     ss << ") " << term->toString() << ")";
 
+    return ss.str();
+}
+
+/* ==================================== MatchTerm ===================================== */
+MatchTerm::MatchTerm(std::shared_ptr<Term> term,
+                     std::vector<std::shared_ptr<MatchCase>>& cases) : term(term) {
+    this->cases.insert(this->cases.begin(), cases.begin(), cases.end());
+}
+
+void MatchTerm::accept(AstVisitor0* visitor) {
+    visitor->visit(shared_from_this());
+}
+
+std::string MatchTerm::toString() {
+    stringstream ss;
+    ss << "(match " << term->toString();
+    for(auto it : cases) {
+        ss << " " << it->toString();
+    }
+    ss << ")";
     return ss.str();
 }
 

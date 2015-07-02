@@ -20,15 +20,16 @@ int yyerror(SmtPrsr parser, const char *);
 	SmtList list;
 };
 
-%token KW_AS KW_LET KW_FORALL KW_EXISTS KW_PAR NOT
+%token KW_AS KW_LET KW_FORALL KW_EXISTS KW_MATCH KW_PAR NOT
 
 %token <ptr> NUMERAL DECIMAL HEXADECIMAL BINARY
 
-%token KW_CMD_ASSERT KW_CMD_CHK_SAT KW_CMD_CHK_SAT_ASSUM KW_CMD_DECL_CONST KW_CMD_DECL_FUN KW_CMD_DECL_SORT
-%token KW_CMD_DEF_FUN KW_CMD_DEF_FUN_REC KW_CMD_DEF_FUNS_REC KW_CMD_DEF_SORT KW_CMD_ECHO KW_CMD_EXIT
-%token KW_CMD_GET_ASSERTS KW_CMD_GET_ASSIGNS KW_CMD_GET_INFO KW_CMD_GET_MODEL KW_CMD_GET_OPT KW_CMD_GET_PROOF
-%token KW_CMD_GET_UNSAT_ASSUMS KW_CMD_GET_UNSAT_CORE KW_CMD_GET_VALUE KW_CMD_POP KW_CMD_PUSH
-%token KW_CMD_RESET KW_CMD_RESET_ASSERTS KW_CMD_SET_INFO KW_CMD_SET_LOGIC KW_CMD_SET_OPT
+%token KW_ASSERT KW_CHK_SAT KW_CHK_SAT_ASSUM KW_DECL_CONST KW_DECL_FUN KW_DECL_SORT
+%token KW_DEF_FUN KW_DEF_FUN_REC KW_DEF_FUNS_REC KW_DEF_SORT KW_ECHO KW_EXIT
+%token KW_GET_ASSERTS KW_GET_ASSIGNS KW_GET_INFO KW_GET_MODEL KW_GET_OPT KW_GET_PROOF
+%token KW_GET_UNSAT_ASSUMS KW_GET_UNSAT_CORE KW_GET_VALUE KW_POP KW_PUSH
+%token KW_RESET KW_RESET_ASSERTS KW_SET_INFO KW_SET_LOGIC KW_SET_OPT
+%token KW_DECL_DATATYPE KW_DECL_DATATYPES
 
 %token <ptr> META_SPEC_DECIMAL META_SPEC_NUMERAL META_SPEC_STRING
 %token <ptr> KEYWORD STRING SYMBOL THEORY LOGIC
@@ -39,11 +40,13 @@ int yyerror(SmtPrsr parser, const char *);
 %type <ptr> sort var_binding sorted_var attribute attr_value s_exp prop_literal 
 %type <ptr> fun_decl fun_def info_flag option theory_decl theory_attr sort_symbol_decl
 %type <ptr> par_fun_symbol_decl fun_symbol_decl meta_spec_const logic logic_attr symbol
+%type <ptr> datatype_decl constructor_decl selector_decl sort_decl match_case pattern qual_constructor
 
 %type <list> command_plus term_plus index_plus sort_plus var_binding_plus sorted_var_plus
 %type <list> attribute_star attribute_plus s_exp_plus prop_literal_star fun_decl_plus
 %type <list> symbol_star symbol_plus theory_attr_plus sort_symbol_decl_plus
 %type <list> par_fun_symbol_decl_plus logic_attr_plus sort_star sorted_var_star
+%type <list> constructor_decl_plus selector_decl_star sort_decl_plus match_case_plus datatype_decl_plus
 
 %start smt_file
 
@@ -96,7 +99,7 @@ command_plus:
 ;
 
 command:
-	'(' KW_CMD_ASSERT term ')'		
+	'(' KW_ASSERT term ')'		
 		{ 
 			$$ = smt_newAssertCommand($3); 
 
@@ -108,7 +111,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_CHK_SAT ')'			
+	'(' KW_CHK_SAT ')'			
 		{ 
 			$$ = smt_newCheckSatCommand(); 
 
@@ -120,7 +123,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_CHK_SAT_ASSUM '(' prop_literal_star ')' ')'		
+	'(' KW_CHK_SAT_ASSUM '(' prop_literal_star ')' ')'		
 		{ 
 			$$ = smt_newCheckSatAssumCommand($4); 
 
@@ -132,7 +135,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_DECL_CONST symbol sort ')'						
+	'(' KW_DECL_CONST symbol sort ')'						
 		{ 
 			$$ = smt_newDeclareConstCommand($3, $4); 
 
@@ -144,7 +147,31 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_DECL_FUN symbol '(' sort_star ')' sort ')'
+	'(' KW_DECL_DATATYPE datatype_decl ')'
+		{
+			$$ = smt_newDeclareDatatypeCommand($3);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @4.last_line;
+			@$.last_column = @4.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+|
+	'(' KW_DECL_DATATYPES '(' sort_decl_plus ')' '(' datatype_decl_plus ')' ')'
+		{
+			$$ = smt_newDeclareDatatypesCommand($4, $7);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @9.last_line;
+			@$.last_column = @9.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+|
+	'(' KW_DECL_FUN symbol '(' sort_star ')' sort ')'
 		{ 
 			$$ = smt_newDeclareFunCommand($3, $5, $7); 
 
@@ -156,7 +183,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_DECL_SORT symbol NUMERAL ')'
+	'(' KW_DECL_SORT symbol NUMERAL ')'
 		{ 
 			$$ = smt_newDeclareSortCommand($3, $4); 
 
@@ -168,7 +195,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_DEF_FUNS_REC '(' fun_decl_plus ')'  '(' term_plus ')' ')'
+	'(' KW_DEF_FUNS_REC '(' fun_decl_plus ')'  '(' term_plus ')' ')'
 		{ 
 			$$ = smt_newDefineFunsRecCommand($4, $7); 
 
@@ -180,7 +207,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |	
-	'(' KW_CMD_DEF_FUN_REC fun_def ')'
+	'(' KW_DEF_FUN_REC fun_def ')'
 		{ 
 			$$ = smt_newDefineFunRecCommand($3); 
 
@@ -192,7 +219,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_DEF_FUN fun_def ')'
+	'(' KW_DEF_FUN fun_def ')'
 		{ 
 			$$ = smt_newDefineFunCommand($3); 
 
@@ -204,7 +231,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_DEF_SORT symbol '(' symbol_star ')' sort ')'
+	'(' KW_DEF_SORT symbol '(' symbol_star ')' sort ')'
 		{ 
 			$$ = smt_newDefineSortCommand($3, $5, $7); 
 
@@ -216,7 +243,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_ECHO STRING ')'
+	'(' KW_ECHO STRING ')'
 		{ 
 			$$ = smt_newEchoCommand($3); 
 
@@ -228,7 +255,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_EXIT ')'
+	'(' KW_EXIT ')'
 		{ 
 			$$ = smt_newExitCommand(); 
 
@@ -240,7 +267,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_ASSERTS ')'
+	'(' KW_GET_ASSERTS ')'
 		{ 
 			$$ = smt_newGetAssertsCommand(); 
 
@@ -252,7 +279,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_ASSIGNS ')'
+	'(' KW_GET_ASSIGNS ')'
 		{ 
 			$$ = smt_newGetAssignsCommand(); 
 
@@ -264,7 +291,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_INFO info_flag ')' 
+	'(' KW_GET_INFO info_flag ')' 
 		{ 
 			$$ = smt_newGetInfoCommand($3); 
 
@@ -276,7 +303,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_MODEL ')'
+	'(' KW_GET_MODEL ')'
 		{ 
 			$$ = smt_newGetModelCommand(); 
 			@$.first_line = @1.first_line;
@@ -287,7 +314,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_OPT KEYWORD ')'
+	'(' KW_GET_OPT KEYWORD ')'
 		{ 
 			$$ = smt_newGetOptionCommand($3); 
 
@@ -299,7 +326,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_PROOF ')'
+	'(' KW_GET_PROOF ')'
 		{ 
 			$$ = smt_newGetProofCommand(); 
 
@@ -311,7 +338,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_UNSAT_ASSUMS ')'
+	'(' KW_GET_UNSAT_ASSUMS ')'
 		{ 
 			$$ = smt_newGetModelCommand(); 
 
@@ -323,7 +350,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_UNSAT_CORE ')'
+	'(' KW_GET_UNSAT_CORE ')'
 		{ 
 			$$ = smt_newGetUnsatCoreCommand(); 
 
@@ -335,7 +362,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_GET_VALUE term_plus ')'
+	'(' KW_GET_VALUE term_plus ')'
 		{ 
 			$$ = smt_newGetValueCommand($3); 
 
@@ -347,7 +374,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_POP NUMERAL ')'
+	'(' KW_POP NUMERAL ')'
 		{ 
 			$$ = smt_newPopCommand($3); 
 
@@ -359,7 +386,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_PUSH NUMERAL ')'
+	'(' KW_PUSH NUMERAL ')'
 		{ 
 			$$ = smt_newPushCommand($3); 
 
@@ -371,7 +398,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_RESET_ASSERTS ')'
+	'(' KW_RESET_ASSERTS ')'
 		{ 
 			$$ = smt_newResetAssertsCommand(); 
 
@@ -383,7 +410,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_RESET ')'
+	'(' KW_RESET ')'
 		{ 
 			$$ = smt_newResetCommand(); 
 
@@ -395,7 +422,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_SET_INFO attribute ')'
+	'(' KW_SET_INFO attribute ')'
 		{ 
 			$$ = smt_newSetInfoCommand($3); 
 
@@ -407,7 +434,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_SET_LOGIC symbol ')'
+	'(' KW_SET_LOGIC symbol ')'
 		{ 
 			$$ = smt_newSetLogicCommand($3); 
 
@@ -419,7 +446,7 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_CMD_SET_OPT option ')'
+	'(' KW_SET_OPT option ')'
 		{ 
 			$$ = smt_newSetOptionCommand($3); 
 
@@ -429,6 +456,171 @@ command:
             @$.last_column = @4.last_column;
 
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+;
+
+datatype_decl_plus:
+	datatype_decl
+		{
+			$$ = smt_listCreate();
+			smt_listAdd($$, $1);
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @1.last_line;
+            @$.last_column = @1.last_column;
+		}
+|
+	datatype_decl_plus datatype_decl
+		{
+			smt_listAdd($1, $2);
+			$$ = $1;
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @2.last_line;
+            @$.last_column = @2.last_column;
+		}
+;
+
+datatype_decl:
+	'(' constructor_decl_plus ')'
+		{
+			$$ = smt_newSimpleDatatypeDeclaration($2);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @3.last_line;
+			@$.last_column = @3.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+|
+	'(' KW_PAR '(' symbol_plus ')' '(' constructor_decl_plus ')' ')'
+		{
+			$$ = smt_newParametricDatatypeDeclaration($4, $7);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @9.last_line;
+			@$.last_column = @9.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+;
+
+constructor_decl_plus:
+	term
+		{
+			$$ = smt_listCreate();
+			smt_listAdd($$, $1);
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @1.last_line;
+            @$.last_column = @1.last_column;
+		}
+|
+	constructor_decl_plus constructor_decl
+		{
+			smt_listAdd($1, $2);
+			$$ = $1;
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @2.last_line;
+            @$.last_column = @2.last_column;
+		}
+;
+
+constructor_decl:
+	'(' symbol selector_decl_star ')'
+		{
+			$$ = smt_newConstructorDeclaration($2, $3);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @4.last_line;
+			@$.last_column = @4.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+;
+
+selector_decl_star:
+	/* empty */
+		{
+			$$ = smt_listCreate();
+		}
+|
+	selector_decl_star selector_decl
+		{
+			smt_listAdd($1, $2);
+			$$ = $1;
+
+			if(!@1.first_line) {
+				@$.first_line = @2.first_line;
+            	@$.first_column = @2.first_column;
+				@$.last_line = @2.last_line;
+            	@$.last_column = @2.last_column;
+			} else {
+				@$.first_line = @1.first_line;
+            	@$.first_column = @1.first_column;
+				@$.last_line = @2.last_line;
+            	@$.last_column = @2.last_column;
+			}
+		}
+;
+
+selector_decl:
+	'(' symbol sort ')'
+		{
+			$$ = smt_newSelectorDeclaration($2, $3);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @4.last_line;
+			@$.last_column = @4.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+;
+
+sort_decl_plus:
+	term
+		{
+			$$ = smt_listCreate();
+			smt_listAdd($$, $1);
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @1.last_line;
+            @$.last_column = @1.last_column;
+		}
+|
+	sort_decl_plus sort_decl
+		{
+			smt_listAdd($1, $2);
+			$$ = $1;
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @2.last_line;
+            @$.last_column = @2.last_column;
+		}
+;
+
+sort_decl:
+	'(' symbol NUMERAL ')'
+		{
+			$$ = smt_newSortDeclaration($2, $3);
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @4.last_line;
+            @$.last_column = @4.last_column;
+
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -495,8 +687,20 @@ term:
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;
-			@$.last_line = @4.last_line;
-            @$.last_column = @4.last_column;
+			@$.last_line = @7.last_line;
+            @$.last_column = @7.last_column;
+
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+|
+	'(' KW_MATCH term '(' match_case_plus ')' ')'
+		{
+			$$ = smt_newMatchTerm($3, $5);
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @7.last_line;
+            @$.last_column = @7.last_column;
 
             smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
@@ -547,6 +751,92 @@ term_plus:
             @$.first_column = @1.first_column;
 			@$.last_line = @2.last_line;
             @$.last_column = @2.last_column;
+		}
+;
+
+match_case_plus:
+	match_case
+		{
+			$$ = smt_listCreate();
+			smt_listAdd($$, $1);
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @1.last_line;
+            @$.last_column = @1.last_column;
+		}
+|
+	match_case_plus match_case
+		{
+			smt_listAdd($1, $2);
+			$$ = $1;
+
+			@$.first_line = @1.first_line;
+            @$.first_column = @1.first_column;
+			@$.last_line = @2.last_line;
+            @$.last_column = @2.last_column;
+		}
+;
+
+match_case:
+	'(' pattern term ')'
+		{
+			$$ = smt_newMatchCase($2, $3);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @4.last_line;
+			@$.last_column = @4.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+;
+
+pattern:
+	qual_constructor
+		{
+			$$ = $1;
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @1.last_line;
+			@$.last_column = @1.last_column;
+		}
+|
+	'(' qual_constructor symbol_plus ')'
+		{
+			$$ = smt_newQualifiedPattern($2, $3);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @4.last_line;
+			@$.last_column = @4.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
+;
+
+qual_constructor:
+	symbol
+		{
+			$$ = $1;
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @1.last_line;
+			@$.last_column = @1.last_column;
+		}
+|
+	'(' KW_AS symbol sort ')'
+		{
+			$$ = smt_newQualifiedConstructor($3, $4);
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @4.last_line;
+			@$.last_column = @4.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -625,7 +915,7 @@ symbol:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	KW_CMD_RESET
+	KW_RESET
 		{
 			$$ = smt_newSymbol("reset");
 
@@ -648,6 +938,18 @@ symbol:
 
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
+|
+	'_'
+		{
+			$$ = smt_newSymbol("_");
+
+			@$.first_line = @1.first_line;
+			@$.first_column = @1.first_column;
+			@$.last_line = @1.last_line;
+			@$.last_column = @1.last_column;
+
+			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
+		}
 ;
 
 qual_identifier:
@@ -659,8 +961,6 @@ qual_identifier:
             @$.first_column = @1.first_column;
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
-
-			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' KW_AS identifier sort ')'
@@ -679,19 +979,17 @@ qual_identifier:
 identifier:
 	symbol 			
 		{ 
-			$$ = smt_newIdentifier1($1); 
+			$$ = smt_newSimpleIdentifier1($1);
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
-
-			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' '_' symbol index_plus ')'
 		{ 
-			$$ = smt_newIdentifier2($3, $4); 
+			$$ = smt_newSimpleIdentifier2($3, $4);
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;
@@ -723,8 +1021,6 @@ index:
             @$.first_column = @1.first_column;
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
-
-			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -761,8 +1057,6 @@ sort:
             @$.first_column = @1.first_column;
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
-
-			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' identifier sort_plus ')'
@@ -1072,6 +1366,8 @@ s_exp:
             @$.first_column = @1.first_column;
 			@$.last_line = @3.last_line;
             @$.last_column = @3.last_column;
+
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 ;
 
@@ -1394,7 +1690,7 @@ par_fun_symbol_decl:
 |
 	'(' KW_PAR '(' symbol_plus ')' '(' identifier sort_plus attribute_star ')' ')'
 		{ 
-			$$ = smt_newParamFunDeclaration($4, $7, $8, $9); 
+			$$ = smt_newParametricFunDeclaration($4, $7, $8, $9);
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;
@@ -1456,7 +1752,7 @@ fun_symbol_decl:
 |
 	'(' identifier sort_plus attribute_star ')'
 		{ 
-			$$ = smt_newIdentifFunDeclaration($2, $3, $4); 
+			$$ = smt_newSimpleFunDeclaration($2, $3, $4);
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;
@@ -1569,7 +1865,7 @@ logic_attr_plus:
 
 %%
 
-int yyerror(SmtPrsr parser, const char *s) {
+int yyerror(SmtPrsr parser, const char* s) {
 	smt_reportError(parser, yylloc.first_line, yylloc.first_column,
 					yylloc.last_line, yylloc.last_column, s);
 }

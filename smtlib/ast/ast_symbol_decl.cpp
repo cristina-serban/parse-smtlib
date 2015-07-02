@@ -6,18 +6,18 @@ using namespace smtlib::ast;
 
 /* =============================== SortSymbolDeclaration ============================== */
 
-SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<Identifier> identifier,
+SortSymbolDeclaration::SortSymbolDeclaration(shared_ptr<SimpleIdentifier> identifier,
                                              std::shared_ptr<NumeralLiteral> arity,
                                              vector<shared_ptr<Attribute>> &attributes)
         : identifier(identifier), arity(arity){
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
 }
 
-shared_ptr<Identifier> SortSymbolDeclaration::getIdentifier() {
+shared_ptr<SimpleIdentifier> SortSymbolDeclaration::getIdentifier() {
     return identifier;
 }
 
-void SortSymbolDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
+void SortSymbolDeclaration::setIdentifier(shared_ptr<SimpleIdentifier> identifier) {
     this->identifier = identifier;
 }
 
@@ -141,15 +141,15 @@ string MetaSpecConstFunDeclaration::toString() {
     return ss.str();
 }
 
-/* ============================== IdentifierFunDeclaration =============================== */
+/* ============================== SimpleFunDeclaration =============================== */
 
-IdentifierFunDeclaration::IdentifierFunDeclaration(shared_ptr<Identifier> identifier,
+SimpleFunDeclaration::SimpleFunDeclaration(shared_ptr<SimpleIdentifier> identifier,
                                              vector<shared_ptr<Sort>> &signature)
         : identifier(identifier) {
     this->signature.insert(this->signature.end(), signature.begin(), signature.end());
 }
 
-IdentifierFunDeclaration::IdentifierFunDeclaration(shared_ptr<Identifier> identifier,
+SimpleFunDeclaration::SimpleFunDeclaration(shared_ptr<SimpleIdentifier> identifier,
                                              vector<shared_ptr<Sort>> &signature,
                                              vector<shared_ptr<Attribute>> &attributes)
         : identifier(identifier) {
@@ -158,27 +158,27 @@ IdentifierFunDeclaration::IdentifierFunDeclaration(shared_ptr<Identifier> identi
 
 }
 
-shared_ptr<Identifier> IdentifierFunDeclaration::getIdentifier() {
+shared_ptr<SimpleIdentifier> SimpleFunDeclaration::getIdentifier() {
     return identifier;
 }
 
-void IdentifierFunDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
+void SimpleFunDeclaration::setIdentifier(shared_ptr<SimpleIdentifier> identifier) {
     this->identifier = identifier;
 }
 
-vector<shared_ptr<Sort>> &IdentifierFunDeclaration::getSignature() {
+vector<shared_ptr<Sort>> & SimpleFunDeclaration::getSignature() {
     return signature;
 }
 
-vector<shared_ptr<Attribute>> &IdentifierFunDeclaration::getAttributes() {
+vector<shared_ptr<Attribute>> & SimpleFunDeclaration::getAttributes() {
     return attributes;
 }
 
-void IdentifierFunDeclaration::accept(AstVisitor0* visitor){
+void SimpleFunDeclaration::accept(AstVisitor0* visitor){
     visitor->visit(shared_from_this());
 }
 
-string IdentifierFunDeclaration::toString() {
+string SimpleFunDeclaration::toString() {
     stringstream ss;
     ss << "(" << identifier->toString();
 
@@ -198,7 +198,7 @@ string IdentifierFunDeclaration::toString() {
 /* =============================== ParametricFunDeclaration ================================ */
 
 ParametricFunDeclaration::ParametricFunDeclaration(vector<shared_ptr<Symbol>> &params,
-                                         shared_ptr<Identifier> identifier,
+                                         shared_ptr<SimpleIdentifier> identifier,
                                          vector<shared_ptr<Sort>> &signature) {
     this->params.insert(this->params.end(), params.begin(), params.end());
     setIdentifier(identifier);
@@ -206,7 +206,7 @@ ParametricFunDeclaration::ParametricFunDeclaration(vector<shared_ptr<Symbol>> &p
 }
 
 ParametricFunDeclaration::ParametricFunDeclaration(vector<shared_ptr<Symbol>> &params,
-                                         shared_ptr<Identifier> identifier,
+                                         shared_ptr<SimpleIdentifier> identifier,
                                          vector<shared_ptr<Sort>> &signature,
                                          vector<shared_ptr<Attribute>> &attributes) {
     this->params.insert(this->params.end(), params.begin(), params.end());
@@ -219,11 +219,11 @@ vector<shared_ptr<Symbol>> &ParametricFunDeclaration::getParams() {
     return params;
 }
 
-shared_ptr<Identifier> ParametricFunDeclaration::getIdentifier() {
+shared_ptr<SimpleIdentifier> ParametricFunDeclaration::getIdentifier() {
     return identifier;
 }
 
-void ParametricFunDeclaration::setIdentifier(shared_ptr<Identifier> identifier) {
+void ParametricFunDeclaration::setIdentifier(shared_ptr<SimpleIdentifier> identifier) {
     this->identifier = identifier;
 }
 

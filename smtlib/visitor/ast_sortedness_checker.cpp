@@ -154,7 +154,7 @@ shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<MetaSpecConstFunDeclar
     return make_shared<FunInfo>(node->getConstant()->toString(), sig, node->getAttributes(), node);
 }
 
-shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<IdentifierFunDeclaration> node) {
+shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<SimpleFunDeclaration> node) {
     vector<shared_ptr<Sort>> &sig = node->getSignature();
     vector<shared_ptr<Sort>> newsig;
 
@@ -241,13 +241,13 @@ vector<shared_ptr<FunInfo>> SortednessChecker::getInfo(shared_ptr<DefineFunsRecC
 }
 
 void SortednessChecker::loadTheory(string theory) {
-    Parser *parser = new Parser;
+    Parser* parser = new Parser;
     shared_ptr<AstNode> ast = parser->parse("input/Theories/" + theory + ".smt2");
     ast->accept(this);
 }
 
 void SortednessChecker::loadLogic(string logic) {
-    Parser *parser = new Parser;
+    Parser* parser = new Parser;
     shared_ptr<AstNode> ast = parser->parse("input/Logics/" + logic + ".smt2");
     ast->accept(this);
 }
@@ -835,7 +835,7 @@ void SortednessChecker::visit(shared_ptr<MetaSpecConstFunDeclaration> node) {
     }
 }
 
-void SortednessChecker::visit(shared_ptr<IdentifierFunDeclaration> node) {
+void SortednessChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
     shared_ptr<SortednessCheckError> err;
 
     vector<shared_ptr<Sort>> sig = node->getSignature();
@@ -967,7 +967,7 @@ string SortednessChecker::getErrors() {
     return ss.str();
 }
 
-void SortednessChecker::TermSorter::visit(std::shared_ptr<Identifier> node) {
+void SortednessChecker::TermSorter::visit(std::shared_ptr<SimpleIdentifier> node) {
     shared_ptr<VarInfo> varInfo = arg->stack->getVarInfo(node->toString());
     if (varInfo) {
         ret = varInfo->sort;
@@ -1098,7 +1098,7 @@ void SortednessChecker::TermSorter::visit(std::shared_ptr<QualifiedTerm> node) {
         }
     }
 
-    shared_ptr<Identifier> id = dynamic_pointer_cast<Identifier>(node->getIdentifier());
+    shared_ptr<SimpleIdentifier> id = dynamic_pointer_cast<SimpleIdentifier>(node->getIdentifier());
     shared_ptr<QualifiedIdentifier> qid = dynamic_pointer_cast<QualifiedIdentifier>(node->getIdentifier());
 
     shared_ptr<Sort> retExpanded;

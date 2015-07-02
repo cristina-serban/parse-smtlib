@@ -31,7 +31,7 @@ std::shared_ptr<std::string> Parser::getFilename() {
 
 bool Parser::checkSyntax() {
     if(ast) {
-        SyntaxChecker *chk = new SyntaxChecker();
+        SyntaxChecker* chk = new SyntaxChecker();
         if(chk->run(ast)) {
             return true;
         } else {
@@ -46,7 +46,7 @@ bool Parser::checkSyntax() {
 
 bool Parser::checkSortedness() {
     if(ast) {
-        SortednessChecker *chk = new SortednessChecker();
+        SortednessChecker* chk = new SortednessChecker();
         shared_ptr<SymbolStack> stack = make_shared<SymbolStack>();
         if(chk->run(stack, ast)) {
             return true;
@@ -71,6 +71,6 @@ std::shared_ptr<ast::AstNode> Parser::getAst() {
 }
 
 void Parser::reportError(unsigned int lineLeft, unsigned int colLeft,
-                 unsigned int lineRight, unsigned int colRight, const char *msg) {
+                 unsigned int lineRight, unsigned int colRight, const char* msg) {
     Logger::parsingError(lineLeft, colLeft, lineRight, colRight, filename->c_str(), msg);
 }

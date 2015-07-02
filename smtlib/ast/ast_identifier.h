@@ -17,11 +17,11 @@ namespace smtlib {
     namespace ast {
        class Sort;
 
-        /* ==================================== Identifier ==================================== */
+        /* ==================================== SimpleIdentifier ==================================== */
         /**
-         * Identifier (e.g. "Real", "|John Brown|", "_ BitVec 32").
+         * Simple identifier (e.g. "Real", "|John Brown|", "_ BitVec 32").
          */
-        class Identifier : public QIdentifier, public std::enable_shared_from_this<Identifier> {
+        class SimpleIdentifier : public Identifier, public std::enable_shared_from_this<SimpleIdentifier> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::vector<std::shared_ptr<Index>> indices;
@@ -31,14 +31,14 @@ namespace smtlib {
              * Constuctor for unindexed identifier.
              * \param symbol    Identifier symbol
              */
-            Identifier(std::shared_ptr<Symbol> symbol) : symbol(symbol) { }
+            SimpleIdentifier(std::shared_ptr<Symbol> symbol) : symbol(symbol) { }
 
             /**
              * Constuctor for indexed identifier.
              * \param symbol    Identifier symbol
              * \param indices   Identifier indices
              */
-            Identifier(std::shared_ptr<Symbol> symbol,
+            SimpleIdentifier(std::shared_ptr<Symbol> symbol,
                        std::vector<std::shared_ptr<Index>> indices);
 
             std::shared_ptr<Symbol> getSymbol();
@@ -61,25 +61,23 @@ namespace smtlib {
         /**
          * Qualified identifier (e.g. "(as f Sigma)").
          */
-        class QualifiedIdentifier : public QIdentifier, public std::enable_shared_from_this<QualifiedIdentifier> {
+        class QualifiedIdentifier : public Identifier, public std::enable_shared_from_this<QualifiedIdentifier> {
         private:
-            std::shared_ptr<Identifier> identifier;
+            std::shared_ptr<SimpleIdentifier> identifier;
             std::shared_ptr<Sort> sort;
         public:
             /**
-             * \param identifier    Identifier
+             * \param identifier    SimpleIdentifier
              * \param sort          Result sort
              */
-            QualifiedIdentifier(std::shared_ptr<Identifier> identifier,
+            QualifiedIdentifier(std::shared_ptr<SimpleIdentifier> identifier,
                                 std::shared_ptr<Sort> sort) :
                     identifier(identifier), sort(sort) { }
 
-            std::shared_ptr<Identifier> getIdentifier() const;
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<SimpleIdentifier> getIdentifier();
 
-            void setIdentifier(std::shared_ptr<Identifier> identifier);
+            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
 
-            std::shared_ptr<Sort> getSort() const;
             std::shared_ptr<Sort> getSort();
 
             void setSort(std::shared_ptr<Sort> sort);

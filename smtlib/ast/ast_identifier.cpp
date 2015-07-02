@@ -4,35 +4,35 @@
 using namespace std;
 using namespace smtlib::ast;
 
-/* ==================================== Identifier ==================================== */
+/* ==================================== SimpleIdentifier ==================================== */
 
-Identifier::Identifier(shared_ptr<Symbol> symbol,
+SimpleIdentifier::SimpleIdentifier(shared_ptr<Symbol> symbol,
                        vector<shared_ptr<Index>> indices)
         : symbol(symbol) {
     this->indices.insert(this->indices.end(), indices.begin(), indices.end());
 }
 
-shared_ptr<Symbol> Identifier::getSymbol() {
+shared_ptr<Symbol> SimpleIdentifier::getSymbol() {
     return symbol;
 }
 
-void Identifier::setSymbol(shared_ptr<Symbol> symbol) {
+void SimpleIdentifier::setSymbol(shared_ptr<Symbol> symbol) {
     this->symbol = symbol;
 }
 
-vector<shared_ptr<Index>> &Identifier::getIndices() {
+vector<shared_ptr<Index>> & SimpleIdentifier::getIndices() {
     return indices;
 }
 
-bool Identifier::isIndexed() {
+bool SimpleIdentifier::isIndexed() {
     return !indices.empty();
 }
 
-void Identifier::accept(AstVisitor0* visitor) {
+void SimpleIdentifier::accept(AstVisitor0* visitor) {
      visitor->visit(shared_from_this());
 }
 
-string Identifier::toString() {
+string SimpleIdentifier::toString() {
     if(!isIndexed())
         return symbol->toString();
     else {
@@ -50,11 +50,11 @@ string Identifier::toString() {
 
 /* =============================== QualifiedIdentifier ================================ */
 
-shared_ptr<Identifier> QualifiedIdentifier::getIdentifier() {
+shared_ptr<SimpleIdentifier> QualifiedIdentifier::getIdentifier() {
     return identifier;
 }
 
-void QualifiedIdentifier::setIdentifier(shared_ptr<Identifier> identifier) {
+void QualifiedIdentifier::setIdentifier(shared_ptr<SimpleIdentifier> identifier) {
     this->identifier = identifier;
 }
 

@@ -26,9 +26,10 @@ namespace smtlib {
          * Can act as an attribute value.
          */
         class SortSymbolDeclaration : public virtual AstNode,
-                                      public AttributeValue, public std::enable_shared_from_this<SortSymbolDeclaration> {
+                                      public AttributeValue,
+                                      public std::enable_shared_from_this<SortSymbolDeclaration> {
         private:
-            std::shared_ptr<Identifier> identifier;
+            std::shared_ptr<SimpleIdentifier> identifier;
             std::shared_ptr<NumeralLiteral> arity;
             std::vector<std::shared_ptr<Attribute>> attributes;
         public:
@@ -37,7 +38,7 @@ namespace smtlib {
              * \param identifier    Sort symbol identiier
              * \param arity         Sort arity
              */
-            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
+            SortSymbolDeclaration(std::shared_ptr<SimpleIdentifier> identifier,
                                   std::shared_ptr<NumeralLiteral> arity)
                     : identifier(identifier), arity(arity) { }
 
@@ -47,19 +48,19 @@ namespace smtlib {
              * \param arity         Sort arity
              * \param attributes    Sort symbol declaration attributes
              */
-            SortSymbolDeclaration(std::shared_ptr<Identifier> identifier,
+            SortSymbolDeclaration(std::shared_ptr<SimpleIdentifier> identifier,
                                   std::shared_ptr<NumeralLiteral> arity,
-                                  std::vector<std::shared_ptr<Attribute>> &attributes);
+                                  std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<SimpleIdentifier> getIdentifier();
 
-            void setIdentifier(std::shared_ptr<Identifier> identifier);
+            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
 
             std::shared_ptr<NumeralLiteral> getArity();
 
             void setArity(std::shared_ptr<NumeralLiteral> arity);
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            std::vector<std::shared_ptr<Attribute>>& getAttributes();
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -107,7 +108,7 @@ namespace smtlib {
              */
             SpecConstFunDeclaration(std::shared_ptr<SpecConstant> constant,
                                     std::shared_ptr<Sort> sort,
-                                    std::vector<std::shared_ptr<Attribute>> &attributes);
+                                    std::vector<std::shared_ptr<Attribute>>& attributes);
 
             std::shared_ptr<SpecConstant> getConstant();
 
@@ -117,7 +118,7 @@ namespace smtlib {
 
             void setSort(std::shared_ptr<Sort> sort);
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            std::vector<std::shared_ptr<Attribute>>& getAttributes();
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -131,7 +132,8 @@ namespace smtlib {
          * Node of the SMT-LIB abstract syntax tree.
          * Can act as an attribute value.
          */
-        class MetaSpecConstFunDeclaration : public FunSymbolDeclaration, public std::enable_shared_from_this<MetaSpecConstFunDeclaration> {
+        class MetaSpecConstFunDeclaration
+                : public FunSymbolDeclaration, public std::enable_shared_from_this<MetaSpecConstFunDeclaration> {
         private:
             std::shared_ptr<MetaSpecConstant> constant;
             std::shared_ptr<Sort> sort;
@@ -155,7 +157,7 @@ namespace smtlib {
              */
             MetaSpecConstFunDeclaration(std::shared_ptr<MetaSpecConstant> constant,
                                         std::shared_ptr<Sort> sort,
-                                        std::vector<std::shared_ptr<Attribute>> &attributes);
+                                        std::vector<std::shared_ptr<Attribute>>& attributes);
 
             std::shared_ptr<MetaSpecConstant> getConstant();
 
@@ -165,28 +167,28 @@ namespace smtlib {
 
             void setSort(std::shared_ptr<Sort> sort);
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            std::vector<std::shared_ptr<Attribute>>& getAttributes();
 
             virtual void accept(AstVisitor0* visitor);
 
             virtual std::string toString();
         };
 
-        /* ============================== IdentifierFunDeclaration =============================== */
+        /* ============================== SimpleFunDeclaration =============================== */
 
         /**
          * Identifier function symbol declaration.
          * Node of the SMT-LIB abstract syntax tree.
          * Can act as an attribute value.
          */
-        class IdentifierFunDeclaration : public FunSymbolDeclaration,
-                                         public std::enable_shared_from_this<IdentifierFunDeclaration> {
+        class SimpleFunDeclaration : public FunSymbolDeclaration,
+                                     public std::enable_shared_from_this<SimpleFunDeclaration> {
         protected:
-            std::shared_ptr<Identifier> identifier;
+            std::shared_ptr<SimpleIdentifier> identifier;
             std::vector<std::shared_ptr<Sort>> signature;
             std::vector<std::shared_ptr<Attribute>> attributes;
 
-            IdentifierFunDeclaration() { }
+            SimpleFunDeclaration() { }
 
         public:
             /**
@@ -194,8 +196,8 @@ namespace smtlib {
              * \param identifier    Function identifier
              * \param signature     Function signature
              */
-            IdentifierFunDeclaration(std::shared_ptr<Identifier> identifier,
-                                  std::vector<std::shared_ptr<Sort>> &signature);
+            SimpleFunDeclaration(std::shared_ptr<SimpleIdentifier> identifier,
+                                 std::vector<std::shared_ptr<Sort>>& signature);
 
             /**
              * Constructs declaration with attributes.
@@ -203,17 +205,17 @@ namespace smtlib {
              * \param signature     Function signature
              * \param attributes    Function symbol declaration attributes
              */
-            IdentifierFunDeclaration(std::shared_ptr<Identifier> identifier,
-                                  std::vector<std::shared_ptr<Sort>> &signature,
-                                  std::vector<std::shared_ptr<Attribute>> &attributes);
+            SimpleFunDeclaration(std::shared_ptr<SimpleIdentifier> identifier,
+                                 std::vector<std::shared_ptr<Sort>>& signature,
+                                 std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<SimpleIdentifier> getIdentifier();
 
-            void setIdentifier(std::shared_ptr<Identifier> identifier);
+            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
 
-            std::vector<std::shared_ptr<Sort>> &getSignature();
+            std::vector<std::shared_ptr<Sort>>& getSignature();
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            std::vector<std::shared_ptr<Attribute>>& getAttributes();
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -231,7 +233,7 @@ namespace smtlib {
                                          public std::enable_shared_from_this<ParametricFunDeclaration> {
         private:
             std::vector<std::shared_ptr<Symbol>> params;
-            std::shared_ptr<Identifier> identifier;
+            std::shared_ptr<SimpleIdentifier> identifier;
             std::vector<std::shared_ptr<Sort>> signature;
             std::vector<std::shared_ptr<Attribute>> attributes;
 
@@ -242,9 +244,9 @@ namespace smtlib {
              * \param identifier    Function identifier
              * \param signature     Function signature
              */
-            ParametricFunDeclaration(std::vector<std::shared_ptr<Symbol>> &params,
-                                std::shared_ptr<Identifier> identifier,
-                                std::vector<std::shared_ptr<Sort>> &signature);
+            ParametricFunDeclaration(std::vector<std::shared_ptr<Symbol>>& params,
+                                     std::shared_ptr<SimpleIdentifier> identifier,
+                                     std::vector<std::shared_ptr<Sort>>& signature);
 
             /**
              * Constructs declaration with attributes.
@@ -253,20 +255,20 @@ namespace smtlib {
              * \param signature     Function signature
              * \param attributes    Function symbol declaration attributes
              */
-            ParametricFunDeclaration(std::vector<std::shared_ptr<Symbol>> &params,
-                                std::shared_ptr<Identifier> identifier,
-                                std::vector<std::shared_ptr<Sort>> &signature,
-                                std::vector<std::shared_ptr<Attribute>> &attributes);
+            ParametricFunDeclaration(std::vector<std::shared_ptr<Symbol>>& params,
+                                     std::shared_ptr<SimpleIdentifier> identifier,
+                                     std::vector<std::shared_ptr<Sort>>& signature,
+                                     std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::vector<std::shared_ptr<Symbol>> &getParams();
+            std::vector<std::shared_ptr<Symbol>>& getParams();
 
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<SimpleIdentifier> getIdentifier();
 
-            void setIdentifier(std::shared_ptr<Identifier> identifier);
+            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
 
-            std::vector<std::shared_ptr<Sort>> &getSignature();
+            std::vector<std::shared_ptr<Sort>>& getSignature();
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            std::vector<std::shared_ptr<Attribute>>& getAttributes();
 
             virtual void accept(AstVisitor0* visitor);
 

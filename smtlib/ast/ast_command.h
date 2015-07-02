@@ -9,6 +9,7 @@
 #include "ast_abstract.h"
 #include "ast_attribute.h"
 #include "ast_basic.h"
+#include "ast_datatype.h"
 #include "ast_interfaces.h"
 #include "ast_fun.h"
 #include "ast_literal.h"
@@ -114,6 +115,44 @@ namespace smtlib {
             inline std::shared_ptr<Sort> getSort() { return sort; }
 
             inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
+
+            virtual void accept(AstVisitor0* visitor);
+
+            virtual std::string toString();
+        };
+
+        /* ============================== DeclareDatatypeCommand ============================== */
+        class DeclareDatatypeCommand : public Command,
+                                       public std::enable_shared_from_this<DeclareDatatypeCommand> {
+        private:
+            std::shared_ptr<DatatypeDeclaration> declaration;
+        public:
+            DeclareDatatypeCommand(std::shared_ptr<DatatypeDeclaration> declaration);
+
+            inline std::shared_ptr<DatatypeDeclaration> getDeclaration() { return  declaration; }
+
+            inline void setDeclaration(std::shared_ptr<DatatypeDeclaration> declaration) {
+                this->declaration = declaration;
+            }
+
+            virtual void accept(AstVisitor0* visitor);
+
+            virtual std::string toString();
+        };
+
+        /* ============================= DeclareDatatypesCommand ============================== */
+        class DeclareDatatypesCommand : public Command,
+                                        public std::enable_shared_from_this<DeclareDatatypesCommand> {
+        private:
+            std::vector<std::shared_ptr<SortDeclaration>> sorts;
+            std::vector<std::shared_ptr<DatatypeDeclaration>> declarations;
+        public:
+            DeclareDatatypesCommand(std::vector<std::shared_ptr<SortDeclaration>>& sorts,
+                                    std::vector<std::shared_ptr<DatatypeDeclaration>>& declarations);
+
+            inline std::vector<std::shared_ptr<SortDeclaration>> &getSorts() { return sorts; }
+
+            inline std::vector<std::shared_ptr<DatatypeDeclaration>> &getDeclarations() { return declarations; }
 
             virtual void accept(AstVisitor0* visitor);
 

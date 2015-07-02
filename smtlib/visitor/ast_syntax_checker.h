@@ -9,7 +9,7 @@
 
 namespace smtlib {
     namespace ast {
-        class SyntaxChecker : public AstVisitor1<bool> {
+        class SyntaxChecker : public DummyAstVisitor1<bool> {
         private:
             struct SyntaxCheckError {
                 std::vector<std::string> messages;
@@ -65,7 +65,7 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<FunctionDeclaration> node);
             virtual void visit(std::shared_ptr<FunctionDefinition> node);
 
-            virtual void visit(std::shared_ptr<Identifier> node);
+            virtual void visit(std::shared_ptr<SimpleIdentifier> node);
             virtual void visit(std::shared_ptr<QualifiedIdentifier> node);
 
             virtual void visit(std::shared_ptr<DecimalLiteral> node);
@@ -84,7 +84,7 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node);
             virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node);
-            virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node);
+            virtual void visit(std::shared_ptr<SimpleFunDeclaration> node);
             virtual void visit(std::shared_ptr<ParametricFunDeclaration> node);
 
             virtual void visit(std::shared_ptr<QualifiedTerm> node);

@@ -63,6 +63,57 @@ string DeclareConstCommand::toString() {
     return ss.str();
 }
 
+/* ============================== DeclareDatatypeCommand ============================== */
+DeclareDatatypeCommand::DeclareDatatypeCommand(shared_ptr<DatatypeDeclaration> declaration)
+        : declaration(declaration) { }
+
+void DeclareDatatypeCommand::accept(AstVisitor0* visitor) {
+    visitor->visit(shared_from_this());
+}
+
+string DeclareDatatypeCommand::toString() {
+    stringstream ss;
+    ss << "(declare-datatype " << declaration->toString() << ")";
+    return ss.str();
+}
+
+/* ============================= DeclareDatatypesCommand ============================== */
+DeclareDatatypesCommand::DeclareDatatypesCommand(vector<shared_ptr<SortDeclaration>>& sorts,
+                                                 vector<shared_ptr<DatatypeDeclaration>>& declarations) {
+    this->sorts.insert(this->sorts.begin(), sorts.begin(), sorts.end());
+    this->declarations.insert(this->declarations.begin(), declarations.begin(), declarations.end());
+}
+
+void DeclareDatatypesCommand::accept(AstVisitor0* visitor) {
+    visitor->visit(shared_from_this());
+}
+
+string DeclareDatatypesCommand::toString() {
+    stringstream ss;
+    ss << "( declare-datatypes (";
+
+    bool first = true;
+    for(auto it : sorts) {
+        if(first)
+            first = false;
+        else
+            ss << " ";
+        ss << it->toString();
+    }
+
+    ss << ") (";
+
+    first = true;
+    for(auto it : declarations) {
+        if(first)
+            first = false;
+        else
+            ss << " ";
+        ss << it->toString();
+    }
+
+    return ss.str();
+}
 /* =============================== DeclareFunCommand ================================ */
 
 DeclareFunCommand::DeclareFunCommand(shared_ptr<Symbol> symbol,
@@ -144,8 +195,8 @@ string DefineFunRecCommand::toString() {
 /* =============================== DefineFunsRecCommand =============================== */
 
 DefineFunsRecCommand::DefineFunsRecCommand(
-        std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
-        std::vector<std::shared_ptr<Term>> &bodies) {
+        vector<shared_ptr<FunctionDeclaration>> &declarations,
+        vector<shared_ptr<Term>> &bodies) {
     this->declarations.insert(this->declarations.end(), declarations.begin(), declarations.end());
     this->bodies.insert(this->bodies.end(), bodies.begin(), bodies.end());
 }

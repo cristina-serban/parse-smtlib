@@ -25,7 +25,7 @@ namespace smtlib {
         std::shared_ptr<ast::AstNode> getAst();
 
         void reportError(unsigned int lineLeft, unsigned int colLeft,
-                         unsigned int lineRight, unsigned int colRight, const char *msg);
+                         unsigned int lineRight, unsigned int colRight, const char* msg);
     };
 }
 

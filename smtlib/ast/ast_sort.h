@@ -14,14 +14,14 @@
 
 namespace smtlib {
     namespace ast {
-        class Identifier;
+        class SimpleIdentifier;
         /**
          * An SMT-LIB sort.
          * Node of the SMT-LIB abstract syntax tree.
          */
         class Sort : public AstNode, public std::enable_shared_from_this<Sort> {
         protected:
-            std::shared_ptr<Identifier> identifier;
+            std::shared_ptr<SimpleIdentifier> identifier;
             std::vector<std::shared_ptr<Sort>> args;
         public:
 
@@ -29,19 +29,19 @@ namespace smtlib {
              * Constructor for a simple sort
              * \param identifier    Sort name
              */
-            Sort(std::shared_ptr<Identifier> identifier) : identifier(identifier) { }
+            Sort(std::shared_ptr<SimpleIdentifier> identifier) : identifier(identifier) { }
 
             /**
              * Constructor for a parametric sort
              * \param identifier    Sort name
              * \param args          Sort arguments
              */
-            Sort(std::shared_ptr<Identifier> identifier,
+            Sort(std::shared_ptr<SimpleIdentifier> identifier,
                  std::vector<std::shared_ptr<Sort>> &args);
 
-            std::shared_ptr<Identifier> getIdentifier();
+            std::shared_ptr<SimpleIdentifier> getIdentifier();
 
-            void setIdentifier(std::shared_ptr<Identifier> identifier);
+            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
 
             std::vector<std::shared_ptr<Sort>> &getArgs();
 

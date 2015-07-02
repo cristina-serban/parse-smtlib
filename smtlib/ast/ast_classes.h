@@ -18,6 +18,8 @@ namespace smtlib {
         class CheckSatCommand;
         class CheckSatAssumCommand;
         class DeclareConstCommand;
+        class DeclareDatatypeCommand;
+        class DeclareDatatypesCommand;
         class DeclareFunCommand;
         class DeclareSortCommand;
         class DefineFunCommand;
@@ -46,7 +48,7 @@ namespace smtlib {
         class FunctionDeclaration;
         class FunctionDefinition;
 
-        class Identifier;
+        class SimpleIdentifier;
         class QualifiedIdentifier;
 
         class DecimalLiteral;
@@ -64,13 +66,25 @@ namespace smtlib {
 
         class SpecConstFunDeclaration;
         class MetaSpecConstFunDeclaration;
-        class IdentifierFunDeclaration;
+        class SimpleFunDeclaration;
         class ParametricFunDeclaration;
+
+        class SortDeclaration;
+        class SelectorDeclaration;
+        class ConstructorDeclaration;
+        class DatatypeDeclaration;
+        class SimpleDatatypeDeclaration;
+        class ParametricDatatypeDeclaration;
+
+        class QualifiedConstructor;
+        class QualifiedPattern;
+        class MatchCase;
 
         class QualifiedTerm;
         class LetTerm;
         class ForallTerm;
         class ExistsTerm;
+        class MatchTerm;
         class AnnotatedTerm;
 
         class SortedVariable;

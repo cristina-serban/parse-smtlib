@@ -31,7 +31,7 @@ namespace smtlib {
                 std::shared_ptr<AstNode> source;
 
                 TermSorterInfo(std::shared_ptr<SymbolStack> stack,
-                               SortednessChecker *checker,
+                               SortednessChecker* checker,
                                std::shared_ptr<AstNode> source) {
                     this->stack = stack;
                     this->checker = checker;
@@ -60,7 +60,7 @@ namespace smtlib {
 
             std::shared_ptr<FunInfo> getInfo(std::shared_ptr<SpecConstFunDeclaration> node);
             std::shared_ptr<FunInfo> getInfo(std::shared_ptr<MetaSpecConstFunDeclaration> nodetd);
-            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<IdentifierFunDeclaration> node);
+            std::shared_ptr<FunInfo> getInfo(std::shared_ptr<SimpleFunDeclaration> node);
             std::shared_ptr<FunInfo> getInfo(std::shared_ptr<ParametricFunDeclaration> node);
             std::shared_ptr<FunInfo> getInfo(std::shared_ptr<DeclareConstCommand> node);
             std::shared_ptr<FunInfo> getInfo(std::shared_ptr<DeclareFunCommand> node);
@@ -84,7 +84,7 @@ namespace smtlib {
             class TermSorter : public DummyAstVisitor2<std::shared_ptr<Sort>, std::shared_ptr<TermSorterInfo>> {
 
             public:
-                virtual void visit(std::shared_ptr<Identifier> node);
+                virtual void visit(std::shared_ptr<SimpleIdentifier> node);
                 virtual void visit(std::shared_ptr<QualifiedIdentifier> node);
 
                 virtual void visit(std::shared_ptr<DecimalLiteral> node);
@@ -120,12 +120,12 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<SortSymbolDeclaration> node);
             virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node);
             virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node);
-            virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node);
+            virtual void visit(std::shared_ptr<SimpleFunDeclaration> node);
             virtual void visit(std::shared_ptr<ParametricFunDeclaration> node);
 
             virtual bool run (std::shared_ptr<SymbolStack> stack, std::shared_ptr<AstNode> node) {
                 if(node) {
-                    SyntaxChecker *chk = new SyntaxChecker();
+                    SyntaxChecker* chk = new SyntaxChecker();
                     if(chk->run(node)) {
                         ret = true;
                         arg = stack;

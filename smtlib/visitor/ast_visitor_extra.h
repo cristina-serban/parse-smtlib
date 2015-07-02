@@ -54,6 +54,8 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<CheckSatCommand> node) { }
             virtual void visit(std::shared_ptr<CheckSatAssumCommand> node) { }
             virtual void visit(std::shared_ptr<DeclareConstCommand> node) { }
+            virtual void visit(std::shared_ptr<DeclareDatatypeCommand> node) { }
+            virtual void visit(std::shared_ptr<DeclareDatatypesCommand> node) { }
             virtual void visit(std::shared_ptr<DeclareFunCommand> node) { }
             virtual void visit(std::shared_ptr<DeclareSortCommand> node) { }
             virtual void visit(std::shared_ptr<DefineFunCommand> node) { }
@@ -82,7 +84,7 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<FunctionDeclaration> node) { }
             virtual void visit(std::shared_ptr<FunctionDefinition> node) { }
 
-            virtual void visit(std::shared_ptr<Identifier> node) { }
+            virtual void visit(std::shared_ptr<SimpleIdentifier> node) { }
             virtual void visit(std::shared_ptr<QualifiedIdentifier> node) { }
 
             virtual void visit(std::shared_ptr<DecimalLiteral> node) { }
@@ -101,13 +103,24 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node) { }
             virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node) { }
-            virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node) { }
+            virtual void visit(std::shared_ptr<SimpleFunDeclaration> node) { }
             virtual void visit(std::shared_ptr<ParametricFunDeclaration> node) { }
+
+            virtual void visit(std::shared_ptr<SortDeclaration> node) { }
+            virtual void visit(std::shared_ptr<SelectorDeclaration> node) { }
+            virtual void visit(std::shared_ptr<ConstructorDeclaration> node) { }
+            virtual void visit(std::shared_ptr<SimpleDatatypeDeclaration> node) { }
+            virtual void visit(std::shared_ptr<ParametricDatatypeDeclaration> node) { }
+
+            virtual void visit(std::shared_ptr<QualifiedConstructor> node) { }
+            virtual void visit(std::shared_ptr<QualifiedPattern> node) { }
+            virtual void visit(std::shared_ptr<MatchCase> node) { }
 
             virtual void visit(std::shared_ptr<QualifiedTerm> node) { }
             virtual void visit(std::shared_ptr<LetTerm> node) { }
             virtual void visit(std::shared_ptr<ForallTerm> node) { }
             virtual void visit(std::shared_ptr<ExistsTerm> node) { }
+            virtual void visit(std::shared_ptr<MatchTerm> node) { }
             virtual void visit(std::shared_ptr<AnnotatedTerm> node) { }
 
             virtual void visit(std::shared_ptr<SortedVariable> node) { }
@@ -130,6 +143,8 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<CheckSatCommand> node) { }
             virtual void visit(std::shared_ptr<CheckSatAssumCommand> node) { }
             virtual void visit(std::shared_ptr<DeclareConstCommand> node) { }
+            virtual void visit(std::shared_ptr<DeclareDatatypeCommand> node) { }
+            virtual void visit(std::shared_ptr<DeclareDatatypesCommand> node) { }
             virtual void visit(std::shared_ptr<DeclareFunCommand> node) { }
             virtual void visit(std::shared_ptr<DeclareSortCommand> node) { }
             virtual void visit(std::shared_ptr<DefineFunCommand> node) { }
@@ -158,7 +173,7 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<FunctionDeclaration> node) { }
             virtual void visit(std::shared_ptr<FunctionDefinition> node) { }
 
-            virtual void visit(std::shared_ptr<Identifier> node) { }
+            virtual void visit(std::shared_ptr<SimpleIdentifier> node) { }
             virtual void visit(std::shared_ptr<QualifiedIdentifier> node) { }
 
             virtual void visit(std::shared_ptr<DecimalLiteral> node) { }
@@ -177,13 +192,24 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<SpecConstFunDeclaration> node) { }
             virtual void visit(std::shared_ptr<MetaSpecConstFunDeclaration> node) { }
-            virtual void visit(std::shared_ptr<IdentifierFunDeclaration> node) { }
+            virtual void visit(std::shared_ptr<SimpleFunDeclaration> node) { }
             virtual void visit(std::shared_ptr<ParametricFunDeclaration> node) { }
+
+            virtual void visit(std::shared_ptr<SortDeclaration> node) { }
+            virtual void visit(std::shared_ptr<SelectorDeclaration> node) { }
+            virtual void visit(std::shared_ptr<ConstructorDeclaration> node) { }
+            virtual void visit(std::shared_ptr<SimpleDatatypeDeclaration> node) { }
+            virtual void visit(std::shared_ptr<ParametricDatatypeDeclaration> node) { }
+
+            virtual void visit(std::shared_ptr<QualifiedConstructor> node) { }
+            virtual void visit(std::shared_ptr<QualifiedPattern> node) { }
+            virtual void visit(std::shared_ptr<MatchCase> node) { }
 
             virtual void visit(std::shared_ptr<QualifiedTerm> node) { }
             virtual void visit(std::shared_ptr<LetTerm> node) { }
             virtual void visit(std::shared_ptr<ForallTerm> node) { }
             virtual void visit(std::shared_ptr<ExistsTerm> node) { }
+            virtual void visit(std::shared_ptr<MatchTerm> node) { }
             virtual void visit(std::shared_ptr<AnnotatedTerm> node) { }
 
             virtual void visit(std::shared_ptr<SortedVariable> node) { }

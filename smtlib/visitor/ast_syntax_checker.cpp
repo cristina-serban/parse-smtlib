@@ -634,7 +634,7 @@ void SyntaxChecker::visit(std::shared_ptr<FunctionDefinition> node) {
     }
 }
 
-void SyntaxChecker::visit(std::shared_ptr<Identifier> node) {
+void SyntaxChecker::visit(std::shared_ptr<SimpleIdentifier> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
@@ -747,7 +747,7 @@ void SyntaxChecker::visit(std::shared_ptr<Logic> node) {
                 ret = false;
                 err = addError("Attribute value should be a list of theory names", attr, err);
             } else {
-                CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
+                CompAttributeValue* val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 /*if (values.empty()) {
@@ -804,7 +804,7 @@ void SyntaxChecker::visit(std::shared_ptr<Theory> node) {
                 ret = false;
                 err = addError("Attribute value should be a list of sort symbol declarations", attr, err);
             } else {
-                CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
+                CompAttributeValue* val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
@@ -824,7 +824,7 @@ void SyntaxChecker::visit(std::shared_ptr<Theory> node) {
                 ret = false;
                 err = addError("Attribute value should be a list of function symbol declarations", attr, err);
             } else {
-                CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
+                CompAttributeValue* val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
@@ -983,7 +983,7 @@ void SyntaxChecker::visit(std::shared_ptr<MetaSpecConstFunDeclaration> node) {
     }
 }
 
-void SyntaxChecker::visit(std::shared_ptr<IdentifierFunDeclaration> node) {
+void SyntaxChecker::visit(std::shared_ptr<SimpleFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
