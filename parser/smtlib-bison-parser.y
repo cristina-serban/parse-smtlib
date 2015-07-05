@@ -147,14 +147,14 @@ command:
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' KW_DECL_DATATYPE datatype_decl ')'
+	'(' KW_DECL_DATATYPE symbol datatype_decl ')'
 		{
-			$$ = smt_newDeclareDatatypeCommand($3);
+			$$ = smt_newDeclareDatatypeCommand($3, $4);
 
 			@$.first_line = @1.first_line;
 			@$.first_column = @1.first_column;
-			@$.last_line = @4.last_line;
-			@$.last_column = @4.last_column;
+			@$.last_line = @5.last_line;
+			@$.last_column = @5.last_column;
 
 			smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
@@ -1396,7 +1396,7 @@ s_exp_plus :
 ;
 
 prop_literal:
-	SYMBOL 
+	symbol
 		{ 
 			$$ = smt_newPropLiteral($1, 0); 
 
@@ -1408,7 +1408,7 @@ prop_literal:
             smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
-	'(' NOT SYMBOL ')'
+	'(' NOT symbol ')'
 		{ 
 			$$ = smt_newPropLiteral($3, 1); 
 
@@ -1589,7 +1589,7 @@ theory_attr:
 	KW_ATTR_SORTS '(' sort_symbol_decl_plus ')'
 		{ 
 			$$ = smt_newAttribute2($1, 
-				smt_newCompoundAttributeValue($3)); 
+				smt_newCompAttributeValue($3));
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;
@@ -1602,7 +1602,7 @@ theory_attr:
 	KW_ATTR_FUNS '(' par_fun_symbol_decl_plus ')'
 		{ 
 			$$ = smt_newAttribute2($1, 
-				smt_newCompoundAttributeValue($3)); 
+				smt_newCompAttributeValue($3));
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;
@@ -1818,7 +1818,7 @@ logic:
 logic_attr:
 	KW_ATTR_THEORIES '(' symbol_star ')'
 		{ 
-			$$ = smt_newAttribute2($1, smt_newCompoundAttributeValue($3)); 
+			$$ = smt_newAttribute2($1, smt_newCompAttributeValue($3));
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;

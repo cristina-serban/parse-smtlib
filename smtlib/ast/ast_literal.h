@@ -26,16 +26,9 @@ namespace smtlib {
             Literal() { }
 
         public:
-            const T &getValue() const{
-                return value;
-            }
+            inline T &getValue() { return value; }
 
-            T &getValue() {
-                return value;
-            }
-
-            void setValue(T &value) {
-                this->value = value;
+            inline void setValue(T &value) { this->value = value;
             }
         };
 
@@ -51,11 +44,12 @@ namespace smtlib {
         private:
             unsigned int base;
         public:
-            NumeralLiteral(long value, unsigned int base);
+            inline NumeralLiteral(long value, unsigned int base)
+                    : base(base) { this->value = value; }
 
-            unsigned int getBase();
+            inline unsigned int getBase() { return base; }
 
-            void setBase(unsigned int base);
+            inline void setBase(unsigned int base) { this->base = base; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -71,7 +65,7 @@ namespace smtlib {
         class DecimalLiteral : public Literal<double>,
                                public SpecConstant, public std::enable_shared_from_this<DecimalLiteral> {
         public:
-            DecimalLiteral(double value);
+            inline DecimalLiteral(double value) { this->value = value; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -85,9 +79,10 @@ namespace smtlib {
          * Can act as a specification constant.
          */
         class StringLiteral : public Literal<std::string>,
-                              public SpecConstant, public std::enable_shared_from_this<StringLiteral> {
+                              public SpecConstant,
+                              public std::enable_shared_from_this<StringLiteral> {
         public:
-            StringLiteral(std::string value);
+            inline StringLiteral(std::string value) { this->value = value; }
 
             virtual void accept(AstVisitor0* visitor);
 

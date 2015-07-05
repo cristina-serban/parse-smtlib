@@ -15,13 +15,14 @@
 
 namespace smtlib {
     namespace ast {
-       class Sort;
+        class Sort;
 
         /* ==================================== SimpleIdentifier ==================================== */
         /**
          * Simple identifier (e.g. "Real", "|John Brown|", "_ BitVec 32").
          */
-        class SimpleIdentifier : public Identifier, public std::enable_shared_from_this<SimpleIdentifier> {
+        class SimpleIdentifier : public Identifier,
+                                 public std::enable_shared_from_this<SimpleIdentifier> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::vector<std::shared_ptr<Index>> indices;
@@ -39,13 +40,13 @@ namespace smtlib {
              * \param indices   Identifier indices
              */
             SimpleIdentifier(std::shared_ptr<Symbol> symbol,
-                       std::vector<std::shared_ptr<Index>> indices);
+                             std::vector<std::shared_ptr<Index>>& indices);
 
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            std::vector<std::shared_ptr<Index>> &getIndices();
+            inline std::vector<std::shared_ptr<Index>>& getIndices() { return indices; }
 
             /**
              * Checks whether the identifier is indexed (i.e. the list of indices is not empty).
@@ -70,17 +71,17 @@ namespace smtlib {
              * \param identifier    SimpleIdentifier
              * \param sort          Result sort
              */
-            QualifiedIdentifier(std::shared_ptr<SimpleIdentifier> identifier,
-                                std::shared_ptr<Sort> sort) :
+            inline QualifiedIdentifier(std::shared_ptr<SimpleIdentifier> identifier,
+                                       std::shared_ptr<Sort> sort) :
                     identifier(identifier), sort(sort) { }
 
-            std::shared_ptr<SimpleIdentifier> getIdentifier();
+            inline std::shared_ptr<SimpleIdentifier> getIdentifier() { return identifier; }
 
-            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
+            inline void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier) { this->identifier = identifier; }
 
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
 
             virtual void accept(AstVisitor0* visitor);
 

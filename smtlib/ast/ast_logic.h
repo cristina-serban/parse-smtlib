@@ -29,7 +29,7 @@ namespace smtlib {
              * Constructs logic without attributes.
              * \param name          Logic name
              */
-            Logic(std::shared_ptr<Symbol> name) : name(name) { }
+            inline Logic(std::shared_ptr<Symbol> name) : name(name) { }
 
             /**
              * Constructs logic with attributes.
@@ -37,13 +37,13 @@ namespace smtlib {
              * \param attributes    Logic attributes
              */
             Logic(std::shared_ptr<Symbol> name,
-                     std::vector<std::shared_ptr<Attribute>> &attributes);
+                     std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<Symbol> getName();
+            inline std::shared_ptr<Symbol> getName() { return name; }
 
-            void setName(std::shared_ptr<Symbol> name);
+            inline void setName(std::shared_ptr<Symbol> name) { this->name = name; }
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 

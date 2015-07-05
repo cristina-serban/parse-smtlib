@@ -155,7 +155,7 @@ shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<MetaSpecConstFunDeclar
 }
 
 shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<SimpleFunDeclaration> node) {
-    vector<shared_ptr<Sort>> &sig = node->getSignature();
+    vector<shared_ptr<Sort>>& sig = node->getSignature();
     vector<shared_ptr<Sort>> newsig;
 
     for (vector<shared_ptr<Sort>>::iterator it = sig.begin(); it != sig.end(); it++) {
@@ -167,7 +167,7 @@ shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<SimpleFunDeclaration> 
 }
 
 shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<ParametricFunDeclaration> node) {
-    vector<shared_ptr<Sort>> &sig = node->getSignature();
+    vector<shared_ptr<Sort>>& sig = node->getSignature();
     vector<shared_ptr<Sort>> newsig;
 
     for (vector<shared_ptr<Sort>>::iterator it = sig.begin(); it != sig.end(); it++) {
@@ -186,7 +186,7 @@ shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DeclareConstCommand> n
 }
 
 shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DeclareFunCommand> node) {
-    vector<shared_ptr<Sort>> &sig = node->getParams();
+    vector<shared_ptr<Sort>>& sig = node->getParams();
     vector<shared_ptr<Sort>> newsig;
 
     for (vector<shared_ptr<Sort>>::iterator it = sig.begin(); it != sig.end(); it++) {
@@ -201,7 +201,7 @@ shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DeclareFunCommand> nod
 
 shared_ptr<FunInfo>SortednessChecker::getInfo(shared_ptr<DefineFunCommand> node) {
     vector<shared_ptr<Sort>> newsig;
-    vector<shared_ptr<SortedVariable>> &params = node->getDefinition()->getSignature()->getParams();
+    vector<shared_ptr<SortedVariable>>& params = node->getDefinition()->getSignature()->getParams();
     for (vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
         newsig.push_back(arg->expand((*it)->getSort()));
     }
@@ -213,7 +213,7 @@ shared_ptr<FunInfo>SortednessChecker::getInfo(shared_ptr<DefineFunCommand> node)
 
 shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DefineFunRecCommand> node) {
     vector<shared_ptr<Sort>> newsig;
-    vector<shared_ptr<SortedVariable>> &params = node->getDefinition()->getSignature()->getParams();
+    vector<shared_ptr<SortedVariable>>& params = node->getDefinition()->getSignature()->getParams();
     for (vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
         newsig.push_back(arg->expand((*it)->getSort()));
     }
@@ -227,7 +227,7 @@ vector<shared_ptr<FunInfo>> SortednessChecker::getInfo(shared_ptr<DefineFunsRecC
     vector<shared_ptr<FunInfo>> infos;
     for (unsigned long i = 0; i < node->getDeclarations().size(); i++) {
         vector<shared_ptr<Sort>> newsig;
-        vector<shared_ptr<SortedVariable>> &params = node->getDeclarations()[i]->getParams();
+        vector<shared_ptr<SortedVariable>>& params = node->getDeclarations()[i]->getParams();
         for (vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
             newsig.push_back(arg->expand((*it)->getSort()));
         }
@@ -285,7 +285,7 @@ SortednessChecker::checkSort(shared_ptr<Sort> sort,
 }
 
 shared_ptr<SortednessChecker::SortednessCheckError>
-SortednessChecker::checkSort(vector<shared_ptr<Symbol>> params,
+SortednessChecker::checkSort(vector<shared_ptr<Symbol>>& params,
                              unordered_map<string, bool> &paramUsage,
                              shared_ptr<Sort> sort,
                              shared_ptr<AstNode> source,
@@ -434,7 +434,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunCommand> node) {
         bool ok = true;
         arg->push();
 
-        vector<shared_ptr<SortedVariable>> &bindings = node->getDefinition()->getSignature()->getParams();
+        vector<shared_ptr<SortedVariable>>& bindings = node->getDefinition()->getSignature()->getParams();
         for (auto it : bindings) {
             arg->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
                                              arg->expand(it->getSort()), node));
@@ -513,7 +513,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunRecCommand> node) {
         arg->push();
         arg->tryAdd(nodeInfo);
 
-        vector<shared_ptr<SortedVariable>> &bindings = node->getDefinition()->getSignature()->getParams();
+        vector<shared_ptr<SortedVariable>>& bindings = node->getDefinition()->getSignature()->getParams();
         for (auto it : bindings) {
             arg->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
                                              arg->expand(it->getSort()), node));
@@ -574,8 +574,8 @@ void SortednessChecker::visit(shared_ptr<DefineFunRecCommand> node) {
 // TODO Check that all parameters are used inside function
 void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
     shared_ptr<SortednessCheckError> err;
-    vector<shared_ptr<FunctionDeclaration>> &decls = node->getDeclarations();
-    vector<shared_ptr<Term>> &bodies = node->getBodies();
+    vector<shared_ptr<FunctionDeclaration>>& decls = node->getDeclarations();
+    vector<shared_ptr<Term>>& bodies = node->getBodies();
 
     for (vector<shared_ptr<FunctionDeclaration>>::iterator it = decls.begin(); it != decls.end(); it++) {
 
@@ -608,7 +608,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
 
         for (unsigned long i = 0; i < decls.size(); i++) {
             arg->push();
-            vector<shared_ptr<SortedVariable>> &bindings = decls[i]->getParams();
+            vector<shared_ptr<SortedVariable>>& bindings = decls[i]->getParams();
             for (auto it : bindings) {
                 arg->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
                                                  arg->expand(it->getSort()), node));
@@ -764,7 +764,7 @@ void SortednessChecker::visit(shared_ptr<Logic> node) {
     for (vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         shared_ptr<Attribute> attr = *it;
         if (attr->getKeyword()->getValue() == ":theories") {
-            CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
+            CompAttributeValue*val = dynamic_cast<CompAttributeValue*>(attr->getValue().get());
             for (vector<shared_ptr<AttributeValue>>::iterator v = val->getValues().begin();
                  v != val->getValues().end(); v++) {
                 string theory = dynamic_cast<Symbol *>((*v).get())->toString();
@@ -780,7 +780,7 @@ void SortednessChecker::visit(shared_ptr<Theory> node) {
         shared_ptr<Attribute> attr = *it;
 
         if (attr->getKeyword()->getValue() == ":sorts" || attr->getKeyword()->getValue() == ":funs") {
-            CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
+            CompAttributeValue*val = dynamic_cast<CompAttributeValue*>(attr->getValue().get());
             for (vector<shared_ptr<AttributeValue>>::iterator v = val->getValues().begin();
                  v != val->getValues().end(); v++) {
                 (*v)->accept(this);
@@ -790,7 +790,7 @@ void SortednessChecker::visit(shared_ptr<Theory> node) {
 }
 
 void SortednessChecker::visit(shared_ptr<Script> node) {
-    vector<shared_ptr<Command>> &commands = node->getCommands();
+    vector<shared_ptr<Command>>& commands = node->getCommands();
     for (vector<shared_ptr<Command>>::iterator it = commands.begin(); it != commands.end(); it++) {
         (*it)->accept(this);
     }
@@ -1244,7 +1244,7 @@ void SortednessChecker::TermSorter::visit(std::shared_ptr<QualifiedTerm> node) {
 void SortednessChecker::TermSorter::visit(std::shared_ptr<LetTerm> node) {
     arg->stack->push();
 
-    vector<shared_ptr<VarBinding>> &bindings = node->getBindings();
+    vector<shared_ptr<VarBinding>>& bindings = node->getBindings();
     for (auto it : bindings) {
         TermSorter sorter;
         shared_ptr<Sort> result = sorter.run(arg, it->getTerm());
@@ -1280,7 +1280,7 @@ void SortednessChecker::TermSorter::visit(std::shared_ptr<LetTerm> node) {
 void SortednessChecker::TermSorter::visit(std::shared_ptr<ForallTerm> node) {
     arg->stack->push();
 
-    vector<shared_ptr<SortedVariable>> &bindings = node->getBindings();
+    vector<shared_ptr<SortedVariable>>& bindings = node->getBindings();
     for (auto it : bindings) {
         arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
                                                 arg->stack->expand(it->getSort()), node));
@@ -1327,7 +1327,7 @@ void SortednessChecker::TermSorter::visit(std::shared_ptr<ForallTerm> node) {
 void SortednessChecker::TermSorter::visit(std::shared_ptr<ExistsTerm> node) {
     arg->stack->push();
 
-    vector<shared_ptr<SortedVariable>> &bindings = node->getBindings();
+    vector<shared_ptr<SortedVariable>>& bindings = node->getBindings();
     for (auto it : bindings) {
         arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
                                                 arg->stack->expand(it->getSort()), node));

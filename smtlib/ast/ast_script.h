@@ -28,14 +28,14 @@ namespace smtlib {
             /**
              * Default constructor
              */
-            Script() { }
+            inline Script() { }
 
             /**
              * \param cmds    Command list
              */
-            Script(std::vector<std::shared_ptr<Command>> &cmds);
+            Script(std::vector<std::shared_ptr<Command>>& commands);
 
-            std::vector<std::shared_ptr<Command>> &getCommands();
+            inline std::vector<std::shared_ptr<Command>>& getCommands() { return commands; }
 
             virtual void accept(AstVisitor0* visitor);
 

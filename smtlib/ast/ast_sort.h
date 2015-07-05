@@ -29,7 +29,7 @@ namespace smtlib {
              * Constructor for a simple sort
              * \param identifier    Sort name
              */
-            Sort(std::shared_ptr<SimpleIdentifier> identifier) : identifier(identifier) { }
+            inline Sort(std::shared_ptr<SimpleIdentifier> identifier) : identifier(identifier) { }
 
             /**
              * Constructor for a parametric sort
@@ -37,13 +37,13 @@ namespace smtlib {
              * \param args          Sort arguments
              */
             Sort(std::shared_ptr<SimpleIdentifier> identifier,
-                 std::vector<std::shared_ptr<Sort>> &args);
+                 std::vector<std::shared_ptr<Sort>>& args);
 
-            std::shared_ptr<SimpleIdentifier> getIdentifier();
+            inline std::shared_ptr<SimpleIdentifier> getIdentifier() { return identifier; }
 
-            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
+            inline void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier) { this->identifier = identifier; }
 
-            std::vector<std::shared_ptr<Sort>> &getArgs();
+            inline std::vector<std::shared_ptr<Sort>>& getArgs() { return args; }
 
             /**
              * Checks whether the sort is parametrized (i.e. the list of sort parameters is not empty).

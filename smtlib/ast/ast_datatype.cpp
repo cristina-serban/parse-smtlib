@@ -7,9 +7,6 @@ using namespace smtlib;
 using namespace smtlib::ast;
 
 /* ================================= SortDeclaration ================================== */
-SortDeclaration::SortDeclaration(shared_ptr<Symbol> symbol,
-                                 shared_ptr<NumeralLiteral> numeral) : symbol(symbol), numeral(numeral) { }
-
 void SortDeclaration::accept(AstVisitor0* visitor) {
     visitor->visit(shared_from_this());
 }
@@ -21,10 +18,6 @@ string SortDeclaration::toString() {
 }
 
 /* =============================== SelectorDeclaration ================================ */
-
-SelectorDeclaration::SelectorDeclaration(shared_ptr<Symbol> symbol,
-                                         shared_ptr<Sort> sort) : symbol(symbol), sort(sort) { }
-
 void SelectorDeclaration::accept(AstVisitor0* visitor) {
     visitor->visit(shared_from_this());
 }
@@ -83,7 +76,7 @@ string SimpleDatatypeDeclaration::toString() {
 
 /* =========================== ParametricDatatypeDeclaration ========================== */
 
-ParametricDatatypeDeclaration::ParametricDatatypeDeclaration(vector<shared_ptr<Symbol>> params,
+ParametricDatatypeDeclaration::ParametricDatatypeDeclaration(vector<shared_ptr<Symbol>>& params,
                                                              vector<shared_ptr<ConstructorDeclaration>>& constructors) {
     this->params.insert(this->params.begin(), params.begin(), params.end());
     this->constructors.insert(this->constructors.begin(), constructors.begin(), constructors.end());

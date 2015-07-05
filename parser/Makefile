@@ -1,5 +1,5 @@
 smtlib-parser:
-	bison -d smtlib-bison-parser.y -Wconflicts-sr
+	bison -d smtlib-bison-parser.y -Wconflicts-sr -Wconflicts-rr
 	mv smtlib-bison-parser.tab.h smtlib-bison-parser.y.h
 	mv smtlib-bison-parser.tab.c smtlib-bison-parser.y.c
 	flex smtlib-flex-lexer.l
@@ -29,11 +29,12 @@ smtlib-parser:
 	g++ -g -c -std=c++11 ../smtlib/util/smt_logger.cpp -o smt_logger.o
 	g++ -g -c -std=c++11 ../smtlib/visitor/ast_syntax_checker.cpp -o ast_syntax_checker.o
 	g++ -g -c -std=c++11 ../smtlib/visitor/ast_sortedness_checker.cpp -o ast_sortedness_checker.o
-	g++ -g -o parse-smtlib smtlib-flex-lexer.l.o smtlib-bison-parser.y.o smtlib-glue.o \
-	ast_attribute.o ast_basic.o ast_command.o ast_datatype.o ast_fun.o ast_identifier.o \
-	ast_literal.o ast_logic.o ast_match.o ast_sexp.o ast_sort.o ast_script.o ast_symbol_decl.o \
-	ast_term.o ast_theory.o ast_var.o smt_parser.o smt_logger.o ast_syntax_checker.o \
-	ast_sortedness_checker.o smt_symbol_table.o smt_symbol_stack.o  -lfl
+	g++ -g -o parse-smtlib smtlib-flex-lexer.l.o smtlib-bison-parser.y.o \
+	smtlib-glue.o ast_attribute.o ast_basic.o ast_command.o ast_datatype.o \
+	ast_fun.o ast_identifier.o ast_literal.o ast_logic.o ast_match.o ast_sexp.o \
+	ast_sort.o ast_script.o ast_symbol_decl.o ast_term.o ast_theory.o ast_var.o \
+	smt_parser.o smt_logger.o ast_syntax_checker.o ast_sortedness_checker.o \
+	smt_symbol_table.o smt_symbol_stack.o  -lfl
 	rm -f *.o
 clean:
 	rm -f smtlib-bison-parser.y.h

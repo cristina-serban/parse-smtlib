@@ -7,9 +7,6 @@ using namespace std;
 using namespace smtlib;
 using namespace smtlib::ast;
 
-QualifiedConstructor::QualifiedConstructor(shared_ptr<Symbol> symbol,
-                                           shared_ptr<Sort> sort) : symbol(symbol), sort(sort) { }
-
 void QualifiedConstructor::accept(AstVisitor0* visitor) {
     visitor->visit(shared_from_this());
 }
@@ -42,9 +39,6 @@ string QualifiedPattern::toString() {
 }
 
 /* ===================================== MatchCase ==================================== */
-MatchCase::MatchCase(shared_ptr<Pattern> pattern,
-                     shared_ptr<Term> term) : pattern(pattern), term(term) {}
-
 void MatchCase::accept(AstVisitor0* visitor) {
     visitor->visit(shared_from_this());
 }

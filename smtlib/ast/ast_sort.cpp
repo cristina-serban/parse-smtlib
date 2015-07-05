@@ -5,21 +5,9 @@ using namespace std;
 using namespace smtlib::ast;
 
 Sort::Sort(shared_ptr<SimpleIdentifier> identifier,
-           vector<shared_ptr<Sort>> &args)
+           vector<shared_ptr<Sort>>& args)
         : identifier(identifier) {
     this->args.insert(this->args.end(), args.begin(), args.end());
-}
-
-shared_ptr<SimpleIdentifier> Sort::getIdentifier() {
-    return identifier;
-}
-
-void Sort::setIdentifier(shared_ptr<SimpleIdentifier> identifier) {
-    this->identifier = identifier;
-}
-
-vector<shared_ptr<Sort>> &Sort::getArgs() {
-    return args;
 }
 
 bool Sort::hasArgs() {

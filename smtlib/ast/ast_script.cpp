@@ -4,12 +4,8 @@
 using namespace std;
 using namespace smtlib::ast;
 
-Script::Script(vector<shared_ptr<Command>> &commands) {
+Script::Script(vector<shared_ptr<Command>>& commands) {
     this->commands.insert(this->commands.end(), commands.begin(), commands.end());
-}
-
-std::vector<shared_ptr<Command>> &Script::getCommands() {
-    return commands;
 }
 
 void Script::accept(AstVisitor0* visitor){

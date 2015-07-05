@@ -9,15 +9,15 @@ using namespace smtlib;
 using namespace smtlib::ast;
 
 
-unordered_map<string, shared_ptr<SortInfo>> &SymbolTable::getSorts() {
+unordered_map<string, shared_ptr<SortInfo>>& SymbolTable::getSorts() {
     return sorts;
 }
 
-unordered_map<string, vector<shared_ptr<FunInfo>>> &SymbolTable::getFuns() {
+unordered_map<string, vector<shared_ptr<FunInfo>>>& SymbolTable::getFuns() {
     return funs;
 }
 
-unordered_map<string, shared_ptr<VarInfo>> &SymbolTable::getVars() {
+unordered_map<string, shared_ptr<VarInfo>>& SymbolTable::getVars() {
     return vars;
 }
 

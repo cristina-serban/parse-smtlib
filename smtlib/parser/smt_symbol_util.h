@@ -12,7 +12,7 @@ namespace smtlib {
         std::vector<std::shared_ptr<ast::Symbol>> params;
         std::shared_ptr<ast::Sort> sort;
 
-        SortDefInfo(std::vector<std::shared_ptr<ast::Symbol>> &params,
+        SortDefInfo(std::vector<std::shared_ptr<ast::Symbol>>& params,
                     std::shared_ptr<ast::Sort> sort) {
             this->params.insert(this->params.begin(), params.begin(), params.end());
             this->sort = sort;
@@ -34,7 +34,7 @@ namespace smtlib {
         }
 
         SortInfo(std::string name, unsigned long arity,
-                 std::vector<std::shared_ptr<ast::Attribute>> &attributes,
+                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                  std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->arity = arity;
@@ -43,7 +43,7 @@ namespace smtlib {
         }
 
         SortInfo(std::string name, unsigned long arity,
-                 std::vector<std::shared_ptr<ast::Symbol>> &params,
+                 std::vector<std::shared_ptr<ast::Symbol>>& params,
                  std::shared_ptr<ast::Sort> sort,
                  std::shared_ptr<ast::AstNode> source) {
             this->name = name;
@@ -53,9 +53,9 @@ namespace smtlib {
         }
 
         SortInfo(std::string name, unsigned long arity,
-                 std::vector<std::shared_ptr<ast::Symbol>> &params,
+                 std::vector<std::shared_ptr<ast::Symbol>>& params,
                  std::shared_ptr<ast::Sort> sort,
-                 std::vector<std::shared_ptr<ast::Attribute>> &attributes,
+                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                  std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->arity = arity;
@@ -74,7 +74,7 @@ namespace smtlib {
         std::vector<std::shared_ptr<ast::Attribute>> attributes;
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
@@ -84,7 +84,7 @@ namespace smtlib {
         }
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::shared_ptr<ast::Term> body,
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
@@ -94,8 +94,8 @@ namespace smtlib {
         }
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
-                std::vector<std::shared_ptr<ast::Symbol>> &params,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
+                std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
@@ -104,8 +104,8 @@ namespace smtlib {
         }
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
-                std::vector<std::shared_ptr<ast::Symbol>> &params,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
+                std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::shared_ptr<ast::Term> body,
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
@@ -116,8 +116,8 @@ namespace smtlib {
         }
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
-                std::vector<std::shared_ptr<ast::Attribute>> &attributes,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
+                std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source){
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
@@ -128,9 +128,9 @@ namespace smtlib {
         }
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::shared_ptr<ast::Term> body,
-                std::vector<std::shared_ptr<ast::Attribute>> &attributes,
+                std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
@@ -140,9 +140,9 @@ namespace smtlib {
         }
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
-                std::vector<std::shared_ptr<ast::Symbol>> &params,
-                std::vector<std::shared_ptr<ast::Attribute>> &attributes,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
+                std::vector<std::shared_ptr<ast::Symbol>>& params,
+                std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
@@ -152,10 +152,10 @@ namespace smtlib {
         }
 
         FunInfo(std::string name,
-                std::vector<std::shared_ptr<ast::Sort>> &signature,
-                std::vector<std::shared_ptr<ast::Symbol>> &params,
+                std::vector<std::shared_ptr<ast::Sort>>& signature,
+                std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::shared_ptr<ast::Term> body,
-                std::vector<std::shared_ptr<ast::Attribute>> &attributes,
+                std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());

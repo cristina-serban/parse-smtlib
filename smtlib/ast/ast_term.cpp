@@ -7,21 +7,9 @@ using namespace smtlib::ast;
 /* ================================== QualifiedTerm =================================== */
 
 QualifiedTerm::QualifiedTerm(shared_ptr<Identifier> identifier,
-                             vector<shared_ptr<Term>> &terms)
+                             vector<shared_ptr<Term>>& terms)
         : identifier(identifier) {
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
-}
-
-shared_ptr<Identifier> QualifiedTerm::getIdentifier() {
-    return identifier;
-}
-
-void QualifiedTerm::setIdentifier(shared_ptr<Identifier> identifier) {
-    this->identifier = identifier;
-}
-
-vector<shared_ptr<Term>> &QualifiedTerm::getTerms() {
-    return terms;
 }
 
 void QualifiedTerm::accept(AstVisitor0* visitor){
@@ -44,22 +32,10 @@ string QualifiedTerm::toString() {
 
 /* ===================================== LetTerm ====================================== */
 
-LetTerm::LetTerm(vector<shared_ptr<VarBinding>> &bindings,
+LetTerm::LetTerm(vector<shared_ptr<VarBinding>>& bindings,
                  shared_ptr<Term> term)
         : term(term) {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
-}
-
-shared_ptr<Term> LetTerm::getTerm() {
-    return term;
-}
-
-void LetTerm::setTerm(shared_ptr<Term> term) {
-    this->term = term;
-}
-
-vector<shared_ptr<VarBinding>> &LetTerm::getBindings() {
-    return bindings;
 }
 
 void LetTerm::accept(AstVisitor0* visitor){
@@ -82,22 +58,10 @@ string LetTerm::toString() {
 }
 
 /* ==================================== ForallTerm ==================================== */
-ForallTerm::ForallTerm(vector<shared_ptr<SortedVariable>> &bindings,
+ForallTerm::ForallTerm(vector<shared_ptr<SortedVariable>>& bindings,
                        shared_ptr<Term> term)
         : term(term)  {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
-}
-
-shared_ptr<Term> ForallTerm::getTerm() {
-    return term;
-}
-
-void ForallTerm::setTerm(shared_ptr<Term> term) {
-    this->term = term;
-}
-
-vector<shared_ptr<SortedVariable>> & ForallTerm::getBindings() {
-    return bindings;
 }
 
 void ForallTerm::accept(AstVisitor0* visitor){
@@ -120,22 +84,10 @@ string ForallTerm::toString() {
 }
 
 /* ==================================== ExistsTerm ==================================== */
-ExistsTerm::ExistsTerm(vector<shared_ptr<SortedVariable>> &bindings,
+ExistsTerm::ExistsTerm(vector<shared_ptr<SortedVariable>>& bindings,
                        shared_ptr<Term> term)
         : term(term) {
     this->bindings.insert(this->bindings.end(), bindings.begin(), bindings.end());
-}
-
-shared_ptr<Term> ExistsTerm::getTerm() {
-    return term;
-}
-
-void ExistsTerm::setTerm(shared_ptr<Term> term) {
-    this->term = term;
-}
-
-vector<shared_ptr<SortedVariable>> &ExistsTerm::getBindings() {
-    return bindings;
 }
 
 void ExistsTerm::accept(AstVisitor0* visitor){
@@ -179,21 +131,9 @@ std::string MatchTerm::toString() {
 
 /* ================================== AnnotatedTerm =================================== */
 AnnotatedTerm::AnnotatedTerm(shared_ptr<Term> term,
-                             vector<shared_ptr<Attribute>> &attributes)
+                             vector<shared_ptr<Attribute>>& attributes)
         : term(term) {
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
-}
-
-shared_ptr<Term> AnnotatedTerm::getTerm() {
-    return term;
-}
-
-void AnnotatedTerm::setTerm(shared_ptr<Term> term) {
-    this->term = term;
-}
-
-vector<shared_ptr<Attribute>> &AnnotatedTerm::getAttributes() {
-    return attributes;
 }
 
 void AnnotatedTerm::accept(AstVisitor0* visitor){

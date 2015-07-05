@@ -1,3 +1,8 @@
+/**
+ * \file smt_datatype.h
+ * \brief SMT-LIB datatype declarations and their components.
+ */
+
 #ifndef PARSE_SMTLIB_AST_DATATYPE_H
 #define PARSE_SMTLIB_AST_DATATYPE_H
 
@@ -9,14 +14,23 @@
 namespace smtlib {
     namespace ast {
         /* ================================= SortDeclaration ================================== */
+        /**
+         * A sort declaration (used by the declare-datatypes command).
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class SortDeclaration : public AstNode,
                                 public std::enable_shared_from_this<SortDeclaration> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::shared_ptr<NumeralLiteral> numeral;
         public:
-            SortDeclaration(std::shared_ptr<Symbol> symbol,
-                            std::shared_ptr<NumeralLiteral> numeral);
+            /**
+             * \param symbol    Datatype (sort) name
+             * \param numeral   Arity
+             */
+            inline SortDeclaration(std::shared_ptr<Symbol> symbol,
+                                   std::shared_ptr<NumeralLiteral> numeral)
+                    : symbol(symbol), numeral(numeral) { }
 
             inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
@@ -32,14 +46,23 @@ namespace smtlib {
         };
 
         /* =============================== SelectorDeclaration ================================ */
+        /**
+         * A selector declaration (used by constructor declarations).
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class SelectorDeclaration : public AstNode,
                                     public std::enable_shared_from_this<SelectorDeclaration> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::shared_ptr<Sort> sort;
         public:
-            SelectorDeclaration(std::shared_ptr<Symbol> symbol,
-                            std::shared_ptr<Sort> sort);
+            /**
+             * \param symbol    Selector name
+             * \param sort      Selector sort
+             */
+            inline SelectorDeclaration(std::shared_ptr<Symbol> symbol,
+                                       std::shared_ptr<Sort> sort)
+                    : symbol(symbol), sort(sort) { }
 
             inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
@@ -55,12 +78,20 @@ namespace smtlib {
         };
 
         /* =============================== ConstructorDeclaration ============================== */
+        /**
+         * A sort declaration (used by the declare-datatypes command).
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class ConstructorDeclaration : public AstNode,
                                        public std::enable_shared_from_this<ConstructorDeclaration> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::vector<std::shared_ptr<SelectorDeclaration>> selectors;
         public:
+            /**
+             * \param symbol        Constructor name
+             * \param selectors     Selectors for the constructor
+             */
             ConstructorDeclaration(std::shared_ptr<Symbol> symbol,
                                    std::vector<std::shared_ptr<SelectorDeclaration>>& selectors);
 
@@ -76,14 +107,25 @@ namespace smtlib {
         };
 
         /* ================================ DatatypeDeclaration =============================== */
+        /**
+         * A datatype declaration (used by the declare-datatype and declare-datatypes commands).
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class DatatypeDeclaration : public AstNode { };
 
         /* ============================= SimpleDatatypeDeclaration ============================ */
+        /**
+         * A simple (non-parametric) datatype declaration.
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class SimpleDatatypeDeclaration : public DatatypeDeclaration,
                                           public std::enable_shared_from_this<SimpleDatatypeDeclaration>  {
         private:
             std::vector<std::shared_ptr<ConstructorDeclaration>> constructors;
         public:
+            /**
+             * \param constructors  Constructors for this datatype
+             */
             SimpleDatatypeDeclaration(std::vector<std::shared_ptr<ConstructorDeclaration>>& constructors);
 
             inline std::vector<std::shared_ptr<ConstructorDeclaration>>& getConstructors() { return constructors; }
@@ -94,13 +136,21 @@ namespace smtlib {
         };
 
         /* =========================== ParametricDatatypeDeclaration ========================== */
+        /**
+         * A parametric datatype declaration.
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class ParametricDatatypeDeclaration : public DatatypeDeclaration,
                                               public std::enable_shared_from_this<ParametricDatatypeDeclaration> {
         private:
             std::vector<std::shared_ptr<Symbol>> params;
             std::vector<std::shared_ptr<ConstructorDeclaration>> constructors;
         public:
-            ParametricDatatypeDeclaration(std::vector<std::shared_ptr<Symbol>> params,
+            /**
+             * \param params        Parameters for the declaration
+             * \param constructors  Constructors for this datatype
+             */
+            ParametricDatatypeDeclaration(std::vector<std::shared_ptr<Symbol>>& params,
                                           std::vector<std::shared_ptr<ConstructorDeclaration>>& constructors);
 
             inline std::vector<std::shared_ptr<Symbol>>& getParams() { return params; }

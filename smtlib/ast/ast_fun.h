@@ -23,7 +23,8 @@ namespace smtlib {
          * An SMT-LIB function declaration.
          * Node of the SMT-LIB abstract syntax tree.
          */
-        class FunctionDeclaration : public AstNode, public std::enable_shared_from_this<FunctionDeclaration> {
+        class FunctionDeclaration : public AstNode,
+                                    public std::enable_shared_from_this<FunctionDeclaration> {
         private:
             std::shared_ptr<Symbol> symbol;
             std::vector<std::shared_ptr<SortedVariable>> params;
@@ -35,18 +36,18 @@ namespace smtlib {
              * \param sort      Sort of the return value
              */
             FunctionDeclaration(std::shared_ptr<Symbol> symbol,
-                                std::vector<std::shared_ptr<SortedVariable>> &params,
+                                std::vector<std::shared_ptr<SortedVariable>>& params,
                                 std::shared_ptr<Sort> sort);
 
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            std::vector<std::shared_ptr<SortedVariable>> &getParams();
+            inline std::vector<std::shared_ptr<SortedVariable>>& getParams() { return params; }
 
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort;}
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -78,17 +79,17 @@ namespace smtlib {
              * \param body      Function body
              */
             FunctionDefinition(std::shared_ptr<Symbol> symbol,
-                               std::vector<std::shared_ptr<SortedVariable>> &params,
+                               std::vector<std::shared_ptr<SortedVariable>>& params,
                                std::shared_ptr<Sort> sort,
                                std::shared_ptr<Term> body);
 
-            std::shared_ptr<FunctionDeclaration> getSignature();
+            inline std::shared_ptr<FunctionDeclaration> getSignature() { return signature; }
 
-            void setSignature(std::shared_ptr<FunctionDeclaration> signature);
+            inline void setSignature(std::shared_ptr<FunctionDeclaration> signature) { this->signature = signature; }
 
-            std::shared_ptr<Term> getBody();
+            inline std::shared_ptr<Term> getBody() { return body; }
 
-            void setBody(std::shared_ptr<Term> body);
+            inline void setBody(std::shared_ptr<Term> body) { this->body = body; }
 
             virtual void accept(AstVisitor0* visitor);
 

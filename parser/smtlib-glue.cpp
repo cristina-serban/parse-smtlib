@@ -505,8 +505,9 @@ SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value) {
     return ptr.get();
 }
 
-SmtPtr smt_newCompoundAttributeValue(SmtList values) {
-    shared_ptr<CompAttributeValue> ptr = make_shared<CompAttributeValue>(values->unwrap<AttributeValue>());
+SmtPtr smt_newCompAttributeValue(SmtList values) {
+    vector<shared_ptr<AttributeValue>> v = values->unwrap<AttributeValue>();
+    shared_ptr<CompAttributeValue> ptr = make_shared<CompAttributeValue>(v);
     nodemap[ptr.get()] = ptr;
     return ptr.get();
 }
@@ -570,9 +571,10 @@ SmtPtr smt_newDeclareConstCommand(SmtPtr symbol, SmtPtr sort) {
     return ptr.get();
 }
 
-SmtPtr smt_newDeclareDatatypeCommand(SmtPtr declaration) {
+SmtPtr smt_newDeclareDatatypeCommand(SmtPtr symbol, SmtPtr declaration) {
     shared_ptr<DeclareDatatypeCommand> ptr =
-            make_shared<DeclareDatatypeCommand>(share<DatatypeDeclaration>(declaration));
+            make_shared<DeclareDatatypeCommand>(share<Symbol>(symbol),
+                                                share<DatatypeDeclaration>(declaration));
     nodemap[ptr.get()] = ptr;
     return ptr.get();
 }
@@ -586,8 +588,9 @@ SmtPtr smt_newDeclareDatatypesCommand(SmtList sorts, SmtList declarations) {
 }
 
 SmtPtr smt_newDeclareFunCommand(SmtPtr symbol, SmtList params, SmtPtr sort) {
+    vector<shared_ptr<Sort>> v = params->unwrap<Sort>();
     shared_ptr<DeclareFunCommand> ptr =
-            make_shared<DeclareFunCommand>(share<Symbol>(symbol), params->unwrap<Sort>(), share<Sort>(sort));
+            make_shared<DeclareFunCommand>(share<Symbol>(symbol), v, share<Sort>(sort));
     nodemap[ptr.get()] = ptr;
     return ptr.get();
 }
@@ -799,8 +802,9 @@ SmtPtr smt_newSimpleIdentifier1(SmtPtr symbol) {
 }
 
 SmtPtr smt_newSimpleIdentifier2(SmtPtr symbol, SmtList indices) {
+    vector<shared_ptr<Index>> v = indices->unwrap<Index>();
     shared_ptr<SimpleIdentifier> ptr =
-            make_shared<SimpleIdentifier>(share<Symbol>(symbol), indices->unwrap<Index>());
+            make_shared<SimpleIdentifier>(share<Symbol>(symbol), v);
     nodemap[ptr.get()] = ptr;
     return ptr.get();
 }

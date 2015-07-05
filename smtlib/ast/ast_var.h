@@ -30,17 +30,17 @@ namespace smtlib {
              * \param symbol    Variable name
              * \param sort      Variable sort
              */
-            SortedVariable(std::shared_ptr<Symbol> symbol,
-                           std::shared_ptr<Sort> sort)
+            inline SortedVariable(std::shared_ptr<Symbol> symbol,
+                                  std::shared_ptr<Sort> sort)
                     : symbol(symbol), sort(sort) { }
 
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -67,13 +67,13 @@ namespace smtlib {
                     : symbol(symbol), term(term) {
             }
 
-            std::shared_ptr<Symbol> getSymbol();
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
-            void setSymbol(std::shared_ptr<Symbol> symbol);
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            std::shared_ptr<Term> getTerm();
+            inline std::shared_ptr<Term> getTerm() { return term; }
 
-            void setTerm(std::shared_ptr<Term> term);
+            inline void setTerm(std::shared_ptr<Term> term) { this->term = term; }
 
             virtual void accept(AstVisitor0* visitor);
 

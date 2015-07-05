@@ -16,7 +16,9 @@ namespace smtlib {
             std::shared_ptr<Symbol> symbol;
             std::shared_ptr<Sort> sort;
         public:
-            QualifiedConstructor(std::shared_ptr<Symbol> symbol, std::shared_ptr<Sort> sort);
+            inline QualifiedConstructor(std::shared_ptr<Symbol> symbol,
+                                        std::shared_ptr<Sort> sort)
+                    : symbol(symbol), sort(sort) { }
 
             inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
@@ -59,12 +61,12 @@ namespace smtlib {
             std::shared_ptr<Pattern> pattern;
             std::shared_ptr<Term> term;
         public:
-            MatchCase(std::shared_ptr<Pattern> pattern,
-                      std::shared_ptr<Term> term);
+            inline MatchCase(std::shared_ptr<Pattern> pattern,
+                             std::shared_ptr<Term> term) : pattern(pattern), term(term) { }
 
-            inline std::shared_ptr<Pattern> getPattern() { return pattern;}
+            inline std::shared_ptr<Pattern> getPattern() { return pattern; }
 
-            inline void setPattern(std::shared_ptr<Pattern> pattern) { this->pattern = pattern;}
+            inline void setPattern(std::shared_ptr<Pattern> pattern) { this->pattern = pattern; }
 
             inline std::shared_ptr<Term> getTerm() { return term; }
 

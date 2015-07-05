@@ -13,28 +13,28 @@ namespace smtlib {
         bool equal(std::shared_ptr<ast::Sort> sort1,
                    std::shared_ptr<ast::Sort> sort2);
 
-        bool equal(std::vector<std::shared_ptr<ast::Sort>> &signature1,
-                   std::vector<std::shared_ptr<ast::Sort>> &signature2);
+        bool equal(std::vector<std::shared_ptr<ast::Sort>>& signature1,
+                   std::vector<std::shared_ptr<ast::Sort>>& signature2);
 
-        bool equal(std::vector<std::shared_ptr<ast::Symbol>> &params1,
-                   std::vector<std::shared_ptr<ast::Sort>> &signature1,
-                   std::vector<std::shared_ptr<ast::Symbol>> &params2,
-                   std::vector<std::shared_ptr<ast::Sort>> &signature2);
+        bool equal(std::vector<std::shared_ptr<ast::Symbol>>& params1,
+                   std::vector<std::shared_ptr<ast::Sort>>& signature1,
+                   std::vector<std::shared_ptr<ast::Symbol>>& params2,
+                   std::vector<std::shared_ptr<ast::Sort>>& signature2);
 
-        bool equal(std::vector<std::shared_ptr<ast::Symbol>> &params1,
+        bool equal(std::vector<std::shared_ptr<ast::Symbol>>& params1,
                    std::shared_ptr<ast::Sort> sort1,
-                   std::vector<std::shared_ptr<ast::Symbol>> &params2,
+                   std::vector<std::shared_ptr<ast::Symbol>>& params2,
                    std::shared_ptr<ast::Sort> sort2,
                    std::unordered_map<std::string, std::string> &mapping);
 
         std::shared_ptr<ast::Sort> replace(std::shared_ptr<ast::Sort>,
-                                           std::unordered_map<std::string, std::shared_ptr<ast::Sort>> &mapping);
+                                           std::unordered_map<std::string, std::shared_ptr<ast::Sort>>& mapping);
     public:
         SymbolStack();
 
         std::shared_ptr<SymbolTable> getTopLevel();
 
-        std::vector<std::shared_ptr<SymbolTable>> &getStack();
+        std::vector<std::shared_ptr<SymbolTable>>& getStack();
 
         bool push();
         bool push(unsigned long levels);

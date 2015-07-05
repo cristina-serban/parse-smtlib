@@ -28,7 +28,7 @@ string CheckSatCommand::toString() {
 
 /* =============================== CheckSatAssumCommand =============================== */
 
-CheckSatAssumCommand::CheckSatAssumCommand(vector<shared_ptr<PropLiteral>> &assumptions) {
+CheckSatAssumCommand::CheckSatAssumCommand(vector<shared_ptr<PropLiteral>>& assumptions) {
     this->assumptions.insert(this->assumptions.end(), assumptions.begin(), assumptions.end());
 }
 
@@ -64,9 +64,6 @@ string DeclareConstCommand::toString() {
 }
 
 /* ============================== DeclareDatatypeCommand ============================== */
-DeclareDatatypeCommand::DeclareDatatypeCommand(shared_ptr<DatatypeDeclaration> declaration)
-        : declaration(declaration) { }
-
 void DeclareDatatypeCommand::accept(AstVisitor0* visitor) {
     visitor->visit(shared_from_this());
 }
@@ -117,7 +114,7 @@ string DeclareDatatypesCommand::toString() {
 /* =============================== DeclareFunCommand ================================ */
 
 DeclareFunCommand::DeclareFunCommand(shared_ptr<Symbol> symbol,
-                                     vector<shared_ptr<Sort>> params,
+                                     vector<shared_ptr<Sort>>& params,
                                      shared_ptr<Sort> sort)
         : symbol(symbol), sort(sort) {
     this->params.insert(this->params.end(), params.begin(), params.end());
@@ -157,7 +154,7 @@ string DeclareSortCommand::toString() {
 /* ================================= DefineFunCommand ================================= */
 
 DefineFunCommand::DefineFunCommand(shared_ptr<Symbol> symbol,
-                                   vector<shared_ptr<SortedVariable>> &params,
+                                   vector<shared_ptr<SortedVariable>>& params,
                                    shared_ptr<Sort> sort,
                                    shared_ptr<Term> body) {
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
@@ -176,7 +173,7 @@ string DefineFunCommand::toString() {
 /* ================================ DefineFunRecCommand =============================== */
 
 DefineFunRecCommand::DefineFunRecCommand(shared_ptr<Symbol> symbol,
-                                         vector<shared_ptr<SortedVariable>> &params,
+                                         vector<shared_ptr<SortedVariable>>& params,
                                          shared_ptr<Sort> sort,
                                          shared_ptr<Term> body) {
     definition = make_shared<FunctionDefinition>(symbol, params, sort, body);
@@ -195,8 +192,8 @@ string DefineFunRecCommand::toString() {
 /* =============================== DefineFunsRecCommand =============================== */
 
 DefineFunsRecCommand::DefineFunsRecCommand(
-        vector<shared_ptr<FunctionDeclaration>> &declarations,
-        vector<shared_ptr<Term>> &bodies) {
+        vector<shared_ptr<FunctionDeclaration>>& declarations,
+        vector<shared_ptr<Term>>& bodies) {
     this->declarations.insert(this->declarations.end(), declarations.begin(), declarations.end());
     this->bodies.insert(this->bodies.end(), bodies.begin(), bodies.end());
 }
@@ -229,7 +226,7 @@ string DefineFunsRecCommand::toString() {
 /* ================================ DefineSortCommand ================================= */
 
 DefineSortCommand::DefineSortCommand(shared_ptr<Symbol> symbol,
-                                     vector<shared_ptr<Symbol>> &params,
+                                     vector<shared_ptr<Symbol>>& params,
                                      shared_ptr<Sort> sort)
         : symbol(symbol), sort(sort) {
     this->params.insert(this->params.end(), params.begin(), params.end());
@@ -360,7 +357,7 @@ string GetUnsatCoreCommand::toString() {
 
 /* ================================= GetValueCommand ================================== */
 
-GetValueCommand::GetValueCommand(vector<shared_ptr<Term>> &terms) {
+GetValueCommand::GetValueCommand(vector<shared_ptr<Term>>& terms) {
     this->terms.insert(this->terms.end(), terms.begin(), terms.end());
 }
 

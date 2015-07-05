@@ -12,7 +12,7 @@ shared_ptr<SymbolTable> SymbolStack::getTopLevel() {
     return stack[stack.size() - 1];
 }
 
-vector<shared_ptr<SymbolTable>> &SymbolStack::getStack() {
+vector<shared_ptr<SymbolTable>>& SymbolStack::getStack() {
     return stack;
 }
 
@@ -116,7 +116,7 @@ shared_ptr<VarInfo> SymbolStack::findDuplicate(shared_ptr<VarInfo> info) {
 }
 
 shared_ptr<Sort> SymbolStack::replace(shared_ptr<Sort> sort,
-                         unordered_map<string, shared_ptr<Sort>> &mapping) {
+                         unordered_map<string, shared_ptr<Sort>>& mapping) {
     if(mapping.empty())
         return sort;
 
@@ -228,9 +228,9 @@ bool SymbolStack::equal(shared_ptr<Sort> sort1,
     return sort1->toString() == sort2->toString();
 }
 
-bool SymbolStack::equal(vector<shared_ptr<Symbol>> &params1,
+bool SymbolStack::equal(vector<shared_ptr<Symbol>>& params1,
                         shared_ptr<Sort> sort1,
-                        vector<shared_ptr<Symbol>> &params2,
+                        vector<shared_ptr<Symbol>>& params2,
                         shared_ptr<Sort> sort2,
                         unordered_map<string, string> &mapping) {
     if (sort1->getArgs().size() != sort2->getArgs().size())
@@ -275,8 +275,8 @@ bool SymbolStack::equal(vector<shared_ptr<Symbol>> &params1,
     }
 }
 
-bool SymbolStack::equal(vector<shared_ptr<Sort>> &signature1,
-                        vector<shared_ptr<Sort>> &signature2) {
+bool SymbolStack::equal(vector<shared_ptr<Sort>>& signature1,
+                        vector<shared_ptr<Sort>>& signature2) {
     if (signature1.size() != signature2.size())
         return false;
 
@@ -288,10 +288,10 @@ bool SymbolStack::equal(vector<shared_ptr<Sort>> &signature1,
     return true;
 }
 
-bool SymbolStack::equal(vector<shared_ptr<Symbol>> &params1,
-                        vector<shared_ptr<Sort>> &signature1,
-                        vector<shared_ptr<Symbol>> &params2,
-                        vector<shared_ptr<Sort>> &signature2) {
+bool SymbolStack::equal(vector<shared_ptr<Symbol>>& params1,
+                        vector<shared_ptr<Sort>>& signature1,
+                        vector<shared_ptr<Symbol>>& params2,
+                        vector<shared_ptr<Sort>>& signature2) {
     if (params1.size() != params2.size() || signature1.size() != signature2.size())
         return false;
 

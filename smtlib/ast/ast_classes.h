@@ -14,6 +14,7 @@ namespace smtlib {
         class BooleanValue;
         class PropLiteral;
 
+        class Command;
         class AssertCommand;
         class CheckSatCommand;
         class CheckSatAssumCommand;
@@ -64,6 +65,7 @@ namespace smtlib {
 
         class SortSymbolDeclaration;
 
+        class FunSymbolDeclaration;
         class SpecConstFunDeclaration;
         class MetaSpecConstFunDeclaration;
         class SimpleFunDeclaration;

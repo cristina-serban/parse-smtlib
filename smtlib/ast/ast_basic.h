@@ -16,10 +16,10 @@ namespace smtlib {
     namespace ast {
         /* ====================================== Symbol ====================================== */
         /**
-     * An SMT-LIB symbol (e.g. "plus", "+", "|quoted symbol|").
-     * Node of the SMT-LIB abstract syntax tree.
-     * Can act as an S-expression, an index.
-     */
+         * An SMT-LIB symbol (e.g. "plus", "+", "|quoted symbol|").
+         * Node of the SMT-LIB abstract syntax tree.
+         * Can act as an S-expression, an index.
+         */
         class Symbol : public virtual AstNode,
                        public SExpression,
                        public Index,
@@ -34,7 +34,7 @@ namespace smtlib {
              */
             inline Symbol(std::string value) : value(value) { }
 
-            inline std::string &getValue() { return value; }
+            inline std::string& getValue() { return value; }
 
             inline void setValue(std::string value) { this->value = value; }
 
@@ -45,10 +45,10 @@ namespace smtlib {
 
         /* ====================================== Keyword ===================================== */
         /**
-     * An SMT-LIB keyword (e.g. ":date", ":<=").
-     * Node of the SMT-LIB abstract syntax tree.
-     * Can act as an S-expression.
-     */
+         * An SMT-LIB keyword (e.g. ":date", ":<=").
+         * Node of the SMT-LIB abstract syntax tree.
+         * Can act as an S-expression.
+         */
         class Keyword : public virtual AstNode,
                         public SExpression,
                         public std::enable_shared_from_this<Keyword> {
@@ -60,7 +60,7 @@ namespace smtlib {
              */
             inline Keyword(std::string value) : value(value) { }
 
-            inline std::string &getValue() { return value; }
+            inline std::string& getValue() { return value; }
 
             inline void setValue(std::string value) { this->value = value; }
 
@@ -71,9 +71,9 @@ namespace smtlib {
 
         /* ================================= MetaSpecConstant ================================= */
         /**
-     * An SMT-LIB meta specification constant ("NUMERAL", "DECIMAL" or "STRING").
-     * Node of the SMT-LIB abstract syntax tree.
-     */
+         * An SMT-LIB meta specification constant ("NUMERAL", "DECIMAL" or "STRING").
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class MetaSpecConstant : public AstNode,
                                  public std::enable_shared_from_this<MetaSpecConstant> {
         public:
@@ -98,21 +98,25 @@ namespace smtlib {
             virtual void accept(AstVisitor0* visitor);
 
             virtual std::string toString();
+
         private:
             MetaSpecConstant::Type type;
         };
 
         /* =================================== BooleanValue =================================== */
         /**
-     * A boolean value ("true" or "false").
-     * Node of the SMT-LIB abstract syntax tree.
-     */
+         * A boolean value ('true' or 'false').
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class BooleanValue : public virtual AstNode,
                              public AttributeValue,
                              public std::enable_shared_from_this<BooleanValue> {
         private:
             bool value;
         public:
+            /**
+             * \param value Truth value ("true" or "false")
+             */
             inline BooleanValue(bool value) : value(value) { }
 
             inline bool getValue() { return value; }
@@ -126,9 +130,9 @@ namespace smtlib {
 
         /* =================================== PropLiteral ==================================== */
         /**
-     * Propositional literal (used for check-sat-assuming).
-     * Node of the SMT-LIB abstract syntax tree.
-     */
+         * Propositional literal (used for check-sat-assuming commands).
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class PropLiteral : public AstNode,
                             public std::enable_shared_from_this<PropLiteral> {
         private:
@@ -136,6 +140,10 @@ namespace smtlib {
             bool negated;
 
         public:
+            /**
+             * \param symbol    Symbol of the literal
+             * \param negated   Whether the symbol is negated
+             */
             inline PropLiteral(std::shared_ptr<Symbol> symbol, bool negated)
                     : symbol(symbol), negated(negated) { }
 

@@ -5,21 +5,9 @@ using namespace smtlib::ast;
 using namespace std;
 
 Logic::Logic(std::shared_ptr<Symbol> name,
-                   vector<shared_ptr<Attribute>> &attributes)
+                   vector<shared_ptr<Attribute>>& attributes)
         : name(name) {
     this->attributes.insert(this->attributes.end(), attributes.begin(), attributes.end());
-}
-
-shared_ptr<Symbol> Logic::getName() {
-    return name;
-}
-
-void Logic::setName(shared_ptr<Symbol> name) {
-    this->name = name;
-}
-
-std::vector<shared_ptr<Attribute>> &Logic::getAttributes() {
-    return attributes;
 }
 
 void Logic::accept(AstVisitor0* visitor){

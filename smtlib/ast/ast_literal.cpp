@@ -10,19 +10,6 @@ using namespace smtlib::ast;
 using namespace std;
 
 /* ================================== NumeralLiteral ================================== */
-
-NumeralLiteral::NumeralLiteral(long value, unsigned int base) : base(base) {
-    setValue(value);
-}
-
-unsigned int NumeralLiteral::getBase() {
-    return base;
-}
-
-void NumeralLiteral::setBase(unsigned int base) {
-    this->base = base;
-}
-
 void NumeralLiteral::accept(AstVisitor0* visitor){
     visitor->visit(shared_from_this());
 }
@@ -55,11 +42,6 @@ string NumeralLiteral::toString() {
 }
 
 /* ================================== DecimalLiteral ================================== */
-
-DecimalLiteral::DecimalLiteral(double value) {
-    setValue(value);
-}
-
 void DecimalLiteral::accept(AstVisitor0* visitor){
     visitor->visit(shared_from_this());
 }
@@ -71,11 +53,6 @@ string DecimalLiteral::toString() {
 }
 
 /* ================================== StringLiteral =================================== */
-
-StringLiteral::StringLiteral(string value) {
-    setValue(value);
-}
-
 void StringLiteral::accept(AstVisitor0* visitor){
     visitor->visit(shared_from_this());
 }

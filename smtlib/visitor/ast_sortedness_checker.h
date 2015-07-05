@@ -75,7 +75,7 @@ namespace smtlib {
                                                             std::shared_ptr<AstNode> source,
                                                             std::shared_ptr<SortednessCheckError> err);
 
-            std::shared_ptr<SortednessCheckError> checkSort(std::vector<std::shared_ptr<Symbol>> params,
+            std::shared_ptr<SortednessCheckError> checkSort(std::vector<std::shared_ptr<Symbol>>& params,
                                                             std::unordered_map<std::string, bool>& paramUsage,
                                                             std::shared_ptr<Sort> sort,
                                                             std::shared_ptr<AstNode> source,

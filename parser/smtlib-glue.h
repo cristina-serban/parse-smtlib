@@ -42,7 +42,7 @@ int smt_bool_value(SmtPtr ptr);
 // ast_attribute.h
 SmtPtr smt_newAttribute1(SmtPtr keyword);
 SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value);
-SmtPtr smt_newCompoundAttributeValue(SmtList values);
+SmtPtr smt_newCompAttributeValue(SmtList values);
 
 // smt_basic.h
 SmtPtr smt_newSymbol(char const* value);
@@ -56,7 +56,7 @@ SmtPtr smt_newAssertCommand(SmtPtr term);
 SmtPtr smt_newCheckSatCommand();
 SmtPtr smt_newCheckSatAssumCommand(SmtList assumptions);
 SmtPtr smt_newDeclareConstCommand(SmtPtr symbol, SmtPtr sort);
-SmtPtr smt_newDeclareDatatypeCommand(SmtPtr declarations);
+SmtPtr smt_newDeclareDatatypeCommand(SmtPtr symbol, SmtPtr declaration);
 SmtPtr smt_newDeclareDatatypesCommand(SmtList sorts, SmtList declarations);
 SmtPtr smt_newDeclareFunCommand(SmtPtr symbol, SmtList params, SmtPtr sort);
 SmtPtr smt_newDeclareSortCommand(SmtPtr symbol, SmtPtr arity);

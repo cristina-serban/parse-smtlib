@@ -30,7 +30,7 @@ namespace smtlib {
              * Constructs theory without attributes.
              * \param name  Theory name
              */
-            Theory(std::shared_ptr<Symbol> name) : name(name) { }
+            inline Theory(std::shared_ptr<Symbol> name) : name(name) { }
 
             /**
              * Constructs theory with attributes.
@@ -38,13 +38,13 @@ namespace smtlib {
              * \param attributes    Theory attributes
              */
             Theory(std::shared_ptr<Symbol> name,
-                      std::vector<std::shared_ptr<Attribute>> &attributes);
+                   std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<Symbol> getName();
+            inline std::shared_ptr<Symbol> getName() { return name; }
 
-            void setName(std::shared_ptr<Symbol> name);
+            inline void setName(std::shared_ptr<Symbol> name) { this->name = name; }
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 

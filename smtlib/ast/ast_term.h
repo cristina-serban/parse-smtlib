@@ -32,13 +32,13 @@ namespace smtlib {
              * \param terms         List of terms
              */
             QualifiedTerm(std::shared_ptr<Identifier> identifier,
-                          std::vector<std::shared_ptr<Term>> &terms);
+                          std::vector<std::shared_ptr<Term>>& terms);
 
-            std::shared_ptr<Identifier> getIdentifier();
+            inline std::shared_ptr<Identifier> getIdentifier() { return identifier; }
 
-            void setIdentifier(std::shared_ptr<Identifier> identifier);
+            inline void setIdentifier(std::shared_ptr<Identifier> identifier) { this->identifier = identifier; }
 
-            std::vector<std::shared_ptr<Term>> &getTerms();
+            inline std::vector<std::shared_ptr<Term>>& getTerms() { return terms; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -60,14 +60,14 @@ namespace smtlib {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            LetTerm(std::vector<std::shared_ptr<VarBinding>> &bindings,
+            LetTerm(std::vector<std::shared_ptr<VarBinding>>& bindings,
                     std::shared_ptr<Term> term);
 
-            std::shared_ptr<Term> getTerm();
+            inline std::shared_ptr<Term> getTerm() { return term; }
 
-            void setTerm(std::shared_ptr<Term> term);
+            inline void setTerm(std::shared_ptr<Term> term) { this->term = term; }
 
-            std::vector<std::shared_ptr<VarBinding>> &getBindings();
+            inline std::vector<std::shared_ptr<VarBinding>>& getBindings() { return bindings; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -89,14 +89,14 @@ namespace smtlib {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            ForallTerm(std::vector<std::shared_ptr<SortedVariable>> &bindings,
+            ForallTerm(std::vector<std::shared_ptr<SortedVariable>>& bindings,
                        std::shared_ptr<Term> term);
 
-            std::shared_ptr<Term> getTerm();
+            inline std::shared_ptr<Term> getTerm() { return term; }
 
-            void setTerm(std::shared_ptr<Term> term);
+            inline void setTerm(std::shared_ptr<Term> term) { this->term = term; }
 
-            std::vector<std::shared_ptr<SortedVariable>> &getBindings();
+            inline std::vector<std::shared_ptr<SortedVariable>>& getBindings() { return bindings; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -118,14 +118,14 @@ namespace smtlib {
              * \param bindings  List of bound variables
              * \param term      Inner term
              */
-            ExistsTerm(std::vector<std::shared_ptr<SortedVariable>> &bindings,
+            ExistsTerm(std::vector<std::shared_ptr<SortedVariable>>& bindings,
                        std::shared_ptr<Term> term);
 
-            std::shared_ptr<Term> getTerm();
+            inline std::shared_ptr<Term> getTerm() { return term; }
 
-            void setTerm(std::shared_ptr<Term> term);
+            inline void setTerm(std::shared_ptr<Term> term) { this->term = term; }
 
-            std::vector<std::shared_ptr<SortedVariable>> &getBindings();
+            inline std::vector<std::shared_ptr<SortedVariable>>& getBindings() { return bindings; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -146,7 +146,7 @@ namespace smtlib {
 
             void setTerm(std::shared_ptr<Term> term) { this->term = term; }
 
-            std::vector<std::shared_ptr<MatchCase>> &getCases() { return cases; }
+            std::vector<std::shared_ptr<MatchCase>>& getCases() { return cases; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -169,13 +169,13 @@ namespace smtlib {
              * \param attr  Attributes
              */
             AnnotatedTerm(std::shared_ptr<Term> term,
-                          std::vector<std::shared_ptr<Attribute>> &attributes);
+                          std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<Term> getTerm();
+            inline std::shared_ptr<Term> getTerm() { return term; }
 
-            void setTerm(std::shared_ptr<Term> term);
+            inline void setTerm(std::shared_ptr<Term> term) { this->term = term; }
 
-            std::vector<std::shared_ptr<Attribute>> &getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 

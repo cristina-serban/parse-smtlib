@@ -11,8 +11,6 @@
 #include "ast_interfaces.h"
 #include "../visitor/ast_visitor.h"
 
-#include <memory>
-#include <string>
 #include <vector>
 
 namespace smtlib {
@@ -45,7 +43,7 @@ namespace smtlib {
              * \param value     Value of the attribute
              */
             inline Attribute(std::shared_ptr<Keyword> keyword,
-                      std::shared_ptr<AttributeValue> value)
+                             std::shared_ptr<AttributeValue> value)
                     : keyword(keyword), value(value) { }
 
             inline std::shared_ptr<Keyword> getKeyword() { return keyword; }
@@ -66,13 +64,17 @@ namespace smtlib {
          * A compound value for an SMT-LIB attribute
          */
         class CompAttributeValue : public AttributeValue,
-                                       public std::enable_shared_from_this<CompAttributeValue> {
+                                   public std::enable_shared_from_this<CompAttributeValue> {
         private:
             std::vector<std::shared_ptr<AttributeValue>> values;
         public:
-            CompAttributeValue(std::vector<std::shared_ptr<AttributeValue>> values);
+            /**
+             * Constructs a composite attribute value from a vector of attribute values
+             * \param values    Vector of attribute values
+             */
+            CompAttributeValue(std::vector<std::shared_ptr<AttributeValue>>& values);
 
-            inline std::vector<std::shared_ptr<AttributeValue>> &getValues() { return values; }
+            inline std::vector<std::shared_ptr<AttributeValue>>& getValues() { return values; }
 
             virtual void accept(AstVisitor0* visitor);
 

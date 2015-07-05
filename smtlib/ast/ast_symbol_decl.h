@@ -38,8 +38,8 @@ namespace smtlib {
              * \param identifier    Sort symbol identiier
              * \param arity         Sort arity
              */
-            SortSymbolDeclaration(std::shared_ptr<SimpleIdentifier> identifier,
-                                  std::shared_ptr<NumeralLiteral> arity)
+            inline SortSymbolDeclaration(std::shared_ptr<SimpleIdentifier> identifier,
+                                         std::shared_ptr<NumeralLiteral> arity)
                     : identifier(identifier), arity(arity) { }
 
             /**
@@ -52,15 +52,15 @@ namespace smtlib {
                                   std::shared_ptr<NumeralLiteral> arity,
                                   std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<SimpleIdentifier> getIdentifier();
+            inline std::shared_ptr<SimpleIdentifier> getIdentifier() { return identifier; }
 
-            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
+            inline void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier) { this->identifier = identifier; }
 
-            std::shared_ptr<NumeralLiteral> getArity();
+            inline std::shared_ptr<NumeralLiteral> getArity() { return arity; }
 
-            void setArity(std::shared_ptr<NumeralLiteral> arity);
+            inline void setArity(std::shared_ptr<NumeralLiteral> arity) { this->arity = arity; }
 
-            std::vector<std::shared_ptr<Attribute>>& getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -96,8 +96,8 @@ namespace smtlib {
             * \param constant      Specification constant
             * \param sort          Function sort
             */
-            SpecConstFunDeclaration(std::shared_ptr<SpecConstant> constant,
-                                    std::shared_ptr<Sort> sort)
+            inline SpecConstFunDeclaration(std::shared_ptr<SpecConstant> constant,
+                                           std::shared_ptr<Sort> sort)
                     : constant(constant), sort(sort) { }
 
             /**
@@ -110,15 +110,15 @@ namespace smtlib {
                                     std::shared_ptr<Sort> sort,
                                     std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<SpecConstant> getConstant();
+            inline std::shared_ptr<SpecConstant> getConstant() { return constant; }
 
-            void setConstant(std::shared_ptr<SpecConstant> constant);
+            inline void setConstant(std::shared_ptr<SpecConstant> constant) { this->constant = constant; }
 
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
 
-            std::vector<std::shared_ptr<Attribute>>& getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -145,8 +145,8 @@ namespace smtlib {
             * \param constant      Meta specification constant
             * \param sort          Function sort
             */
-            MetaSpecConstFunDeclaration(std::shared_ptr<MetaSpecConstant> constant,
-                                        std::shared_ptr<Sort> sort)
+            inline MetaSpecConstFunDeclaration(std::shared_ptr<MetaSpecConstant> constant,
+                                               std::shared_ptr<Sort> sort)
                     : constant(constant), sort(sort) { }
 
             /**
@@ -159,15 +159,15 @@ namespace smtlib {
                                         std::shared_ptr<Sort> sort,
                                         std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<MetaSpecConstant> getConstant();
+            inline std::shared_ptr<MetaSpecConstant> getConstant() { return constant; }
 
-            void setConstant(std::shared_ptr<MetaSpecConstant> constant);
+            inline void setConstant(std::shared_ptr<MetaSpecConstant> constant) { this->constant = constant; }
 
-            std::shared_ptr<Sort> getSort();
+            inline std::shared_ptr<Sort> getSort() { return sort; }
 
-            void setSort(std::shared_ptr<Sort> sort);
+            inline void setSort(std::shared_ptr<Sort> sort) { this->sort = sort; }
 
-            std::vector<std::shared_ptr<Attribute>>& getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -209,13 +209,13 @@ namespace smtlib {
                                  std::vector<std::shared_ptr<Sort>>& signature,
                                  std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::shared_ptr<SimpleIdentifier> getIdentifier();
+            inline std::shared_ptr<SimpleIdentifier> getIdentifier() { return identifier; }
 
-            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
+            inline void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier) { this->identifier = identifier; }
 
-            std::vector<std::shared_ptr<Sort>>& getSignature();
+            inline std::vector<std::shared_ptr<Sort>>& getSignature() { return signature; }
 
-            std::vector<std::shared_ptr<Attribute>>& getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -260,15 +260,15 @@ namespace smtlib {
                                      std::vector<std::shared_ptr<Sort>>& signature,
                                      std::vector<std::shared_ptr<Attribute>>& attributes);
 
-            std::vector<std::shared_ptr<Symbol>>& getParams();
+            inline std::vector<std::shared_ptr<Symbol>>& getParams() { return params; }
 
-            std::shared_ptr<SimpleIdentifier> getIdentifier();
+            inline std::shared_ptr<SimpleIdentifier> getIdentifier() { return identifier; }
 
-            void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier);
+            inline void setIdentifier(std::shared_ptr<SimpleIdentifier> identifier) { this->identifier = identifier; }
 
-            std::vector<std::shared_ptr<Sort>>& getSignature();
+            inline std::vector<std::shared_ptr<Sort>>& getSignature() { return signature; }
 
-            std::vector<std::shared_ptr<Attribute>>& getAttributes();
+            inline std::vector<std::shared_ptr<Attribute>>& getAttributes() { return attributes; }
 
             virtual void accept(AstVisitor0* visitor);
 

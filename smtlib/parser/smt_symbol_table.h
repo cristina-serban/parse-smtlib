@@ -19,9 +19,9 @@ namespace smtlib {
                 std::shared_ptr<VarInfo>> vars;
 
     public:
-        std::unordered_map<std::string, std::shared_ptr<SortInfo>> &getSorts();
-        std::unordered_map<std::string, std::vector<std::shared_ptr<FunInfo>>> &getFuns();
-        std::unordered_map<std::string, std::shared_ptr<VarInfo>> &getVars();
+        std::unordered_map<std::string, std::shared_ptr<SortInfo>>& getSorts();
+        std::unordered_map<std::string, std::vector<std::shared_ptr<FunInfo>>>& getFuns();
+        std::unordered_map<std::string, std::shared_ptr<VarInfo>>& getVars();
 
         std::shared_ptr<SortInfo> getSortInfo(std::string name);
         std::vector<std::shared_ptr<FunInfo>> getFunInfo(std::string name);

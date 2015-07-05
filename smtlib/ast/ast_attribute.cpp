@@ -20,7 +20,7 @@ string Attribute::toString() {
 
 /* ============================== CompAttributeValue ============================== */
 
-CompAttributeValue::CompAttributeValue(vector<shared_ptr<AttributeValue>> values) {
+CompAttributeValue::CompAttributeValue(vector<shared_ptr<AttributeValue>>& values) {
     this->values.insert(this->values.begin(), values.begin(), values.end());
 }
 

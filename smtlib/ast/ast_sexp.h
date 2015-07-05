@@ -1,5 +1,5 @@
 /**
- * \file smt_s_expr.h
+ * \file smt_sexp.h
  * \brief Compound S-expression.
  */
 
@@ -25,9 +25,9 @@ namespace smtlib {
             /**
              * \param exprs     Subexpressions
              */
-            CompSExpression(std::vector<std::shared_ptr<SExpression>> &exprs);
+            CompSExpression(std::vector<std::shared_ptr<SExpression>>& exprs);
 
-            std::vector<std::shared_ptr<SExpression>> &getExpressions();
+            inline std::vector<std::shared_ptr<SExpression>>& getExpressions() { return exprs; }
 
             virtual void accept(AstVisitor0* visitor);
 

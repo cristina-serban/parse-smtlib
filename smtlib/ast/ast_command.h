@@ -60,7 +60,7 @@ namespace smtlib {
         class CheckSatCommand : public Command,
                                 public std::enable_shared_from_this<CheckSatCommand> {
         public:
-            CheckSatCommand() { }
+            inline CheckSatCommand() { }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -81,9 +81,9 @@ namespace smtlib {
             /**
              * \param assumptions   List of assumptions
              */
-            CheckSatAssumCommand(std::vector<std::shared_ptr<PropLiteral>> &assumptions);
+            CheckSatAssumCommand(std::vector<std::shared_ptr<PropLiteral>>& assumptions);
 
-            inline std::vector<std::shared_ptr<PropLiteral>> &getAssumptions() { return assumptions; }
+            inline std::vector<std::shared_ptr<PropLiteral>>& getAssumptions() { return assumptions; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -122,12 +122,26 @@ namespace smtlib {
         };
 
         /* ============================== DeclareDatatypeCommand ============================== */
+        /**
+         * A 'declare-datatype' command.
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class DeclareDatatypeCommand : public Command,
                                        public std::enable_shared_from_this<DeclareDatatypeCommand> {
         private:
+            std::shared_ptr<Symbol> symbol;
             std::shared_ptr<DatatypeDeclaration> declaration;
         public:
-            DeclareDatatypeCommand(std::shared_ptr<DatatypeDeclaration> declaration);
+            /**
+             * \param declaration   Datatype declaration
+             */
+            inline DeclareDatatypeCommand(std::shared_ptr<Symbol> symbol,
+                                          std::shared_ptr<DatatypeDeclaration> declaration)
+                    : symbol(symbol), declaration(declaration) { }
+
+            inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
+
+            inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
             inline std::shared_ptr<DatatypeDeclaration> getDeclaration() { return  declaration; }
 
@@ -141,18 +155,26 @@ namespace smtlib {
         };
 
         /* ============================= DeclareDatatypesCommand ============================== */
+        /**
+         * A 'declare-datatypes' command.
+         * Node of the SMT-LIB abstract syntax tree.
+         */
         class DeclareDatatypesCommand : public Command,
                                         public std::enable_shared_from_this<DeclareDatatypesCommand> {
         private:
             std::vector<std::shared_ptr<SortDeclaration>> sorts;
             std::vector<std::shared_ptr<DatatypeDeclaration>> declarations;
         public:
+            /**
+             * \param sorts         Names and arities of the new datatypes
+             * \param declarations  Declarations of the new datatypes
+             */
             DeclareDatatypesCommand(std::vector<std::shared_ptr<SortDeclaration>>& sorts,
                                     std::vector<std::shared_ptr<DatatypeDeclaration>>& declarations);
 
-            inline std::vector<std::shared_ptr<SortDeclaration>> &getSorts() { return sorts; }
+            inline std::vector<std::shared_ptr<SortDeclaration>>& getSorts() { return sorts; }
 
-            inline std::vector<std::shared_ptr<DatatypeDeclaration>> &getDeclarations() { return declarations; }
+            inline std::vector<std::shared_ptr<DatatypeDeclaration>>& getDeclarations() { return declarations; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -177,14 +199,14 @@ namespace smtlib {
              * \param sort      Sort of the return value
              */
             DeclareFunCommand(std::shared_ptr<Symbol> symbol,
-                              std::vector<std::shared_ptr<Sort>> params,
+                              std::vector<std::shared_ptr<Sort>>& params,
                               std::shared_ptr<Sort> sort);
 
             inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
             inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            inline std::vector<std::shared_ptr<Sort>> &getParams() { return params; }
+            inline std::vector<std::shared_ptr<Sort>>& getParams() { return params; }
 
             inline std::shared_ptr<Sort> getSort() { return sort; }
 
@@ -259,7 +281,7 @@ namespace smtlib {
              * \param body      Function body
              */
             DefineFunCommand(std::shared_ptr<Symbol> symbol,
-                             std::vector<std::shared_ptr<SortedVariable>> &params,
+                             std::vector<std::shared_ptr<SortedVariable>>& params,
                              std::shared_ptr<Sort> sort,
                              std::shared_ptr<Term> body);
 
@@ -304,7 +326,7 @@ namespace smtlib {
              * \param body      Function body
              */
             DefineFunRecCommand(std::shared_ptr<Symbol> symbol,
-                                std::vector<std::shared_ptr<SortedVariable>> &params,
+                                std::vector<std::shared_ptr<SortedVariable>>& params,
                                 std::shared_ptr<Sort> sort,
                                 std::shared_ptr<Term> body);
 
@@ -332,12 +354,12 @@ namespace smtlib {
              * \param declarations    Function declarations
              * \param bodies          Function bodies
              */
-            DefineFunsRecCommand(std::vector<std::shared_ptr<FunctionDeclaration>> &declarations,
-                                 std::vector<std::shared_ptr<Term>> &bodies);
+            DefineFunsRecCommand(std::vector<std::shared_ptr<FunctionDeclaration>>& declarations,
+                                 std::vector<std::shared_ptr<Term>>& bodies);
 
-            inline std::vector<std::shared_ptr<FunctionDeclaration>> &getDeclarations() { return declarations; }
+            inline std::vector<std::shared_ptr<FunctionDeclaration>>& getDeclarations() { return declarations; }
 
-            inline std::vector<std::shared_ptr<Term>> &getBodies() { return bodies; }
+            inline std::vector<std::shared_ptr<Term>>& getBodies() { return bodies; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -357,18 +379,19 @@ namespace smtlib {
             std::shared_ptr<Sort> sort;
         public:
             /**
-             * \param name      Name of the sort
-             * \param arity     Arity of the sort
+             * \param symbol    Name of the sort
+             * \param params    Sort parameters
+             * \param sort      Definition of the new sort
              */
             DefineSortCommand(std::shared_ptr<Symbol> symbol,
-                              std::vector<std::shared_ptr<Symbol>> &params,
+                              std::vector<std::shared_ptr<Symbol>>& params,
                               std::shared_ptr<Sort> sort);
 
             inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
             inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            inline std::vector<std::shared_ptr<Symbol>> &getParams() { return params; }
+            inline std::vector<std::shared_ptr<Symbol>>& getParams() { return params; }
 
             inline std::shared_ptr<Sort> getSort() { return sort; }
 
@@ -392,7 +415,7 @@ namespace smtlib {
             /**
              * \param   Message to print
              */
-            inline EchoCommand(std::string message) : message(message) {}
+            inline EchoCommand(std::string message) : message(message) { }
 
             inline std::string &getMessage() { return message; }
 
@@ -569,9 +592,9 @@ namespace smtlib {
             /**
              * \param terms Terms to evaluate
              */
-            GetValueCommand(std::vector<std::shared_ptr<Term>> &terms);
+            GetValueCommand(std::vector<std::shared_ptr<Term>>& terms);
 
-            inline std::vector<std::shared_ptr<Term>> &getTerms() { return terms; }
+            inline std::vector<std::shared_ptr<Term>>& getTerms() { return terms; }
 
             virtual void accept(AstVisitor0* visitor);
 
@@ -580,7 +603,7 @@ namespace smtlib {
 
         /* ==================================== PopCommand ==================================== */
         /**
-         * A 'push' command.
+         * A 'pop' command.
          * Node of the SMT-LIB abstract syntax tree.
          */
         class PopCommand : public Command,
@@ -588,6 +611,9 @@ namespace smtlib {
         private:
             std::shared_ptr<NumeralLiteral> numeral;
         public:
+            /**
+             * \param numeral   Number of levels to pop
+             */
             inline PopCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
             inline std::shared_ptr<NumeralLiteral> getNumeral() { return numeral; }
@@ -609,6 +635,9 @@ namespace smtlib {
         private:
             std::shared_ptr<NumeralLiteral> numeral;
         public:
+            /**
+             * \param numeral   Number of levels to push
+             */
             inline PushCommand(std::shared_ptr<NumeralLiteral> numeral) : numeral(numeral) { }
 
             inline std::shared_ptr<NumeralLiteral> getNumeral() { return numeral; }

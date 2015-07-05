@@ -4,12 +4,8 @@
 using namespace std;
 using namespace smtlib::ast;
 
-CompSExpression::CompSExpression(vector<shared_ptr<SExpression>> &exprs) {
+CompSExpression::CompSExpression(vector<shared_ptr<SExpression>>& exprs) {
     this->exprs.insert(this->exprs.end(), exprs.begin(), exprs.end());
-}
-
-vector<shared_ptr<SExpression>> &CompSExpression::getExpressions() {
-    return exprs;
 }
 
 void CompSExpression::accept(AstVisitor0* visitor){
