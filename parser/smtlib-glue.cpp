@@ -431,7 +431,8 @@ public:
     vector<shared_ptr<T>> unwrap() {
         vector<shared_ptr<T>> result;
         for (unsigned long i = 0, n = v.size(); i < n; ++i) {
-            result.push_back(share<T>(v[i]));
+            shared_ptr<T> ptr = share<T>(v[i]);
+            result.push_back(ptr);
         }
         v.clear();
         return result;

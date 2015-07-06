@@ -13,7 +13,7 @@ void SortDeclaration::accept(AstVisitor0* visitor) {
 
 string SortDeclaration::toString() {
     stringstream ss;
-    ss << "(" << symbol->toString() << " " << numeral->toString() << ")";
+    ss << "(" << symbol->toString() << " " << arity->toString() << ")";
     return ss.str();
 }
 

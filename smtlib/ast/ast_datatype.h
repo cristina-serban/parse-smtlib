@@ -22,23 +22,23 @@ namespace smtlib {
                                 public std::enable_shared_from_this<SortDeclaration> {
         private:
             std::shared_ptr<Symbol> symbol;
-            std::shared_ptr<NumeralLiteral> numeral;
+            std::shared_ptr<NumeralLiteral> arity;
         public:
             /**
              * \param symbol    Datatype (sort) name
-             * \param numeral   Arity
+             * \param arity   Arity
              */
             inline SortDeclaration(std::shared_ptr<Symbol> symbol,
-                                   std::shared_ptr<NumeralLiteral> numeral)
-                    : symbol(symbol), numeral(numeral) { }
+                                   std::shared_ptr<NumeralLiteral> arity)
+                    : symbol(symbol), arity(arity) { }
 
             inline std::shared_ptr<Symbol> getSymbol() { return symbol; }
 
             inline void setSymbol(std::shared_ptr<Symbol> symbol) { this->symbol = symbol; }
 
-            inline std::shared_ptr<NumeralLiteral> getNumeral() { return numeral; }
+            inline std::shared_ptr<NumeralLiteral> getArity() { return arity; }
 
-            inline void setNumeral(std::shared_ptr<NumeralLiteral> numeral) { this->numeral = numeral; }
+            inline void setArity(std::shared_ptr<NumeralLiteral> arity) { this->arity = arity; }
 
             virtual void accept(AstVisitor0* visitor);
 

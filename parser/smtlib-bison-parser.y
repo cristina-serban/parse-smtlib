@@ -510,7 +510,7 @@ datatype_decl:
 ;
 
 constructor_decl_plus:
-	term
+	constructor_decl
 		{
 			$$ = smt_listCreate();
 			smt_listAdd($$, $1);
@@ -587,7 +587,7 @@ selector_decl:
 ;
 
 sort_decl_plus:
-	term
+	sort_decl
 		{
 			$$ = smt_listCreate();
 			smt_listAdd($$, $1);
