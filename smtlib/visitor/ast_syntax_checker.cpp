@@ -16,15 +16,48 @@
 using namespace std;
 using namespace smtlib::ast;
 
-shared_ptr<SyntaxChecker::SyntaxCheckError> SyntaxChecker::addError(string message, shared_ptr<AstNode> node,
-                                                                    shared_ptr<SyntaxChecker::SyntaxCheckError> err) {
+shared_ptr<SyntaxChecker::SyntaxCheckError>
+SyntaxChecker::addError(string message, shared_ptr<AstNode> node,
+                        shared_ptr<SyntaxChecker::SyntaxCheckError> err) {
     if (!err) {
-        err = make_shared<SyntaxCheckError>();
-        err->messages.push_back(message);
-        err->node = node;
+        err = make_shared<SyntaxCheckError>(message, node);
         errors.push_back(err);
     } else {
         err->messages.push_back(message);
+    }
+
+    return err;
+}
+
+shared_ptr<SyntaxChecker::SyntaxCheckError>
+SyntaxChecker::checkParamUsage(vector<shared_ptr<Symbol>> & params,
+                               unordered_map<string, bool> & paramUsage,
+                               shared_ptr<Sort> sort,
+                               shared_ptr<AstNode> source,
+                               shared_ptr<SyntaxCheckError> err) {
+    if(!sort)
+        return err;
+
+    string name = sort->getIdentifier()->toString();
+    bool isParam = false;
+    for (vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
+        if (name == (*it)->toString())
+            isParam = true;
+    }
+
+    if (isParam) {
+        paramUsage[name] = true;
+
+        if (!sort->getArgs().empty()) {
+            ret = false;
+            err = addError(sort->toString() + ": '" + name +
+                           "' is a sort parameter - it should have an arity of 0 ", source, err);
+        }
+    } else {
+        for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
+             it != sort->getArgs().end(); it++) {
+            checkParamUsage(params, paramUsage, *it, source, err);
+        }
     }
 
     return err;
@@ -385,6 +418,7 @@ void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
         return;
     }
 
+    // Check symbol
     if (!node->getSymbol()) {
         ret = false;
         err = addError("Missing sort name from define-sort command", node, err);
@@ -392,17 +426,46 @@ void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
         node->getSymbol()->accept(this);
     }
 
+    // Check parameter list
     vector<shared_ptr<Symbol>>& params = node->getParams();
     for (vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
         if (*it)
             (*it)->accept(this);
     }
 
+    // Check definition
     if (!node->getSort()) {
         ret = false;
         err = addError("Missing sort definition from define-sort command", node, err);
     } else {
         node->getSort()->accept(this);
+    }
+
+    // Check parameter usage
+    unordered_map<string, bool> paramUsage;
+    err = checkParamUsage(node->getParams(), paramUsage, node->getSort(), node, err);
+
+    if (paramUsage.size() != node->getParams().size()) {
+        long diff = node->getParams().size() - paramUsage.size();
+
+        stringstream ss;
+        ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
+        bool first = true;
+        for (vector<shared_ptr<Symbol>>::iterator it = node->getParams().begin();
+             it != node->getParams().end(); it++) {
+            string pname = (*it)->toString();
+            if (paramUsage.find(pname) == paramUsage.end()) {
+                if (!first) {
+                    ss << ", ";
+                } else {
+                    first = false;
+                }
+                ss << "'" << pname << "'";
+            }
+        }
+        ss << ((diff == 1) ? " is " : " are ") << "not used in sort definition";
+        ret = false;
+        err = addError(ss.str(), node, err);
     }
 }
 
@@ -1117,6 +1180,7 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
         return;
     }
 
+    // Check parameter list
     if (node->getParams().empty()) {
         ret = false;
         err = addError("Empty parameter list for parametric function symbol declaration", node, err);
@@ -1128,6 +1192,7 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
         }
     }
 
+    // Check identifier
     if (!node->getIdentifier()) {
         ret = false;
         err = addError("Missing identifier from parametric function symbol declaration", node, err);
@@ -1135,6 +1200,7 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
         node->getIdentifier()->accept(this);
     }
 
+    // Check signature
     if (node->getSignature().empty()) {
         ret = false;
         err = addError("Empty signature for parametric function symbol declaration", node, err);
@@ -1146,6 +1212,37 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
         }
     }
 
+    // Check parameter usage
+    unordered_map<string, bool> paramUsage;
+    vector<shared_ptr<Sort>> sig = node->getSignature();
+    for (vector<shared_ptr<Sort>>::iterator it = sig.begin(); it != sig.end(); it++) {
+        err = checkParamUsage(node->getParams(), paramUsage, *it, node, err);
+    }
+
+    if (paramUsage.size() != node->getParams().size()) {
+        long diff = node->getParams().size() - paramUsage.size();
+
+        stringstream ss;
+        ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
+        bool first = true;
+        for (vector<shared_ptr<Symbol>>::iterator it = node->getParams().begin();
+             it != node->getParams().end(); it++) {
+            string pname = (*it)->toString();
+            if (paramUsage.find(pname) == paramUsage.end()) {
+                if (!first) {
+                    ss << ", ";
+                } else {
+                    first = false;
+                }
+                ss << "'" << pname << "'";
+            }
+        }
+        ss << ((diff == 1) ? " is " : " are ") << "not used in parametric function declaration";
+        ret = false;
+        err = addError(ss.str(), node, err);
+    }
+
+    // Check attribute list
     vector<shared_ptr<Attribute>>& attrs = node->getAttributes();
     for (vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         if (*it)
@@ -1272,6 +1369,39 @@ void SyntaxChecker::visit(shared_ptr<ParametricDatatypeDeclaration> node) {
             if (*it)
                 (*it)->accept(this);
         }
+    }
+
+    std::unordered_map<std::string, bool> paramUsage;
+
+    for (vector<shared_ptr<ConstructorDeclaration>>::iterator consit = node->getConstructors().begin();
+         consit != node->getConstructors().end(); consit++) {
+        for (vector<shared_ptr<SelectorDeclaration>>::iterator selit = (*consit)->getSelectors().begin();
+             selit != (*consit)->getSelectors().end(); selit++) {
+            err = checkParamUsage(node->getParams(), paramUsage, (*selit)->getSort(), node, err);
+        }
+    }
+
+    if (paramUsage.size() != node->getParams().size()) {
+        long diff = node->getParams().size() - paramUsage.size();
+
+        stringstream ss;
+        ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
+        bool first = true;
+        for (vector<shared_ptr<Symbol>>::iterator it = node->getParams().begin();
+             it != node->getParams().end(); it++) {
+            string pname = (*it)->toString();
+            if (paramUsage.find(pname) == paramUsage.end()) {
+                if (!first) {
+                    ss << ", ";
+                } else {
+                    first = false;
+                }
+                ss << "'" << pname << "'";
+            }
+        }
+        ss << ((diff == 1) ? " is " : " are ") << "not used in parametric datatype declaration";
+        ret = false;
+        err = addError(ss.str(), node, err);
     }
 }
 

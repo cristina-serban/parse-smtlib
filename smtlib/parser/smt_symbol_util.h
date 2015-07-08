@@ -8,7 +8,16 @@
 #include <string>
 
 namespace smtlib {
-    struct SortDefInfo {
+    class SymbolInfo {
+    public:
+        std::string name;
+        std::shared_ptr<ast::AstNode> source;
+
+        virtual ~SymbolInfo();
+    };
+
+    class SortDefInfo {
+    public:
         std::vector<std::shared_ptr<ast::Symbol>> params;
         std::shared_ptr<ast::Sort> sort;
 
@@ -19,25 +28,22 @@ namespace smtlib {
         }
     };
 
-    struct SortInfo {
-        std::string name;
+    class SortInfo : public SymbolInfo {
+    public:
         unsigned long arity;
         std::shared_ptr<SortDefInfo> definition;
         std::vector<std::shared_ptr<ast::Attribute>> attributes;
-        std::shared_ptr<ast::AstNode> source;
 
         SortInfo(std::string name, unsigned long arity,
-                 std::shared_ptr<ast::AstNode> source) {
+                 std::shared_ptr<ast::AstNode> source) : arity(arity) {
             this->name = name;
-            this->arity = arity;
             this->source = source;
         }
 
         SortInfo(std::string name, unsigned long arity,
                  std::vector<std::shared_ptr<ast::Attribute>>& attributes,
-                 std::shared_ptr<ast::AstNode> source) {
+                 std::shared_ptr<ast::AstNode> source) : arity(arity) {
             this->name = name;
-            this->arity = arity;
             this->source = source;
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
@@ -45,9 +51,8 @@ namespace smtlib {
         SortInfo(std::string name, unsigned long arity,
                  std::vector<std::shared_ptr<ast::Symbol>>& params,
                  std::shared_ptr<ast::Sort> sort,
-                 std::shared_ptr<ast::AstNode> source) {
+                 std::shared_ptr<ast::AstNode> source) : arity(arity)  {
             this->name = name;
-            this->arity = arity;
             this->source = source;
             this->definition = std::make_shared<SortDefInfo>(params, sort);
         }
@@ -56,21 +61,19 @@ namespace smtlib {
                  std::vector<std::shared_ptr<ast::Symbol>>& params,
                  std::shared_ptr<ast::Sort> sort,
                  std::vector<std::shared_ptr<ast::Attribute>>& attributes,
-                 std::shared_ptr<ast::AstNode> source) {
+                 std::shared_ptr<ast::AstNode> source) : arity(arity)  {
             this->name = name;
-            this->arity = arity;
             this->source = source;
             this->definition = std::make_shared<SortDefInfo>(params, sort);
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
     };
 
-    struct FunInfo {
-        std::string name;
+    class FunInfo : public SymbolInfo {
+    public:
         std::vector<std::shared_ptr<ast::Sort>> signature;
         std::vector<std::shared_ptr<ast::Symbol>> params;
         std::shared_ptr<ast::Term> body;
-        std::shared_ptr<ast::AstNode> source;
         std::vector<std::shared_ptr<ast::Attribute>> attributes;
 
         FunInfo(std::string name,
@@ -78,18 +81,15 @@ namespace smtlib {
                 std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->body = body;
             this->source = source;
         }
 
         FunInfo(std::string name,
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::shared_ptr<ast::Term> body,
-                std::shared_ptr<ast::AstNode> source) {
+                std::shared_ptr<ast::AstNode> source) : body(body) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->body = body;
             this->source = source;
         }
 
@@ -107,22 +107,19 @@ namespace smtlib {
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::shared_ptr<ast::Term> body,
-                std::shared_ptr<ast::AstNode> source) {
+                std::shared_ptr<ast::AstNode> source) : body(body) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
             this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->body = body;
             this->source = source;
         }
 
         FunInfo(std::string name,
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
-                std::shared_ptr<ast::AstNode> source){
+                std::shared_ptr<ast::AstNode> source) : body(body) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->body = body;
             this->source = source;
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
@@ -131,10 +128,9 @@ namespace smtlib {
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::shared_ptr<ast::Term> body,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
-                std::shared_ptr<ast::AstNode> source) {
+                std::shared_ptr<ast::AstNode> source) : body(body) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->body = body;
             this->source = source;
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
@@ -156,37 +152,32 @@ namespace smtlib {
                 std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::shared_ptr<ast::Term> body,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
-                std::shared_ptr<ast::AstNode> source) {
+                std::shared_ptr<ast::AstNode> source) : body(body) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
             this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->body = body;
             this->source = source;
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
     };
 
-    struct VarInfo {
-        std::string name;
+    class VarInfo : public SymbolInfo {
+    public:
         std::shared_ptr<ast::Sort> sort;
         std::shared_ptr<ast::Term> term;
-        std::shared_ptr<ast::AstNode> source;
 
         VarInfo(std::string name,
                 std::shared_ptr<ast::Sort> sort,
-                std::shared_ptr<ast::AstNode> source) {
+                std::shared_ptr<ast::AstNode> source) : sort(sort) {
             this->name = name;
-            this->sort = sort;
             this->source = source;
         }
 
         VarInfo(std::string name,
                 std::shared_ptr<ast::Sort> sort,
                 std::shared_ptr<ast::Term> term,
-                std::shared_ptr<ast::AstNode> source) {
+                std::shared_ptr<ast::AstNode> source) : sort(sort), term(term) {
             this->name = name;
-            this->sort = sort;
-            this->term = term;
             this->source = source;
         }
     };

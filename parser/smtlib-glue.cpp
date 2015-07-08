@@ -772,7 +772,7 @@ SmtPtr smt_newSimpleDatatypeDeclaration(SmtList constructors) {
 }
 
 SmtPtr smt_newParametricDatatypeDeclaration(SmtList params, SmtList constructors) {
-    vector<shared_ptr<Symbol>> v1 = constructors->unwrap<Symbol>();
+    vector<shared_ptr<Symbol>> v1 = params->unwrap<Symbol>();
     vector<shared_ptr<ConstructorDeclaration>> v2 = constructors->unwrap<ConstructorDeclaration>();
     shared_ptr<ParametricDatatypeDeclaration> ptr = make_shared<ParametricDatatypeDeclaration>(v1, v2);
     nodemap[ptr.get()] = ptr;
