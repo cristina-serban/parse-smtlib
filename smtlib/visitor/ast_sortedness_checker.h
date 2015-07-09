@@ -32,7 +32,7 @@ namespace smtlib {
                 SortednessCheckError() { }
 
                 SortednessCheckError(std::shared_ptr<SortednessCheckErrorInfo> info,
-                                     std::shared_ptr<AstNode>) {
+                                     std::shared_ptr<AstNode> node) {
                     infos.push_back(info);
                     this->node = node;
                 }
@@ -57,6 +57,9 @@ namespace smtlib {
 
             std::map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
 
+            std::unordered_map<std::string, bool> currentTheories;
+            std::string currentLogic = "";
+
             std::shared_ptr<SortednessCheckError> addError(std::string message,
                                                            std::shared_ptr<AstNode> node,
                                                            std::shared_ptr<SortednessCheckError> err);
@@ -71,7 +74,7 @@ namespace smtlib {
 
             void addError(std::string message,
                           std::shared_ptr<AstNode> node,
-                          std::shared_ptr<SymbolInfo> symbolInfo);
+                          std::shared_ptr<SymbolInfo> err);
 
             std::shared_ptr<SortInfo> getInfo(std::shared_ptr<SortSymbolDeclaration> node);
 
@@ -101,9 +104,13 @@ namespace smtlib {
 
             std::vector<std::shared_ptr<SymbolInfo>> getInfo(std::shared_ptr<DeclareDatatypesCommand> node);
 
-            void loadTheory(std::string theory);
+            void loadTheory(std::string theory,
+                            std::shared_ptr<AstNode> node,
+                            std::shared_ptr<SortednessCheckError> err);
 
-            void loadLogic(std::string logic);
+            void loadLogic(std::string logic,
+                           std::shared_ptr<AstNode> node,
+                           std::shared_ptr<SortednessCheckError> err);
 
             std::shared_ptr<SortednessCheckError> checkSort(std::shared_ptr<Sort> sort,
                                                             std::shared_ptr<AstNode> source,
@@ -115,6 +122,11 @@ namespace smtlib {
                                                             std::shared_ptr<SortednessCheckError> err);
 
             class TermSorter : public DummyAstVisitor2<std::shared_ptr<Sort>, std::shared_ptr<TermSorterInfo>> {
+            private:
+                bool getParamMapping(std::vector<std::string>& params,
+                                     std::unordered_map<std::string, std::shared_ptr<Sort>>& mapping,
+                                     std::shared_ptr<Sort> sort1,
+                                     std::shared_ptr<Sort> sort2);
 
             public:
                 virtual void visit(std::shared_ptr<SimpleIdentifier> node);
@@ -138,6 +150,13 @@ namespace smtlib {
                 virtual void visit(std::shared_ptr<MatchTerm> node);
 
                 virtual void visit(std::shared_ptr<AnnotatedTerm> node);
+
+                virtual std::shared_ptr<Sort> run(std::shared_ptr<TermSorterInfo> arg,
+                                                  std::shared_ptr<AstNode> node) {
+                    std::shared_ptr<Sort> null;
+                    ret = null;
+                    return wrappedVisit(arg, node);
+                }
             };
 
         public:
@@ -193,7 +212,9 @@ namespace smtlib {
                     if (chk->run(node)) {
                         ret = true;
                         arg = stack;
-                        loadTheory("Core");
+                        std::shared_ptr<ast::AstNode> null;
+                        std::shared_ptr<SortednessCheckError> err;
+                        loadTheory("Core", null, err);
                         return wrappedVisit(stack, node);
                     } else {
                         Logger::syntaxError("SortednessChecker::run()", node->getFilename()->c_str(),

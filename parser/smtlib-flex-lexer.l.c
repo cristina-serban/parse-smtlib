@@ -659,7 +659,7 @@ static yyconst flex_int32_t yy_rule_can_match_eol[70] =
 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 
-    0, 0, 1, 0, 0, 0, 1, 1, 1, 0,     };
+    0, 0, 1, 0, 0, 0, 1, 0, 1, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -1383,10 +1383,9 @@ case 66:
 /* rule 66 can match eol */
 YY_RULE_SETUP
 #line 183 "smtlib-flex-lexer.l"
-{ SET_LOCATION; yycolumn = 1; }
+{ SET_LOCATION; }
 	YY_BREAK
 case 67:
-/* rule 67 can match eol */
 YY_RULE_SETUP
 #line 184 "smtlib-flex-lexer.l"
 { SET_LOCATION; /*ignore*/ }
@@ -1395,14 +1394,14 @@ case 68:
 /* rule 68 can match eol */
 YY_RULE_SETUP
 #line 185 "smtlib-flex-lexer.l"
-{ SET_LOCATION; /*ignore*/ }
+{ SET_LOCATION; yycolumn = 1; /*ignore*/ }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
 #line 186 "smtlib-flex-lexer.l"
 ECHO;
 	YY_BREAK
-#line 1406 "lex.yy.c"
+#line 1405 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(string):
 case YY_STATE_EOF(quoted):

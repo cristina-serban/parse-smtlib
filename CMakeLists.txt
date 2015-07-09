@@ -65,5 +65,5 @@ set(SOURCE_FILES
 	smtlib/ast/ast_match.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} )
+add_executable(parse-smtlib ${SOURCE_FILES} smtlib/visitor/ast_term_sorter.h smtlib/visitor/ast_term_sorter.cpp)
 target_link_libraries(parse-smtlib ${LIB_FLEX})

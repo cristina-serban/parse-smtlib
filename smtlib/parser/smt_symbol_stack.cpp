@@ -24,7 +24,7 @@ bool SymbolStack::push() {
 
 bool SymbolStack::push(unsigned long levels) {
     unsigned long size = stack.size();
-    for(int i = 0; i < levels; i++)
+    for (int i = 0; i < levels; i++)
         stack.push_back(make_shared<SymbolTable>());
     return (stack.size() == size + levels);
 }
@@ -50,7 +50,7 @@ bool SymbolStack::pop(unsigned long levels) {
 }
 
 void SymbolStack::reset() {
-    pop(stack.size()-1);
+    pop(stack.size() - 1);
     getTopLevel()->reset();
 }
 
@@ -87,7 +87,7 @@ shared_ptr<SortInfo> SymbolStack::findDuplicate(shared_ptr<SortInfo> info) {
     shared_ptr<SortInfo> null;
     for (vector<shared_ptr<SymbolTable>>::iterator it = stack.begin(); it != stack.end(); it++) {
         shared_ptr<SortInfo> dup = (*it)->getSortInfo(info->name);
-        if(dup)
+        if (dup)
             return dup;
     }
     return null;
@@ -97,13 +97,13 @@ shared_ptr<FunInfo> SymbolStack::findDuplicate(shared_ptr<FunInfo> info) {
     shared_ptr<FunInfo> null;
     vector<shared_ptr<FunInfo>> known = getFunInfo(info->name);
     for (vector<shared_ptr<FunInfo>>::iterator it = known.begin(); it != known.end(); it++) {
-        if(info->params.size() == 0 && (*it)->params.size() == 0) {
-            if(equal(info->signature, (*it)->signature)) {
+        if (info->params.size() == 0 && (*it)->params.size() == 0) {
+            if (equal(info->signature, (*it)->signature)) {
                 return (*it);
             }
         } else {
-            if(equal(info->params, info->signature,
-                     (*it)->params, (*it)->signature)) {
+            if (equal(info->params, info->signature,
+                      (*it)->params, (*it)->signature)) {
                 return (*it);
             }
         }
@@ -116,28 +116,28 @@ shared_ptr<VarInfo> SymbolStack::findDuplicate(shared_ptr<VarInfo> info) {
 }
 
 shared_ptr<Sort> SymbolStack::replace(shared_ptr<Sort> sort,
-                         unordered_map<string, shared_ptr<Sort>>& mapping) {
-    if(mapping.empty())
+                                      unordered_map<string, shared_ptr<Sort>>& mapping) {
+    if (mapping.empty())
         return sort;
 
-    if(!sort->hasArgs()) {
-        if(mapping.find(sort->toString()) != mapping.end())
+    if (!sort->hasArgs()) {
+        if (mapping.find(sort->toString()) != mapping.end())
             return mapping[sort->toString()];
         else
             return sort;
     } else {
         vector<shared_ptr<Sort>> newargs;
         bool changed = false;
-        for(vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
-            it != sort->getArgs().end(); it++) {
+        for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
+             it != sort->getArgs().end(); it++) {
             shared_ptr<Sort> result = replace(*it, mapping);
 
             newargs.push_back(result);
-            if(result.get() != (*it).get())
+            if (result.get() != (*it).get())
                 changed = true;
         }
 
-        if(changed) {
+        if (changed) {
             return make_shared<Sort>(sort->getIdentifier(), newargs);
         } else {
             return sort;
@@ -146,15 +146,15 @@ shared_ptr<Sort> SymbolStack::replace(shared_ptr<Sort> sort,
 }
 
 shared_ptr<Sort> SymbolStack::expand(shared_ptr<Sort> sort) {
-    if(!sort)
+    if (!sort)
         return sort;
 
     shared_ptr<Sort> null;
 
     shared_ptr<SortInfo> info = getSortInfo(sort->getIdentifier()->toString());
-    if(!sort->hasArgs()) {
-        if(info && info->definition) {
-            if(info->definition->params.empty()) {
+    if (!sort->hasArgs()) {
+        if (info && info->definition) {
+            if (info->definition->params.empty()) {
                 shared_ptr<Sort> newsort = make_shared<Sort>(info->definition->sort->getIdentifier(),
                                                              info->definition->sort->getArgs());
                 newsort->setRowLeft(sort->getRowLeft());
@@ -171,10 +171,10 @@ shared_ptr<Sort> SymbolStack::expand(shared_ptr<Sort> sort) {
             return sort;
         }
     } else {
-        if(info && info->definition) {
-            if(info->definition->params.size() == sort->getArgs().size()) {
+        if (info && info->definition) {
+            if (info->definition->params.size() == sort->getArgs().size()) {
                 unordered_map<string, shared_ptr<Sort>> mapping;
-                for(int i = 0; i < info->definition->params.size(); i++) {
+                for (int i = 0; i < info->definition->params.size(); i++) {
                     mapping[info->definition->params[i]->toString()] = sort->getArgs()[i];
                 }
 
@@ -191,23 +191,23 @@ shared_ptr<Sort> SymbolStack::expand(shared_ptr<Sort> sort) {
                 return null;
             }
         } else {
-            if(info && info->arity != sort->getArgs().size())
+            if (info && info->arity != sort->getArgs().size())
                 return null;
 
             vector<shared_ptr<Sort>> newargs;
             bool changed = false;
-            for(vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
-                    it != sort->getArgs().end(); it++) {
+            for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
+                 it != sort->getArgs().end(); it++) {
                 shared_ptr<Sort> result = expand(*it);
-                if(!result)
+                if (!result)
                     return null;
 
                 newargs.push_back(result);
-                if(result.get() != (*it).get())
+                if (result.get() != (*it).get())
                     changed = true;
             }
 
-            if(changed) {
+            if (changed) {
                 shared_ptr<Sort> newsort = make_shared<Sort>(sort->getIdentifier(), newargs);
                 newsort->setRowLeft(sort->getRowLeft());
                 newsort->setColLeft(sort->getColLeft());
@@ -232,7 +232,7 @@ bool SymbolStack::equal(vector<shared_ptr<Symbol>>& params1,
                         shared_ptr<Sort> sort1,
                         vector<shared_ptr<Symbol>>& params2,
                         shared_ptr<Sort> sort2,
-                        unordered_map<string, string> &mapping) {
+                        unordered_map<string, string>& mapping) {
     if (sort1->getArgs().size() != sort2->getArgs().size())
         return false;
 
@@ -309,21 +309,21 @@ bool SymbolStack::equal(vector<shared_ptr<Symbol>>& params1,
 
 shared_ptr<SortInfo> SymbolStack::tryAdd(shared_ptr<SortInfo> info) {
     shared_ptr<SortInfo> dup = findDuplicate(info);
-    if(!dup)
+    if (!dup)
         getTopLevel()->add(info);
     return dup;
 }
 
 shared_ptr<FunInfo> SymbolStack::tryAdd(shared_ptr<FunInfo> info) {
     shared_ptr<FunInfo> dup = findDuplicate(info);
-    if(!dup)
+    if (!dup)
         getTopLevel()->add(info);
     return dup;
 }
 
 std::shared_ptr<VarInfo> SymbolStack::tryAdd(shared_ptr<VarInfo> info) {
     shared_ptr<VarInfo> dup = findDuplicate(info);
-    if(!dup)
+    if (!dup)
         getTopLevel()->add(info);
     return dup;
 }

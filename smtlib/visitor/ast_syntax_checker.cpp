@@ -388,11 +388,17 @@ void SyntaxChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
         err = addError("Missing function bodies from define-funs-rec command", node, err);
     }
 
-    if (node->getBodies().size() != node->getDeclarations().size()) {
+    unsigned long declCount = node->getDeclarations().size();
+    unsigned long bodyCount = node->getBodies().size();
+
+
+    if (declCount != bodyCount) {
         ret = false;
-        err = addError(
-                "Number of function declarations is not equal to the number of function bodies in define-funs-rec command",
-                node, err);
+        stringstream ss;
+        ss << "Number of function declarations (" << declCount
+              << ") is not equal to the number of function bodies ("
+              << bodyCount << ") in define-funs-rec command";
+        err = addError(ss.str(), node, err);
     }
 
     vector<shared_ptr<FunctionDeclaration>>& decls = node->getDeclarations();
@@ -880,14 +886,15 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
         if (!attr)
             continue;
 
+        shared_ptr<SyntaxCheckError> attrerr;
+
         if (attr->getKeyword()->getValue() == ":language"
             || attr->getKeyword()->getValue() == ":extensions"
             || attr->getKeyword()->getValue() == ":values"
             || attr->getKeyword()->getValue() == ":notes") {
-
             if (!dynamic_cast<StringLiteral*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be string literal", attr, err);
+                attrerr = addError("Attribute value should be string literal", attr, attrerr);
             }
         } else if (attr->getKeyword()->getValue() == ":theories") {
             if (!dynamic_cast<CompAttributeValue*>(attr->getValue().get())) {
@@ -897,6 +904,7 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
                 CompAttributeValue* val = dynamic_cast<CompAttributeValue*>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
+                // Standard prohibits empty theory list, but there are logics that only use Core
                 /*if (values.empty()) {
                     ret = false;
                     err = addError("Empty list of theory names", attr, err);
@@ -905,7 +913,7 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
                     if (!dynamic_cast<Symbol*>((*itt).get())) {
                         ret = false;
-                        err = addError("Attribute value should be a symbol", (*itt), err);
+                        attrerr = addError("Attribute value should be a symbol", (*itt), attrerr);
                     }
                 }
             }
@@ -940,52 +948,54 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
         if (!attr)
             continue;
 
+        shared_ptr<SyntaxCheckError> attrerr;
+
         if (attr->getKeyword()->getValue() == ":sorts-description"
             || attr->getKeyword()->getValue() == ":funs-description"
             || attr->getKeyword()->getValue() == ":definition"
             || attr->getKeyword()->getValue() == ":values"
             || attr->getKeyword()->getValue() == ":notes") {
-            if (dynamic_cast<StringLiteral const*>(attr->getValue().get())) {
+            if (!dynamic_cast<StringLiteral*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be string literal", attr, err);
+                attrerr = addError("Attribute value should be string literal", attr, attrerr);
             }
         } else if (attr->getKeyword()->getValue() == ":sorts") {
-            if (!dynamic_cast<CompAttributeValue const*>(attr->getValue().get())) {
+            if (!dynamic_cast<CompAttributeValue*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be a list of sort symbol declarations", attr, err);
+                attrerr = addError("Attribute value should be a list of sort symbol declarations", attr, attrerr);
             } else {
                 CompAttributeValue* val = dynamic_cast<CompAttributeValue*>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
                     ret = false;
-                    err = addError("Empty list of sort symbol declarations", attr, err);
+                    attrerr = addError("Empty list of sort symbol declarations", attr, attrerr);
                 }
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
-                    if (!dynamic_cast<SortSymbolDeclaration const*>((*itt).get())) {
+                    if (!dynamic_cast<SortSymbolDeclaration*>((*itt).get())) {
                         ret = false;
-                        err = addError("Attribute value should be a sort symbol declaration", (*itt), err);
+                        attrerr = addError("Attribute value should be a sort symbol declaration", (*itt), attrerr);
                     }
                 }
             }
         } else if (attr->getKeyword()->getValue() == ":funs") {
-            if (!dynamic_cast<CompAttributeValue const*>(attr->getValue().get())) {
+            if (!dynamic_cast<CompAttributeValue*>(attr->getValue().get())) {
                 ret = false;
-                err = addError("Attribute value should be a list of function symbol declarations", attr, err);
+                attrerr = addError("Attribute value should be a list of function symbol declarations", attr, attrerr);
             } else {
                 CompAttributeValue* val = dynamic_cast<CompAttributeValue*>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
                     ret = false;
-                    err = addError("Empty list of function symbol declarations", attr, err);
+                    attrerr = addError("Empty list of function symbol declarations", attr, attrerr);
                 }
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
                     if (!dynamic_cast<FunSymbolDeclaration*>((*itt).get())) {
                         ret = false;
-                        err = addError("Attribute value should be a function symbol declaration", (*itt), err);
+                        attrerr = addError("Attribute value should be a function symbol declaration", (*itt), attrerr);
                     }
                 }
             }
@@ -1700,7 +1710,7 @@ string SyntaxChecker::getErrors() {
 
             string nodestr = err->node->toString();
             if (nodestr.length() > 100)
-                ss << string(nodestr, 100) << "[...]";
+                ss << string(nodestr, 0, 100) << "[...]";
             else
                 ss << nodestr;
         } else {

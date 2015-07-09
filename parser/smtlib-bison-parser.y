@@ -1057,6 +1057,8 @@ sort:
             @$.first_column = @1.first_column;
 			@$.last_line = @1.last_line;
             @$.last_column = @1.last_column;
+
+            smt_setLocation(parser, $$, @$.first_line, @$.first_column, @$.last_line, @$.last_column);
 		}
 |
 	'(' identifier sort_plus ')'

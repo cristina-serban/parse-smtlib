@@ -117,7 +117,7 @@ namespace smtlib {
         FunInfo(std::string name,
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
-                std::shared_ptr<ast::AstNode> source) : body(body) {
+                std::shared_ptr<ast::AstNode> source) {
             this->name = name;
             this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
             this->source = source;

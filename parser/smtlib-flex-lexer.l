@@ -11,7 +11,7 @@ yylloc.first_column = yycolumn; yylloc.last_column = yycolumn+yyleng-1; \
 yycolumn += yyleng;
 %}
 
-whitespace     	[\x09\r\n \xA0]
+whitespace     	[\x09 \xA0]
 printable_char 	[\x20-\x7E\xA0-xFF]
 digit          	[0-9]
 letter         	[a-zA-Z]
@@ -180,6 +180,6 @@ simple_symbol  {sym_begin}{sym_continue}*
 <quoted>\\			{ }
 <quoted>.			{ yymore(); }
 
-[\n\r]+				{ SET_LOCATION; yycolumn = 1; }
+[\n\r]+				{ SET_LOCATION; }
 {whitespace}		{ SET_LOCATION; /*ignore*/ }
-{comment}			{ SET_LOCATION; /*ignore*/ }
+{comment}			{ SET_LOCATION; yycolumn = 1; /*ignore*/ }

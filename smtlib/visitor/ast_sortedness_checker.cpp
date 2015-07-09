@@ -17,19 +17,19 @@ using namespace smtlib::ast;
 
 shared_ptr<SortednessChecker::SortednessCheckError>
 SortednessChecker::addError(string message, shared_ptr<AstNode> node,
-                            shared_ptr<SortednessChecker::SortednessCheckError> symbolInfo) {
-    if (!symbolInfo) {
+                            shared_ptr<SortednessChecker::SortednessCheckError> err) {
+    if (!err) {
         shared_ptr<SortednessCheckErrorInfo> errInfo =
                 make_shared<SortednessCheckErrorInfo>(message);
-        symbolInfo = make_shared<SortednessCheckError>(errInfo, node);
-        errors[string(node->getFilename()->c_str())].push_back(symbolInfo);
+        err = make_shared<SortednessCheckError>(errInfo, node);
+        errors[string(node->getFilename()->c_str())].push_back(err);
     } else {
         shared_ptr<SortednessCheckErrorInfo> errInfo =
                 make_shared<SortednessCheckErrorInfo>(message);
-        symbolInfo->infos.push_back(errInfo);
+        err->infos.push_back(errInfo);
     }
 
-    return symbolInfo;
+    return err;
 }
 
 shared_ptr<SortednessChecker::SortednessCheckError>
@@ -351,16 +351,46 @@ vector<shared_ptr<SymbolInfo>> SortednessChecker::getInfo(shared_ptr<DeclareData
     return infos;
 }
 
-void SortednessChecker::loadTheory(string theory) {
+void SortednessChecker::loadTheory(string theory,
+                                   std::shared_ptr<AstNode> node,
+                                   std::shared_ptr<SortednessCheckError> err) {
     Parser* parser = new Parser;
-    shared_ptr<AstNode> ast = parser->parse("input/Theories/" + theory + ".smt2");
-    ast->accept(this);
+    string path = "input/Theories/" + theory + ".smt2";
+
+    FILE* f = fopen(path.c_str(), "r");
+    if(f) {
+        fclose(f);
+        shared_ptr<AstNode> ast = parser->parse(path);
+        if(ast) {
+            ast->accept(this);
+        } else {
+            ret = false;
+            addError("Cannot load theory " + theory, node, err);
+        }
+    } else {
+        ret = false;
+        addError("Unknown theory '" + theory + "'", node, err);
+    }
 }
 
-void SortednessChecker::loadLogic(string logic) {
+void SortednessChecker::loadLogic(string logic,
+                                  std::shared_ptr<AstNode> node,
+                                  std::shared_ptr<SortednessCheckError> err) {
     Parser* parser = new Parser;
-    shared_ptr<AstNode> ast = parser->parse("input/Logics/" + logic + ".smt2");
-    ast->accept(this);
+    string path = "input/Logics/" + logic + ".smt2";
+
+    FILE* f = fopen(path.c_str(), "r");
+    if(f) {
+        fclose(f);
+        shared_ptr<AstNode> ast = parser->parse(path);
+        if(ast) {
+            ast->accept(this);
+        } else {
+            addError("Cannot set logic to " + logic, node, err);
+        }
+    } else {
+        addError("Unknown logic " + logic, node, err);
+    }
 }
 
 shared_ptr<SortednessChecker::SortednessCheckError>
@@ -447,7 +477,7 @@ void SortednessChecker::visit(shared_ptr<AssertCommand> node) {
             ss << "Assertion term '";
             string termstr = node->getTerm()->toString();
             if (termstr.length() > 50) {
-                ss << string(termstr, 50) << "[...]";
+                ss << string(termstr, 0, 50) << "[...]";
             } else {
                 ss << termstr;
             }
@@ -462,7 +492,7 @@ void SortednessChecker::visit(shared_ptr<AssertCommand> node) {
         ss << "Assertion term '";
         string termstr = node->getTerm()->toString();
         if (termstr.length() > 50) {
-            ss << string(termstr, 50) << "[...]";
+            ss << string(termstr, 0, 50) << "[...]";
         } else {
             ss << termstr;
         }
@@ -532,14 +562,15 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypeCommand> node) {
     }
 
     vector<shared_ptr<SymbolInfo>> infos = getInfo(node);
-    for(vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
+    for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
         shared_ptr<FunInfo> funInfo = dynamic_pointer_cast<FunInfo>(*it);
-        if(funInfo) {
+        if (funInfo) {
             shared_ptr<FunInfo> dupInfo = arg->tryAdd(funInfo);
 
             if (dupInfo) {
                 ret = false;
-                err = addError("Function '" + funInfo->name + "' already exists with the same signature", node, dupInfo, err);
+                err = addError("Function '" + funInfo->name + "' already exists with the same signature", node, dupInfo,
+                               err);
             }
 
         } else {
@@ -559,10 +590,10 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
 
     vector<shared_ptr<SymbolInfo>> infos = getInfo(node);
 
-    for(vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
+    for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
         shared_ptr<SymbolInfo> symbolInfo = *it;
         shared_ptr<SortInfo> sortInfo = dynamic_pointer_cast<SortInfo>((*it));
-        if(sortInfo) {
+        if (sortInfo) {
             shared_ptr<SortInfo> dupInfo = arg->tryAdd(sortInfo);
             if (dupInfo) {
                 ret = false;
@@ -571,7 +602,7 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
         }
     }
 
-    for(unsigned long i = 0; i < node->getSorts().size(); i++) {
+    for (unsigned long i = 0; i < node->getSorts().size(); i++) {
         shared_ptr<SortednessCheckError> declerr;
 
         shared_ptr<ParametricDatatypeDeclaration> pdecl =
@@ -598,15 +629,16 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
             }
         }
 
-        for(vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
+        for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
             shared_ptr<SymbolInfo> symbolInfo = *it;
             shared_ptr<FunInfo> funInfo = dynamic_pointer_cast<FunInfo>(symbolInfo);
-            if(funInfo) {
+            if (funInfo) {
                 shared_ptr<FunInfo> dupInfo = arg->tryAdd(funInfo);
 
                 if (dupInfo) {
                     ret = false;
-                    err = addError("Function '" + funInfo->name + "' already exists with the same signature", node, dupInfo, err);
+                    err = addError("Function '" + funInfo->name + "' already exists with the same signature", node,
+                                   dupInfo, err);
                 }
             }
         }
@@ -660,7 +692,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunCommand> node) {
                 ss << "Function body '";
                 string termstr = node->getDefinition()->getBody()->toString();
                 if (termstr.length() > 50) {
-                    ss << string(termstr, 50) << "[...]";
+                    ss << string(termstr, 0, 50) << "[...]";
                 } else {
                     ss << termstr;
                 }
@@ -679,7 +711,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunCommand> node) {
             ss << "Function body '";
             string termstr = node->getDefinition()->getBody()->toString();
             if (termstr.length() > 50) {
-                ss << string(termstr, 50) << "[...]";
+                ss << string(termstr, 0, 50) << "[...]";
             } else {
                 ss << termstr;
             }
@@ -738,7 +770,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunRecCommand> node) {
                 ss << "Function body '";
                 string termstr = node->getDefinition()->getBody()->toString();
                 if (termstr.length() > 50) {
-                    ss << string(termstr, 50) << "[...]";
+                    ss << string(termstr, 0, 50) << "[...]";
                 } else {
                     ss << termstr;
                 }
@@ -757,7 +789,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunRecCommand> node) {
             ss << "Function body '";
             string termstr = node->getDefinition()->getBody()->toString();
             if (termstr.length() > 50) {
-                ss << string(termstr, 50) << "[...]";
+                ss << string(termstr, 0, 50) << "[...]";
             } else {
                 ss << termstr;
             }
@@ -832,7 +864,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
                     ss << "The body of function " << infos[i]->name << ", '";
                     string termstr = infos[i]->body->toString();
                     if (termstr.length() > 50) {
-                        ss << string(termstr, 50) << "[...]";
+                        ss << string(termstr, 0, 50) << "[...]";
                     } else {
                         ss << termstr;
                     }
@@ -851,7 +883,7 @@ void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
                 ss << "The body of function " << infos[i]->name << ", '";
                 string termstr = infos[i]->body->toString();
                 if (termstr.length() > 50) {
-                    ss << string(termstr, 50) << "[...]";
+                    ss << string(termstr, 0, 50) << "[...]";
                 } else {
                     ss << termstr;
                 }
@@ -901,7 +933,7 @@ void SortednessChecker::visit(shared_ptr<GetValueCommand> node) {
             ss << "Term '";
             string termstr = (*it)->toString();
             if (termstr.length() > 50) {
-                ss << string(termstr, 50) << "[...]";
+                ss << string(termstr, 0, 50) << "[...]";
             } else {
                 ss << termstr;
             }
@@ -933,10 +965,19 @@ void SortednessChecker::visit(shared_ptr<PushCommand> node) {
 
 void SortednessChecker::visit(shared_ptr<ResetCommand> node) {
     arg->reset();
+    currentLogic = "";
+    currentTheories.clear();
 }
 
 void SortednessChecker::visit(shared_ptr<SetLogicCommand> node) {
-    loadLogic(node->getLogic()->toString());
+    shared_ptr<SortednessCheckError> err;
+    if(currentLogic != "") {
+        ret = false;
+        addError("Logic already set to '" + currentLogic + "'", node);
+    } else {
+        currentLogic = node->getLogic()->toString();
+        loadLogic(currentLogic, node, err);
+    }
 }
 
 void SortednessChecker::visit(shared_ptr<Logic> node) {
@@ -944,11 +985,19 @@ void SortednessChecker::visit(shared_ptr<Logic> node) {
     for (vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
         shared_ptr<Attribute> attr = *it;
         if (attr->getKeyword()->getValue() == ":theories") {
+            shared_ptr<SortednessCheckError> err;
+
             CompAttributeValue* val = dynamic_cast<CompAttributeValue*>(attr->getValue().get());
             for (vector<shared_ptr<AttributeValue>>::iterator v = val->getValues().begin();
                  v != val->getValues().end(); v++) {
                 string theory = dynamic_cast<Symbol*>((*v).get())->toString();
-                loadTheory(theory);
+                if(currentTheories.find(theory) != currentTheories.end()) {
+                    ret = false;
+                    err = addError("Theory '" + theory + "' already loaded", attr, err);
+                } else {
+                    currentTheories[theory] = true;
+                    loadTheory(theory, attr, err);
+                }
             }
         }
     }
@@ -1008,7 +1057,7 @@ void SortednessChecker::visit(shared_ptr<MetaSpecConstFunDeclaration> node) {
 
     if (!dupInfo.empty()) {
         ret = false;
-        addError("Sort for meta specification constant '" +
+        err = addError("Sort for meta specification constant '" +
                  nodeInfo->name + "' already declared", node, dupInfo[0], err);
     } else {
         arg->tryAdd(nodeInfo);
@@ -1069,16 +1118,18 @@ string SortednessChecker::getErrors() {
 
         for (vector<shared_ptr<SortednessCheckError>>::iterator itt = errs.begin(); itt != errs.end(); itt++) {
             shared_ptr<SortednessCheckError> err = *itt;
-            ss << err->node->getRowLeft() << ":" << err->node->getColLeft()
-            << " - " << err->node->getRowRight() << ":" << err->node->getColRight() << "   ";
+            if(err->node) {
+                ss << err->node->getRowLeft() << ":" << err->node->getColLeft()
+                << " - " << err->node->getRowRight() << ":" << err->node->getColRight() << "   ";
 
-            string nodestr = err->node->toString();
-            if (nodestr.length() > 100)
-                ss << string(nodestr, 100) << "[...]";
-            else
-                ss << nodestr;
+                string nodestr = err->node->toString();
+                if (nodestr.length() > 100)
+                    ss << string(nodestr, 0, 100) << "[...]";
+                else
+                    ss << nodestr;
 
-            ss << endl;
+                ss << endl;
+            }
 
             for (vector<shared_ptr<SortednessCheckErrorInfo>>::iterator info = err->infos.begin();
                  info != err->infos.end(); info++) {
@@ -1100,7 +1151,7 @@ string SortednessChecker::getErrors() {
 
                     string sourcestr = source->toString();
                     if (sourcestr.length() > 100)
-                        ss << string(sourcestr, 100);
+                        ss << string(sourcestr, 0, 100);
                     else
                         ss << sourcestr;
 
@@ -1118,415 +1169,4 @@ string SortednessChecker::getErrors() {
     ss << endl;
 
     return ss.str();
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<SimpleIdentifier> node) {
-    shared_ptr<VarInfo> varInfo = arg->stack->getVarInfo(node->toString());
-    if (varInfo) {
-        ret = varInfo->sort;
-    } else {
-        vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo(node->toString());
-        vector<shared_ptr<Sort>> possibleSorts;
-        for (auto it : infos) {
-            if (it->signature.size() == 1 && it->params.empty())
-                possibleSorts.push_back(it->signature[0]);
-        }
-
-        if (possibleSorts.size() == 1) {
-            ret = possibleSorts[0];
-        } else if (possibleSorts.empty()) {
-            arg->checker->addError("Unknown constant '" + node->toString() + "'", node);
-        } else {
-            stringstream ss;
-            ss << "Multiple possible sorts for constant '" << node->toString() << "': ";
-            bool first = true;
-            for (auto it : possibleSorts) {
-                if (!first)
-                    ss << ", ";
-                else
-                    first = false;
-                ss << it->toString();
-            }
-            arg->checker->addError(ss.str(), node);
-        }
-    }
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<QualifiedIdentifier> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo(node->getIdentifier()->toString());
-    vector<shared_ptr<Sort>> retSorts;
-    for (auto it : infos) {
-        if (it->signature.size() == 1 && it->params.empty())
-            retSorts.push_back(it->signature[0]);
-    }
-
-    shared_ptr<Sort> expanded = arg->stack->expand(node->getSort());
-
-    if (retSorts.size() == 1 && retSorts[0]->toString() == expanded->toString()) {
-        ret = retSorts[0];
-    } else {
-        if (retSorts.empty()) {
-            arg->checker->addError("Unknown constant '" + node->getIdentifier()->toString() + "'", node);
-        } else {
-            stringstream ss;
-            ss << "Constant '" << node->getIdentifier()->toString() << "' cannot be of sort " << expanded->toString()
-            << ". Possible sorts: ";
-            bool first = true;
-            for (auto it : retSorts) {
-                if (!first)
-                    ss << ", ";
-                else
-                    first = false;
-                ss << it->toString();
-            }
-            arg->checker->addError(ss.str(), node);
-        }
-    }
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<DecimalLiteral> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo("DECIMAL");
-    if (infos.size() == 1) {
-        if (infos[0]->signature.size() == 1) {
-            ret = infos[0]->signature[0];
-        }
-    } else {
-        if (infos.empty())
-            arg->checker->addError("No declared sort for decimal literals", node);
-        else
-            arg->checker->addError("Multiple declared sorts for decimal literals", node);
-    }
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<NumeralLiteral> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo("NUMERAL");
-    if (infos.size() == 1) {
-        if (infos[0]->signature.size() == 1) {
-            ret = infos[0]->signature[0];
-        }
-    } else {
-        if (infos.empty())
-            arg->checker->addError("No declared sort for numeral literals", node);
-        else
-            arg->checker->addError("Multiple declared sorts for numeral literals", node);
-    }
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<StringLiteral> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo("STRING");
-    if (infos.size() == 1) {
-        if (infos[0]->signature.size() == 1) {
-            ret = infos[0]->signature[0];
-        }
-    } else {
-        if (infos.empty())
-            arg->checker->addError("No declared sort for string literals", node);
-        else
-            arg->checker->addError("Multiple declared sorts for string literals", node);
-    }
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<QualifiedTerm> node) {
-    vector<shared_ptr<Sort>> argSorts;
-    for (vector<shared_ptr<Term>>::iterator it = node->getTerms().begin();
-         it != node->getTerms().end(); it++) {
-        TermSorter sorter;
-        shared_ptr<Sort> result = sorter.run(arg, *it);
-        if (result)
-            argSorts.push_back(result);
-        else {
-            stringstream ss;
-            ss << "Term '";
-            string termstr = (*it)->toString();
-            if (termstr.length() > 50) {
-                ss << string(termstr, 50) << "[...]";
-            } else {
-                ss << termstr;
-            }
-            ss << "' (" << (*it)->getRowLeft() << ":" << (*it)->getColLeft() << " - "
-            << (*it)->getRowRight() << ":" << (*it)->getColRight() << ") is not well-sorted";
-            arg->checker->addError(ss.str(), node);
-            ret = false;
-            return;
-        }
-    }
-
-    shared_ptr<SimpleIdentifier> id = dynamic_pointer_cast<SimpleIdentifier>(node->getIdentifier());
-    shared_ptr<QualifiedIdentifier> qid = dynamic_pointer_cast<QualifiedIdentifier>(node->getIdentifier());
-
-    shared_ptr<Sort> retExpanded;
-    string name;
-
-    if (id) {
-        name = id->toString();
-    } else {
-        name = qid->getIdentifier()->toString();
-        retExpanded = arg->stack->expand(qid->getSort());
-    }
-
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo(name);
-    vector<shared_ptr<Sort>> retSorts;
-
-    for (auto it : infos) {
-        if (argSorts.size() == it->signature.size() - 1) {
-            bool fits = true;
-            if (it->params.empty()) {
-                for (unsigned long i = 0; i < it->signature.size() - 1; i++) {
-                    if (it->signature[i]->toString() != argSorts[i]->toString())
-                        fits = false;
-                }
-
-                if (id) {
-                    if (fits)
-                        retSorts.push_back(it->signature[it->signature.size() - 1]);
-                } else {
-                    shared_ptr<Sort> retSort = it->signature[it->signature.size() - 1];
-                    if (fits && retSort->toString() == retExpanded->toString()) {
-                        ret = retSort;
-                        return;
-                    }
-                }
-            } else {
-                vector<string> pnames;
-                for (auto p : it->params) {
-                    pnames.push_back(p->toString());
-                }
-                unordered_map<string, shared_ptr<Sort>> mapping;
-
-                for (unsigned long i = 0; i < it->signature.size() - 1; i++) {
-                    string pcurrent = it->signature[i]->toString();
-                    if (find(pnames.begin(), pnames.end(), pcurrent) != pnames.end()) {
-                        if (mapping.find(pcurrent) != mapping.end()) {
-                            if (mapping[pcurrent]->toString() != argSorts[i]->toString())
-                                fits = false;
-                        } else {
-                            mapping[pcurrent] = argSorts[i];
-                        }
-                    } else {
-                        if (it->signature[i]->toString() != argSorts[i]->toString())
-                            fits = false;
-                    }
-                }
-
-                if (fits && mapping.size() == it->params.size()) {
-                    shared_ptr<Sort> retSort = it->signature[it->signature.size() - 1];
-                    string retSortString = retSort->toString();
-                    if (find(pnames.begin(), pnames.end(), retSortString) != pnames.end()) {
-                        if (id) {
-                            retSorts.push_back(mapping[retSortString]);
-                        } else {
-                            if (mapping[retSortString]->toString() == arg->stack->expand(qid->getSort())->toString()) {
-                                ret = mapping[retSortString];
-                                return;
-                            }
-                        }
-                    } else {
-                        if (id) {
-                            retSorts.push_back(retSort);
-                        } else {
-                            if (retSortString == arg->stack->expand(qid->getSort())->toString()) {
-                                ret = retSort;
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    if (id) {
-        if (retSorts.size() == 1) {
-            ret = retSorts[0];
-        } else if (retSorts.size() == 0) {
-            stringstream ss;
-            ss << "No known declaration for function '" << name << "' with parameter sorts (";
-            bool first = true;
-            for (auto it : argSorts) {
-                if (first) {
-                    first = false;
-                } else {
-                    ss << " ";
-                }
-                ss << it->toString();
-            }
-            ss << ")";
-            arg->checker->addError(ss.str(), node);
-        } else {
-            stringstream ss;
-            ss << "Multiple declarations for function '" << name << "' with parameter sorts ";
-            bool first = true;
-            for (auto it : argSorts) {
-                if (first) {
-                    first = false;
-                } else {
-                    ss << ", ";
-                }
-                ss << it->toString();
-            }
-
-            ss << ". Possible return sorts: ";
-            first = true;
-            for (auto it : retSorts) {
-                if (first) {
-                    first = false;
-                } else {
-                    ss << ", ";
-                }
-                ss << it->toString();
-            }
-            arg->checker->addError(ss.str(), node);
-        }
-    } else {
-        stringstream ss;
-        ss << "No known declaration for function '" << name << "' with parameter sorts ";
-        bool first = true;
-        for (auto it : argSorts) {
-            if (first) {
-                first = false;
-            } else {
-                ss << ", ";
-            }
-            ss << it->toString();
-        }
-        ss << " and return sort " << retExpanded->toString();
-        arg->checker->addError(ss.str(), node);
-    }
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<LetTerm> node) {
-    arg->stack->push();
-
-    vector<shared_ptr<VarBinding>>& bindings = node->getBindings();
-    for (auto it : bindings) {
-        TermSorter sorter;
-        shared_ptr<Sort> result = sorter.run(arg, it->getTerm());
-        if (result) {
-            arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(), result, node));
-        } else {
-            return;
-        }
-    }
-
-    TermSorter sorter;
-    shared_ptr<Sort> result = sorter.run(arg, node->getTerm());
-    if (result) {
-        ret = result;
-    } else {
-        stringstream ss;
-        ss << "Term '";
-        string termstr = node->getTerm()->toString();
-        if (termstr.length() > 50) {
-            ss << string(termstr, 50) << "[...]";
-        } else {
-            ss << termstr;
-        }
-        ss << "' (" << node->getTerm()->getRowLeft() << ":" << node->getTerm()->getColLeft() << " - "
-        << node->getTerm()->getRowRight() << ":" << node->getTerm()->getColRight()
-        << ") is not well-sorted";
-        arg->checker->addError(ss.str(), node);
-    }
-
-    arg->stack->pop();
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<ForallTerm> node) {
-    arg->stack->push();
-
-    vector<shared_ptr<SortedVariable>>& bindings = node->getBindings();
-    for (auto it : bindings) {
-        arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
-                                                arg->stack->expand(it->getSort()), node));
-    }
-
-    TermSorter sorter;
-    shared_ptr<Sort> result = sorter.run(arg, node->getTerm());
-    string resstr = result->toString();
-    if (result) {
-        if (result->toString() == "Bool") {
-            ret = result;
-        } else {
-            stringstream ss;
-            ss << "Assertion term '";
-            string termstr = node->getTerm()->toString();
-            if (termstr.length() > 50) {
-                ss << string(termstr, 50) << "[...]";
-            } else {
-                ss << termstr;
-            }
-            ss << "' (" << node->getTerm()->getRowLeft() << ":" << node->getTerm()->getColLeft() << " - "
-            << node->getTerm()->getRowRight() << ":" << node->getTerm()->getColRight()
-            << ") is of type " << resstr << ", not Bool";
-            arg->checker->addError(ss.str(), node);
-        }
-    } else {
-        stringstream ss;
-        ss << "Term '";
-        string termstr = node->getTerm()->toString();
-        if (termstr.length() > 50) {
-            ss << string(termstr, 50) << "[...]";
-        } else {
-            ss << termstr;
-        }
-        ss << "' (" << node->getTerm()->getRowLeft() << ":" << node->getTerm()->getColLeft() << " - "
-        << node->getTerm()->getRowRight() << ":" << node->getTerm()->getColRight()
-        << ") is not well-sorted";
-        arg->checker->addError(ss.str(), node);
-    }
-
-    arg->stack->pop();
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<ExistsTerm> node) {
-    arg->stack->push();
-
-    vector<shared_ptr<SortedVariable>>& bindings = node->getBindings();
-    for (auto it : bindings) {
-        arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
-                                                arg->stack->expand(it->getSort()), node));
-    }
-
-    TermSorter sorter;
-    shared_ptr<Sort> result = sorter.run(arg, node->getTerm());
-    string resstr = result->toString();
-    if (result) {
-        if (result->toString() == "Bool") {
-            ret = result;
-        } else {
-            stringstream ss;
-            ss << "Assertion term '";
-            string termstr = node->getTerm()->toString();
-            if (termstr.length() > 50) {
-                ss << string(termstr, 50) << "[...]";
-            } else {
-                ss << termstr;
-            }
-            ss << "' (" << node->getTerm()->getRowLeft() << ":" << node->getTerm()->getColLeft() << " - "
-            << node->getTerm()->getRowRight() << ":" << node->getTerm()->getColRight()
-            << ") is of type " << resstr << ", not Bool";
-            arg->checker->addError(ss.str(), node);
-        }
-    } else {
-        stringstream ss;
-        ss << "Term '";
-        string termstr = node->getTerm()->toString();
-        if (termstr.length() > 50) {
-            ss << string(termstr, 50) << "[...]";
-        } else {
-            ss << termstr;
-        }
-        ss << "' (" << node->getTerm()->getRowLeft() << ":" << node->getTerm()->getColLeft() << " - "
-        << node->getTerm()->getRowRight() << ":" << node->getTerm()->getColRight()
-        << ") is not well-sorted";
-        arg->checker->addError(ss.str(), node);
-    }
-    arg->stack->pop();
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
-
-}
-
-void SortednessChecker::TermSorter::visit(shared_ptr<AnnotatedTerm> node) {
-    node->getTerm()->accept(this);
 }

@@ -27,8 +27,7 @@ namespace smtlib {
                    std::shared_ptr<ast::Sort> sort2,
                    std::unordered_map<std::string, std::string> &mapping);
 
-        std::shared_ptr<ast::Sort> replace(std::shared_ptr<ast::Sort>,
-                                           std::unordered_map<std::string, std::shared_ptr<ast::Sort>>& mapping);
+
     public:
         SymbolStack();
 
@@ -52,7 +51,9 @@ namespace smtlib {
         std::shared_ptr<FunInfo> findDuplicate(std::shared_ptr<FunInfo> info);
         std::shared_ptr<VarInfo> findDuplicate(std::shared_ptr<VarInfo> info);
 
-        std::shared_ptr<ast::Sort> expand(std::shared_ptr<ast::Sort>);
+        std::shared_ptr<ast::Sort> expand(std::shared_ptr<ast::Sort> sort);
+        std::shared_ptr<ast::Sort> replace(std::shared_ptr<ast::Sort>,
+                                           std::unordered_map<std::string, std::shared_ptr<ast::Sort>>& mapping);
 
         std::shared_ptr<SortInfo> tryAdd(std::shared_ptr<SortInfo> info);
         std::shared_ptr<FunInfo> tryAdd(std::shared_ptr<FunInfo> info);
