@@ -9,9 +9,13 @@ using namespace std;
 using namespace smtlib;
 using namespace smtlib::ast;
 
-int main() {
-    Parser* parser = new Parser;
-    shared_ptr<AstNode> ast = parser->parse("tests/scripts/syn_def_sort.smt");
-    parser->checkSortedness();
-    return 0;
+int main(int argc, char** argv) {
+    if (argc == 2) {
+        Parser* parser = new Parser;
+        shared_ptr<AstNode> ast = parser->parse(argv[1]);
+        parser->checkSortedness();
+        return 0;
+    } else {
+        return 1;
+    }
 }

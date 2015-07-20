@@ -225,7 +225,11 @@ shared_ptr<Sort> SymbolStack::expand(shared_ptr<Sort> sort) {
 
 bool SymbolStack::equal(shared_ptr<Sort> sort1,
                         shared_ptr<Sort> sort2) {
-    return sort1->toString() == sort2->toString();
+    if(sort1 && sort2) {
+        return sort1->toString() == sort2->toString();
+    } else {
+        return false;
+    }
 }
 
 bool SymbolStack::equal(vector<shared_ptr<Symbol>>& params1,
@@ -233,6 +237,10 @@ bool SymbolStack::equal(vector<shared_ptr<Symbol>>& params1,
                         vector<shared_ptr<Symbol>>& params2,
                         shared_ptr<Sort> sort2,
                         unordered_map<string, string>& mapping) {
+    if(!sort1 || !sort2) {
+        return false;
+    }
+
     if (sort1->getArgs().size() != sort2->getArgs().size())
         return false;
 

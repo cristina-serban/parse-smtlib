@@ -8,6 +8,8 @@
 #include <string>
 
 namespace smtlib {
+
+
     class SymbolInfo {
     public:
         std::string name;
@@ -70,37 +72,49 @@ namespace smtlib {
     };
 
     class FunInfo : public SymbolInfo {
+    private:
+        inline void init(std::string name,
+                         std::vector<std::shared_ptr<ast::Sort>>& signature,
+                         std::shared_ptr<ast::AstNode> source) {
+            this->name = name;
+            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
+            this->source = source;
+            assocL = false;
+            assocR = false;
+            chainable = false;
+            pairwise = false;
+        }
+
     public:
         std::vector<std::shared_ptr<ast::Sort>> signature;
         std::vector<std::shared_ptr<ast::Symbol>> params;
         std::shared_ptr<ast::Term> body;
         std::vector<std::shared_ptr<ast::Attribute>> attributes;
 
+        bool assocR;
+        bool assocL;
+        bool chainable;
+        bool pairwise;
+
         FunInfo(std::string name,
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::shared_ptr<ast::AstNode> source) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->source = source;
+            init(name, signature, source);
         }
 
         FunInfo(std::string name,
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::shared_ptr<ast::Term> body,
                 std::shared_ptr<ast::AstNode> source) : body(body) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->source = source;
+            init(name, signature, source);
         }
 
         FunInfo(std::string name,
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::shared_ptr<ast::AstNode> source) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
+            init(name, signature, source);
             this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->source = source;
         }
 
         FunInfo(std::string name,
@@ -108,19 +122,15 @@ namespace smtlib {
                 std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::shared_ptr<ast::Term> body,
                 std::shared_ptr<ast::AstNode> source) : body(body) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
+            init(name, signature, source);
             this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->source = source;
         }
 
         FunInfo(std::string name,
                 std::vector<std::shared_ptr<ast::Sort>>& signature,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->source = source;
+            init(name, signature, source);
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
 
@@ -129,9 +139,7 @@ namespace smtlib {
                 std::shared_ptr<ast::Term> body,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source) : body(body) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
-            this->source = source;
+            init(name, signature, source);
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
 
@@ -140,10 +148,8 @@ namespace smtlib {
                 std::vector<std::shared_ptr<ast::Symbol>>& params,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
+            init(name, signature, source);
             this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->source = source;
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
 
@@ -153,10 +159,8 @@ namespace smtlib {
                 std::shared_ptr<ast::Term> body,
                 std::vector<std::shared_ptr<ast::Attribute>>& attributes,
                 std::shared_ptr<ast::AstNode> source) : body(body) {
-            this->name = name;
-            this->signature.insert(this->signature.begin(), signature.begin(), signature.end());
+            init(name, signature, source);
             this->params.insert(this->params.begin(), params.begin(), params.end());
-            this->source = source;
             this->attributes.insert(this->attributes.begin(), attributes.begin(), attributes.end());
         }
     };

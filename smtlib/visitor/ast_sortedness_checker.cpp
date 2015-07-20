@@ -22,7 +22,10 @@ SortednessChecker::addError(string message, shared_ptr<AstNode> node,
         shared_ptr<SortednessCheckErrorInfo> errInfo =
                 make_shared<SortednessCheckErrorInfo>(message);
         err = make_shared<SortednessCheckError>(errInfo, node);
-        errors[string(node->getFilename()->c_str())].push_back(err);
+        if(node && node->getFilename())
+            errors[string(node->getFilename()->c_str())].push_back(err);
+        else
+            errors[""].push_back(err);
     } else {
         shared_ptr<SortednessCheckErrorInfo> errInfo =
                 make_shared<SortednessCheckErrorInfo>(message);
@@ -40,7 +43,10 @@ SortednessChecker::addError(string message, shared_ptr<AstNode> node,
         shared_ptr<SortednessCheckErrorInfo> errInfo =
                 make_shared<SortednessCheckErrorInfo>(message, info);
         err = make_shared<SortednessCheckError>(errInfo, node);
-        errors[string(node->getFilename()->c_str())].push_back(err);
+        if(node && node->getFilename())
+            errors[string(node->getFilename()->c_str())].push_back(err);
+        else
+            errors[""].push_back(err);
     } else {
         shared_ptr<SortednessCheckErrorInfo> errInfo =
                 make_shared<SortednessCheckErrorInfo>(message, info);
@@ -55,7 +61,10 @@ void SortednessChecker::addError(string message, shared_ptr<AstNode> node) {
             make_shared<SortednessCheckErrorInfo>(message);
     shared_ptr<SortednessCheckError> err =
             make_shared<SortednessCheckError>(errInfo, node);
-    errors[string(node->getFilename()->c_str())].push_back(err);
+    if(node && node->getFilename())
+        errors[string(node->getFilename()->c_str())].push_back(err);
+    else
+        errors[""].push_back(err);
 }
 
 void SortednessChecker::addError(string message, shared_ptr<AstNode> node,
@@ -104,8 +113,28 @@ shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<SimpleFunDeclaration> 
         newsig.push_back(arg->expand(*it));
     }
 
-    return make_shared<FunInfo>(node->getIdentifier()->toString(), newsig,
-                                node->getAttributes(), node);
+    shared_ptr<FunInfo> funInfo = make_shared<FunInfo>(node->getIdentifier()->toString(), newsig,
+                                                       node->getAttributes(), node);
+
+    for(auto attr : node->getAttributes()) {
+        if(attr->toString() == ":right-assoc") {
+            funInfo->assocR = true;
+        }
+
+        if(attr->toString() == ":left-assoc") {
+            funInfo->assocL = true;
+        }
+
+        if(attr->toString() == ":chainable") {
+            funInfo->chainable = true;
+        }
+
+        if(attr->toString() == ":pairwise") {
+            funInfo->pairwise = true;
+        }
+    }
+
+    return funInfo;
 }
 
 shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<ParametricFunDeclaration> node) {
@@ -116,8 +145,28 @@ shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<ParametricFunDeclarati
         newsig.push_back(arg->expand(*it));
     }
 
-    return make_shared<FunInfo>(node->getIdentifier()->toString(), newsig,
-                                node->getParams(), node->getAttributes(), node);
+    shared_ptr<FunInfo> funInfo = make_shared<FunInfo>(node->getIdentifier()->toString(), newsig,
+                                                       node->getParams(), node->getAttributes(), node);
+
+    for(auto attr : node->getAttributes()) {
+        if(attr->toString() == ":right-assoc") {
+            funInfo->assocR = true;
+        }
+
+        if(attr->toString() == ":left-assoc") {
+            funInfo->assocL = true;
+        }
+
+        if(attr->toString() == ":chainable") {
+            funInfo->chainable = true;
+        }
+
+        if(attr->toString() == ":pairwise") {
+            funInfo->pairwise = true;
+        }
+    }
+
+    return funInfo;
 }
 
 shared_ptr<FunInfo> SortednessChecker::getInfo(shared_ptr<DeclareConstCommand> node) {
@@ -222,6 +271,7 @@ vector<shared_ptr<SymbolInfo>> SortednessChecker::getInfo(shared_ptr<DeclareData
             }
 
             // Add constructor function info
+            consSig.push_back(typeSort);
             infos.push_back(make_shared<FunInfo>(consName, consSig, pdecl->getParams(), node));
         }
 
@@ -257,6 +307,7 @@ vector<shared_ptr<SymbolInfo>> SortednessChecker::getInfo(shared_ptr<DeclareData
             }
 
             // Add constructor function info
+            consSig.push_back(typeSort);
             infos.push_back(make_shared<FunInfo>(consName, consSig, node));
         }
     }
@@ -273,7 +324,7 @@ vector<shared_ptr<SymbolInfo>> SortednessChecker::getInfo(shared_ptr<DeclareData
         unsigned long arity = (unsigned long) (*it)->getArity()->getValue();
 
         // Add datatype sort info
-        infos.push_back(make_shared<SortInfo>(typeName, 0, node));
+        infos.push_back(make_shared<SortInfo>(typeName, arity, node));
     }
 
     for (unsigned long i = 0; i < node->getSorts().size(); i++) {
@@ -311,6 +362,7 @@ vector<shared_ptr<SymbolInfo>> SortednessChecker::getInfo(shared_ptr<DeclareData
                 }
 
                 // Add constructor function info
+                consSig.push_back(typeSort);
                 infos.push_back(make_shared<FunInfo>(consName, consSig, pdecl->getParams(), node));
             }
         } else {
@@ -343,6 +395,7 @@ vector<shared_ptr<SymbolInfo>> SortednessChecker::getInfo(shared_ptr<DeclareData
                 }
 
                 // Add constructor function info
+                consSig.push_back(typeSort);
                 infos.push_back(make_shared<FunInfo>(consName, consSig, node));
             }
         }
@@ -355,7 +408,7 @@ void SortednessChecker::loadTheory(string theory,
                                    std::shared_ptr<AstNode> node,
                                    std::shared_ptr<SortednessCheckError> err) {
     Parser* parser = new Parser;
-    string path = "input/Theories/" + theory + ".smt2";
+    string path = "/home/cristinaserban/Work/parse-smtlib/input/Theories/" + theory + ".smt2";
 
     FILE* f = fopen(path.c_str(), "r");
     if(f) {
@@ -377,7 +430,7 @@ void SortednessChecker::loadLogic(string logic,
                                   std::shared_ptr<AstNode> node,
                                   std::shared_ptr<SortednessCheckError> err) {
     Parser* parser = new Parser;
-    string path = "input/Logics/" + logic + ".smt2";
+    string path = "/home/cristinaserban/Work/parse-smtlib/input/Logics/" + logic + ".smt2";
 
     FILE* f = fopen(path.c_str(), "r");
     if(f) {
@@ -540,6 +593,19 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypeCommand> node) {
     shared_ptr<ParametricDatatypeDeclaration> pdecl =
             dynamic_pointer_cast<ParametricDatatypeDeclaration>(node->getDeclaration());
 
+    vector<shared_ptr<SymbolInfo>> infos = getInfo(node);
+    for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
+        shared_ptr<SortInfo> sortInfo = dynamic_pointer_cast<SortInfo>(*it);
+        if (sortInfo) {
+            shared_ptr<SortInfo> dupInfo = arg->tryAdd(sortInfo);
+
+            if (dupInfo) {
+                ret = false;
+                err = addError("Sort symbol '" + sortInfo->name + "' already exists", node, dupInfo, err);
+            }
+        }
+    }
+
     if (pdecl) {
         for (vector<shared_ptr<ConstructorDeclaration>>::iterator consit = pdecl->getConstructors().begin();
              consit != pdecl->getConstructors().end(); consit++) {
@@ -561,7 +627,7 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypeCommand> node) {
         }
     }
 
-    vector<shared_ptr<SymbolInfo>> infos = getInfo(node);
+    infos = getInfo(node);
     for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
         shared_ptr<FunInfo> funInfo = dynamic_pointer_cast<FunInfo>(*it);
         if (funInfo) {
@@ -569,18 +635,10 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypeCommand> node) {
 
             if (dupInfo) {
                 ret = false;
-                err = addError("Function '" + funInfo->name + "' already exists with the same signature", node, dupInfo,
-                               err);
+                err = addError("Function '" + funInfo->name +
+                                       "' already exists with the same signature", node, dupInfo, err);
             }
 
-        } else {
-            shared_ptr<SortInfo> sortInfo = dynamic_pointer_cast<SortInfo>(*it);
-            shared_ptr<SortInfo> dupInfo = arg->tryAdd(sortInfo);
-
-            if (dupInfo) {
-                ret = false;
-                err = addError("Sort symbol '" + sortInfo->name + "' already exists", node, dupInfo, err);
-            }
         }
     }
 }
@@ -589,7 +647,6 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
     shared_ptr<SortednessCheckError> err;
 
     vector<shared_ptr<SymbolInfo>> infos = getInfo(node);
-
     for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
         shared_ptr<SymbolInfo> symbolInfo = *it;
         shared_ptr<SortInfo> sortInfo = dynamic_pointer_cast<SortInfo>((*it));
@@ -628,18 +685,19 @@ void SortednessChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
                 }
             }
         }
+    }
 
-        for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
-            shared_ptr<SymbolInfo> symbolInfo = *it;
-            shared_ptr<FunInfo> funInfo = dynamic_pointer_cast<FunInfo>(symbolInfo);
-            if (funInfo) {
-                shared_ptr<FunInfo> dupInfo = arg->tryAdd(funInfo);
+    infos = getInfo(node);
+    for (vector<shared_ptr<SymbolInfo>>::iterator it = infos.begin(); it != infos.end(); it++) {
+        shared_ptr<SymbolInfo> symbolInfo = *it;
+        shared_ptr<FunInfo> funInfo = dynamic_pointer_cast<FunInfo>(symbolInfo);
+        if (funInfo) {
+            shared_ptr<FunInfo> dupInfo = arg->tryAdd(funInfo);
 
-                if (dupInfo) {
-                    ret = false;
-                    err = addError("Function '" + funInfo->name + "' already exists with the same signature", node,
-                                   dupInfo, err);
-                }
+            if (dupInfo) {
+                ret = false;
+                err = addError("Function '" + funInfo->name + "' already exists with the same signature", node,
+                               dupInfo, err);
             }
         }
     }
@@ -1019,6 +1077,10 @@ void SortednessChecker::visit(shared_ptr<Theory> node) {
 }
 
 void SortednessChecker::visit(shared_ptr<Script> node) {
+    std::shared_ptr<ast::AstNode> null;
+    std::shared_ptr<SortednessCheckError> err;
+    loadTheory("Core", null, err);
+
     vector<shared_ptr<Command>>& commands = node->getCommands();
     for (vector<shared_ptr<Command>>::iterator it = commands.begin(); it != commands.end(); it++) {
         (*it)->accept(this);
@@ -1073,6 +1135,109 @@ void SortednessChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
     }
 
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
+
+    if(nodeInfo->assocL) {
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be left associative - it does not have 2 parameters", node, err);
+            nodeInfo->assocL = false;
+        } else {
+            shared_ptr<Sort> firstSort = sig[0];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (firstSort->toString() != returnSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be left associative " +
+                               "- sort of first parameter not the same as return sort", node, err);
+                nodeInfo->assocL = false;
+            }
+        }
+    }
+
+    if(nodeInfo->assocR) {
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be right associative - it does not have 2 parameters", node, err);
+            nodeInfo->assocR = false;
+        } else {
+            shared_ptr<Sort> secondSort = sig[1];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (secondSort->toString() != returnSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be right associative " +
+                               "- sort of second parameter not the same as return sort", node, err);
+                nodeInfo->assocR = false;
+            }
+        }
+    }
+
+    if(nodeInfo->chainable && nodeInfo->pairwise) {
+        ret = false;
+        err = addError("Function '" +
+                       nodeInfo->name + "' cannot be both chainable and pairwise", node, err);
+        nodeInfo->chainable = false;
+        nodeInfo->pairwise = false;
+    } else if (nodeInfo->chainable) {
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be chainable - it does not have 2 parameters", node, err);
+            nodeInfo->chainable = false;
+        } else {
+            shared_ptr<Sort> firstSort = sig[0];
+            shared_ptr<Sort> secondSort = sig[1];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (firstSort->toString() != secondSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- parameters do not have the same sort", node, err);
+                nodeInfo->chainable = false;
+            }
+
+            if(returnSort->toString() != "Bool") {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- return sort is not Bool", node, err);
+                nodeInfo->chainable = false;
+            }
+        }
+    } else if(nodeInfo->pairwise) {
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be pairwise - it does not have 2 parameters", node, err);
+            nodeInfo->pairwise = false;
+        } else {
+            shared_ptr<Sort> firstSort = sig[0];
+            shared_ptr<Sort> secondSort = sig[1];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (firstSort->toString() != secondSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- parameters do not have the same sort", node, err);
+                nodeInfo->pairwise = false;
+            }
+
+            if(returnSort->toString() != "Bool") {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- return sort is not Bool", node, err);
+                nodeInfo->pairwise = false;
+            }
+        }
+    }
+
     shared_ptr<FunInfo> dupInfo = arg->tryAdd(nodeInfo);
 
     if (dupInfo) {
@@ -1091,6 +1256,109 @@ void SortednessChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
     }
 
     shared_ptr<FunInfo> nodeInfo = getInfo(node);
+
+    if(nodeInfo->assocL) {
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be left associative - it does not have 2 parameters", node, err);
+            nodeInfo->assocL = false;
+        } else {
+            shared_ptr<Sort> firstSort = sig[0];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (firstSort->toString() != returnSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be left associative " +
+                               "- sort of first parameter not the same as return sort", node, err);
+                nodeInfo->assocL = false;
+            }
+        }
+    }
+
+    if(nodeInfo->assocR) {
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be right associative - it does not have 2 parameters", node, err);
+            nodeInfo->assocR = false;
+        } else {
+            shared_ptr<Sort> secondSort = sig[1];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (secondSort->toString() != returnSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be right associative " +
+                               "- sort of second parameter not the same as return sort", node, err);
+                nodeInfo->assocR = false;
+            }
+        }
+    }
+
+    if(nodeInfo->chainable && nodeInfo->pairwise) {
+        ret = false;
+        err = addError("Function '" +
+                       nodeInfo->name + "' cannot be both chainable and pairwise", node, err);
+        nodeInfo->chainable = false;
+        nodeInfo->pairwise = false;
+    } else if (nodeInfo->chainable) {
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be chainable - it does not have 2 parameters", node, err);
+            nodeInfo->chainable = false;
+        } else {
+            shared_ptr<Sort> firstSort = sig[0];
+            shared_ptr<Sort> secondSort = sig[1];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (firstSort->toString() != secondSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- parameters do not have the same sort", node, err);
+                nodeInfo->chainable = false;
+            }
+
+            if(returnSort->toString() != "Bool") {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- return sort is not Bool", node, err);
+                nodeInfo->chainable = false;
+            }
+        }
+    } else if(nodeInfo->pairwise){
+        if(sig.size() != 3) {
+            ret = false;
+            err = addError("Function '" +
+                           nodeInfo->name + "' cannot be pairwise - it does not have 2 parameters", node, err);
+            nodeInfo->pairwise = false;
+        } else {
+            shared_ptr<Sort> firstSort = sig[0];
+            shared_ptr<Sort> secondSort = sig[1];
+            shared_ptr<Sort> returnSort = sig[2];
+
+            if (firstSort->toString() != secondSort->toString()) {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- parameters do not have the same sort", node, err);
+                nodeInfo->pairwise = false;
+            }
+
+            if(returnSort->toString() != "Bool") {
+                ret = false;
+                err = addError("Function '" +
+                               nodeInfo->name + "' cannot be chainable " +
+                               "- return sort is not Bool", node, err);
+                nodeInfo->pairwise = false;
+            }
+        }
+    }
+
     shared_ptr<FunInfo> dupInfo = arg->tryAdd(nodeInfo);
 
     if (dupInfo) {
@@ -1108,13 +1376,15 @@ string SortednessChecker::getErrors() {
         string file = it->first;
         vector<shared_ptr<SortednessCheckError>> errs = it->second;
 
-        long length = 11 + file.length();
-        for (long i = 0; i < length; i++)
-            ss << "-";
-        ss << endl << "In file '" << file << "':" << endl;
-        for (long i = 0; i < length; i++)
-            ss << "-";
-        ss << endl;
+        if(file != "") {
+            long length = 11 + file.length();
+            for (long i = 0; i < length; i++)
+                ss << "-";
+            ss << endl << "In file '" << file << "':" << endl;
+            for (long i = 0; i < length; i++)
+                ss << "-";
+            ss << endl;
+        }
 
         for (vector<shared_ptr<SortednessCheckError>>::iterator itt = errs.begin(); itt != errs.end(); itt++) {
             shared_ptr<SortednessCheckError> err = *itt;

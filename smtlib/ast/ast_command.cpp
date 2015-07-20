@@ -70,7 +70,7 @@ void DeclareDatatypeCommand::accept(AstVisitor0* visitor) {
 
 string DeclareDatatypeCommand::toString() {
     stringstream ss;
-    ss << "(declare-datatype " << declaration->toString() << ")";
+    ss << "(declare-datatype " << symbol->toString() << " " << declaration->toString() << ")";
     return ss.str();
 }
 

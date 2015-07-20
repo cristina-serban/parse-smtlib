@@ -88,7 +88,7 @@ void ParametricDatatypeDeclaration::accept(AstVisitor0* visitor) {
 
 string ParametricDatatypeDeclaration::toString() {
     stringstream ss;
-    ss << "( par (";
+    ss << "(par (";
 
     bool first = true;
     for(auto it : params) {
@@ -109,6 +109,8 @@ string ParametricDatatypeDeclaration::toString() {
             ss << " ";
         ss << it->toString();
     }
+
+    ss << "))";
 
     return ss.str();
 }

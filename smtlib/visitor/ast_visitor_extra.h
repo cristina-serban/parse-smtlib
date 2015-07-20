@@ -1,6 +1,7 @@
 #ifndef PARSE_SMTLIB_AST_VISITOR_EXTRA_H
 #define PARSE_SMTLIB_AST_VISITOR_EXTRA_H
 
+#include <util/smt_logger.h>
 #include "ast_visitor.h"
 #include "../ast/ast_abstract.h"
 

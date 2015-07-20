@@ -264,11 +264,35 @@ void SyntaxChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
         err = addError("Missing datatype declarations from declare-datatypes command", node, err);
     }
 
+    unsigned long sortCount = node->getSorts().size();
+    unsigned long declCount = node->getDeclarations().size();
+
     if (node->getSorts().size() != node->getDeclarations().size()) {
+        stringstream ss;
+        ss << "Number of sort declarations (" << sortCount
+           << ") is not equal to the number of datatype declarations ("
+           << declCount << ") in declare-datatypes command";
         ret = false;
-        err = addError(
-                "Number of sort declarations is not equal to the number of datatype declarations in declare-datatypes command",
-                node, err);
+        err = addError( ss.str(), node, err);
+    }
+
+    unsigned long minCount = sortCount < declCount ? sortCount : declCount;
+    for(unsigned long i = 0; i < minCount; i++) {
+        long arity = node->getSorts()[i]->getArity()->getValue();
+        long params = 0;
+        shared_ptr<ParametricDatatypeDeclaration> decl =
+                dynamic_pointer_cast<ParametricDatatypeDeclaration>(node->getDeclarations()[i]);
+        if(decl) {
+            params = decl->getParams().size();
+        }
+
+        if(arity != params) {
+            stringstream ss;
+            ss << "Datatype '" << node->getSorts()[i]->getSymbol()->toString() << "' has an arity of " << arity
+            << " but its declaration has " << params << " parameter" << (params == 1 ? "" : "s");
+            ret = false;
+            err = addError(ss.str(), node, err);
+        }
     }
 
     vector<shared_ptr<SortDeclaration>>& sorts = node->getSorts();
@@ -719,9 +743,8 @@ void SyntaxChecker::visit(shared_ptr<SetOptionCommand> node) {
                     || option->getKeyword()->getValue() == ":produce-proofs"
                     || option->getKeyword()->getValue() == ":produce-unsat-assumptions"
                     || option->getKeyword()->getValue() == ":produce-unsat-cores")) {
-
-            StringLiteral* lit = dynamic_cast<StringLiteral*>(option->getValue().get());
-            if (!lit || (lit->getValue() != "true" && lit->getValue() != "false")) {
+            if (!option->getValue() || (option->getValue()->toString() != "true"
+                                        && option->getValue()->toString() != "false")) {
                 ret = false;
                 err = addError("Option value should be boolean", option, err);
             }
@@ -904,16 +927,17 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
                 CompAttributeValue* val = dynamic_cast<CompAttributeValue*>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
-                // Standard prohibits empty theory list, but there are logics that only use Core
+                // Note: standard prohibits empty theory list, but there are logics that only use Core
                 /*if (values.empty()) {
                     ret = false;
                     err = addError("Empty list of theory names", attr, err);
                 }*/
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
-                    if (!dynamic_cast<Symbol*>((*itt).get())) {
+                    if ((*itt) && !dynamic_cast<Symbol*>((*itt).get())) {
                         ret = false;
-                        attrerr = addError("Attribute value should be a symbol", (*itt), attrerr);
+                        attrerr = addError("Attribute value '" + (*itt)->toString()
+                                           + "' should be a symbol", attr, attrerr);
                     }
                 }
             }
@@ -973,9 +997,10 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
                 }
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
-                    if (!dynamic_cast<SortSymbolDeclaration*>((*itt).get())) {
+                    if ((*itt) && !dynamic_cast<SortSymbolDeclaration*>((*itt).get())) {
                         ret = false;
-                        attrerr = addError("Attribute value should be a sort symbol declaration", (*itt), attrerr);
+                        attrerr = addError("Attribute value '" + (*itt)->toString()
+                                           + "' should be a sort symbol declaration", attr, attrerr);
                     }
                 }
             }
@@ -993,9 +1018,9 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
                 }
 
                 for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
-                    if (!dynamic_cast<FunSymbolDeclaration*>((*itt).get())) {
+                    if ((*itt) && !dynamic_cast<FunSymbolDeclaration*>((*itt).get())) {
                         ret = false;
-                        attrerr = addError("Attribute value should be a function symbol declaration", (*itt), attrerr);
+                        attrerr = addError("Attribute value '" + (*itt)->toString() + "' should be a function symbol declaration", (*itt), attrerr);
                     }
                 }
             }

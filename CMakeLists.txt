@@ -3,8 +3,9 @@ project(parse-smtlib)
 
 set(LIB_FLEX fl)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-include_directories("smtlib" "smtlib/ast" "smtlib/util" "smtlib/visitor" "smtlib/parser")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
+include_directories("smtlib" "smtlib/ast" "smtlib/util" "smtlib/visitor" "smtlib/parser")
 set(SOURCE_FILES
     main.cpp
 	smtlib/ast/ast_abstract.h
@@ -59,11 +60,12 @@ set(SOURCE_FILES
     smtlib/parser/smt_symbol_util.cpp
 	smtlib/visitor/ast_sortedness_checker.h
 	smtlib/visitor/ast_sortedness_checker.cpp
+	smtlib/visitor/ast_term_sorter.cpp
 	smtlib/ast/ast_datatype.h
 	smtlib/ast/ast_datatype.cpp
 	smtlib/ast/ast_match.h
 	smtlib/ast/ast_match.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} smtlib/visitor/ast_term_sorter.h smtlib/visitor/ast_term_sorter.cpp)
+add_executable(parse-smtlib ${SOURCE_FILES})
 target_link_libraries(parse-smtlib ${LIB_FLEX})

@@ -212,9 +212,6 @@ namespace smtlib {
                     if (chk->run(node)) {
                         ret = true;
                         arg = stack;
-                        std::shared_ptr<ast::AstNode> null;
-                        std::shared_ptr<SortednessCheckError> err;
-                        loadTheory("Core", null, err);
                         return wrappedVisit(stack, node);
                     } else {
                         Logger::syntaxError("SortednessChecker::run()", node->getFilename()->c_str(),
