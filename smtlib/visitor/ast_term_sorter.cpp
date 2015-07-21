@@ -7,6 +7,7 @@
 #include "../ast/ast_theory.h"
 #include "../parser/smt_parser.h"
 #include "../util/smt_logger.h"
+#include "../util/global_settings.h"
 
 #include <memory>
 #include <sstream>
@@ -181,11 +182,11 @@ string buildCasesMismatchMsg(vector<shared_ptr<Sort>> caseSorts) {
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<SimpleIdentifier> node) {
-    shared_ptr<VarInfo> varInfo = arg->stack->getVarInfo(node->toString());
+    shared_ptr<VarInfo> varInfo = termSorterInfo->stack->getVarInfo(node->toString());
     if (varInfo) {
         ret = varInfo->sort;
     } else {
-        vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo(node->toString());
+        vector<shared_ptr<FunInfo>> infos = termSorterInfo->stack->getFunInfo(node->toString());
         vector<shared_ptr<Sort>> possibleSorts;
         for (auto it : infos) {
             if (it->signature.size() == 1 && it->params.empty())
@@ -195,91 +196,91 @@ void SortednessChecker::TermSorter::visit(shared_ptr<SimpleIdentifier> node) {
         if (possibleSorts.size() == 1) {
             ret = possibleSorts[0];
         } else if (possibleSorts.empty()) {
-            arg->checker->addError(buildUnknownConstMsg(node->toString()), node);
+            termSorterInfo->checker->addError(buildUnknownConstMsg(node->toString()), node);
         } else {
-            arg->checker->addError(buildMultipleSortsConstMsg(node->toString(), possibleSorts), node);
+            termSorterInfo->checker->addError(buildMultipleSortsConstMsg(node->toString(), possibleSorts), node);
         }
     }
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<QualifiedIdentifier> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo(node->getIdentifier()->toString());
+    vector<shared_ptr<FunInfo>> infos = termSorterInfo->stack->getFunInfo(node->getIdentifier()->toString());
     vector<shared_ptr<Sort>> retSorts;
     for (auto it : infos) {
         if (it->signature.size() == 1 && it->params.empty())
             retSorts.push_back(it->signature[0]);
     }
 
-    shared_ptr<Sort> expanded = arg->stack->expand(node->getSort());
+    shared_ptr<Sort> expanded = termSorterInfo->stack->expand(node->getSort());
 
     if (retSorts.size() == 1 && retSorts[0]->toString() == expanded->toString()) {
         ret = retSorts[0];
     } else {
         if (retSorts.empty()) {
-            arg->checker->addError(buildUnknownConstMsg(node->getIdentifier()->toString()), node);
+            termSorterInfo->checker->addError(buildUnknownConstMsg(node->getIdentifier()->toString()), node);
         } else {
-            arg->checker->addError(buildWrongSortConstMsg(node->getIdentifier()->toString(),
+            termSorterInfo->checker->addError(buildWrongSortConstMsg(node->getIdentifier()->toString(),
                                                           expanded, retSorts), node);
         }
     }
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<DecimalLiteral> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo("DECIMAL");
+    vector<shared_ptr<FunInfo>> infos = termSorterInfo->stack->getFunInfo(MSCONST_DECIMAL);
     if (infos.size() == 1) {
         if (infos[0]->signature.size() == 1) {
             ret = infos[0]->signature[0];
         }
     } else {
         if (infos.empty()) {
-            arg->checker->addError(buildNoSortLiteralMsg("decimal"), node);
+            termSorterInfo->checker->addError(buildNoSortLiteralMsg(MSCONST_DECIMAL_REF), node);
         } else {
             vector<shared_ptr<Sort>> possibleSorts;
             for (auto it : infos) {
                 if (it->signature.size() == 1 && it->params.empty())
                     possibleSorts.push_back(it->signature[0]);
             }
-            arg->checker->addError(buildMultipleSortsLiteralMsg("decimal", possibleSorts), node);
+            termSorterInfo->checker->addError(buildMultipleSortsLiteralMsg(MSCONST_DECIMAL_REF, possibleSorts), node);
         }
     }
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<NumeralLiteral> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo("NUMERAL");
+    vector<shared_ptr<FunInfo>> infos = termSorterInfo->stack->getFunInfo(MSCONST_NUMERAL);
     if (infos.size() == 1) {
         if (infos[0]->signature.size() == 1) {
             ret = infos[0]->signature[0];
         }
     } else {
         if (infos.empty()) {
-            arg->checker->addError(buildNoSortLiteralMsg("numeral"), node);
+            termSorterInfo->checker->addError(buildNoSortLiteralMsg(MSCONST_NUMERAL_REF), node);
         } else {
             vector<shared_ptr<Sort>> possibleSorts;
             for (auto it : infos) {
                 if (it->signature.size() == 1 && it->params.empty())
                     possibleSorts.push_back(it->signature[0]);
             }
-            arg->checker->addError(buildMultipleSortsLiteralMsg("numeral", possibleSorts), node);
+            termSorterInfo->checker->addError(buildMultipleSortsLiteralMsg(MSCONST_NUMERAL_REF, possibleSorts), node);
         }
     }
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<StringLiteral> node) {
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo("STRING");
+    vector<shared_ptr<FunInfo>> infos = termSorterInfo->stack->getFunInfo(MSCONST_STRING);
     if (infos.size() == 1) {
         if (infos[0]->signature.size() == 1) {
             ret = infos[0]->signature[0];
         }
     } else {
         if (infos.empty()) {
-            arg->checker->addError(buildNoSortLiteralMsg("string"), node);
+            termSorterInfo->checker->addError(buildNoSortLiteralMsg(MSCONST_STRING_REF), node);
         } else {
             vector<shared_ptr<Sort>> possibleSorts;
             for (auto it : infos) {
                 if (it->signature.size() == 1 && it->params.empty())
                     possibleSorts.push_back(it->signature[0]);
             }
-            arg->checker->addError(buildMultipleSortsLiteralMsg("string", possibleSorts), node);
+            termSorterInfo->checker->addError(buildMultipleSortsLiteralMsg(MSCONST_STRING_REF, possibleSorts), node);
         }
     }
 }
@@ -288,8 +289,7 @@ void SortednessChecker::TermSorter::visit(shared_ptr<QualifiedTerm> node) {
     vector<shared_ptr<Sort>> argSorts;
     for (vector<shared_ptr<Term>>::iterator it = node->getTerms().begin();
             it != node->getTerms().end(); it++) {
-        TermSorter sorter;
-        shared_ptr<Sort> result = sorter.run(arg, *it);
+        shared_ptr<Sort> result = wrappedVisit(*it);
         if (result)
             argSorts.push_back(result);
         else {
@@ -307,10 +307,10 @@ void SortednessChecker::TermSorter::visit(shared_ptr<QualifiedTerm> node) {
         name = id->toString();
     } else {
         name = qid->getIdentifier()->toString();
-        retExpanded = arg->stack->expand(qid->getSort());
+        retExpanded = termSorterInfo->stack->expand(qid->getSort());
     }
 
-    vector<shared_ptr<FunInfo>> infos = arg->stack->getFunInfo(name);
+    vector<shared_ptr<FunInfo>> infos = termSorterInfo->stack->getFunInfo(name);
     vector<shared_ptr<Sort>> retSorts;
 
 
@@ -372,12 +372,12 @@ void SortednessChecker::TermSorter::visit(shared_ptr<QualifiedTerm> node) {
 
                 if (fits && mapping.size() == it->params.size()) {
                     shared_ptr<Sort> retSort = funSig[funSig.size() - 1];
-                    retSort = arg->stack->replace(retSort, mapping);
+                    retSort = termSorterInfo->stack->replace(retSort, mapping);
                     string retSortString = retSort->toString();
                     if (id) {
                         retSorts.push_back(retSort);
                     } else {
-                        if (retSortString == arg->stack->expand(qid->getSort())->toString()) {
+                        if (retSortString == termSorterInfo->stack->expand(qid->getSort())->toString()) {
                             ret = retSort;
                             return;
                         }
@@ -391,55 +391,52 @@ void SortednessChecker::TermSorter::visit(shared_ptr<QualifiedTerm> node) {
         if (retSorts.size() == 1) {
             ret = retSorts[0];
         } else if (retSorts.empty()) {
-            arg->checker->addError(buildNoDeclFunMsg(name, argSorts), node);
+            termSorterInfo->checker->addError(buildNoDeclFunMsg(name, argSorts), node);
         } else {
-            arg->checker->addError(buildMultipleDeclFunMsg(name, argSorts, retSorts), node);
+            termSorterInfo->checker->addError(buildMultipleDeclFunMsg(name, argSorts, retSorts), node);
         }
     } else {
-        arg->checker->addError(buildNoDeclFunMsg(name, argSorts, retExpanded), node);
+        termSorterInfo->checker->addError(buildNoDeclFunMsg(name, argSorts, retExpanded), node);
     }
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<LetTerm> node) {
-    arg->stack->push();
+    termSorterInfo->stack->push();
 
     vector<shared_ptr<VarBinding>>& bindings = node->getBindings();
     for (auto it : bindings) {
-        TermSorter sorter;
-        shared_ptr<Sort> result = sorter.run(arg, it->getTerm());
+        shared_ptr<Sort> result = wrappedVisit(it->getTerm());
         if (result) {
-            arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(), result, node));
+            termSorterInfo->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(), result, node));
         } else {
             return;
         }
     }
 
-    TermSorter sorter;
-    shared_ptr<Sort> result = sorter.run(arg, node->getTerm());
+    shared_ptr<Sort> result = wrappedVisit(node->getTerm());
     if (result) {
         ret = result;
     }
 
-    arg->stack->pop();
+    termSorterInfo->stack->pop();
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<ForallTerm> node) {
-    arg->stack->push();
+    termSorterInfo->stack->push();
 
     vector<shared_ptr<SortedVariable>>& bindings = node->getBindings();
     for (auto it : bindings) {
-        arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
-                                                arg->stack->expand(it->getSort()), node));
+        termSorterInfo->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
+                                                termSorterInfo->stack->expand(it->getSort()), node));
     }
 
-    TermSorter sorter;
-    shared_ptr<Sort> result = sorter.run(arg, node->getTerm());
+    shared_ptr<Sort> result = wrappedVisit(node->getTerm());
     if (result) {
         string resstr = result->toString();
-        if (resstr == "Bool") {
+        if (resstr == SORT_BOOL) {
             ret = result;
         } else {
-            arg->checker->addError(buildQuantTermDiffSort(node->getTerm(), resstr, "Bool",
+            termSorterInfo->checker->addError(buildQuantTermDiffSort(node->getTerm(), resstr, SORT_BOOL,
                                                           node->getTerm()->getRowLeft(),
                                                           node->getTerm()->getColLeft(),
                                                           node->getTerm()->getRowRight(),
@@ -447,26 +444,25 @@ void SortednessChecker::TermSorter::visit(shared_ptr<ForallTerm> node) {
         }
     }
 
-    arg->stack->pop();
+    termSorterInfo->stack->pop();
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<ExistsTerm> node) {
-    arg->stack->push();
+    termSorterInfo->stack->push();
 
     vector<shared_ptr<SortedVariable>>& bindings = node->getBindings();
     for (auto it : bindings) {
-        arg->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
-                                                arg->stack->expand(it->getSort()), node));
+        termSorterInfo->stack->tryAdd(make_shared<VarInfo>(it->getSymbol()->toString(),
+                                                termSorterInfo->stack->expand(it->getSort()), node));
     }
 
-    TermSorter sorter;
-    shared_ptr<Sort> result = sorter.run(arg, node->getTerm());
+    shared_ptr<Sort> result = wrappedVisit(node->getTerm());
     if (result) {
         string resstr = result->toString();
-        if (resstr == "Bool") {
+        if (resstr == SORT_BOOL) {
             ret = result;
         } else {
-            arg->checker->addError(buildQuantTermDiffSort(node->getTerm(), resstr, "Bool",
+            termSorterInfo->checker->addError(buildQuantTermDiffSort(node->getTerm(), resstr, SORT_BOOL,
                                                           node->getTerm()->getRowLeft(),
                                                           node->getTerm()->getColLeft(),
                                                           node->getTerm()->getRowRight(),
@@ -474,12 +470,11 @@ void SortednessChecker::TermSorter::visit(shared_ptr<ExistsTerm> node) {
         }
     }
 
-    arg->stack->pop();
+    termSorterInfo->stack->pop();
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
-    TermSorter sorter;
-    shared_ptr<Sort> termSort = sorter.run(arg, node->getTerm());
+    shared_ptr<Sort> termSort = wrappedVisit(node->getTerm());
     vector<shared_ptr<Sort>> caseSorts;
 
     if (termSort) {
@@ -518,7 +513,7 @@ void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
             }
 
             // Get known information about functions with the name caseId
-            vector<shared_ptr<FunInfo>> funInfos = arg->stack->getFunInfo(caseId);
+            vector<shared_ptr<FunInfo>> funInfos = termSorterInfo->stack->getFunInfo(caseId);
             vector<shared_ptr<FunInfo>> matchingInfos;
             vector<unordered_map<string, shared_ptr<Sort>>> matchingMappings;
 
@@ -542,7 +537,7 @@ void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
                 if (spattern || cpattern) {
                     // Return sort mismatch in case of qualified constructor
                     if (cpattern && cpattern->getSort()->toString() != termSortStr) {
-                        err = arg->checker->addError(
+                        err = termSorterInfo->checker->addError(
                                 buildPatternMismatchMsg(termSortStr, pattern->toString()), node, err);
                         continue;
                     }
@@ -555,7 +550,7 @@ void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
                 } else if (qpattern) {
                     // Return sort mismatch in case of qualified constructor
                     if (qcons && qcons->getSort()->toString() != termSortStr) {
-                        err = arg->checker->addError(
+                        err = termSorterInfo->checker->addError(
                                 buildPatternMismatchMsg(termSortStr, pattern->toString()), node, err);
                         continue;
                     }
@@ -573,41 +568,41 @@ void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
             if (matchingInfos.empty()) {
                 if (spattern && it + 1 == node->getCases().end()) {
                     // If it's not a function, try to interpret it as a variable
-                    arg->stack->push();
-                    arg->stack->tryAdd(make_shared<VarInfo>(caseId, termSort, *it));
-                    shared_ptr<Sort> caseSort = sorter.run(arg, (*it)->getTerm());
+                    termSorterInfo->stack->push();
+                    termSorterInfo->stack->tryAdd(make_shared<VarInfo>(caseId, termSort, *it));
+                    shared_ptr<Sort> caseSort = wrappedVisit((*it)->getTerm());
                     if(caseSort) {
                         caseSorts.push_back(caseSort);
                     }
-                    arg->stack->pop();
+                    termSorterInfo->stack->pop();
                 } else if (spattern || cpattern) {
-                    err = arg->checker->addError(buildNoDeclFunMsg(caseId, termSort), node, err);
+                    err = termSorterInfo->checker->addError(buildNoDeclFunMsg(caseId, termSort), node, err);
                 } else if (qpattern) {
-                    err = arg->checker->addError(
+                    err = termSorterInfo->checker->addError(
                             buildNoDeclFunMsg(caseId, qpattern->getSymbols().size(), termSort), node, err);
                 }
             } else if (matchingInfos.size() > 1) {
                 if (qpattern) {
-                    err = arg->checker->addError(
+                    err = termSorterInfo->checker->addError(
                             buildMultipleDeclFunMsg(caseId, qpattern->getSymbols().size(), termSort), node, err);
                 }
             } else {
                 shared_ptr<FunInfo> match = matchingInfos[0];
                 if(qpattern) {
-                    arg->stack->push();
+                    termSorterInfo->stack->push();
                     for(unsigned long i = 0; i < match->signature.size() - 1; i++) {
-                        shared_ptr<Sort> paramSort = arg->stack->replace(match->signature[i], matchingMappings[0]);
-                        arg->stack->tryAdd(make_shared<VarInfo>(qpattern->getSymbols()[i]->toString(), paramSort, *it));
+                        shared_ptr<Sort> paramSort = termSorterInfo->stack->replace(match->signature[i], matchingMappings[0]);
+                        termSorterInfo->stack->tryAdd(make_shared<VarInfo>(qpattern->getSymbols()[i]->toString(), paramSort, *it));
                     }
                 }
 
-                shared_ptr<Sort> caseSort = sorter.run(arg, (*it)->getTerm());
+                shared_ptr<Sort> caseSort = wrappedVisit((*it)->getTerm());
                 if(caseSort) {
                     caseSorts.push_back(caseSort);
                 }
 
                 if(qpattern) {
-                    arg->stack->pop();
+                    termSorterInfo->stack->pop();
                 }
             }
         }
@@ -617,7 +612,7 @@ void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
             bool equalCases = true;
             for(unsigned long i = 1; i < caseSorts.size(); i++) {
                 if(caseSorts[1]->toString() != case1) {
-                    err = arg->checker->addError(buildCasesMismatchMsg(caseSorts), node, err);
+                    err = termSorterInfo->checker->addError(buildCasesMismatchMsg(caseSorts), node, err);
                     equalCases = false;
                     break;
                 }
@@ -629,7 +624,7 @@ void SortednessChecker::TermSorter::visit(shared_ptr<MatchTerm> node) {
 }
 
 void SortednessChecker::TermSorter::visit(shared_ptr<AnnotatedTerm> node) {
-    node->getTerm()->accept(this);
+    visit0(node->getTerm());
 }
 
 

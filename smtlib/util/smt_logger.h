@@ -14,9 +14,13 @@ namespace smtlib {
 
         static void error(const char* fun, const char* msg);
 
+        static void syntaxError(const char* fun, const char* msg);
+
         static void syntaxError(const char* fun, const char* file, const char* msg);
 
         static void sortednessError(const char* fun, const char* file, const char* msg);
+
+        static void sortednessError(const char* fun, const char* msg);
 
         static void parsingError(unsigned int rowLeft, unsigned int colLeft,
                                  unsigned int rowRight, unsigned int colRight,

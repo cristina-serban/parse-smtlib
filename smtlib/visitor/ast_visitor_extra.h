@@ -1,20 +1,22 @@
 #ifndef PARSE_SMTLIB_AST_VISITOR_EXTRA_H
 #define PARSE_SMTLIB_AST_VISITOR_EXTRA_H
 
-#include <util/smt_logger.h>
 #include "ast_visitor.h"
 #include "../ast/ast_abstract.h"
+#include "../util/smt_logger.h"
 
 namespace smtlib {
     namespace ast {
         template<class RetT>
-        class AstVisitor1 : public AstVisitor0 {
+        class AstVisitor1 : public virtual AstVisitor0 {
         protected:
             RetT ret;
-
             RetT wrappedVisit(std::shared_ptr<AstNode> node) {
-                node->accept(this);
-                return this->ret;
+                RetT oldRet = ret;
+                visit0(node);
+                RetT newRet = ret;
+                ret = oldRet;
+                return newRet;
             }
         public:
             virtual RetT run (std::shared_ptr<AstNode> node) {
@@ -23,15 +25,18 @@ namespace smtlib {
         };
 
         template<class RetT, class ArgT>
-        class AstVisitor2 : public AstVisitor0 {
+        class AstVisitor2 : public virtual AstVisitor0 {
         protected:
             ArgT arg;
             RetT ret;
 
             RetT wrappedVisit(ArgT arg, std::shared_ptr<AstNode> node) {
+                RetT oldRet = ret;
                 this->arg = arg;
-                node->accept(this);
-                return this->ret;
+                visit0(node);
+                RetT newRet = ret;
+                ret = oldRet;
+                return newRet;
             }
         public:
             virtual RetT run(ArgT arg, std::shared_ptr<AstNode> node) {
@@ -40,7 +45,8 @@ namespace smtlib {
         };
 
         template<class RetT>
-        class DummyAstVisitor1 : public AstVisitor1<RetT> {
+        class DummyAstVisitor1 : public AstVisitor1<RetT>, public DummyVisitor0 {
+        /*
         public:
             virtual void visit(std::shared_ptr<Attribute> node) { }
             virtual void visit(std::shared_ptr<CompAttributeValue> node) { }
@@ -126,10 +132,12 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<SortedVariable> node) { }
             virtual void visit(std::shared_ptr<VarBinding> node) { }
+        */
         };
 
         template<class RetT, class ArgT>
-        class DummyAstVisitor2 : public AstVisitor2<RetT, ArgT> {
+        class DummyAstVisitor2 : public AstVisitor2<RetT, ArgT>, public DummyVisitor0 {
+        /*
         public:
             virtual void visit(std::shared_ptr<Attribute> node) { }
             virtual void visit(std::shared_ptr<CompAttributeValue> node) { }
@@ -215,6 +223,7 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<SortedVariable> node) { }
             virtual void visit(std::shared_ptr<VarBinding> node) { }
+            */
         };
     }
 }

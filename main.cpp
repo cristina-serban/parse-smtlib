@@ -1,21 +1,37 @@
+#include <cstring>
 #include <iostream>
 #include <memory>
-#include "smt_parser.h"
-#include "../ast/ast_script.h"
-#include "../ast/ast_abstract.h"
-#include "../visitor/ast_syntax_checker.h"
+#include <string>
+#include <vector>
+#include "smtlib/util/smt_logger.h"
+#include "smtlib/smt_execution.h"
 
 using namespace std;
 using namespace smtlib;
 using namespace smtlib::ast;
 
 int main(int argc, char** argv) {
-    if (argc == 2) {
-        Parser* parser = new Parser;
-        shared_ptr<AstNode> ast = parser->parse(argv[1]);
-        parser->checkSortedness();
-        return 0;
-    } else {
+    shared_ptr<SmtExecutionSettings> settings = make_shared<SmtExecutionSettings>();
+    vector<string> files;
+
+    for(int i = 1; i < argc; i++) {
+        if(strcmp(argv[i], "--no-core") == 0) {
+            settings->setCoreTheoryEnabled(false);
+        } else {
+            files.push_back(string(argv[i]));
+        }
+    }
+
+    if(files.empty()) {
+        Logger::error("main()", "No input files");
         return 1;
     }
+
+    for(auto file : files) {
+        settings->setInputFromFile(file);
+        SmtExecution exec(settings);
+        exec.checkSortedness();
+    }
+
+    return 0;
 }

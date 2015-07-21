@@ -1,7 +1,7 @@
 #ifndef PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
 #define PARSE_SMTLIB_AST_SYNTAX_CHECKER_H
 
-#include "ast_visitor_extra.h"
+#include "ast_visitor.h"
 
 #include <regex>
 #include <string>
@@ -10,7 +10,7 @@
 
 namespace smtlib {
     namespace ast {
-        class SyntaxChecker : public DummyAstVisitor1<bool> {
+        class SyntaxChecker : public DummyVisitor0 {
         private:
             struct SyntaxCheckError {
                 std::vector<std::string> messages;
@@ -32,9 +32,13 @@ namespace smtlib {
             std::vector<std::shared_ptr<SyntaxCheckError>> errors;
 
             const std::regex regexSymbol = std::regex(
-                    "^([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
+                    "^([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)"
+                            "|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$"
+            );
             const std::regex regexKeyword = std::regex(
-                    "^:([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$");
+                    "^:([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)"
+                            "|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$"
+            );
 
             std::shared_ptr<SyntaxCheckError> addError(std::string message, std::shared_ptr<AstNode> node,
                                                        std::shared_ptr<SyntaxCheckError> err);
@@ -185,9 +189,9 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<VarBinding> node);
 
-            virtual bool run(std::shared_ptr<AstNode> node) {
-                ret = true;
-                return wrappedVisit(node);
+            bool check(std::shared_ptr<AstNode> node) {
+                visit0(node);
+                return errors.empty();
             }
 
             std::string getErrors();

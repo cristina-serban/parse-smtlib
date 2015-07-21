@@ -57,7 +57,7 @@ namespace smtlib {
             inline void setFilename(std::shared_ptr<std::string> filename) { this->filename = filename; }
 
             /** Accept a visitor */
-            virtual void accept(AstVisitor0* visitor) = 0;
+            virtual void accept(class AstVisitor0* visitor) = 0;
 
             /** Get string representation of the node */
             virtual std::string toString() = 0;

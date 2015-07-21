@@ -14,10 +14,6 @@ namespace smtlib {
     public:
         std::shared_ptr<ast::AstNode> parse(std::string filename);
 
-        bool checkSyntax();
-
-        bool checkSortedness();
-
         std::shared_ptr<std::string> getFilename();
 
         void setAst(std::shared_ptr<ast::AstNode> ast);

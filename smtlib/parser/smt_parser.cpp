@@ -29,37 +29,6 @@ std::shared_ptr<std::string> Parser::getFilename() {
     return filename;
 }
 
-bool Parser::checkSyntax() {
-    if(ast) {
-        SyntaxChecker* chk = new SyntaxChecker();
-        if(chk->run(ast)) {
-            return true;
-        } else {
-            Logger::syntaxError("Parser::checkSyntax()", filename->c_str(), chk->getErrors().c_str());
-            return false;
-        }
-    } else {
-        Logger::warning("Parser::checkSyntax()", "Attempting to check an empty abstract syntax tree");
-        return false;
-    }
-}
-
-bool Parser::checkSortedness() {
-    if(ast) {
-        SortednessChecker* chk = new SortednessChecker();
-        shared_ptr<SymbolStack> stack = make_shared<SymbolStack>();
-        if(chk->run(stack, ast)) {
-            return true;
-        } else {
-            Logger::sortednessError("Parser::checkSortedness()", filename->c_str(), chk->getErrors().c_str());
-            return false;
-        }
-    } else {
-        Logger::warning("Parser::checkSortedness()", "Attempting to check an empty abstract syntax tree");
-        return false;
-    }
-}
-
 void Parser::setAst(shared_ptr<AstNode> ast) {
     if(ast) {
         this->ast = ast;

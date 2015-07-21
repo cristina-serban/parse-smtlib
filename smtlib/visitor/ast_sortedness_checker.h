@@ -12,7 +12,7 @@
 
 namespace smtlib {
     namespace ast {
-        class SortednessChecker : public DummyAstVisitor2<bool, std::shared_ptr<SymbolStack>> {
+        class SortednessChecker : public DummyVisitor0 {
         private:
             struct SortednessCheckErrorInfo {
                 std::string message;
@@ -55,9 +55,11 @@ namespace smtlib {
                         : stack(stack), checker(checker), source(source) { }
             };
 
+            std::shared_ptr<SymbolStack> stack;
+
             std::map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
 
-            std::unordered_map<std::string, bool> currentTheories;
+            std::unordered_map<std::string, bool> currentTheories; //fixme?
             std::string currentLogic = "";
 
             std::shared_ptr<SortednessCheckError> addError(std::string message,
@@ -121,14 +123,20 @@ namespace smtlib {
                                                             std::shared_ptr<AstNode> source,
                                                             std::shared_ptr<SortednessCheckError> err);
 
-            class TermSorter : public DummyAstVisitor2<std::shared_ptr<Sort>, std::shared_ptr<TermSorterInfo>> {
+            class TermSorter : public DummyAstVisitor1<std::shared_ptr<Sort>> {
             private:
+
+                std::shared_ptr<TermSorterInfo> termSorterInfo;
+
                 bool getParamMapping(std::vector<std::string>& params,
                                      std::unordered_map<std::string, std::shared_ptr<Sort>>& mapping,
                                      std::shared_ptr<Sort> sort1,
                                      std::shared_ptr<Sort> sort2);
 
             public:
+                inline TermSorter(std::shared_ptr<TermSorterInfo> info)
+                    : termSorterInfo(info) { }
+
                 virtual void visit(std::shared_ptr<SimpleIdentifier> node);
 
                 virtual void visit(std::shared_ptr<QualifiedIdentifier> node);
@@ -151,15 +159,21 @@ namespace smtlib {
 
                 virtual void visit(std::shared_ptr<AnnotatedTerm> node);
 
-                virtual std::shared_ptr<Sort> run(std::shared_ptr<TermSorterInfo> arg,
-                                                  std::shared_ptr<AstNode> node) {
-                    std::shared_ptr<Sort> null;
-                    ret = null;
-                    return wrappedVisit(arg, node);
+                std::shared_ptr<Sort> run(std::shared_ptr<AstNode> node) {
+                    return wrappedVisit(node);
                 }
             };
 
         public:
+            inline SortednessChecker() {
+                stack = std::make_shared<SymbolStack>();
+            }
+
+            inline SortednessChecker(std::shared_ptr<SymbolStack> stack)
+                    : stack(stack) { }
+
+            void loadTheory(std::string theory);
+
             virtual void visit(std::shared_ptr<AssertCommand> node);
 
             virtual void visit(std::shared_ptr<DeclareConstCommand> node);
@@ -206,25 +220,14 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<ParametricFunDeclaration> node);
 
-            virtual bool run(std::shared_ptr<SymbolStack> stack, std::shared_ptr<AstNode> node) {
+            bool check(std::shared_ptr<AstNode> node) {
                 if (node) {
-                    SyntaxChecker* chk = new SyntaxChecker();
-                    if (chk->run(node)) {
-                        ret = true;
-                        arg = stack;
-                        return wrappedVisit(stack, node);
-                    } else {
-                        Logger::syntaxError("SortednessChecker::run()", node->getFilename()->c_str(),
-                                            chk->getErrors().c_str());
-                        std::string msg = "File '" + std::string(node->getFilename()->c_str()) +
-                                          "' contains syntax errors. Cannot check well-sortedness";
-                        Logger::error("SortednessChecker::run()", msg.c_str());
-                        return false;
-                    }
+                    visit0(node);
                 } else {
                     Logger::warning("SortednessChecker::run()", "Attempting to check an empty abstract syntax tree");
                     return false;
                 }
+                return errors.empty();
             }
 
             std::string getErrors();

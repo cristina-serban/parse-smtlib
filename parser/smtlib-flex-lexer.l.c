@@ -686,12 +686,24 @@ char *yytext;
 #include "smtlib-bison-parser.y.h"
 
 int yycolumn = 1;
+#define UPDATE_COLUMN(n) yycolumn += n;
+
+#define RESET_COLUMN yycolumn = 1;
+
 #define SET_LOCATION yylloc.first_line = yylloc.last_line = yylineno; \
-yylloc.first_column = yycolumn; yylloc.last_column = yycolumn+yyleng-1; \
-yycolumn += yyleng;
+yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng - 1; \
+UPDATE_COLUMN(yyleng);
+
+#define SET_LEFT yylloc.first_line = yylineno; \
+yylloc.first_column = yycolumn; \
+UPDATE_COLUMN(yyleng);
+
+#define SET_RIGHT yylloc.last_line = yylineno; \
+yylloc.last_column = yycolumn + yyleng - 1; \
+UPDATE_COLUMN(yyleng);
 
 
-#line 695 "lex.yy.c"
+#line 707 "lex.yy.c"
 
 #define INITIAL 0
 #define string 1
@@ -880,10 +892,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 35 "smtlib-flex-lexer.l"
+#line 47 "smtlib-flex-lexer.l"
 
 
-#line 887 "lex.yy.c"
+#line 899 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -984,57 +996,57 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 37 "smtlib-flex-lexer.l"
+#line 49 "smtlib-flex-lexer.l"
 { SET_LOCATION; return '_'; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 38 "smtlib-flex-lexer.l"
+#line 50 "smtlib-flex-lexer.l"
 { SET_LOCATION; return '!'; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 39 "smtlib-flex-lexer.l"
+#line 51 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_AS; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 40 "smtlib-flex-lexer.l"
+#line 52 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_LET; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 41 "smtlib-flex-lexer.l"
+#line 53 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_EXISTS; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 42 "smtlib-flex-lexer.l"
+#line 54 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_FORALL; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 43 "smtlib-flex-lexer.l"
+#line 55 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_MATCH; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 44 "smtlib-flex-lexer.l"
+#line 56 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_PAR; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 46 "smtlib-flex-lexer.l"
+#line 58 "smtlib-flex-lexer.l"
 { SET_LOCATION; return '('; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 47 "smtlib-flex-lexer.l"
+#line 59 "smtlib-flex-lexer.l"
 { SET_LOCATION; return ')'; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 49 "smtlib-flex-lexer.l"
+#line 61 "smtlib-flex-lexer.l"
 { 
 						SET_LOCATION;
 						yylval.ptr = smt_newNumeralLiteral(
@@ -1044,7 +1056,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 56 "smtlib-flex-lexer.l"
+#line 68 "smtlib-flex-lexer.l"
 {
 						SET_LOCATION;
 						yylval.ptr = smt_newDecimalLiteral(
@@ -1054,7 +1066,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 62 "smtlib-flex-lexer.l"
+#line 74 "smtlib-flex-lexer.l"
 { 
 						SET_LOCATION;
 						yylval.ptr = smt_newNumeralLiteral(
@@ -1064,7 +1076,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 68 "smtlib-flex-lexer.l"
+#line 80 "smtlib-flex-lexer.l"
 {
 						SET_LOCATION;
 						yylval.ptr = smt_newNumeralLiteral(
@@ -1074,162 +1086,162 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 74 "smtlib-flex-lexer.l"
+#line 86 "smtlib-flex-lexer.l"
 { SET_LOCATION; return NOT; }
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 76 "smtlib-flex-lexer.l"
+#line 88 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_ASSERT; }
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 77 "smtlib-flex-lexer.l"
+#line 89 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_CHK_SAT_ASSUM; }
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 78 "smtlib-flex-lexer.l"
+#line 90 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_CHK_SAT; }
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 79 "smtlib-flex-lexer.l"
+#line 91 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DECL_CONST; }
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 80 "smtlib-flex-lexer.l"
+#line 92 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DECL_DATATYPE; }
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 81 "smtlib-flex-lexer.l"
+#line 93 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DECL_DATATYPES; }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 82 "smtlib-flex-lexer.l"
+#line 94 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DECL_FUN; }
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 83 "smtlib-flex-lexer.l"
+#line 95 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DECL_SORT; }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 84 "smtlib-flex-lexer.l"
+#line 96 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DEF_FUNS_REC; }
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 85 "smtlib-flex-lexer.l"
+#line 97 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DEF_FUN_REC; }
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 86 "smtlib-flex-lexer.l"
+#line 98 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DEF_FUN; }
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 87 "smtlib-flex-lexer.l"
+#line 99 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_DEF_SORT; }
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 88 "smtlib-flex-lexer.l"
+#line 100 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_ECHO; }
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 89 "smtlib-flex-lexer.l"
+#line 101 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_EXIT; }
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 90 "smtlib-flex-lexer.l"
+#line 102 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_ASSERTS; }
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 91 "smtlib-flex-lexer.l"
+#line 103 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_ASSIGNS; }
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 92 "smtlib-flex-lexer.l"
+#line 104 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_INFO; }
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 93 "smtlib-flex-lexer.l"
+#line 105 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_MODEL; }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 94 "smtlib-flex-lexer.l"
+#line 106 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_OPT; }
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 95 "smtlib-flex-lexer.l"
+#line 107 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_PROOF; }
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 96 "smtlib-flex-lexer.l"
+#line 108 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_UNSAT_ASSUMS; }
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 97 "smtlib-flex-lexer.l"
+#line 109 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_UNSAT_CORE; }
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 98 "smtlib-flex-lexer.l"
+#line 110 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_GET_VALUE; }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 99 "smtlib-flex-lexer.l"
+#line 111 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_POP; }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 100 "smtlib-flex-lexer.l"
+#line 112 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_PUSH; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 101 "smtlib-flex-lexer.l"
+#line 113 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_RESET_ASSERTS; }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 102 "smtlib-flex-lexer.l"
+#line 114 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_RESET; }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 103 "smtlib-flex-lexer.l"
+#line 115 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_SET_INFO; }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 104 "smtlib-flex-lexer.l"
+#line 116 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_SET_LOGIC; }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 105 "smtlib-flex-lexer.l"
+#line 117 "smtlib-flex-lexer.l"
 { SET_LOCATION; return KW_SET_OPT; }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 107 "smtlib-flex-lexer.l"
+#line 119 "smtlib-flex-lexer.l"
 { 
 				SET_LOCATION;
 				yylval.ptr = smt_newMetaSpecConstant(1);
@@ -1238,7 +1250,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 47:
 YY_RULE_SETUP
-#line 112 "smtlib-flex-lexer.l"
+#line 124 "smtlib-flex-lexer.l"
 { 
 				SET_LOCATION;
 				yylval.ptr = smt_newMetaSpecConstant(0);
@@ -1247,7 +1259,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 48:
 YY_RULE_SETUP
-#line 117 "smtlib-flex-lexer.l"
+#line 129 "smtlib-flex-lexer.l"
 { 
 				SET_LOCATION;
 				yylval.ptr = smt_newMetaSpecConstant(2);
@@ -1256,7 +1268,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 49:
 YY_RULE_SETUP
-#line 123 "smtlib-flex-lexer.l"
+#line 135 "smtlib-flex-lexer.l"
 { 
 				SET_LOCATION;
 				yylval.ptr = smt_newSymbol(yytext); 
@@ -1265,7 +1277,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-#line 128 "smtlib-flex-lexer.l"
+#line 140 "smtlib-flex-lexer.l"
 { 
 				SET_LOCATION;
 				yylval.ptr = smt_newSymbol(yytext); 
@@ -1274,7 +1286,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-#line 134 "smtlib-flex-lexer.l"
+#line 146 "smtlib-flex-lexer.l"
 { 
 							SET_LOCATION;
 							yylval.ptr = smt_newKeyword(yytext);
@@ -1283,7 +1295,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-#line 139 "smtlib-flex-lexer.l"
+#line 151 "smtlib-flex-lexer.l"
 { 
 							SET_LOCATION;
 							yylval.ptr = smt_newKeyword(yytext);
@@ -1292,7 +1304,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 53:
 YY_RULE_SETUP
-#line 144 "smtlib-flex-lexer.l"
+#line 156 "smtlib-flex-lexer.l"
 {
 							SET_LOCATION;
 							yylval.ptr = smt_newKeyword(yytext); 
@@ -1301,7 +1313,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 54:
 YY_RULE_SETUP
-#line 150 "smtlib-flex-lexer.l"
+#line 162 "smtlib-flex-lexer.l"
 {
 						SET_LOCATION;
 						yylval.ptr = smt_newSymbol(yytext); 
@@ -1310,7 +1322,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 55:
 YY_RULE_SETUP
-#line 155 "smtlib-flex-lexer.l"
+#line 167 "smtlib-flex-lexer.l"
 { 
 						SET_LOCATION;
 						yylval.ptr = smt_newKeyword(yytext); 
@@ -1319,25 +1331,25 @@ YY_RULE_SETUP
 	YY_BREAK
 case 56:
 YY_RULE_SETUP
-#line 161 "smtlib-flex-lexer.l"
-{ BEGIN string; yymore(); }
+#line 173 "smtlib-flex-lexer.l"
+{ SET_LEFT; BEGIN string; yymore(); }
 	YY_BREAK
 case 57:
 YY_RULE_SETUP
-#line 162 "smtlib-flex-lexer.l"
-{ yymore(); }
+#line 174 "smtlib-flex-lexer.l"
+{ UPDATE_COLUMN(2);; yymore(); }
 	YY_BREAK
 case 58:
 /* rule 58 can match eol */
 YY_RULE_SETUP
-#line 163 "smtlib-flex-lexer.l"
-{ yycolumn = 1; yymore(); }
+#line 175 "smtlib-flex-lexer.l"
+{ RESET_COLUMN; yymore(); }
 	YY_BREAK
 case 59:
 YY_RULE_SETUP
-#line 164 "smtlib-flex-lexer.l"
+#line 176 "smtlib-flex-lexer.l"
 { 	
-						SET_LOCATION;											
+						SET_RIGHT;
 						BEGIN 0; 
 						yylval.ptr = smt_newStringLiteral(yytext);
 						return STRING; 
@@ -1345,25 +1357,25 @@ YY_RULE_SETUP
 	YY_BREAK
 case 60:
 YY_RULE_SETUP
-#line 170 "smtlib-flex-lexer.l"
-{ yymore(); }
+#line 182 "smtlib-flex-lexer.l"
+{ UPDATE_COLUMN(1); yymore(); }
 	YY_BREAK
 case 61:
 YY_RULE_SETUP
-#line 172 "smtlib-flex-lexer.l"
-{ BEGIN quoted; yymore(); }
+#line 184 "smtlib-flex-lexer.l"
+{ SET_LEFT; BEGIN quoted; yymore(); }
 	YY_BREAK
 case 62:
 /* rule 62 can match eol */
 YY_RULE_SETUP
-#line 173 "smtlib-flex-lexer.l"
-{ yycolumn = 1; yymore(); }
+#line 185 "smtlib-flex-lexer.l"
+{ RESET_COLUMN; yymore(); }
 	YY_BREAK
 case 63:
 YY_RULE_SETUP
-#line 174 "smtlib-flex-lexer.l"
+#line 186 "smtlib-flex-lexer.l"
 { 
-						SET_LOCATION;
+						SET_RIGHT;
 						BEGIN 0; 
 						yylval.ptr = smt_newSymbol(yytext);
 						return SYMBOL; 
@@ -1371,37 +1383,37 @@ YY_RULE_SETUP
 	YY_BREAK
 case 64:
 YY_RULE_SETUP
-#line 180 "smtlib-flex-lexer.l"
+#line 192 "smtlib-flex-lexer.l"
 { }
 	YY_BREAK
 case 65:
 YY_RULE_SETUP
-#line 181 "smtlib-flex-lexer.l"
-{ yymore(); }
+#line 193 "smtlib-flex-lexer.l"
+{ UPDATE_COLUMN(1); yymore(); }
 	YY_BREAK
 case 66:
 /* rule 66 can match eol */
 YY_RULE_SETUP
-#line 183 "smtlib-flex-lexer.l"
-{ SET_LOCATION; }
+#line 195 "smtlib-flex-lexer.l"
+{ SET_LOCATION; yycolumn = 1; }
 	YY_BREAK
 case 67:
 YY_RULE_SETUP
-#line 184 "smtlib-flex-lexer.l"
+#line 196 "smtlib-flex-lexer.l"
 { SET_LOCATION; /*ignore*/ }
 	YY_BREAK
 case 68:
 /* rule 68 can match eol */
 YY_RULE_SETUP
-#line 185 "smtlib-flex-lexer.l"
+#line 197 "smtlib-flex-lexer.l"
 { SET_LOCATION; yycolumn = 1; /*ignore*/ }
 	YY_BREAK
 case 69:
 YY_RULE_SETUP
-#line 186 "smtlib-flex-lexer.l"
+#line 198 "smtlib-flex-lexer.l"
 ECHO;
 	YY_BREAK
-#line 1405 "lex.yy.c"
+#line 1417 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(string):
 case YY_STATE_EOF(quoted):
@@ -2413,4 +2425,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 186 "smtlib-flex-lexer.l"
+#line 198 "smtlib-flex-lexer.l"

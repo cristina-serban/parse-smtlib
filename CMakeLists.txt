@@ -49,6 +49,7 @@ set(SOURCE_FILES
 	smtlib/util/smt_logger.h
 	smtlib/util/smt_logger.cpp
 	smtlib/visitor/ast_visitor.h
+	smtlib/visitor/ast_visitor.cpp
 	smtlib/visitor/ast_visitor_extra.h
 	smtlib/visitor/ast_syntax_checker.h
 	smtlib/visitor/ast_syntax_checker.cpp
@@ -65,6 +66,12 @@ set(SOURCE_FILES
 	smtlib/ast/ast_datatype.cpp
 	smtlib/ast/ast_match.h
 	smtlib/ast/ast_match.cpp
+	smtlib/util/global_settings.h
+	smtlib/util/global_settings.cpp
+	smtlib/smt_execution.h
+	smtlib/smt_execution.cpp
+	smtlib/smt_execution_settings.h
+	smtlib/smt_execution_settings.cpp
 )
 
 add_executable(parse-smtlib ${SOURCE_FILES})

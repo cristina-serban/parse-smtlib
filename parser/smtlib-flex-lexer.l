@@ -6,9 +6,21 @@
 #include "smtlib-bison-parser.y.h"
 
 int yycolumn = 1;
+#define UPDATE_COLUMN(n) yycolumn += n;
+
+#define RESET_COLUMN yycolumn = 1;
+
 #define SET_LOCATION yylloc.first_line = yylloc.last_line = yylineno; \
-yylloc.first_column = yycolumn; yylloc.last_column = yycolumn+yyleng-1; \
-yycolumn += yyleng;
+yylloc.first_column = yycolumn; yylloc.last_column = yycolumn + yyleng - 1; \
+UPDATE_COLUMN(yyleng);
+
+#define SET_LEFT yylloc.first_line = yylineno; \
+yylloc.first_column = yycolumn; \
+UPDATE_COLUMN(yyleng);
+
+#define SET_RIGHT yylloc.last_line = yylineno; \
+yylloc.last_column = yycolumn + yyleng - 1; \
+UPDATE_COLUMN(yyleng);
 %}
 
 whitespace     	[\x09 \xA0]
@@ -158,28 +170,28 @@ simple_symbol  {sym_begin}{sym_continue}*
 						return KEYWORD; 
 					}
 
-\"					{ BEGIN string; yymore(); }
-<string>\"\"   		{ yymore(); }
-<string>[\n\r]+		{ yycolumn = 1; yymore(); }
+\"					{ SET_LEFT; BEGIN string; yymore(); }
+<string>\"\"   		{ UPDATE_COLUMN(2);; yymore(); }
+<string>[\n\r]+		{ RESET_COLUMN; yymore(); }
 <string>\"			{ 	
-						SET_LOCATION;											
+						SET_RIGHT;
 						BEGIN 0; 
 						yylval.ptr = smt_newStringLiteral(yytext);
 						return STRING; 
 					}
-<string>.			{ yymore(); }
+<string>.			{ UPDATE_COLUMN(1); yymore(); }
 
-\|					{ BEGIN quoted; yymore(); }
-<quoted>[\n\r]+		{ yycolumn = 1; yymore(); }
+\|					{ SET_LEFT; BEGIN quoted; yymore(); }
+<quoted>[\n\r]+		{ RESET_COLUMN; yymore(); }
 <quoted>\|			{ 
-						SET_LOCATION;
+						SET_RIGHT;
 						BEGIN 0; 
 						yylval.ptr = smt_newSymbol(yytext);
 						return SYMBOL; 
 					}
 <quoted>\\			{ }
-<quoted>.			{ yymore(); }
+<quoted>.			{ UPDATE_COLUMN(1); yymore(); }
 
-[\n\r]+				{ SET_LOCATION; }
+[\n\r]+				{ SET_LOCATION; yycolumn = 1; }
 {whitespace}		{ SET_LOCATION; /*ignore*/ }
 {comment}			{ SET_LOCATION; yycolumn = 1; /*ignore*/ }

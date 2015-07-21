@@ -1,4 +1,6 @@
 #include "ast_basic.h"
+#include "../util/global_settings.h"
+
 #include <sstream>
 
 using namespace smtlib::ast;
@@ -31,9 +33,9 @@ void MetaSpecConstant::accept(AstVisitor0* visitor){
 }
 
 string MetaSpecConstant::toString() {
-    return (type == Type::META_SPEC_STRING) ? "STRING"
-                                            : (type == Type::META_SPEC_NUMERAL ? "NUMERAL"
-                                                                               : "DECIMAL");
+    return (type == Type::META_SPEC_STRING) ? MSCONST_STRING
+                                            : (type == Type::META_SPEC_NUMERAL ? MSCONST_NUMERAL
+                                                                               : MSCONST_DECIMAL);
 }
 
 /* =================================== BooleanValue =================================== */
@@ -44,9 +46,9 @@ void BooleanValue::accept(AstVisitor0* visitor){
 
 string BooleanValue::toString() {
     if(value)
-        return "true";
+        return CONST_TRUE;
     else
-        return "false";
+        return CONST_FALSE;
 }
 
 /* =================================== PropLiteral ==================================== */

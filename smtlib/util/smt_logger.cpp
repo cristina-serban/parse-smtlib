@@ -16,12 +16,20 @@ void Logger::error(const char* fun, const char* msg) {
     fprintf(stderr, "Error in %s: %s.\n", fun, msg);
 }
 
+void Logger::syntaxError(const char* fun, const char* msg) {
+    fprintf(stderr, "%s: Syntax errors in \n%s", fun, msg);
+}
+
 void Logger::syntaxError(const char* fun, const char* file, const char* msg) {
     fprintf(stderr, "%s: Syntax errors in file '%s'\n%s", fun, file, msg);
 }
 
 void Logger::sortednessError(const char* fun, const char* file, const char* msg) {
     fprintf(stderr, "%s: Well-sortedness errors when checking file '%s'\n\n%s", fun, file, msg);
+}
+
+void Logger::sortednessError(const char* fun, const char* msg) {
+    fprintf(stderr, "%s: Well-sortedness errors\n\n%s", fun, msg);
 }
 
 void Logger::parsingError(unsigned int rowLeft, unsigned int colLeft,
