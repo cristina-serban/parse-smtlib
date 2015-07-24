@@ -1,4 +1,4 @@
-smtlib-parser:
+parser:
 	bison -d smtlib-bison-parser.y -Wconflicts-sr -Wconflicts-rr
 	mv smtlib-bison-parser.tab.h smtlib-bison-parser.y.h
 	mv smtlib-bison-parser.tab.c smtlib-bison-parser.y.c
@@ -26,7 +26,7 @@ smtlib-parser:
 	g++ -g -c -std=c++11 ../smtlib/parser/smt_parser.cpp -o smt_parser.o
 	g++ -g -c -std=c++11 ../smtlib/util/smt_logger.cpp -o smt_logger.o
 	g++ -g -c -std=c++11 ../smtlib/util/global_settings.cpp -o global_settings.o
-	g++ -g -o parse-smtlib smtlib-flex-lexer.l.o smtlib-bison-parser.y.o \
+	g++ -g -o parser smtlib-flex-lexer.l.o smtlib-bison-parser.y.o \
 	smtlib-glue.o ast_attribute.o ast_basic.o ast_command.o ast_datatype.o \
 	ast_fun.o ast_identifier.o ast_literal.o ast_logic.o ast_match.o ast_sexp.o \
 	ast_sort.o ast_script.o ast_symbol_decl.o ast_term.o ast_theory.o ast_var.o \
@@ -37,4 +37,4 @@ clean:
 	rm -f smtlib-bison-parser.y.c
 	rm -f smtlib-flex-lexer.l.c
 	rm -f *.o
-	rm -f parse-smtlib
+	rm -f parser

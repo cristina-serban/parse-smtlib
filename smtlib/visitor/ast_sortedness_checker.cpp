@@ -635,6 +635,10 @@ SortednessChecker::checkSort(shared_ptr<Sort> sort,
     if (!info) {
         err = addError(buildUnknownSortMsg(name, sort->getRowLeft(), sort->getColLeft(),
                                            sort->getRowRight(), sort->getColRight()), source, err);
+        for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
+             it != sort->getArgs().end(); it++) {
+            checkSort(*it, source, err);
+        }
     } else {
         if (sort->getArgs().size() != info->arity) {
             err = addError(buildAritySortMsg(name, info->arity, sort->getArgs().size(),
@@ -667,6 +671,10 @@ SortednessChecker::checkSort(vector<shared_ptr<Symbol>>& params,
         if (!info) {
             err = addError(buildUnknownSortMsg(name, sort->getRowLeft(), sort->getColLeft(),
                                                sort->getRowRight(), sort->getColRight()), source, err);
+            for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
+                 it != sort->getArgs().end(); it++) {
+                checkSort(params, *it, source, err);
+            }
         } else {
             if(sort->getArgs().empty())
                 return err;

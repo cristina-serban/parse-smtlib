@@ -3,7 +3,6 @@ project(parse-smtlib)
 
 set(LIB_FLEX fl)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 include_directories("smtlib" "smtlib/ast" "smtlib/util" "smtlib/visitor" "smtlib/parser")
 set(SOURCE_FILES
