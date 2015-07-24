@@ -1,8 +1,8 @@
 #include "global_settings.h"
 
 namespace smtlib {
-    const std::string LOC_LOGICS = "/home/cristinaserban/Work/parse-smtlib/input/Logics/";
-    const std::string LOC_THEORIES = "/home/cristinaserban/Work/parse-smtlib/input/Theories/";
+    const std::string LOC_LOGICS = "input/Logics/";
+    const std::string LOC_THEORIES = "input/Theories/";
     const std::string FILE_EXT_LOGIC = ".smt2";
     const std::string FILE_EXT_THEORY = ".smt2";
 

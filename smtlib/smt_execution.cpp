@@ -49,6 +49,8 @@ bool SmtExecution::parse() {
         ast = parser->parse(settings->getFilename().c_str());
         if (ast) {
             parseSuccessful = true;
+        } else {
+            Logger::error("SmtExecution::parse()", "Stopped due to previous errors");
         }
     }
 

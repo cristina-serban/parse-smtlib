@@ -89,6 +89,65 @@ string buildExistingSortMsg(string name) {
     return "Sort symbol '" + name + "' already exists";
 }
 
+string buildExistingSpecConstMsg(string name) {
+    return "Specification constant '" + name + "' already exists";
+}
+
+string buildExistingMetaSpecConstMsg(string name) {
+    return "Sort for meta specification constant '" + name + "' already declared";
+}
+
+string buildNoRightAssocParamCountMsg(string name) {
+    return "Function '" + name +
+           "' cannot be right associative - it does not have 2 parameters";
+}
+
+string buildNoRightAssocRetMsg(string name) {
+    return "Function '" + name +
+           "' cannot be right associative - sort of second parameter not the same as return sort";
+}
+
+string buildNoLeftAssocParamCountMsg(string name) {
+    return "Function '" + name +
+            "' cannot be left associative - it does not have 2 parameters";
+}
+
+string buildNoLeftAssocRetMsg(string name) {
+    return "Function '" + name +
+           "' cannot be left associative - sort of first parameter not the same as return sort";
+}
+
+string buildChainableAndPairwiseMsg(string name) {
+    return "Function '" + name +
+           "' cannot be both chainable and pairwise";
+}
+
+string buildNoChainableParamCountMsg(string name) {
+    return "Function '" + name +
+           "' cannot be chainable - it does not have 2 parameters";
+}
+
+string buildNoChainableParamSortMsg(string name) {
+    return "Function '" + name + "' cannot be chainable " + "- parameters do not have the same sort";
+}
+
+string buildNoChainableRetSortMsg(string name) {
+    return "Function '" + name + "' cannot be chainable " + "- return sort is not Bool";
+}
+
+string buildNoPairwiseParamCountMsg(string name) {
+    return "Function '" + name +
+           "' cannot be chainable - it does not have 2 parameters";
+}
+
+string buildNoPairwiseParamSortMsg(string name) {
+    return "Function '" + name + "' cannot be pairwise " + "- parameters do not have the same sort";
+}
+
+string buildNoPairwiseRetSortMsg(string name) {
+    return "Function '" + name + "' cannot be pairwise " + "- return sort is not Bool";
+}
+
 string buildFunBodyDiffSortMsg(shared_ptr<Term> body, string wrongSort, string rightSort) {
     stringstream ss;
     ss << "Function body '";
@@ -1107,7 +1166,7 @@ void SortednessChecker::visit(shared_ptr<SortSymbolDeclaration> node) {
     shared_ptr<SortInfo> dupInfo = stack->tryAdd(nodeInfo);
 
     if (dupInfo) {
-        addError("Sort symbol '" + nodeInfo->name + "' already exists", node, dupInfo);
+        addError(buildExistingSortMsg(nodeInfo->name), node, dupInfo);
     }
 }
 
@@ -1119,7 +1178,7 @@ void SortednessChecker::visit(shared_ptr<SpecConstFunDeclaration> node) {
     shared_ptr<FunInfo> dupInfo = stack->tryAdd(nodeInfo);
 
     if (dupInfo) {
-        addError("Specification constant '" + nodeInfo->name + "' already exists", node, dupInfo, err);
+        addError(buildExistingSpecConstMsg(nodeInfo->name), node, dupInfo, err);
     }
 }
 
@@ -1131,8 +1190,7 @@ void SortednessChecker::visit(shared_ptr<MetaSpecConstFunDeclaration> node) {
     vector<shared_ptr<FunInfo>> dupInfo = stack->getFunInfo(nodeInfo->name);
 
     if (!dupInfo.empty()) {
-        err = addError("Sort for meta specification constant '" +
-                 nodeInfo->name + "' already declared", node, dupInfo[0], err);
+        err = addError(buildExistingMetaSpecConstMsg(nodeInfo->name), node, dupInfo[0], err);
     } else {
         stack->tryAdd(nodeInfo);
     }
@@ -1150,17 +1208,14 @@ void SortednessChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
 
     if(nodeInfo->assocL) {
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be left associative - it does not have 2 parameters", node, err);
+            err = addError(buildNoLeftAssocParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->assocL = false;
         } else {
             shared_ptr<Sort> firstSort = sig[0];
             shared_ptr<Sort> returnSort = sig[2];
 
             if (firstSort->toString() != returnSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be left associative " +
-                               "- sort of first parameter not the same as return sort", node, err);
+                err = addError(buildNoLeftAssocRetMsg(nodeInfo->name), node, err);
                 nodeInfo->assocL = false;
             }
         }
@@ -1168,31 +1223,26 @@ void SortednessChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
 
     if(nodeInfo->assocR) {
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be right associative - it does not have 2 parameters", node, err);
+            err = addError(buildNoRightAssocParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->assocR = false;
         } else {
             shared_ptr<Sort> secondSort = sig[1];
             shared_ptr<Sort> returnSort = sig[2];
 
             if (secondSort->toString() != returnSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be right associative " +
-                               "- sort of second parameter not the same as return sort", node, err);
+                err = addError(buildNoRightAssocRetMsg(nodeInfo->name), node, err);
                 nodeInfo->assocR = false;
             }
         }
     }
 
     if(nodeInfo->chainable && nodeInfo->pairwise) {
-        err = addError("Function '" +
-                       nodeInfo->name + "' cannot be both chainable and pairwise", node, err);
+        err = addError(buildChainableAndPairwiseMsg(nodeInfo->name), node, err);
         nodeInfo->chainable = false;
         nodeInfo->pairwise = false;
     } else if (nodeInfo->chainable) {
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be chainable - it does not have 2 parameters", node, err);
+            err = addError(buildNoChainableParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->chainable = false;
         } else {
             shared_ptr<Sort> firstSort = sig[0];
@@ -1200,23 +1250,18 @@ void SortednessChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
             shared_ptr<Sort> returnSort = sig[2];
 
             if (firstSort->toString() != secondSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- parameters do not have the same sort", node, err);
+                err = addError(buildNoChainableParamSortMsg(nodeInfo->name), node, err);
                 nodeInfo->chainable = false;
             }
 
             if(returnSort->toString() != SORT_BOOL) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- return sort is not Bool", node, err);
+                err = addError(buildNoChainableRetSortMsg(nodeInfo->name), node, err);
                 nodeInfo->chainable = false;
             }
         }
     } else if(nodeInfo->pairwise) {
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be pairwise - it does not have 2 parameters", node, err);
+            err = addError(buildNoPairwiseParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->pairwise = false;
         } else {
             shared_ptr<Sort> firstSort = sig[0];
@@ -1224,16 +1269,12 @@ void SortednessChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
             shared_ptr<Sort> returnSort = sig[2];
 
             if (firstSort->toString() != secondSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- parameters do not have the same sort", node, err);
+                err = addError(buildNoPairwiseParamSortMsg(nodeInfo->name), node, err);
                 nodeInfo->pairwise = false;
             }
 
             if(returnSort->toString() != SORT_BOOL) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- return sort is not Bool", node, err);
+                err = addError(buildNoPairwiseRetSortMsg(nodeInfo->name), node, err);
                 nodeInfo->pairwise = false;
             }
         }
@@ -1242,8 +1283,7 @@ void SortednessChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
     shared_ptr<FunInfo> dupInfo = stack->tryAdd(nodeInfo);
 
     if (dupInfo) {
-        addError("Function '" + nodeInfo->name +
-                 "' already existis with the same signature", node, dupInfo, err);
+        addError(buildExistingFunMsg(nodeInfo->name), node, dupInfo, err);
     }
 }
 
@@ -1259,17 +1299,14 @@ void SortednessChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
 
     if(nodeInfo->assocL) {
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be left associative - it does not have 2 parameters", node, err);
+            err = addError(buildNoLeftAssocParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->assocL = false;
         } else {
             shared_ptr<Sort> firstSort = sig[0];
             shared_ptr<Sort> returnSort = sig[2];
 
             if (firstSort->toString() != returnSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be left associative " +
-                               "- sort of first parameter not the same as return sort", node, err);
+                err = addError(buildNoLeftAssocRetMsg(nodeInfo->name), node, err);
                 nodeInfo->assocL = false;
             }
         }
@@ -1277,31 +1314,26 @@ void SortednessChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
 
     if(nodeInfo->assocR) {
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be right associative - it does not have 2 parameters", node, err);
+            err = addError(buildNoRightAssocParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->assocR = false;
         } else {
             shared_ptr<Sort> secondSort = sig[1];
             shared_ptr<Sort> returnSort = sig[2];
 
             if (secondSort->toString() != returnSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be right associative " +
-                               "- sort of second parameter not the same as return sort", node, err);
+                err = addError(buildNoRightAssocRetMsg(nodeInfo->name), node, err);
                 nodeInfo->assocR = false;
             }
         }
     }
 
     if(nodeInfo->chainable && nodeInfo->pairwise) {
-        err = addError("Function '" +
-                       nodeInfo->name + "' cannot be both chainable and pairwise", node, err);
+        err = addError(buildChainableAndPairwiseMsg(nodeInfo->name), node, err);
         nodeInfo->chainable = false;
         nodeInfo->pairwise = false;
     } else if (nodeInfo->chainable) {
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be chainable - it does not have 2 parameters", node, err);
+            err = addError(buildNoChainableParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->chainable = false;
         } else {
             shared_ptr<Sort> firstSort = sig[0];
@@ -1309,23 +1341,18 @@ void SortednessChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
             shared_ptr<Sort> returnSort = sig[2];
 
             if (firstSort->toString() != secondSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- parameters do not have the same sort", node, err);
+                err = addError(buildNoChainableParamSortMsg(nodeInfo->name), node, err);
                 nodeInfo->chainable = false;
             }
 
             if(returnSort->toString() != SORT_BOOL) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- return sort is not Bool", node, err);
+                err = addError(buildNoChainableRetSortMsg(nodeInfo->name), node, err);
                 nodeInfo->chainable = false;
             }
         }
     } else if(nodeInfo->pairwise){
         if(sig.size() != 3) {
-            err = addError("Function '" +
-                           nodeInfo->name + "' cannot be pairwise - it does not have 2 parameters", node, err);
+            err = addError(buildNoPairwiseParamCountMsg(nodeInfo->name), node, err);
             nodeInfo->pairwise = false;
         } else {
             shared_ptr<Sort> firstSort = sig[0];
@@ -1333,16 +1360,12 @@ void SortednessChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
             shared_ptr<Sort> returnSort = sig[2];
 
             if (firstSort->toString() != secondSort->toString()) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- parameters do not have the same sort", node, err);
+                err = addError(buildNoPairwiseParamSortMsg(nodeInfo->name), node, err);
                 nodeInfo->pairwise = false;
             }
 
             if(returnSort->toString() != SORT_BOOL) {
-                err = addError("Function '" +
-                               nodeInfo->name + "' cannot be chainable " +
-                               "- return sort is not Bool", node, err);
+                err = addError(buildNoPairwiseRetSortMsg(nodeInfo->name), node, err);
                 nodeInfo->pairwise = false;
             }
         }
@@ -1351,8 +1374,7 @@ void SortednessChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
     shared_ptr<FunInfo> dupInfo = stack->tryAdd(nodeInfo);
 
     if (dupInfo) {
-        addError("Function '" + nodeInfo->name +
-                 "' already existis with the same signature", node, dupInfo, err);
+        addError(buildExistingFunMsg(nodeInfo->name), node, dupInfo, err);
     }
 }
 

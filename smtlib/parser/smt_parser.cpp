@@ -21,6 +21,10 @@ shared_ptr<AstNode> Parser::parse(std::string filename) {
         this->filename = make_shared<string>(filename.c_str());
         yyparse(this);
         fclose(yyin);
+    } else {
+        stringstream ss;
+        ss << "Unable to open file '" << filename << "'";
+        Logger::error("Parser::parse()", ss.str().c_str());
     }
     return ast;
 }
