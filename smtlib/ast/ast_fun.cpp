@@ -21,10 +21,10 @@ string FunctionDeclaration::toString() {
     stringstream ss;
     ss << symbol->toString() << " (";
 
-    for(vector<shared_ptr<SortedVariable>>::iterator it = params.begin(); it != params.end(); it++) {
-        if(it != params.begin())
+    for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+        if(paramIt != params.begin())
             ss << " ";
-        ss << "(" << (*it)->toString() << ")";
+        ss << "(" << (*paramIt)->toString() << ")";
     }
 
     ss << ") " << sort->toString();

@@ -15,10 +15,10 @@ void CompSExpression::accept(AstVisitor0* visitor){
 string CompSExpression::toString() {
     stringstream ss;
     ss << "(";
-    for(vector<shared_ptr<SExpression>>::iterator it = exprs.begin(); it != exprs.end(); it++) {
-        if(it != exprs.begin())
+    for (auto exprIt = exprs.begin(); exprIt != exprs.end(); exprIt++) {
+        if(exprIt != exprs.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*exprIt)->toString();
     }
     ss <<")";
     return ss.str();

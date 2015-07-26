@@ -31,9 +31,9 @@ void CompAttributeValue::accept(AstVisitor0* visitor) {
 string CompAttributeValue::toString() {
     stringstream ss;
     ss << "(";
-    for(vector<shared_ptr<AttributeValue>>::iterator it = values.begin(); it != values.end(); it++) {
-        ss << (*it)->toString();
-        if(it + 1 != values.end())
+    for (auto valueIt = values.begin(); valueIt != values.end(); valueIt++) {
+        ss << (*valueIt)->toString();
+        if(valueIt + 1 != values.end())
             ss << " ";
     }
     ss << ")";

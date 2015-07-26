@@ -45,8 +45,8 @@ set(SOURCE_FILES
 	parser/smtlib-flex-lexer.l.c
 	smtlib/parser/smt_parser.h
 	smtlib/parser/smt_parser.cpp
-	smtlib/util/smt_logger.h
-	smtlib/util/smt_logger.cpp
+	smtlib/util/logger.h
+	smtlib/util/logger.cpp
 	smtlib/visitor/ast_visitor.h
 	smtlib/visitor/ast_visitor.cpp
 	smtlib/visitor/ast_visitor_extra.h
@@ -73,5 +73,5 @@ set(SOURCE_FILES
 	smtlib/smt_execution_settings.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES})
+add_executable(parse-smtlib ${SOURCE_FILES} smtlib/util/error_messages.h smtlib/util/error_messages.cpp)
 target_link_libraries(parse-smtlib ${LIB_FLEX})

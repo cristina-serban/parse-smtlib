@@ -24,7 +24,9 @@ namespace smtlib {
             int colLeft;
             int colRight;
             std::shared_ptr<std::string> filename;
+
         public:
+            AstNode() : rowLeft(0), colLeft(0), rowRight(0), colRight(0) { }
 
             /** Get row where node begins */
             inline int getRowLeft() { return rowLeft; }

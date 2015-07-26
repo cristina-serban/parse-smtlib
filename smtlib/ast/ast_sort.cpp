@@ -25,10 +25,10 @@ string Sort::toString() {
         stringstream ss;
         ss << "(" << identifier->toString() << " ";
 
-        for(vector<shared_ptr<Sort>>::iterator it = args.begin(); it != args.end(); it++) {
-            if(it != args.begin())
+        for (auto argIt = args.begin(); argIt != args.end(); argIt++) {
+            if(argIt != args.begin())
                 ss << " ";
-            ss << (*it)->toString();
+            ss << (*argIt)->toString();
         }
 
         ss << ")";

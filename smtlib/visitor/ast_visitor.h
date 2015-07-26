@@ -14,8 +14,8 @@ namespace smtlib {
             virtual void visit0(std::shared_ptr<AstNode> node);
             template<class T>
             void visit0(std::vector<std::shared_ptr<T>>& arr) {
-                for (auto item : arr) {
-                    visit0(item);
+                for (auto item = arr.begin(); item != arr.end(); item++) {
+                    visit0(*item);
                 }
             }
         public:

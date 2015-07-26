@@ -56,8 +56,8 @@ void SymbolStack::reset() {
 
 shared_ptr<SortInfo> SymbolStack::getSortInfo(string name) {
     shared_ptr<SortInfo> null;
-    for (vector<shared_ptr<SymbolTable>>::iterator it = stack.begin(); it != stack.end(); it++) {
-        shared_ptr<SortInfo> info = (*it)->getSortInfo(name);
+    for (auto lvlIt = stack.begin(); lvlIt != stack.end(); lvlIt++) {
+        shared_ptr<SortInfo> info = (*lvlIt)->getSortInfo(name);
         if (info)
             return info;
     }
@@ -66,8 +66,8 @@ shared_ptr<SortInfo> SymbolStack::getSortInfo(string name) {
 
 vector<shared_ptr<FunInfo>> SymbolStack::getFunInfo(string name) {
     vector<shared_ptr<FunInfo>> result;
-    for (vector<shared_ptr<SymbolTable>>::iterator it = stack.begin(); it != stack.end(); it++) {
-        vector<shared_ptr<FunInfo>> infos = (*it)->getFunInfo(name);
+    for (auto lvlIt = stack.begin(); lvlIt != stack.end(); lvlIt++) {
+        vector<shared_ptr<FunInfo>> infos = (*lvlIt)->getFunInfo(name);
         result.insert(result.end(), infos.begin(), infos.end());
     }
     return result;
@@ -75,8 +75,8 @@ vector<shared_ptr<FunInfo>> SymbolStack::getFunInfo(string name) {
 
 shared_ptr<VarInfo> SymbolStack::getVarInfo(string name) {
     shared_ptr<VarInfo> null;
-    for (vector<shared_ptr<SymbolTable>>::iterator it = stack.begin(); it != stack.end(); it++) {
-        shared_ptr<VarInfo> info = (*it)->getVarInfo(name);
+    for (auto lvlIt = stack.begin(); lvlIt != stack.end(); lvlIt++) {
+        shared_ptr<VarInfo> info = (*lvlIt)->getVarInfo(name);
         if (info)
             return info;
     }
@@ -85,8 +85,8 @@ shared_ptr<VarInfo> SymbolStack::getVarInfo(string name) {
 
 shared_ptr<SortInfo> SymbolStack::findDuplicate(shared_ptr<SortInfo> info) {
     shared_ptr<SortInfo> null;
-    for (vector<shared_ptr<SymbolTable>>::iterator it = stack.begin(); it != stack.end(); it++) {
-        shared_ptr<SortInfo> dup = (*it)->getSortInfo(info->name);
+    for (auto lvlIt = stack.begin(); lvlIt != stack.end(); lvlIt++) {
+        shared_ptr<SortInfo> dup = (*lvlIt)->getSortInfo(info->name);
         if (dup)
             return dup;
     }
@@ -95,16 +95,16 @@ shared_ptr<SortInfo> SymbolStack::findDuplicate(shared_ptr<SortInfo> info) {
 
 shared_ptr<FunInfo> SymbolStack::findDuplicate(shared_ptr<FunInfo> info) {
     shared_ptr<FunInfo> null;
-    vector<shared_ptr<FunInfo>> known = getFunInfo(info->name);
-    for (vector<shared_ptr<FunInfo>>::iterator it = known.begin(); it != known.end(); it++) {
-        if (info->params.size() == 0 && (*it)->params.size() == 0) {
-            if (equal(info->signature, (*it)->signature)) {
-                return (*it);
+    vector<shared_ptr<FunInfo>> knownFuns = getFunInfo(info->name);
+    for (auto funIt = knownFuns.begin(); funIt != knownFuns.end(); funIt++) {
+        if (info->params.size() == 0 && (*funIt)->params.size() == 0) {
+            if (equal(info->signature, (*funIt)->signature)) {
+                return (*funIt);
             }
         } else {
             if (equal(info->params, info->signature,
-                      (*it)->params, (*it)->signature)) {
-                return (*it);
+                      (*funIt)->params, (*funIt)->signature)) {
+                return (*funIt);
             }
         }
     }
@@ -128,12 +128,12 @@ shared_ptr<Sort> SymbolStack::replace(shared_ptr<Sort> sort,
     } else {
         vector<shared_ptr<Sort>> newargs;
         bool changed = false;
-        for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
-             it != sort->getArgs().end(); it++) {
-            shared_ptr<Sort> result = replace(*it, mapping);
+        vector<shared_ptr<Sort>> argSorts = sort->getArgs();
+        for (auto argIt = argSorts.begin(); argIt != argSorts.end(); argIt++) {
+            shared_ptr<Sort> result = replace(*argIt, mapping);
 
             newargs.push_back(result);
-            if (result.get() != (*it).get())
+            if (result.get() != (*argIt).get())
                 changed = true;
         }
 
@@ -196,14 +196,14 @@ shared_ptr<Sort> SymbolStack::expand(shared_ptr<Sort> sort) {
 
             vector<shared_ptr<Sort>> newargs;
             bool changed = false;
-            for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
-                 it != sort->getArgs().end(); it++) {
-                shared_ptr<Sort> result = expand(*it);
+            vector<shared_ptr<Sort>> argSorts = sort->getArgs();
+            for (auto argIt = argSorts.begin(); argIt != argSorts.end(); argIt++) {
+                shared_ptr<Sort> result = expand(*argIt);
                 if (!result)
                     return null;
 
                 newargs.push_back(result);
-                if (result.get() != (*it).get())
+                if (result.get() != (*argIt).get())
                     changed = true;
             }
 

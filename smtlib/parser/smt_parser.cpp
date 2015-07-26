@@ -1,5 +1,5 @@
 #include "smt_parser.h"
-#include "../util/smt_logger.h"
+#include "../util/logger.h"
 #include "../visitor/ast_syntax_checker.h"
 #include "../visitor/ast_sortedness_checker.h"
 #include "../../parser/smtlib-glue.h"

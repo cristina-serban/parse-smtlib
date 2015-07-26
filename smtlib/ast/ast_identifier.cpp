@@ -26,10 +26,10 @@ string SimpleIdentifier::toString() {
     else {
         stringstream ss;
         ss << "( _ " << symbol->toString() << " ";
-        for (vector<shared_ptr<Index>>::iterator it = indices.begin(); it != indices.end(); it++) {
-            if (it != indices.begin())
+        for (auto indexIt = indices.begin(); indexIt != indices.end(); indexIt++) {
+            if (indexIt != indices.begin())
                 ss << " ";
-            ss << (*it)->toString();
+            ss << (*indexIt)->toString();
         }
         ss << ")";
         return ss.str();

@@ -22,7 +22,7 @@ unordered_map<string, shared_ptr<VarInfo>>& SymbolTable::getVars() {
 }
 
 shared_ptr<SortInfo> SymbolTable::getSortInfo(string name) {
-    unordered_map<string, shared_ptr<SortInfo>>::iterator it = sorts.find(name);
+    auto it = sorts.find(name);
     if (it != sorts.end()) {
         return it->second;
     } else {
@@ -32,7 +32,7 @@ shared_ptr<SortInfo> SymbolTable::getSortInfo(string name) {
 }
 
 vector<shared_ptr<FunInfo>> SymbolTable::getFunInfo(string name) {
-    unordered_map<string, vector<shared_ptr<FunInfo>>>::iterator it = funs.find(name);
+    auto it = funs.find(name);
     if (it != funs.end()) {
         return it->second;
     } else {
@@ -42,7 +42,7 @@ vector<shared_ptr<FunInfo>> SymbolTable::getFunInfo(string name) {
 }
 
 shared_ptr<VarInfo> SymbolTable::getVarInfo(string name) {
-    unordered_map<string, shared_ptr<VarInfo>>::iterator it = vars.find(name);
+    auto it = vars.find(name);
     if (it != vars.end()) {
         return it->second;
     } else {
@@ -79,33 +79,33 @@ void SymbolTable::reset() {
     vars.clear();
 
     // Erase sort information that does not come from theory files
-    vector<shared_ptr<SortInfo>> sinfos;
-    for(auto it : sorts) {
-        sinfos.push_back(it.second);
+    vector<shared_ptr<SortInfo>> sortInfos;
+    for (auto sortIt = sorts.begin(); sortIt != sorts.end(); sortIt++) {
+        sortInfos.push_back(sortIt->second);
     }
 
-    for(auto it : sinfos) {
-        if(!dynamic_pointer_cast<SortSymbolDeclaration>(it->source)) {
-            sorts.erase(it->name);
+    for (auto sortInfoIt = sortInfos.begin(); sortInfoIt != sortInfos.end(); sortInfoIt++) {
+        if(!dynamic_pointer_cast<SortSymbolDeclaration>((*sortInfoIt)->source)) {
+            sorts.erase((*sortInfoIt)->name);
         }
     }
 
     // Erase function information that does not come from theory files
-    vector<string> fkeys;
-    vector<vector<shared_ptr<FunInfo>>> finfos;
-    for(auto it : funs) {
-        fkeys.push_back(it.first);
-        finfos.push_back(it.second);
+    vector<string> funKeys;
+    vector<vector<shared_ptr<FunInfo>>> funInfos;
+    for (auto funIt = funs.begin(); funIt != funs.end(); funIt++) {
+        funKeys.push_back(funIt->first);
+        funInfos.push_back(funIt->second);
     }
 
-    for(int i = 0; i < fkeys.size(); i++) {
-        vector<shared_ptr<FunInfo>>& info = funs[fkeys[i]];
-        for(int j = 0; j < finfos[i].size(); j++) {
-            if(!dynamic_pointer_cast<FunSymbolDeclaration>(finfos[i][j]->source)) {
+    for (int i = 0; i < funKeys.size(); i++) {
+        vector<shared_ptr<FunInfo>>& info = funs[funKeys[i]];
+        for (int j = 0; j < funInfos[i].size(); j++) {
+            if(!dynamic_pointer_cast<FunSymbolDeclaration>(funInfos[i][j]->source)) {
                 info.erase(info.begin() + j);
             }
         }
         if(info.empty())
-            funs.erase(fkeys[i]);
+            funs.erase(funKeys[i]);
     }
 }

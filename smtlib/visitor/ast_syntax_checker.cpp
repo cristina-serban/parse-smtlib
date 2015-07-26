@@ -41,8 +41,8 @@ SyntaxChecker::checkParamUsage(vector<shared_ptr<Symbol>> &params,
 
     string name = sort->getIdentifier()->toString();
     bool isParam = false;
-    for (vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
-        if (name == (*it)->toString())
+    for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+        if (name == (*paramIt)->toString())
             isParam = true;
     }
 
@@ -54,9 +54,9 @@ SyntaxChecker::checkParamUsage(vector<shared_ptr<Symbol>> &params,
                            "' is a sort parameter - it should have an arity of 0 ", source, err);
         }
     } else {
-        for (vector<shared_ptr<Sort>>::iterator it = sort->getArgs().begin();
-             it != sort->getArgs().end(); it++) {
-            checkParamUsage(params, paramUsage, *it, source, err);
+        vector<shared_ptr<Sort>> argSorts = sort->getArgs();
+        for (auto argIt = argSorts.begin(); argIt != argSorts.end(); argIt++) {
+            checkParamUsage(params, paramUsage, *argIt, source, err);
         }
     }
 
@@ -419,10 +419,11 @@ void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
 
         stringstream ss;
         ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
+
         bool first = true;
-        for (vector<shared_ptr<Symbol>>::iterator it = node->getParams().begin();
-             it != node->getParams().end(); it++) {
-            string pname = (*it)->toString();
+        vector<shared_ptr<Symbol>> params = node->getParams();
+        for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+            string pname = (*paramIt)->toString();
             if (paramUsage.find(pname) == paramUsage.end()) {
                 if (!first) {
                     ss << ", ";
@@ -807,8 +808,8 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
         err = addError("Logic has no attributes", node, err);
     }
 
-    for (vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
-        shared_ptr<Attribute> attr = *it;
+    for (auto attrIt = attrs.begin(); attrIt != attrs.end(); attrIt++) {
+        shared_ptr<Attribute> attr = *attrIt;
         if (!attr)
             continue;
 
@@ -833,7 +834,7 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
                     err = addError("Empty list of theory names", attr, err);
                 }*/
 
-                for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
+                for (auto itt = values.begin(); itt != values.begin(); itt++) {
                     if ((*itt) && !dynamic_cast<Symbol *>((*itt).get())) {
                         attrerr = addError("Attribute value '" + (*itt)->toString()
                                            + "' should be a symbol", attr, attrerr);
@@ -864,8 +865,8 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
         err = addError("Theory has no attributes", node, err);
     }
 
-    for (vector<shared_ptr<Attribute>>::iterator it = attrs.begin(); it != attrs.end(); it++) {
-        shared_ptr<Attribute> attr = *it;
+    for (auto attrIt = attrs.begin(); attrIt != attrs.end(); attrIt++) {
+        shared_ptr<Attribute> attr = *attrIt;
         if (!attr)
             continue;
 
@@ -890,7 +891,7 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
                     attrerr = addError("Empty list of sort symbol declarations", attr, attrerr);
                 }
 
-                for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
+                for (auto itt = values.begin(); itt != values.begin(); itt++) {
                     if ((*itt) && !dynamic_cast<SortSymbolDeclaration *>((*itt).get())) {
                         attrerr = addError("Attribute value '" + (*itt)->toString()
                                            + "' should be a sort symbol declaration", attr, attrerr);
@@ -908,7 +909,7 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
                     attrerr = addError("Empty list of function symbol declarations", attr, attrerr);
                 }
 
-                for (vector<shared_ptr<AttributeValue>>::iterator itt = values.begin(); itt != values.begin(); itt++) {
+                for (auto itt = values.begin(); itt != values.begin(); itt++) {
                     if ((*itt) && !dynamic_cast<FunSymbolDeclaration *>((*itt).get())) {
                         attrerr = addError(
                                 "Attribute value '" + (*itt)->toString() + "' should be a function symbol declaration",
@@ -1089,8 +1090,8 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
     // Check parameter usage
     unordered_map<string, bool> paramUsage;
     vector<shared_ptr<Sort>> sig = node->getSignature();
-    for (vector<shared_ptr<Sort>>::iterator it = sig.begin(); it != sig.end(); it++) {
-        err = checkParamUsage(node->getParams(), paramUsage, *it, node, err);
+    for (auto sortIt = sig.begin(); sortIt != sig.end(); sortIt++) {
+        err = checkParamUsage(node->getParams(), paramUsage, *sortIt, node, err);
     }
 
     if (paramUsage.size() != node->getParams().size()) {
@@ -1098,10 +1099,11 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
 
         stringstream ss;
         ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
+
         bool first = true;
-        for (vector<shared_ptr<Symbol>>::iterator it = node->getParams().begin();
-             it != node->getParams().end(); it++) {
-            string pname = (*it)->toString();
+        vector<shared_ptr<Symbol>> params = node->getParams();
+        for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+            string pname = (*paramIt)->toString();
             if (paramUsage.find(pname) == paramUsage.end()) {
                 if (!first) {
                     ss << ", ";
@@ -1176,9 +1178,8 @@ void SyntaxChecker::visit(shared_ptr<ConstructorDeclaration> node) {
     }
 
     vector<shared_ptr<SelectorDeclaration>> &selectors = node->getSelectors();
-    for (vector<shared_ptr<SelectorDeclaration>>::iterator it = selectors.begin();
-         it != selectors.end(); it++) {
-        visit0((*it));
+    for (auto selIt = selectors.begin(); selIt != selectors.end(); selIt++) {
+        visit0((*selIt));
     }
 }
 
@@ -1221,10 +1222,10 @@ void SyntaxChecker::visit(shared_ptr<ParametricDatatypeDeclaration> node) {
 
     std::unordered_map<std::string, bool> paramUsage;
 
-    for (vector<shared_ptr<ConstructorDeclaration>>::iterator consit = node->getConstructors().begin();
-         consit != node->getConstructors().end(); consit++) {
-        for (vector<shared_ptr<SelectorDeclaration>>::iterator selit = (*consit)->getSelectors().begin();
-             selit != (*consit)->getSelectors().end(); selit++) {
+    vector<shared_ptr<ConstructorDeclaration>> constructors = node->getConstructors();
+    for (auto consIt = constructors.begin(); consIt != constructors.end(); consIt++) {
+        vector<shared_ptr<SelectorDeclaration>> selectors = (*consIt)->getSelectors();
+        for (auto selit = selectors.begin(); selit != selectors.end(); selit++) {
             err = checkParamUsage(node->getParams(), paramUsage, (*selit)->getSort(), node, err);
         }
     }
@@ -1235,9 +1236,9 @@ void SyntaxChecker::visit(shared_ptr<ParametricDatatypeDeclaration> node) {
         stringstream ss;
         ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
         bool first = true;
-        for (vector<shared_ptr<Symbol>>::iterator it = node->getParams().begin();
-             it != node->getParams().end(); it++) {
-            string pname = (*it)->toString();
+        vector<shared_ptr<Symbol>> params = node->getParams();
+        for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+            string pname = (*paramIt)->toString();
             if (paramUsage.find(pname) == paramUsage.end()) {
                 if (!first) {
                     ss << ", ";
@@ -1348,9 +1349,8 @@ void SyntaxChecker::visit(shared_ptr<LetTerm> node) {
         err = addError("Empty variable binding list for let term", node, err);
     } else {
         vector<shared_ptr<VarBinding>> &bindings = node->getBindings();
-        for (vector<shared_ptr<VarBinding>>::iterator it = bindings.begin();
-             it != bindings.end(); it++) {
-            visit0((*it));
+        for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
+            visit0((*bindingIt));
         }
     }
 
@@ -1373,9 +1373,8 @@ void SyntaxChecker::visit(shared_ptr<ForallTerm> node) {
         err = addError("Empty variable binding list for forall term", node, err);
     } else {
         vector<shared_ptr<SortedVariable>> &bindings = node->getBindings();
-        for (vector<shared_ptr<SortedVariable>>::iterator it = bindings.begin();
-             it != bindings.end(); it++) {
-            visit0((*it));
+        for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
+            visit0((*bindingIt));
         }
     }
 
@@ -1398,9 +1397,8 @@ void SyntaxChecker::visit(shared_ptr<ExistsTerm> node) {
         err = addError("Empty variable binding list for exists term", node, err);
     } else {
         vector<shared_ptr<SortedVariable>> &bindings = node->getBindings();
-        for (vector<shared_ptr<SortedVariable>>::iterator it = bindings.begin();
-             it != bindings.end(); it++) {
-            visit0((*it));
+        for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
+            visit0((*bindingIt));
         }
     }
 
@@ -1429,9 +1427,8 @@ void SyntaxChecker::visit(shared_ptr<MatchTerm> node) {
         err = addError("Empty cases list for match term", node, err);
     } else {
         vector<shared_ptr<MatchCase>> &cases = node->getCases();
-        for (vector<shared_ptr<MatchCase>>::iterator it = cases.begin();
-             it != cases.end(); it++) {
-            visit0((*it));
+        for (auto caseIt = cases.begin(); caseIt != cases.end(); caseIt++) {
+            visit0((*caseIt));
         }
     }
 }
@@ -1501,8 +1498,8 @@ void SyntaxChecker::visit(shared_ptr<VarBinding> node) {
 
 string SyntaxChecker::getErrors() {
     stringstream ss;
-    for (vector<shared_ptr<SyntaxCheckError>>::iterator it = errors.begin(); it != errors.end(); it++) {
-        shared_ptr<SyntaxCheckError> err = *it;
+    for (auto errIt = errors.begin(); errIt != errors.end(); errIt++) {
+        shared_ptr<SyntaxCheckError> err = *errIt;
         if (err->node) {
             ss << err->node->getRowLeft() << ":" << err->node->getColLeft()
             << " - " << err->node->getRowRight() << ":" << err->node->getColRight() << "   ";
@@ -1517,7 +1514,7 @@ string SyntaxChecker::getErrors() {
         }
 
         ss << endl;
-        for (vector<string>::iterator itt = err->messages.begin(); itt != err->messages.end(); itt++) {
+        for (auto itt = err->messages.begin(); itt != err->messages.end(); itt++) {
             ss << "\t" << *itt << "." << endl;
         }
 

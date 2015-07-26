@@ -31,8 +31,8 @@ void QualifiedPattern::accept(AstVisitor0* visitor) {
 string QualifiedPattern::toString() {
     stringstream ss;
     ss << "(" << constructor->toString();
-    for(auto it : symbols) {
-        ss << " " << it->toString();
+    for (auto symbolIt = symbols.begin(); symbolIt != symbols.end(); symbolIt++) {
+        ss << " " << (*symbolIt)->toString();
     }
     ss << ")";
     return ss.str();

@@ -20,10 +20,10 @@ string Theory::toString() {
     stringstream ss;
     ss << "(theory  " << name->toString() << " ";
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        if(it != attributes.begin())
+    for (auto attrIt = attributes.begin(); attrIt != attributes.end(); attrIt++) {
+        if(attrIt != attributes.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*attrIt)->toString();
     }
 
     ss << ")";

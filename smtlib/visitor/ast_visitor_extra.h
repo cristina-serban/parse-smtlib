@@ -3,7 +3,7 @@
 
 #include "ast_visitor.h"
 #include "../ast/ast_abstract.h"
-#include "../util/smt_logger.h"
+#include "../util/logger.h"
 
 namespace smtlib {
     namespace ast {

@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "smt_logger.h"
+#include "logger.h"
 
 using namespace smtlib;
 

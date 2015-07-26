@@ -40,10 +40,10 @@ string CheckSatAssumCommand::toString() {
     stringstream ss;
     ss << "(check-sat-assuming (";
 
-    for (vector<shared_ptr<PropLiteral>>::iterator it = assumptions.begin(); it != assumptions.end(); it++) {
-        if(it != assumptions.begin())
+    for (auto assumIt = assumptions.begin(); assumIt != assumptions.end(); assumIt++) {
+        if(assumIt != assumptions.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*assumIt)->toString();
     }
 
     ss << "))";
@@ -90,23 +90,23 @@ string DeclareDatatypesCommand::toString() {
     ss << "( declare-datatypes (";
 
     bool first = true;
-    for(auto it : sorts) {
+    for (auto sortIt = sorts.begin(); sortIt != sorts.end(); sortIt++) {
         if(first)
             first = false;
         else
             ss << " ";
-        ss << it->toString();
+        ss << (*sortIt)->toString();
     }
 
     ss << ") (";
 
     first = true;
-    for(auto it : declarations) {
+    for (auto declIt = declarations.begin(); declIt != declarations.end(); declIt++) {
         if(first)
             first = false;
         else
             ss << " ";
-        ss << it->toString();
+        ss << (*declIt)->toString();
     }
 
     return ss.str();
@@ -128,10 +128,10 @@ string DeclareFunCommand::toString() {
     stringstream ss;
     ss << "(declare-fun " << symbol->toString() << " (";
 
-    for (vector<shared_ptr<Sort>>::iterator it = params.begin(); it != params.end(); it++) {
-        if(it != params.begin())
+    for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+        if(paramIt != params.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*paramIt)->toString();
     }
 
     ss << ") " << sort->toString() << ")";
@@ -205,18 +205,17 @@ void DefineFunsRecCommand::accept(AstVisitor0* visitor){
 string DefineFunsRecCommand::toString() {
     stringstream ss;
     ss << "(define-funs-rec (";
-    for (vector<shared_ptr<FunctionDeclaration>>::iterator it = declarations.begin();
-         it != declarations.end(); it++) {
-        if(it != declarations.begin())
+    for (auto declIt = declarations.begin(); declIt != declarations.end(); declIt++) {
+        if(declIt != declarations.begin())
             ss << " ";
-        ss << "(" << (*it)->toString() << ")";
+        ss << "(" << (*declIt)->toString() << ")";
     }
 
     ss << ") (";
-    for (vector<shared_ptr<Term>>::iterator it = bodies.begin(); it != bodies.end(); it++) {
-        if(it != bodies.begin())
+    for (auto bodyIt = bodies.begin(); bodyIt != bodies.end(); bodyIt++) {
+        if(bodyIt != bodies.begin())
             ss << " ";
-        ss << "(" << (*it)->toString() << ")";
+        ss << "(" << (*bodyIt)->toString() << ")";
     }
 
     ss << "))";
@@ -239,10 +238,10 @@ void DefineSortCommand::accept(AstVisitor0* visitor){
 string DefineSortCommand::toString() {
     stringstream ss;
     ss << "(define-sort " << symbol->toString() << " (";
-    for (vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
-        if(it != params.begin())
+    for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+        if(paramIt != params.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*paramIt)->toString();
     }
 
     ss << ") " << sort->toString() << ")";
@@ -369,10 +368,10 @@ string GetValueCommand::toString() {
     stringstream ss;
     ss << "(get-value (";
 
-    for(vector<shared_ptr<Term>>::iterator it = terms.begin(); it != terms.end(); it++) {
-        if(it != terms.begin())
+    for (auto termIt = terms.begin(); termIt != terms.end(); termIt++) {
+        if(termIt != terms.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*termIt)->toString();
     }
 
     ss << "))";

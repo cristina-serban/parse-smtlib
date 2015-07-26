@@ -21,8 +21,8 @@ string SortSymbolDeclaration::toString() {
     stringstream ss;
     ss << "(" << identifier->toString() << " " << arity->toString();
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-         ss << " " << (*it)->toString();
+    for (auto attrIt = attributes.begin(); attrIt != attributes.end(); attrIt++) {
+         ss << " " << (*attrIt)->toString();
     }
 
     ss << ")";
@@ -46,8 +46,8 @@ string SpecConstFunDeclaration::toString() {
     stringstream ss;
     ss << "(" << constant->toString() << " " << sort->toString();
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        ss << " " << (*it)->toString();
+    for (auto attrIt = attributes.begin(); attrIt != attributes.end(); attrIt++) {
+        ss << " " << (*attrIt)->toString();
     }
 
     ss << ")";
@@ -72,8 +72,8 @@ string MetaSpecConstFunDeclaration::toString() {
     stringstream ss;
     ss << "(" << constant->toString() << " " << sort->toString();
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        ss << " " << (*it)->toString();
+    for (auto attrIt = attributes.begin(); attrIt != attributes.end(); attrIt++) {
+        ss << " " << (*attrIt)->toString();
     }
 
     ss << ")";
@@ -106,12 +106,12 @@ string SimpleFunDeclaration::toString() {
     stringstream ss;
     ss << "(" << identifier->toString();
 
-    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
-        ss << " " << (*it)->toString();
+    for (auto sigIt = signature.begin(); sigIt != signature.end(); sigIt++) {
+        ss << " " << (*sigIt)->toString();
     }
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        ss << " " << (*it)->toString();
+    for (auto attrIt = attributes.begin(); attrIt != attributes.end(); attrIt++) {
+        ss << " " << (*attrIt)->toString();
     }
 
     ss << ")";
@@ -146,19 +146,19 @@ void ParametricFunDeclaration::accept(AstVisitor0* visitor){
 string ParametricFunDeclaration::toString() {
     stringstream ss;
     ss << "(par (";
-    for(vector<shared_ptr<Symbol>>::iterator it = params.begin(); it != params.end(); it++) {
-        if(it != params.begin())
+    for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
+        if(paramIt != params.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*paramIt)->toString();
     }
 
     ss << ") (" << identifier->toString();
-    for(vector<shared_ptr<Sort>>::iterator it = signature.begin(); it != signature.end(); it++) {
-        ss << " " << (*it)->toString();
+    for (auto sigIt = signature.begin(); sigIt != signature.end(); sigIt++) {
+        ss << " " << (*sigIt)->toString();
     }
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        ss << " " << (*it)->toString();
+    for (auto attrIt = attributes.begin(); attrIt != attributes.end(); attrIt++) {
+        ss << " " << (*attrIt)->toString();
     }
 
     ss << "))";

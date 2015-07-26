@@ -6,7 +6,7 @@
 #include "../ast/ast_symbol_decl.h"
 #include "../ast/ast_command.h"
 #include "../parser/smt_symbol_stack.h"
-#include "../util/smt_logger.h"
+#include "../util/logger.h"
 
 #include <map>
 

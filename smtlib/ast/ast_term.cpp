@@ -20,10 +20,10 @@ string QualifiedTerm::toString() {
     stringstream ss;
     ss << "(" << identifier->toString() << " ";
 
-    for(vector<shared_ptr<Term>>::iterator it = terms.begin(); it != terms.end(); it++) {
-        if(it != terms.begin())
+    for (auto termIt = terms.begin(); termIt != terms.end(); termIt++) {
+        if(termIt != terms.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*termIt)->toString();
     }
 
     ss << ")";
@@ -46,10 +46,10 @@ string LetTerm::toString() {
     stringstream ss;
     ss << "(let (";
 
-    for(vector<shared_ptr<VarBinding>>::iterator it = bindings.begin(); it != bindings.end(); it++) {
-        if(it != bindings.begin())
+    for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
+        if(bindingIt != bindings.begin())
             ss << " ";
-        ss << "(" << (*it)->toString() << ")";
+        ss << "(" << (*bindingIt)->toString() << ")";
     }
 
     ss << ") " << term->toString() << ")";
@@ -72,10 +72,10 @@ string ForallTerm::toString() {
     stringstream ss;
     ss << "(forall (";
 
-    for(vector<shared_ptr<SortedVariable>>::iterator it = bindings.begin(); it != bindings.end(); it++) {
-        if(it != bindings.begin())
+    for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
+        if(bindingIt != bindings.begin())
             ss << " ";
-        ss << "(" << (*it)->toString() << ")";
+        ss << "(" << (*bindingIt)->toString() << ")";
     }
 
     ss << ") " << term->toString() << ")";
@@ -98,10 +98,10 @@ string ExistsTerm::toString() {
     stringstream ss;
     ss << "(exists (";
 
-    for(vector<shared_ptr<SortedVariable>>::iterator it = bindings.begin(); it != bindings.end(); it++) {
-        if(it != bindings.begin())
+    for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
+        if(bindingIt != bindings.begin())
             ss << " ";
-        ss << "(" << (*it)->toString() << ")";
+        ss << "(" << (*bindingIt)->toString() << ")";
     }
 
     ss << ") " << term->toString() << ")";
@@ -122,8 +122,8 @@ void MatchTerm::accept(AstVisitor0* visitor) {
 std::string MatchTerm::toString() {
     stringstream ss;
     ss << "(match " << term->toString();
-    for(auto it : cases) {
-        ss << " " << it->toString();
+    for (auto caseIt = cases.begin(); caseIt != cases.end(); caseIt++) {
+        ss << " " << (*caseIt)->toString();
     }
     ss << ")";
     return ss.str();
@@ -144,10 +144,10 @@ string AnnotatedTerm::toString() {
     stringstream ss;
     ss << "( ! " << term->toString() << " ";
 
-    for(vector<shared_ptr<Attribute>>::iterator it = attributes.begin(); it != attributes.end(); it++) {
-        if(it != attributes.begin())
+    for (auto attrIt = attributes.begin(); attrIt != attributes.end(); attrIt++) {
+        if(attrIt != attributes.begin())
             ss << " ";
-        ss << (*it)->toString();
+        ss << (*attrIt)->toString();
     }
 
     ss << ")";

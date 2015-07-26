@@ -14,8 +14,8 @@ void Script::accept(AstVisitor0* visitor){
 
 string Script::toString() {
     stringstream ss;
-    for(vector<shared_ptr<Command>>::iterator it = commands.begin(); it != commands.end(); it++) {
-        ss << (*it)->toString() << "\n";
+    for (auto commandIt = commands.begin(); commandIt != commands.end(); commandIt++) {
+        ss << (*commandIt)->toString() << "\n";
     }
     return ss.str();
 }
