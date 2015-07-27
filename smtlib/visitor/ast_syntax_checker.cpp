@@ -8,6 +8,7 @@
 #include "../ast/ast_term.h"
 #include "../ast/ast_theory.h"
 #include "../util/global_settings.h"
+#include "../util/error_messages.h"
 
 #include <iostream>
 #include <memory>
@@ -15,6 +16,7 @@
 #include <vector>
 
 using namespace std;
+using namespace smtlib;
 using namespace smtlib::ast;
 
 shared_ptr<SyntaxChecker::SyntaxCheckError>
@@ -50,8 +52,7 @@ SyntaxChecker::checkParamUsage(vector<shared_ptr<Symbol>> &params,
         paramUsage[name] = true;
 
         if (!sort->getArgs().empty()) {
-            err = addError(sort->toString() + ": '" + name +
-                           "' is a sort parameter - it should have an arity of 0 ", source, err);
+            err = addError(ErrorMessages::buildSortParamArity(sort->toString(), name), source, err);
         }
     } else {
         vector<shared_ptr<Sort>> argSorts = sort->getArgs();
@@ -67,12 +68,12 @@ void SyntaxChecker::visit(shared_ptr<Attribute> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getKeyword()) {
-        err = addError("Missing keyword from attribute", node, err);
+        err = addError(ErrorMessages::ERR_ATTR_MISSING_KEYWORD, node, err);
     } else {
         visit0(node->getKeyword());
     }
@@ -84,7 +85,7 @@ void SyntaxChecker::visit(shared_ptr<CompAttributeValue> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
@@ -95,12 +96,12 @@ void SyntaxChecker::visit(shared_ptr<Symbol> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!regex_match(node->getValue(), regexSymbol)) {
-        err = addError("Malformed symbol", node, err);
+        err = addError(ErrorMessages::ERR_SYMBOL_MALFORMED, node, err);
     }
 }
 
@@ -108,12 +109,12 @@ void SyntaxChecker::visit(shared_ptr<Keyword> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!regex_match(node->getValue(), regexKeyword)) {
-        err = addError("Malformed keyword", node, err);
+        err = addError(ErrorMessages::ERR_KEYWORD_MALFORMED, node, err);
     }
 }
 
@@ -121,7 +122,7 @@ void SyntaxChecker::visit(shared_ptr<MetaSpecConstant> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -130,7 +131,7 @@ void SyntaxChecker::visit(shared_ptr<BooleanValue> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -139,12 +140,12 @@ void SyntaxChecker::visit(shared_ptr<PropLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from propositional literal", node, err);
+        err = addError(ErrorMessages::ERR_PROP_LIT_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
@@ -154,12 +155,12 @@ void SyntaxChecker::visit(shared_ptr<AssertCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing term from assert command", node, err);
+        err = addError(ErrorMessages::ERR_ASSERT_MISSING_TERM, node, err);
     } else {
         visit0(node->getTerm());
     }
@@ -169,7 +170,7 @@ void SyntaxChecker::visit(shared_ptr<CheckSatCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -178,7 +179,7 @@ void SyntaxChecker::visit(shared_ptr<CheckSatAssumCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
@@ -189,18 +190,18 @@ void SyntaxChecker::visit(shared_ptr<DeclareConstCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing constant name from declare-const command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_CONST_MISSING_NAME, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getSort()) {
-        err = addError("Missing constant sort from declare-const command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_CONST_MISSING_SORT, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -211,18 +212,18 @@ void SyntaxChecker::visit(shared_ptr<DeclareDatatypeCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing datatype name from declare-datatype command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_DATATYPE_MISSING_NAME, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getDeclaration()) {
-        err = addError("Missing datatype declaration from declare-datatype command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_DATATYPE_MISSING_DECL, node, err);
     } else {
         visit0(node->getDeclaration());
     }
@@ -232,44 +233,38 @@ void SyntaxChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getSorts().empty()) {
-        err = addError("Missing sort declarations from declare-datatypes command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_DATATYPES_MISSING_SORTS, node, err);
     }
 
     if (node->getDeclarations().empty()) {
-        err = addError("Missing datatype declarations from declare-datatypes command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_DATATYPES_MISSING_DECLS, node, err);
     }
 
     unsigned long sortCount = node->getSorts().size();
     unsigned long declCount = node->getDeclarations().size();
 
     if (node->getSorts().size() != node->getDeclarations().size()) {
-        stringstream ss;
-        ss << "Number of sort declarations (" << sortCount
-        << ") is not equal to the number of datatype declarations ("
-        << declCount << ") in declare-datatypes command";
-        err = addError(ss.str(), node, err);
+        err = addError(ErrorMessages::buildDeclDatatypesCount(sortCount, declCount), node, err);
     }
 
     unsigned long minCount = sortCount < declCount ? sortCount : declCount;
     for (unsigned long i = 0; i < minCount; i++) {
-        long arity = node->getSorts()[i]->getArity()->getValue();
-        long params = 0;
+        unsigned long arity = (unsigned long)node->getSorts()[i]->getArity()->getValue();
+        unsigned long paramCount = 0;
         shared_ptr<ParametricDatatypeDeclaration> decl =
                 dynamic_pointer_cast<ParametricDatatypeDeclaration>(node->getDeclarations()[i]);
         if (decl) {
-            params = decl->getParams().size();
+            paramCount = decl->getParams().size();
         }
 
-        if (arity != params) {
-            stringstream ss;
-            ss << "Datatype '" << node->getSorts()[i]->getSymbol()->toString() << "' has an arity of " << arity
-            << " but its declaration has " << params << " parameter" << (params == 1 ? "" : "s");
-            err = addError(ss.str(), node, err);
+        if (arity != paramCount) {
+            err = addError(ErrorMessages::buildDeclDatatypeArity(
+                    node->getSorts()[i]->getSymbol()->toString(), arity, paramCount), node, err);
         }
     }
 
@@ -282,12 +277,12 @@ void SyntaxChecker::visit(shared_ptr<DeclareFunCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing function name from declare-fun command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_FUN_MISSING_NAME, node, err);
     } else {
         visit0(node->getSymbol());
     }
@@ -295,7 +290,7 @@ void SyntaxChecker::visit(shared_ptr<DeclareFunCommand> node) {
     visit0(node->getParams());
 
     if (!node->getSort()) {
-        err = addError("Missing function sort from declare-fun command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_FUN_MISSING_RET, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -305,18 +300,18 @@ void SyntaxChecker::visit(shared_ptr<DeclareSortCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing sort name from declare-sort command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_SORT_MISSING_NAME, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getArity()) {
-        err = addError("Missing sort arity from declare-sort command", node, err);
+        err = addError(ErrorMessages::ERR_DECL_SORT_MISSING_ARITY, node, err);
     } else {
         visit0(node->getArity());
     }
@@ -326,12 +321,12 @@ void SyntaxChecker::visit(shared_ptr<DefineFunCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getDefinition()) {
-        err = addError("Missing function definition from define-fun command", node, err);
+        err = addError(ErrorMessages::ERR_DEF_FUN_MISSING_DEF, node, err);
     } else {
         visit0(node->getDefinition());
     }
@@ -341,12 +336,12 @@ void SyntaxChecker::visit(shared_ptr<DefineFunRecCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getDefinition()) {
-        err = addError("Missing function definition from define-fun-rec command", node, err);
+        err = addError(ErrorMessages::ERR_DEF_FUN_REC_MISSING_DEF, node, err);
     } else {
         visit0(node->getDefinition());
     }
@@ -356,16 +351,16 @@ void SyntaxChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getDeclarations().empty()) {
-        err = addError("Missing function declarations from define-funs-rec command", node, err);
+        err = addError(ErrorMessages::ERR_DEF_FUNS_REC_EMPTY_DECLS, node, err);
     }
 
     if (node->getBodies().empty()) {
-        err = addError("Missing function bodies from define-funs-rec command", node, err);
+        err = addError(ErrorMessages::ERR_DEF_FUNS_REC_EMPTY_BODIES, node, err);
     }
 
     unsigned long declCount = node->getDeclarations().size();
@@ -373,11 +368,7 @@ void SyntaxChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
 
 
     if (declCount != bodyCount) {
-        stringstream ss;
-        ss << "Number of function declarations (" << declCount
-        << ") is not equal to the number of function bodies ("
-        << bodyCount << ") in define-funs-rec command";
-        err = addError(ss.str(), node, err);
+        err = addError(ErrorMessages::buildDefFunsRecCount(declCount, bodyCount), node, err);
     }
 
     visit0(node->getDeclarations());
@@ -389,13 +380,13 @@ void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     // Check symbol
     if (!node->getSymbol()) {
-        err = addError("Missing sort name from define-sort command", node, err);
+        err = addError(ErrorMessages::ERR_DEF_SORT_MISSING_NAME, node, err);
     } else {
         visit0(node->getSymbol());
     }
@@ -405,7 +396,7 @@ void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
 
     // Check definition
     if (!node->getSort()) {
-        err = addError("Missing sort definition from define-sort command", node, err);
+        err = addError(ErrorMessages::ERR_DEF_SORT_MISSING_DEF, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -415,26 +406,15 @@ void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
     err = checkParamUsage(node->getParams(), paramUsage, node->getSort(), node, err);
 
     if (paramUsage.size() != node->getParams().size()) {
-        long diff = node->getParams().size() - paramUsage.size();
-
-        stringstream ss;
-        ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
-
-        bool first = true;
+        vector<string> unusedParams;
         vector<shared_ptr<Symbol>> params = node->getParams();
         for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
             string pname = (*paramIt)->toString();
             if (paramUsage.find(pname) == paramUsage.end()) {
-                if (!first) {
-                    ss << ", ";
-                } else {
-                    first = false;
-                }
-                ss << "'" << pname << "'";
+                unusedParams.push_back("'" + pname + "'");
             }
         }
-        ss << ((diff == 1) ? " is " : " are ") << "not used in sort definition";
-        err = addError(ss.str(), node, err);
+        err = addError(ErrorMessages::buildSortDefUnusedSortParams(unusedParams), node, err);
     }
 }
 
@@ -442,12 +422,12 @@ void SyntaxChecker::visit(shared_ptr<EchoCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getMessage() == "") {
-        err = addError("Attempting to echo empty string", node, err);
+        err = addError(ErrorMessages::ERR_ECHO_EMPTY_STRING, node, err);
     }
 
 }
@@ -456,7 +436,7 @@ void SyntaxChecker::visit(shared_ptr<ExitCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -465,7 +445,7 @@ void SyntaxChecker::visit(shared_ptr<GetAssertsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -474,7 +454,7 @@ void SyntaxChecker::visit(shared_ptr<GetAssignsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -483,12 +463,12 @@ void SyntaxChecker::visit(shared_ptr<GetInfoCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getFlag()) {
-        err = addError("Missing flag in get-info command", node, err);
+        err = addError(ErrorMessages::ERR_GET_INFO_MISSING_FLAG, node, err);
     } else {
         visit0(node->getFlag());
     }
@@ -498,7 +478,7 @@ void SyntaxChecker::visit(shared_ptr<GetModelCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -507,12 +487,12 @@ void SyntaxChecker::visit(shared_ptr<GetOptionCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getOption()) {
-        err = addError("Missing option in get-option command", node, err);
+        err = addError(ErrorMessages::ERR_GET_OPT_MISSING_OPT, node, err);
     } else {
         visit0(node->getOption());
     }
@@ -522,7 +502,7 @@ void SyntaxChecker::visit(shared_ptr<GetProofCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -531,7 +511,7 @@ void SyntaxChecker::visit(shared_ptr<GetUnsatAssumsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -540,7 +520,7 @@ void SyntaxChecker::visit(shared_ptr<GetUnsatCoreCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -549,12 +529,12 @@ void SyntaxChecker::visit(shared_ptr<GetValueCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getTerms().empty()) {
-        err = addError("Missing terms in get-value command", node, err);
+        err = addError(ErrorMessages::ERR_GET_VALUE_EMPTY_TERMS, node, err);
     } else {
         visit0(node->getTerms());
     }
@@ -564,12 +544,12 @@ void SyntaxChecker::visit(shared_ptr<PopCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getNumeral()) {
-        err = addError("Missing numeral in pop command", node, err);
+        err = addError(ErrorMessages::ERR_POP_MISSING_NUMERAL, node, err);
     } else {
         visit0(node->getNumeral());
     }
@@ -579,12 +559,12 @@ void SyntaxChecker::visit(shared_ptr<PushCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getNumeral()) {
-        err = addError("Missing numeral in push command", node, err);
+        err = addError(ErrorMessages::ERR_PUSH_MISSING_NUMERAL, node, err);
     } else {
         visit0(node->getNumeral());
     }
@@ -594,7 +574,7 @@ void SyntaxChecker::visit(shared_ptr<ResetCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -603,7 +583,7 @@ void SyntaxChecker::visit(shared_ptr<ResetAssertsCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -612,12 +592,12 @@ void SyntaxChecker::visit(shared_ptr<SetInfoCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getInfo()) {
-        err = addError("Missing info in set-info command", node, err);
+        err = addError(ErrorMessages::ERR_SET_INFO_MISSING_INFO, node, err);
     } else {
         visit0(node->getInfo());
     }
@@ -627,12 +607,12 @@ void SyntaxChecker::visit(shared_ptr<SetLogicCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getLogic()) {
-        err = addError("Missing logic in set-logic command", node, err);
+        err = addError(ErrorMessages::ERR_SET_LOGIC_MISSING_LOGIC, node, err);
     }
 }
 
@@ -640,23 +620,23 @@ void SyntaxChecker::visit(shared_ptr<SetOptionCommand> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getOption()) {
-        err = addError("Missing option in set-option command", node, err);
+        err = addError(ErrorMessages::ERR_SET_OPT_MISSING_OPT, node, err);
     } else {
         shared_ptr<Attribute> option = node->getOption();
         if ((option->getKeyword()->getValue() == KW_DIAG_OUTPUT_CHANNEL
              || option->getKeyword()->getValue() == KW_REGULAR_OUTPUT_CHANNEL)
             && !dynamic_cast<StringLiteral *>(option->getValue().get())) {
-            err = addError("Option value should be string literal", option, err);
+            err = addError(ErrorMessages::ERR_OPT_VALUE_STRING, option, err);
         } else if ((option->getKeyword()->getValue() == KW_RANDOM_SEED
                     || option->getKeyword()->getValue() == KW_VERBOSITY
                     || option->getKeyword()->getValue() == KW_REPROD_RESOURCE_LIMIT)
                    && !dynamic_cast<NumeralLiteral *>(option->getValue().get())) {
-            err = addError("Option value should be numeral literal", option, err);
+            err = addError(ErrorMessages::ERR_OPT_VALUE_NUMERAL, option, err);
         } else if ((option->getKeyword()->getValue() == KW_EXPAND_DEFS
                     || option->getKeyword()->getValue() == KW_GLOBAL_DECLS
                     || option->getKeyword()->getValue() == KW_INTERACTIVE_MODE
@@ -669,7 +649,7 @@ void SyntaxChecker::visit(shared_ptr<SetOptionCommand> node) {
                     || option->getKeyword()->getValue() == KW_PROD_UNSAT_CORES)) {
             if (!option->getValue() || (option->getValue()->toString() != CONST_TRUE
                                         && option->getValue()->toString() != CONST_FALSE)) {
-                err = addError("Option value should be boolean", option, err);
+                err = addError(ErrorMessages::ERR_OPT_VALUE_BOOLEAN, option, err);
             }
         }
 
@@ -681,12 +661,12 @@ void SyntaxChecker::visit(shared_ptr<FunctionDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing name from function declaration", node, err);
+        err = addError(ErrorMessages::ERR_FUN_DECL_MISSING_NAME, node, err);
     } else {
         visit0(node->getSymbol());
     }
@@ -694,7 +674,7 @@ void SyntaxChecker::visit(shared_ptr<FunctionDeclaration> node) {
     visit0(node->getParams());
 
     if (!node->getSort()) {
-        err = addError("Missing return sort from function declaration", node, err);
+        err = addError(ErrorMessages::ERR_FUN_DECL_MISSING_RET, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -704,18 +684,18 @@ void SyntaxChecker::visit(shared_ptr<FunctionDefinition> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSignature()) {
-        err = addError("Missing signature from function definition", node, err);
+        err = addError(ErrorMessages::ERR_FUN_DEF_MISSING_SIG, node, err);
     } else {
         visit0(node->getSignature());
     }
 
     if (!node->getBody()) {
-        err = addError("Missing body from function definition", node, err);
+        err = addError(ErrorMessages::ERR_FUN_DEF_MISSING_BODY, node, err);
     } else {
         visit0(node->getBody());
     }
@@ -725,18 +705,18 @@ void SyntaxChecker::visit(shared_ptr<SimpleIdentifier> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from identifier", node, err);
+        err = addError(ErrorMessages::ERR_ID_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (node->isIndexed() && node->getIndices().empty()) {
-        err = addError("Indexed identifier has no indices", node, err);
+        err = addError(ErrorMessages::ERR_ID_EMPTY_INDICES, node, err);
     }
 
     visit0(node->getIndices());
@@ -746,18 +726,18 @@ void SyntaxChecker::visit(shared_ptr<QualifiedIdentifier> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getIdentifier()) {
-        err = addError("Missing identifier from qualified identifier", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_ID_MISSING_ID, node, err);
     } else {
         visit0(node->getIdentifier());
     }
 
     if (!node->getSort()) {
-        err = addError("Missing sort from qualified identifier", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_ID_MISSING_SORT, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -767,7 +747,7 @@ void SyntaxChecker::visit(shared_ptr<DecimalLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -776,7 +756,7 @@ void SyntaxChecker::visit(shared_ptr<NumeralLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -785,7 +765,7 @@ void SyntaxChecker::visit(shared_ptr<StringLiteral> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 }
@@ -794,18 +774,18 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     vector<shared_ptr<Attribute>> attrs = node->getAttributes();
 
     if (!node->getName()) {
-        err = addError("Missing logic name", node, err);
+        err = addError(ErrorMessages::ERR_LOGIC_MISSING_NAME, node, err);
     }
 
     if (attrs.empty()) {
-        err = addError("Logic has no attributes", node, err);
+        err = addError(ErrorMessages::ERR_LOGIC_EMPTY_ATTRS, node, err);
     }
 
     for (auto attrIt = attrs.begin(); attrIt != attrs.end(); attrIt++) {
@@ -820,24 +800,23 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
             || attr->getKeyword()->getValue() == KW_VALUES
             || attr->getKeyword()->getValue() == KW_NOTES) {
             if (!dynamic_cast<StringLiteral *>(attr->getValue().get())) {
-                attrerr = addError("Attribute value should be string literal", attr, attrerr);
+                attrerr = addError(ErrorMessages::ERR_ATTR_VALUE_STRING, attr, attrerr);
             }
         } else if (attr->getKeyword()->getValue() == KW_THEORIES) {
             if (!dynamic_cast<CompAttributeValue *>(attr->getValue().get())) {
-                err = addError("Attribute value should be a list of theory names", attr, err);
+                err = addError(ErrorMessages::ERR_ATTR_VALUE_THEORIES, attr, err);
             } else {
                 CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 // Note: standard prohibits empty theory list, but there are logics that only use Core
                 /*if (values.empty()) {
-                    err = addError("Empty list of theory names", attr, err);
+                    err = addError(ErrorMessages::ERR_ATTR_VALUE_THEORIES_EMPTY, attr, err);
                 }*/
 
-                for (auto itt = values.begin(); itt != values.begin(); itt++) {
-                    if ((*itt) && !dynamic_cast<Symbol *>((*itt).get())) {
-                        attrerr = addError("Attribute value '" + (*itt)->toString()
-                                           + "' should be a symbol", attr, attrerr);
+                for (auto valueIt = values.begin(); valueIt != values.begin(); valueIt++) {
+                    if ((*valueIt) && !dynamic_cast<Symbol *>((*valueIt).get())) {
+                        attrerr = addError(ErrorMessages::buildAttrValueSymbol((*valueIt)->toString()), attr, attrerr);
                     }
                 }
             }
@@ -851,18 +830,18 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     vector<shared_ptr<Attribute>> attrs = node->getAttributes();
 
     if (!node->getName()) {
-        err = addError("Missing theory name", node, err);
+        err = addError(ErrorMessages::ERR_THEORY_MISSING_NAME, node, err);
     }
 
     if (attrs.empty()) {
-        err = addError("Theory has no attributes", node, err);
+        err = addError(ErrorMessages::ERR_THEORY_EMPTY_ATTRS, node, err);
     }
 
     for (auto attrIt = attrs.begin(); attrIt != attrs.end(); attrIt++) {
@@ -878,42 +857,41 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
             || attr->getKeyword()->getValue() == KW_VALUES
             || attr->getKeyword()->getValue() == KW_NOTES) {
             if (!dynamic_cast<StringLiteral *>(attr->getValue().get())) {
-                attrerr = addError("Attribute value should be string literal", attr, attrerr);
+                attrerr = addError(ErrorMessages::ERR_ATTR_VALUE_STRING, attr, attrerr);
             }
         } else if (attr->getKeyword()->getValue() == KW_SORTS) {
             if (!dynamic_cast<CompAttributeValue *>(attr->getValue().get())) {
-                attrerr = addError("Attribute value should be a list of sort symbol declarations", attr, attrerr);
+                attrerr = addError(ErrorMessages::ERR_ATTR_VALUE_SORTS, attr, attrerr);
             } else {
                 CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
-                    attrerr = addError("Empty list of sort symbol declarations", attr, attrerr);
+                    attrerr = addError(ErrorMessages::ERR_ATTR_VALUE_SORTS_EMPTY, attr, attrerr);
                 }
 
-                for (auto itt = values.begin(); itt != values.begin(); itt++) {
-                    if ((*itt) && !dynamic_cast<SortSymbolDeclaration *>((*itt).get())) {
-                        attrerr = addError("Attribute value '" + (*itt)->toString()
-                                           + "' should be a sort symbol declaration", attr, attrerr);
+                for (auto valueIt = values.begin(); valueIt != values.begin(); valueIt++) {
+                    if ((*valueIt) && !dynamic_cast<SortSymbolDeclaration *>((*valueIt).get())) {
+                        attrerr = addError(
+                                ErrorMessages::buildAttrValueSortDecl((*valueIt)->toString()), attr, attrerr);
                     }
                 }
             }
         } else if (attr->getKeyword()->getValue() == KW_FUNS) {
             if (!dynamic_cast<CompAttributeValue *>(attr->getValue().get())) {
-                attrerr = addError("Attribute value should be a list of function symbol declarations", attr, attrerr);
+                attrerr = addError(ErrorMessages::ERR_ATTR_VALUE_FUNS, attr, attrerr);
             } else {
                 CompAttributeValue *val = dynamic_cast<CompAttributeValue *>(attr->getValue().get());
                 vector<shared_ptr<AttributeValue>> values = val->getValues();
 
                 if (values.empty()) {
-                    attrerr = addError("Empty list of function symbol declarations", attr, attrerr);
+                    attrerr = addError(ErrorMessages::ERR_ATTR_VALUE_FUNS_EMPTY, attr, attrerr);
                 }
 
-                for (auto itt = values.begin(); itt != values.begin(); itt++) {
-                    if ((*itt) && !dynamic_cast<FunSymbolDeclaration *>((*itt).get())) {
+                for (auto valueIt = values.begin(); valueIt != values.begin(); valueIt++) {
+                    if ((*valueIt) && !dynamic_cast<FunSymbolDeclaration *>((*valueIt).get())) {
                         attrerr = addError(
-                                "Attribute value '" + (*itt)->toString() + "' should be a function symbol declaration",
-                                (*itt), attrerr);
+                                ErrorMessages::buildAttrValueFunDecl((*valueIt)->toString()), attr, attrerr);
                     }
                 }
             }
@@ -927,7 +905,7 @@ void SyntaxChecker::visit(shared_ptr<Script> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
@@ -938,18 +916,18 @@ void SyntaxChecker::visit(shared_ptr<Sort> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getIdentifier()) {
-        err = addError("Missing identifier from sort", node, err);
+        err = addError(ErrorMessages::ERR_SORT_MISSING_ID, node, err);
     } else {
         visit0(node->getIdentifier());
     }
 
     if (node->hasArgs() && node->getArgs().empty()) {
-        err = addError("Parametric sort has no arguments", node, err);
+        err = addError(ErrorMessages::ERR_SORT_EMPTY_ARGS, node, err);
     } else {
         visit0(node->getArgs());
     }
@@ -959,7 +937,7 @@ void SyntaxChecker::visit(shared_ptr<CompSExpression> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
@@ -970,18 +948,18 @@ void SyntaxChecker::visit(shared_ptr<SortSymbolDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getIdentifier()) {
-        err = addError("Missing identifier from sort symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_SORT_SYM_DECL_MISSING_ID, node, err);
     } else {
         visit0(node->getIdentifier());
     }
 
     if (!node->getArity()) {
-        err = addError("Missing arity from sort symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_SORT_SYM_DECL_MISSING_ARITY, node, err);
     } else {
         visit0(node->getArity());
     }
@@ -993,18 +971,18 @@ void SyntaxChecker::visit(shared_ptr<SpecConstFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getConstant()) {
-        err = addError("Missing constant from specification constant function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_SPEC_CONST_DECL_MISSING_CONST, node, err);
     } else {
         visit0(node->getConstant());
     }
 
     if (!node->getSort()) {
-        err = addError("Missing sort from specification function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_SPEC_CONST_DECL_MISSING_SORT, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -1016,18 +994,18 @@ void SyntaxChecker::visit(shared_ptr<MetaSpecConstFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getConstant()) {
-        err = addError("Missing constant from meta specification constant function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_META_SPEC_CONST_DECL_MISSING_CONST, node, err);
     } else {
         visit0(node->getConstant());
     }
 
     if (!node->getSort()) {
-        err = addError("Missing sort from meta specification constant function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_META_SPEC_CONST_DECL_MISSING_SORT, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -1039,18 +1017,18 @@ void SyntaxChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getIdentifier()) {
-        err = addError("Missing identifier from function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_FUN_SYM_DECL_MISSING_ID, node, err);
     } else {
         visit0(node->getIdentifier());
     }
 
     if (node->getSignature().empty()) {
-        err = addError("Empty signature for function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_FUN_SYM_DECL_EMPTY_SIG, node, err);
     } else {
         visit0(node->getSignature());
     }
@@ -1062,27 +1040,27 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     // Check parameter list
     if (node->getParams().empty()) {
-        err = addError("Empty parameter list for parametric function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_PARAM_FUN_SYM_DECL_EMPTY_PARAMS, node, err);
     } else {
         visit0(node->getParams());
     }
 
     // Check identifier
     if (!node->getIdentifier()) {
-        err = addError("Missing identifier from parametric function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_PARAM_FUN_SYM_DECL_MISSING_ID, node, err);
     } else {
         visit0(node->getIdentifier());
     }
 
     // Check signature
     if (node->getSignature().empty()) {
-        err = addError("Empty signature for parametric function symbol declaration", node, err);
+        err = addError(ErrorMessages::ERR_PARAM_FUN_SYM_DECL_EMPTY_SIG, node, err);
     } else {
         visit0(node->getSignature());
     }
@@ -1095,26 +1073,16 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
     }
 
     if (paramUsage.size() != node->getParams().size()) {
-        long diff = node->getParams().size() - paramUsage.size();
-
-        stringstream ss;
-        ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
-
-        bool first = true;
+        vector<string> unusedParams;
         vector<shared_ptr<Symbol>> params = node->getParams();
         for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
             string pname = (*paramIt)->toString();
             if (paramUsage.find(pname) == paramUsage.end()) {
-                if (!first) {
-                    ss << ", ";
-                } else {
-                    first = false;
-                }
-                ss << "'" << pname << "'";
+                unusedParams.push_back("'" + pname + "'");
             }
         }
-        ss << ((diff == 1) ? " is " : " are ") << "not used in parametric function declaration";
-        err = addError(ss.str(), node, err);
+
+        err = addError(ErrorMessages::buildParamFunDeclUnusedSortParams(unusedParams), node, err);
     }
 
     // Check attribute list
@@ -1125,18 +1093,18 @@ void SyntaxChecker::visit(shared_ptr<SortDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from sort declaration", node, err);
+        err = addError(ErrorMessages::ERR_SORT_DECL_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getArity()) {
-        err = addError("Missing arity from sort declaration", node, err);
+        err = addError(ErrorMessages::ERR_SORT_DECL_MISSING_ARITY, node, err);
     } else {
         visit0(node->getArity());
     }
@@ -1146,18 +1114,18 @@ void SyntaxChecker::visit(shared_ptr<SelectorDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from selector declaration", node, err);
+        err = addError(ErrorMessages::ERR_SEL_DECL_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getSort()) {
-        err = addError("Missing sort from selector declaration", node, err);
+        err = addError(ErrorMessages::ERR_SEL_DECL_MISSING_SORT, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -1167,12 +1135,12 @@ void SyntaxChecker::visit(shared_ptr<ConstructorDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from constructor declaration", node, err);
+        err = addError(ErrorMessages::ERR_CONS_DECL_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
@@ -1188,12 +1156,12 @@ void SyntaxChecker::visit(shared_ptr<SimpleDatatypeDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getConstructors().empty()) {
-        err = addError("Empty constructor list for datatype declaration", node, err);
+        err = addError(ErrorMessages::ERR_DATATYPE_DECL_EMPTY_CONS, node, err);
     } else {
         visit0(node->getConstructors());
     }
@@ -1204,18 +1172,18 @@ void SyntaxChecker::visit(shared_ptr<ParametricDatatypeDeclaration> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getParams().empty()) {
-        err = addError("Empty parameter list for parametric datatype declaration", node, err);
+        err = addError(ErrorMessages::ERR_PARAM_DATATYPE_DECL_EMPTY_PARAMS, node, err);
     } else {
         visit0(node->getParams());
     }
 
     if (node->getConstructors().empty()) {
-        err = addError("Empty constructor list for parametric datatype declaration", node, err);
+        err = addError(ErrorMessages::ERR_PARAM_DATATYPE_DECL_EMPTY_CONS, node, err);
     } else {
         visit0(node->getConstructors());
     }
@@ -1231,25 +1199,15 @@ void SyntaxChecker::visit(shared_ptr<ParametricDatatypeDeclaration> node) {
     }
 
     if (paramUsage.size() != node->getParams().size()) {
-        long diff = node->getParams().size() - paramUsage.size();
-
-        stringstream ss;
-        ss << "Sort parameter" << ((diff == 1) ? " " : "s ");
-        bool first = true;
+        vector<string> unusedParams;
         vector<shared_ptr<Symbol>> params = node->getParams();
         for (auto paramIt = params.begin(); paramIt != params.end(); paramIt++) {
             string pname = (*paramIt)->toString();
             if (paramUsage.find(pname) == paramUsage.end()) {
-                if (!first) {
-                    ss << ", ";
-                } else {
-                    first = false;
-                }
-                ss << "'" << pname << "'";
+                unusedParams.push_back("'" + pname + "'");
             }
         }
-        ss << ((diff == 1) ? " is " : " are ") << "not used in parametric datatype declaration";
-        err = addError(ss.str(), node, err);
+        err = addError(ErrorMessages::buildParamDatatypeDeclUnusedSortParams(unusedParams), node, err);
     }
 }
 
@@ -1257,18 +1215,18 @@ void SyntaxChecker::visit(shared_ptr<QualifiedConstructor> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from qualified constructor", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_CONS_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getSort()) {
-        err = addError("Missing sort from qualified constructor", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_CONS_MISSING_SORT, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -1278,18 +1236,18 @@ void SyntaxChecker::visit(shared_ptr<QualifiedPattern> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getConstructor()) {
-        err = addError("Missing constructor from qualified pattern", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_PATTERN_MISSING_CONS, node, err);
     } else {
         visit0(node->getConstructor());
     }
 
     if (node->getSymbols().empty()) {
-        err = addError("Empty symbol list for qualified pattern", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_PATTERN_EMPTY_SYMS, node, err);
     } else {
         visit0(node->getSymbols());
     }
@@ -1299,18 +1257,18 @@ void SyntaxChecker::visit(shared_ptr<MatchCase> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getPattern()) {
-        err = addError("Missing pattern from match case", node, err);
+        err = addError(ErrorMessages::ERR_MATCH_CASE_MISSING_PATTERN, node, err);
     } else {
         visit0(node->getPattern());
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing term from match case", node, err);
+        err = addError(ErrorMessages::ERR_MATCH_CASE_MISSING_TERM, node, err);
     } else {
         visit0(node->getTerm());
     }
@@ -1320,18 +1278,18 @@ void SyntaxChecker::visit(shared_ptr<QualifiedTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getIdentifier()) {
-        err = addError("Missing identifier from qualified term", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_TERM_MISSING_ID, node, err);
     } else {
         visit0(node->getIdentifier());
     }
 
     if (node->getTerms().empty()) {
-        err = addError("Empty term list for qualified term", node, err);
+        err = addError(ErrorMessages::ERR_QUAL_TERM_EMPTY_TERMS, node, err);
     } else {
         visit0(node->getTerms());
     }
@@ -1341,12 +1299,12 @@ void SyntaxChecker::visit(shared_ptr<LetTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getBindings().empty()) {
-        err = addError("Empty variable binding list for let term", node, err);
+        err = addError(ErrorMessages::ERR_LET_TERM_EMPTY_VARS, node, err);
     } else {
         vector<shared_ptr<VarBinding>> &bindings = node->getBindings();
         for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
@@ -1355,7 +1313,7 @@ void SyntaxChecker::visit(shared_ptr<LetTerm> node) {
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing term from let term", node, err);
+        err = addError(ErrorMessages::ERR_LET_TERM_MISSING_TERM, node, err);
     } else {
         visit0(node->getTerm());
     }
@@ -1365,12 +1323,12 @@ void SyntaxChecker::visit(shared_ptr<ForallTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getBindings().empty()) {
-        err = addError("Empty variable binding list for forall term", node, err);
+        err = addError(ErrorMessages::ERR_FORALL_TERM_EMPTY_VARS, node, err);
     } else {
         vector<shared_ptr<SortedVariable>> &bindings = node->getBindings();
         for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
@@ -1379,7 +1337,7 @@ void SyntaxChecker::visit(shared_ptr<ForallTerm> node) {
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing term from forall term", node, err);
+        err = addError(ErrorMessages::ERR_FORALL_TERM_MISSING_TERM, node, err);
     } else {
         visit0(node->getTerm());
     }
@@ -1389,12 +1347,12 @@ void SyntaxChecker::visit(shared_ptr<ExistsTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (node->getBindings().empty()) {
-        err = addError("Empty variable binding list for exists term", node, err);
+        err = addError(ErrorMessages::ERR_EXISTS_TERM_EMPTY_VARS, node, err);
     } else {
         vector<shared_ptr<SortedVariable>> &bindings = node->getBindings();
         for (auto bindingIt = bindings.begin(); bindingIt != bindings.end(); bindingIt++) {
@@ -1403,7 +1361,7 @@ void SyntaxChecker::visit(shared_ptr<ExistsTerm> node) {
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing term from exists term", node, err);
+        err = addError(ErrorMessages::ERR_EXISTS_TERM_MISSING_TERM, node, err);
     } else {
         visit0(node->getTerm());
     }
@@ -1413,18 +1371,18 @@ void SyntaxChecker::visit(shared_ptr<MatchTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing term from match term", node, err);
+        err = addError(ErrorMessages::ERR_MATCH_TERM_MISSING_TERM, node, err);
     } else {
         visit0(node->getTerm());
     }
 
     if (node->getCases().empty()) {
-        err = addError("Empty cases list for match term", node, err);
+        err = addError(ErrorMessages::ERR_MATCH_TERM_EMPTY_CASES, node, err);
     } else {
         vector<shared_ptr<MatchCase>> &cases = node->getCases();
         for (auto caseIt = cases.begin(); caseIt != cases.end(); caseIt++) {
@@ -1437,18 +1395,18 @@ void SyntaxChecker::visit(shared_ptr<AnnotatedTerm> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing term from annotated term", node, err);
+        err = addError(ErrorMessages::ERR_ANNOT_TERM_MISSING_TERM, node, err);
     } else {
         visit0(node->getTerm());
     }
 
     if (node->getAttributes().empty()) {
-        err = addError("Empty attribute list for annotated term", node, err);
+        err = addError(ErrorMessages::ERR_ANNOT_TERM_EMPTY_ATTRS, node, err);
     } else {
         visit0(node->getAttributes());
     }
@@ -1458,18 +1416,18 @@ void SyntaxChecker::visit(shared_ptr<SortedVariable> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from sorted variable", node, err);
+        err = addError(ErrorMessages::ERR_SORTED_VAR_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getSort()) {
-        err = addError("Missing sort from sorted variable", node, err);
+        err = addError(ErrorMessages::ERR_SORTED_VAR_MISSING_SORT, node, err);
     } else {
         visit0(node->getSort());
     }
@@ -1479,18 +1437,18 @@ void SyntaxChecker::visit(shared_ptr<VarBinding> node) {
     shared_ptr<SyntaxCheckError> err;
 
     if (!node) {
-        err = addError("Attempt to visit NULL node", node, err);
+        err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
         return;
     }
 
     if (!node->getSymbol()) {
-        err = addError("Missing symbol from variable binding", node, err);
+        err = addError(ErrorMessages::ERR_VAR_BIND_MISSING_SYMBOL, node, err);
     } else {
         visit0(node->getSymbol());
     }
 
     if (!node->getTerm()) {
-        err = addError("Missing sort from variable binding", node, err);
+        err = addError(ErrorMessages::ERR_VAR_BIND_MISSING_SORT, node, err);
     } else {
         visit0(node->getTerm());
     }
