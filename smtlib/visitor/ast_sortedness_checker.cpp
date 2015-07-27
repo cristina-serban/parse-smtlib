@@ -9,6 +9,7 @@
 #include "../util/logger.h"
 #include "../util/global_settings.h"
 #include "../util/error_messages.h"
+#include "../smt_execution.h"
 
 #include <memory>
 #include <sstream>
@@ -427,15 +428,21 @@ void SortednessChecker::loadTheory(string theory) {
 void SortednessChecker::loadTheory(string theory,
                                    std::shared_ptr<AstNode> node,
                                    std::shared_ptr<SortednessCheckError> err) {
-    Parser *parser = new Parser;
     string path = LOC_THEORIES + theory + FILE_EXT_THEORY;
-
     FILE *f = fopen(path.c_str(), "r");
     if (f) {
         fclose(f);
-        shared_ptr<AstNode> ast = parser->parse(path);
-        if (ast) {
-            visit0(ast);
+
+        shared_ptr<SmtExecutionSettings> settings = make_shared<SmtExecutionSettings>();
+        settings->setInputFromFile(path);
+        settings->setCoreTheoryEnabled(false);
+        settings->setStack(stack);
+
+        SmtExecution exec(settings);
+        if(exec.parse()) {
+            if(exec.checkSortedness()) {
+                currentTheories[theory] = true;
+            }
         } else {
             addError(ErrorMessages::buildTheoryUnloadable(theory), node, err);
         }
@@ -447,15 +454,19 @@ void SortednessChecker::loadTheory(string theory,
 void SortednessChecker::loadLogic(string logic,
                                   std::shared_ptr<AstNode> node,
                                   std::shared_ptr<SortednessCheckError> err) {
-    Parser *parser = new Parser;
     string path = LOC_LOGICS + logic + FILE_EXT_LOGIC;
-
     FILE *f = fopen(path.c_str(), "r");
     if (f) {
         fclose(f);
-        shared_ptr<AstNode> ast = parser->parse(path);
-        if (ast) {
-            visit0(ast);
+
+        shared_ptr<SmtExecutionSettings> settings = make_shared<SmtExecutionSettings>();
+        settings->setInputFromFile(path);
+        settings->setCoreTheoryEnabled(false);
+        settings->setStack(stack);
+
+        SmtExecution exec(settings);
+        if(exec.parse()) {
+            exec.checkSortedness();
         } else {
             addError(ErrorMessages::buildLogicUnloadable(logic), node, err);
         }

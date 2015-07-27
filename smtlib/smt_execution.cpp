@@ -50,7 +50,7 @@ bool SmtExecution::parse() {
         if (ast) {
             parseSuccessful = true;
         } else {
-            Logger::error("SmtExecution::parse()", "Stopped due to previous errors");
+            //Logger::error("SmtExecution::parse()", "Stopped due to previous errors");
         }
     }
 
@@ -64,7 +64,7 @@ bool SmtExecution::checkSyntax() {
     syntaxCheckAttempted = true;
 
     if(!parse()) {
-        Logger::error("SmtExecution::checkSyntax()", "Stopped due to previous errors");
+        //Logger::error("SmtExecution::checkSyntax()", "Stopped due to previous errors");
         return false;
     }
 
@@ -90,11 +90,17 @@ bool SmtExecution::checkSortedness() {
     sortednessCheckAttempted = true;
 
     if (!checkSyntax()) {
-        Logger::error("SmtExecution::checkSortedness()", "Stopped due to previous errors");
+        //Logger::error("SmtExecution::checkSortedness()", "Stopped due to previous errors");
         return false;
     }
 
-    shared_ptr<SortednessChecker> chk = make_shared<SortednessChecker>();
+    shared_ptr<SortednessChecker> chk;
+
+    if(settings->getStack())
+        chk = make_shared<SortednessChecker>();
+    else
+        chk = make_shared<SortednessChecker>(settings->getStack());
+
     if(settings->isCoreTheoryEnabled())
         chk->loadTheory(THEORY_CORE);
     sortednessCheckSuccessful = chk->check(ast);

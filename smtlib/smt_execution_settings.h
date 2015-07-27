@@ -1,7 +1,9 @@
 #ifndef PARSE_SMTLIB_SMT_EXECUTION_SETTINGS_H
 #define PARSE_SMTLIB_SMT_EXECUTION_SETTINGS_H
 
-#include"ast/ast_abstract.h"
+#include "ast/ast_abstract.h"
+#include "parser/smt_symbol_stack.h"
+
 #include <memory>
 
 namespace smtlib {
@@ -12,6 +14,7 @@ namespace smtlib {
         bool coreTheoryEnabled;
         std::string filename;
         std::shared_ptr<smtlib::ast::AstNode> ast;
+        std::shared_ptr<smtlib::SymbolStack> stack;
         InputMethod inputMethod;
     public:
         SmtExecutionSettings();
@@ -26,9 +29,13 @@ namespace smtlib {
 
         void setInputFromAst(std::shared_ptr<smtlib::ast::AstNode> ast);
 
+        void setStack(std::shared_ptr<smtlib::SymbolStack> stack) { this->stack = stack; }
+
         inline std::string getFilename() { return filename; }
 
         inline std::shared_ptr<smtlib::ast::AstNode> getAst() { return ast; }
+
+        inline std::shared_ptr<smtlib::SymbolStack> getStack() { return stack; }
 
         inline InputMethod getInputMethod() { return inputMethod; }
     };
