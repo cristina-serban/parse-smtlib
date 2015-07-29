@@ -7,9 +7,9 @@ The parsing is done using a generated parser based on Bison and Flex, which buil
 ## Requirements ##
 g++ 4.9.0 
 
-Flex 2.5
+Flex 2.5.35
 
-Bison 3.0.2
+Bison 2.5
 
 Doxygen (optional, for documentation)
 
