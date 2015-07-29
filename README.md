@@ -22,7 +22,6 @@ Because the program needs to parse the sort and function symbols from theory fil
 
 The 'Core' theory is automatically loaded. If you want to run the program without it loading 'Core' (for example, if, for some reason, you want it to parse and check the 'Core' theory file itself), specify the option `--no-core`. Example:
 ```
-#!
 .../parse-smtlib> ./parse-smtlib --no-core input/Theories/Core.smt2
 ```
 
@@ -40,7 +39,6 @@ Small things that do not quite work yet (but will):
 
 (2) If any of the files mentioned above are not there:
 ```
-#!
 .../parse-smtlib> cd parser
 .../parse-smtlib/parser> make
 .../parse-smtlib> cd ..
@@ -48,40 +46,34 @@ Small things that do not quite work yet (but will):
 
 (3) Run `make` in the root folder of the project. This creates the executable `parse-smtlib` which can parse and check a list of files. 
 ```
-#!
 .../parse-smtlib> make 
 .../parse-smtlib> ./parse-smtlib input_file_path1 input_file_path2 input_file_path3 ...
 ```
 
 (4) If you want to clean the executable or remaining files from a failed build, run `make clean`.
 ```
-#!
 .../parse-smtlib> make clean
 ```
 
 ## Recompiling and building the generated parser ##
 If the files `parser/smtlib-bison-parser.y` and `parser/smtlib-flex-lexer.l` are changed, they need to be recompiled.
 ```
-#!
 .../parse-smtlib/parser> make
 ```
 
 The generated parser can also be built and used idependently (this is not required in order to run `parse-smtlib`).
 ```
-#!
 .../parse-smtlib/parser> make parser
 .../parse-smtlib/parser> ./parser < input_file_path
 ```
 
 To erase generated code and/or the parser executable, run `make clean`.
 ```
-#!
 .../parse-smtlib/parser> make clean
 ```
 
 ## Generating documentation ##
 ```
-#!
 .../parse-smtlib> doxygen
 ```
 The documentation in `html` format is generated in the `docs` folder. Open the `docs/index.html` file in a browser.
