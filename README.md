@@ -18,7 +18,7 @@ You can parse and check any kind of SMT-LIB files - scripts, logics or theories.
 
 Well-sortedness checks use the sort and function symbols declared in the theory files, which can be found in the folders `input/Theories` and `input/Logics`. If you want to add new theories or logics, put them in those folders. Make sure the filename coincides with the name of the logic or theory and that the extension is `.smt2`.
 
-Because the program needs to parse the sort and function symbols from theory files (namely, the values of the `:sorts` and `:funs` attributes), it is unable to perform a good check on files based on infinite theories (such as BitVectors). These cases require specific implementations.
+Because the program needs to parse the sort and function symbols from theory files (namely, the values of the `:sorts` and `:funs` attributes), it is unable to perform a good check on files working with infinite theories (such as BitVectors). These cases require specific implementations.
 
 The 'Core' theory is automatically loaded. If you want to run the program without it loading 'Core' (for example, if, for some reason, you want it to parse and check the 'Core' theory file itself), specify the option `--no-core`. Example:
 ```
@@ -66,7 +66,7 @@ If the files `parser/smtlib-bison-parser.y` and `parser/smtlib-flex-lexer.l` are
 .../parse-smtlib/parser> make
 ```
 
-The generated parser can also be built and used idependently (this is not required in order to run the project).
+The generated parser can also be built and used idependently (this is not required in order to run `parse-smtlib`).
 ```
 #!
 .../parse-smtlib/parser> make parser
