@@ -5,7 +5,7 @@ Parser and well-sortedness checker for version 2.6 of SMT-LIB.
 The parsing is done using a generated parser based on Bison and Flex, which builds an abstract syntax tree. Various new operations can be implemented on this structure by extending the visitor classes provided. Additional syntax checks and well-sortedness checks are already implemented.
 
 ## Requirements ##
-g++ 4.9.2 
+g++ 4.9.0 
 
 Flex 2.5.35
 
