@@ -97,9 +97,9 @@ bool SmtExecution::checkSortedness() {
     shared_ptr<SortednessChecker> chk;
 
     if(settings->getStack())
-        chk = make_shared<SortednessChecker>();
-    else
         chk = make_shared<SortednessChecker>(settings->getStack());
+    else
+        chk = make_shared<SortednessChecker>();
 
     if(settings->isCoreTheoryEnabled())
         chk->loadTheory(THEORY_CORE);

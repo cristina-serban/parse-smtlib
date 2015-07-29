@@ -441,7 +441,7 @@ void SortednessChecker::loadTheory(string theory,
         SmtExecution exec(settings);
         if(exec.parse()) {
             if(exec.checkSortedness()) {
-                currentTheories[theory] = true;
+                //currentTheories[theory] = true;
             }
         } else {
             addError(ErrorMessages::buildTheoryUnloadable(theory), node, err);
@@ -735,7 +735,6 @@ void SortednessChecker::visit(shared_ptr<DefineFunCommand> node) {
     if (dupInfo) {
         addError(ErrorMessages::buildFunAlreadyExists(nodeInfo->name), node, dupInfo, err);
     } else {
-        bool ok = true;
         stack->push();
 
         vector<shared_ptr<SortedVariable>> &bindings = node->getDefinition()->getSignature()->getParams();
@@ -755,19 +754,16 @@ void SortednessChecker::visit(shared_ptr<DefineFunCommand> node) {
                 addError(ErrorMessages::buildFunBodyWrongSort(body->toString(), resstr, retstr,
                                                               body->getRowLeft(), body->getColLeft(),
                                                               body->getRowRight(), body->getColRight()), node);
-                ok = false;
             }
         } else {
             shared_ptr<Term> body = node->getDefinition()->getBody();
             addError(ErrorMessages::buildFunBodyNotWellSorted(body->toString(),
                                                               body->getRowLeft(), body->getColLeft(),
                                                               body->getRowRight(), body->getColRight()), node);
-            ok = false;
         }
 
         stack->pop();
-        if (ok)
-            stack->tryAdd(nodeInfo);
+        stack->tryAdd(nodeInfo);
     }
 }
 
@@ -786,7 +782,6 @@ void SortednessChecker::visit(shared_ptr<DefineFunRecCommand> node) {
     if (dupInfo) {
         addError(ErrorMessages::buildFunAlreadyExists(nodeInfo->name), node, dupInfo, err);
     } else {
-        bool ok = true;
         stack->push();
         stack->tryAdd(nodeInfo);
 
@@ -807,19 +802,16 @@ void SortednessChecker::visit(shared_ptr<DefineFunRecCommand> node) {
                 addError(ErrorMessages::buildFunBodyWrongSort(body->toString(), resstr, retstr,
                                                               body->getRowLeft(), body->getColLeft(),
                                                               body->getRowRight(), body->getColRight()), node);
-                ok = false;
             }
         } else {
             shared_ptr<Term> body = node->getDefinition()->getBody();
             addError(ErrorMessages::buildFunBodyNotWellSorted(body->toString(),
                                                               body->getRowLeft(), body->getColLeft(),
                                                               body->getRowRight(), body->getColRight()), node);
-            ok = false;
         }
 
         stack->pop();
-        if (ok)
-            stack->tryAdd(nodeInfo);
+        stack->tryAdd(nodeInfo);
     }
 }
 
@@ -848,7 +840,6 @@ void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
     }
 
     if (!dup) {
-        bool ok = true;
         stack->push();
 
         for (unsigned long i = 0; i < decls.size(); i++) {
@@ -875,7 +866,6 @@ void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
                                                                         infos[i]->body->getColLeft(),
                                                                         infos[i]->body->getRowRight(),
                                                                         infos[i]->body->getColRight()), node, err);
-                    ok = false;
                 }
             } else {
                 err = addError(ErrorMessages::buildFunBodyNotWellSorted(infos[i]->name, infos[i]->body->toString(),
@@ -883,17 +873,13 @@ void SortednessChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
                                                                         infos[i]->body->getColLeft(),
                                                                         infos[i]->body->getRowRight(),
                                                                         infos[i]->body->getColRight()), node, err);
-                ok = false;
             }
             stack->pop();
         }
 
         stack->pop();
-
-        if (ok) {
-            for (unsigned long i = 0; i < infos.size(); i++) {
-                stack->tryAdd(infos[i]);
-            }
+        for (unsigned long i = 0; i < infos.size(); i++) {
+            stack->tryAdd(infos[i]);
         }
     }
 }

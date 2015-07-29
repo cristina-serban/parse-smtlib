@@ -12,6 +12,7 @@ SmtExecutionSettings::SmtExecutionSettings(shared_ptr<SmtExecutionSettings> sett
     this->inputMethod = settings->inputMethod;
     this->filename = settings->filename;
     this->ast = settings->ast;
+    this->stack = settings->stack;
 }
 
 void SmtExecutionSettings::setInputFromFile(std::string filename) {

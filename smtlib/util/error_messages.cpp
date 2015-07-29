@@ -393,7 +393,7 @@ string ErrorMessages::buildFunUnknownDecl(string name,
                                           vector<string> argSorts) {
     stringstream ss;
     ss << "No known declaration for function '" << name << "' with parameter list (";
-    printArray(ss, argSorts, ", ");
+    printArray(ss, argSorts, " ");
     ss << ")";
 
     return ss.str();
@@ -422,9 +422,9 @@ string ErrorMessages::buildFunMultipleDecls(string name,
                                             vector<string> argSorts,
                                             vector<string> retSorts) {
     stringstream ss;
-    ss << "Multiple declarations for function '" << name << "' with parameter list ";
-    printArray(ss, argSorts, ", ");
-    ss << ". Possible return sorts: ";
+    ss << "Multiple declarations for function '" << name << "' with parameter list (";
+    printArray(ss, argSorts, " ");
+    ss << "). Possible return sorts: ";
     printArray(ss, retSorts, ", ");
 
     return ss.str();

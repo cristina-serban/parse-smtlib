@@ -2737,8 +2737,8 @@ yyreduce:
 
   case 76:
 #line 931 "smtlib-bison-parser.y" /* yacc.c:1646  */
-    { 
-			(yyval.ptr) = smt_newSymbol("not"); 
+    {
+			(yyval.ptr) = smt_newSymbol("not");
 
 			(yyloc).first_line = (yylsp[0]).first_line;
             (yyloc).first_column = (yylsp[0]).first_column;

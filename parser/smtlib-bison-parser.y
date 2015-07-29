@@ -928,8 +928,8 @@ symbol:
 		}
 |
 	NOT
-		{ 
-			$$ = smt_newSymbol("not"); 
+		{
+			$$ = smt_newSymbol("not");
 
 			@$.first_line = @1.first_line;
             @$.first_column = @1.first_column;

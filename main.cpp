@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 #include <vector>
-#include "util/logger.h"
+#include "smtlib/util/logger.h"
 #include "smtlib/smt_execution.h"
 
 using namespace std;
