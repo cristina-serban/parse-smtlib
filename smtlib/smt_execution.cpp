@@ -8,7 +8,7 @@ using namespace smtlib;
 using namespace smtlib::ast;
 
 SmtExecution::SmtExecution()
-        : settings(make_shared<SmtExecutionSettings>()) {
+        : settings(make_shared<SmtExecutionSettings>()) {ast
     parseAttempted = false;
     parseSuccessful = false;
     syntaxCheckAttempted = false;

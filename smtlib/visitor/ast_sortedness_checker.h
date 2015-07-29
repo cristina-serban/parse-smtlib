@@ -12,6 +12,8 @@
 
 namespace smtlib {
     namespace ast {
+
+        /* ============================= SortednessCheckerContext ============================= */
         class ISortCheckContext {
         public:
             virtual std::shared_ptr<SymbolStack> getStack() = 0;
@@ -37,6 +39,7 @@ namespace smtlib {
             virtual void setCurrentLogic(std::string logic);
         };
 
+        /* ================================ SortednessChecker ================================= */
         class SortednessChecker : public DummyVisitor0,
                                   public ITermSorterContext,
                                   public std::enable_shared_from_this<SortednessChecker>{

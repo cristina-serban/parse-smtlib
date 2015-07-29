@@ -8,6 +8,8 @@
 #include <string>
 
 namespace smtlib {
+
+    /* ==================================== SymbolInfo ==================================== */
     class SymbolInfo {
     public:
         std::string name;
@@ -16,6 +18,7 @@ namespace smtlib {
         virtual ~SymbolInfo();
     };
 
+    /* =================================== SortDefInfo ==================================== */
     class SortDefInfo {
     public:
         std::vector<std::shared_ptr<ast::Symbol>> params;
@@ -28,6 +31,7 @@ namespace smtlib {
         }
     };
 
+    /* ===================================== SortInfo ===================================== */
     class SortInfo : public SymbolInfo {
     public:
         unsigned long arity;
@@ -69,6 +73,7 @@ namespace smtlib {
         }
     };
 
+    /* ===================================== FunInfo ====================================== */
     class FunInfo : public SymbolInfo {
     private:
         inline void init(std::string name,
@@ -163,6 +168,7 @@ namespace smtlib {
         }
     };
 
+    /* ===================================== VarInfo ====================================== */
     class VarInfo : public SymbolInfo {
     public:
         std::shared_ptr<ast::Sort> sort;

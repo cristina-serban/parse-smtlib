@@ -12,7 +12,6 @@ using namespace smtlib::ast;
 
 void AstVisitor0::visit0(std::shared_ptr<AstNode> node) {
     if (node == NULL) {
-        // TODO: error ?
         return;
     }
     node->accept(this);
