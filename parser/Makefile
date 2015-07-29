@@ -1,3 +1,9 @@
+code:
+	bison -d smtlib-bison-parser.y -Wconflicts-sr -Wconflicts-rr
+	mv smtlib-bison-parser.tab.h smtlib-bison-parser.y.h
+	mv smtlib-bison-parser.tab.c smtlib-bison-parser.y.c
+	flex smtlib-flex-lexer.l
+	mv lex.yy.c smtlib-flex-lexer.l.c
 parser:
 	bison -d smtlib-bison-parser.y -Wconflicts-sr -Wconflicts-rr
 	mv smtlib-bison-parser.tab.h smtlib-bison-parser.y.h

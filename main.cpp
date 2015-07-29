@@ -1,7 +1,6 @@
 #include <cstring>
 #include <iostream>
 #include <memory>
-#include <string>
 #include <vector>
 #include "smtlib/util/logger.h"
 #include "smtlib/smt_execution.h"
