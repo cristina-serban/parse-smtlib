@@ -13,7 +13,6 @@ namespace smtlib {
         static void printArray(std::stringstream &ss,
                                std::vector<std::string> &array,
                                std::string separator);
-
     public:
         static const std::string ERR_NULL_NODE_VISIT;
         static const std::string ERR_ATTR_MISSING_KEYWORD;

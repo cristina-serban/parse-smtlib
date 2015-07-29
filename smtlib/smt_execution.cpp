@@ -1,5 +1,6 @@
 #include "smt_execution.h"
 #include "visitor/ast_sortedness_checker.h"
+#include "visitor/ast_syntax_checker.h"
 #include "util/global_settings.h"
 
 using namespace std;
@@ -96,8 +97,8 @@ bool SmtExecution::checkSortedness() {
 
     shared_ptr<SortednessChecker> chk;
 
-    if(settings->getStack())
-        chk = make_shared<SortednessChecker>(settings->getStack());
+    if(settings->getSortCheckContext())
+        chk = make_shared<SortednessChecker>(settings->getSortCheckContext());
     else
         chk = make_shared<SortednessChecker>();
 

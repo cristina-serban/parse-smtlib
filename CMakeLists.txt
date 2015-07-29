@@ -60,6 +60,7 @@ set(SOURCE_FILES
     smtlib/parser/smt_symbol_util.cpp
 	smtlib/visitor/ast_sortedness_checker.h
 	smtlib/visitor/ast_sortedness_checker.cpp
+	smtlib/visitor/ast_term_sorter.h
 	smtlib/visitor/ast_term_sorter.cpp
 	smtlib/ast/ast_datatype.h
 	smtlib/ast/ast_datatype.cpp
@@ -71,7 +72,9 @@ set(SOURCE_FILES
 	smtlib/smt_execution.cpp
 	smtlib/smt_execution_settings.h
 	smtlib/smt_execution_settings.cpp
+	smtlib/util/error_messages.h
+	smtlib/util/error_messages.cpp
 )
 
-add_executable(parse-smtlib ${SOURCE_FILES} smtlib/util/error_messages.h smtlib/util/error_messages.cpp)
+add_executable(parse-smtlib ${SOURCE_FILES})
 target_link_libraries(parse-smtlib ${LIB_FLEX})

@@ -19,11 +19,11 @@ using namespace std;
 using namespace smtlib;
 using namespace smtlib::ast;
 
-shared_ptr<SyntaxChecker::SyntaxCheckError>
+shared_ptr<SyntaxChecker::Error>
 SyntaxChecker::addError(string message, shared_ptr<AstNode> node,
-                        shared_ptr<SyntaxChecker::SyntaxCheckError> err) {
+                        shared_ptr<SyntaxChecker::Error> err) {
     if (!err) {
-        err = make_shared<SyntaxCheckError>(message, node);
+        err = make_shared<Error>(message, node);
         errors.push_back(err);
     } else {
         err->messages.push_back(message);
@@ -32,12 +32,12 @@ SyntaxChecker::addError(string message, shared_ptr<AstNode> node,
     return err;
 }
 
-shared_ptr<SyntaxChecker::SyntaxCheckError>
+shared_ptr<SyntaxChecker::Error>
 SyntaxChecker::checkParamUsage(vector<shared_ptr<Symbol>> &params,
                                unordered_map<string, bool> &paramUsage,
                                shared_ptr<Sort> sort,
                                shared_ptr<AstNode> source,
-                               shared_ptr<SyntaxCheckError> err) {
+                               shared_ptr<Error> err) {
     if (!sort)
         return err;
 
@@ -65,7 +65,7 @@ SyntaxChecker::checkParamUsage(vector<shared_ptr<Symbol>> &params,
 }
 
 void SyntaxChecker::visit(shared_ptr<Attribute> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -82,7 +82,7 @@ void SyntaxChecker::visit(shared_ptr<Attribute> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<CompAttributeValue> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -93,7 +93,7 @@ void SyntaxChecker::visit(shared_ptr<CompAttributeValue> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<Symbol> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -106,7 +106,7 @@ void SyntaxChecker::visit(shared_ptr<Symbol> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<Keyword> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -119,7 +119,7 @@ void SyntaxChecker::visit(shared_ptr<Keyword> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<MetaSpecConstant> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -128,7 +128,7 @@ void SyntaxChecker::visit(shared_ptr<MetaSpecConstant> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<BooleanValue> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -137,7 +137,7 @@ void SyntaxChecker::visit(shared_ptr<BooleanValue> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<PropLiteral> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -152,7 +152,7 @@ void SyntaxChecker::visit(shared_ptr<PropLiteral> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<AssertCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -167,7 +167,7 @@ void SyntaxChecker::visit(shared_ptr<AssertCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<CheckSatCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -176,7 +176,7 @@ void SyntaxChecker::visit(shared_ptr<CheckSatCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<CheckSatAssumCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -187,7 +187,7 @@ void SyntaxChecker::visit(shared_ptr<CheckSatAssumCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DeclareConstCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -209,7 +209,7 @@ void SyntaxChecker::visit(shared_ptr<DeclareConstCommand> node) {
 
 
 void SyntaxChecker::visit(shared_ptr<DeclareDatatypeCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -230,7 +230,7 @@ void SyntaxChecker::visit(shared_ptr<DeclareDatatypeCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -274,7 +274,7 @@ void SyntaxChecker::visit(shared_ptr<DeclareDatatypesCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DeclareFunCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -297,7 +297,7 @@ void SyntaxChecker::visit(shared_ptr<DeclareFunCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DeclareSortCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -318,7 +318,7 @@ void SyntaxChecker::visit(shared_ptr<DeclareSortCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DefineFunCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -333,7 +333,7 @@ void SyntaxChecker::visit(shared_ptr<DefineFunCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DefineFunRecCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -348,7 +348,7 @@ void SyntaxChecker::visit(shared_ptr<DefineFunRecCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -377,7 +377,7 @@ void SyntaxChecker::visit(shared_ptr<DefineFunsRecCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -419,7 +419,7 @@ void SyntaxChecker::visit(shared_ptr<DefineSortCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<EchoCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -433,7 +433,7 @@ void SyntaxChecker::visit(shared_ptr<EchoCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ExitCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -442,7 +442,7 @@ void SyntaxChecker::visit(shared_ptr<ExitCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetAssertsCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -451,7 +451,7 @@ void SyntaxChecker::visit(shared_ptr<GetAssertsCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetAssignsCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -460,7 +460,7 @@ void SyntaxChecker::visit(shared_ptr<GetAssignsCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetInfoCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -475,7 +475,7 @@ void SyntaxChecker::visit(shared_ptr<GetInfoCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetModelCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -484,7 +484,7 @@ void SyntaxChecker::visit(shared_ptr<GetModelCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetOptionCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -499,7 +499,7 @@ void SyntaxChecker::visit(shared_ptr<GetOptionCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetProofCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -508,7 +508,7 @@ void SyntaxChecker::visit(shared_ptr<GetProofCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetUnsatAssumsCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -517,7 +517,7 @@ void SyntaxChecker::visit(shared_ptr<GetUnsatAssumsCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetUnsatCoreCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -526,7 +526,7 @@ void SyntaxChecker::visit(shared_ptr<GetUnsatCoreCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<GetValueCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -541,7 +541,7 @@ void SyntaxChecker::visit(shared_ptr<GetValueCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<PopCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -556,7 +556,7 @@ void SyntaxChecker::visit(shared_ptr<PopCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<PushCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -571,7 +571,7 @@ void SyntaxChecker::visit(shared_ptr<PushCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ResetCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -580,7 +580,7 @@ void SyntaxChecker::visit(shared_ptr<ResetCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ResetAssertsCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -589,7 +589,7 @@ void SyntaxChecker::visit(shared_ptr<ResetAssertsCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SetInfoCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -604,7 +604,7 @@ void SyntaxChecker::visit(shared_ptr<SetInfoCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SetLogicCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -617,7 +617,7 @@ void SyntaxChecker::visit(shared_ptr<SetLogicCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SetOptionCommand> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -658,7 +658,7 @@ void SyntaxChecker::visit(shared_ptr<SetOptionCommand> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<FunctionDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -681,7 +681,7 @@ void SyntaxChecker::visit(shared_ptr<FunctionDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<FunctionDefinition> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -702,7 +702,7 @@ void SyntaxChecker::visit(shared_ptr<FunctionDefinition> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SimpleIdentifier> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -723,7 +723,7 @@ void SyntaxChecker::visit(shared_ptr<SimpleIdentifier> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<QualifiedIdentifier> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -744,7 +744,7 @@ void SyntaxChecker::visit(shared_ptr<QualifiedIdentifier> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<DecimalLiteral> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -753,7 +753,7 @@ void SyntaxChecker::visit(shared_ptr<DecimalLiteral> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<NumeralLiteral> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -762,7 +762,7 @@ void SyntaxChecker::visit(shared_ptr<NumeralLiteral> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<StringLiteral> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -771,7 +771,7 @@ void SyntaxChecker::visit(shared_ptr<StringLiteral> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<Logic> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -793,7 +793,7 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
         if (!attr)
             continue;
 
-        shared_ptr<SyntaxCheckError> attrerr;
+        shared_ptr<Error> attrerr;
 
         if (attr->getKeyword()->getValue() == KW_LANGUAGE
             || attr->getKeyword()->getValue() == KW_EXTENSIONS
@@ -827,7 +827,7 @@ void SyntaxChecker::visit(shared_ptr<Logic> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<Theory> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -849,7 +849,7 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
         if (!attr)
             continue;
 
-        shared_ptr<SyntaxCheckError> attrerr;
+        shared_ptr<Error> attrerr;
 
         if (attr->getKeyword()->getValue() == KW_SORTS_DESC
             || attr->getKeyword()->getValue() == KW_FUNS_DESC
@@ -902,7 +902,7 @@ void SyntaxChecker::visit(shared_ptr<Theory> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<Script> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -913,7 +913,7 @@ void SyntaxChecker::visit(shared_ptr<Script> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<Sort> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -934,7 +934,7 @@ void SyntaxChecker::visit(shared_ptr<Sort> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<CompSExpression> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -945,7 +945,7 @@ void SyntaxChecker::visit(shared_ptr<CompSExpression> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SortSymbolDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -968,7 +968,7 @@ void SyntaxChecker::visit(shared_ptr<SortSymbolDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SpecConstFunDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -991,7 +991,7 @@ void SyntaxChecker::visit(shared_ptr<SpecConstFunDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<MetaSpecConstFunDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1014,7 +1014,7 @@ void SyntaxChecker::visit(shared_ptr<MetaSpecConstFunDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1037,7 +1037,7 @@ void SyntaxChecker::visit(shared_ptr<SimpleFunDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1090,7 +1090,7 @@ void SyntaxChecker::visit(shared_ptr<ParametricFunDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SortDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1111,7 +1111,7 @@ void SyntaxChecker::visit(shared_ptr<SortDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SelectorDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1132,7 +1132,7 @@ void SyntaxChecker::visit(shared_ptr<SelectorDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ConstructorDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1153,7 +1153,7 @@ void SyntaxChecker::visit(shared_ptr<ConstructorDeclaration> node) {
 
 
 void SyntaxChecker::visit(shared_ptr<SimpleDatatypeDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1169,7 +1169,7 @@ void SyntaxChecker::visit(shared_ptr<SimpleDatatypeDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ParametricDatatypeDeclaration> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1212,7 +1212,7 @@ void SyntaxChecker::visit(shared_ptr<ParametricDatatypeDeclaration> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<QualifiedConstructor> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1233,7 +1233,7 @@ void SyntaxChecker::visit(shared_ptr<QualifiedConstructor> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<QualifiedPattern> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1254,7 +1254,7 @@ void SyntaxChecker::visit(shared_ptr<QualifiedPattern> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<MatchCase> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1275,7 +1275,7 @@ void SyntaxChecker::visit(shared_ptr<MatchCase> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<QualifiedTerm> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1296,7 +1296,7 @@ void SyntaxChecker::visit(shared_ptr<QualifiedTerm> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<LetTerm> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1320,7 +1320,7 @@ void SyntaxChecker::visit(shared_ptr<LetTerm> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ForallTerm> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1344,7 +1344,7 @@ void SyntaxChecker::visit(shared_ptr<ForallTerm> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<ExistsTerm> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1368,7 +1368,7 @@ void SyntaxChecker::visit(shared_ptr<ExistsTerm> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<MatchTerm> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1392,7 +1392,7 @@ void SyntaxChecker::visit(shared_ptr<MatchTerm> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<AnnotatedTerm> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1413,7 +1413,7 @@ void SyntaxChecker::visit(shared_ptr<AnnotatedTerm> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<SortedVariable> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1434,7 +1434,7 @@ void SyntaxChecker::visit(shared_ptr<SortedVariable> node) {
 }
 
 void SyntaxChecker::visit(shared_ptr<VarBinding> node) {
-    shared_ptr<SyntaxCheckError> err;
+    shared_ptr<Error> err;
 
     if (!node) {
         err = addError(ErrorMessages::ERR_NULL_NODE_VISIT, node, err);
@@ -1454,10 +1454,15 @@ void SyntaxChecker::visit(shared_ptr<VarBinding> node) {
     }
 }
 
+bool SyntaxChecker::check(std::shared_ptr<AstNode> node) {
+    visit0(node);
+    return errors.empty();
+}
+
 string SyntaxChecker::getErrors() {
     stringstream ss;
     for (auto errIt = errors.begin(); errIt != errors.end(); errIt++) {
-        shared_ptr<SyntaxCheckError> err = *errIt;
+        shared_ptr<Error> err = *errIt;
         if (err->node) {
             ss << err->node->getRowLeft() << ":" << err->node->getColLeft()
             << " - " << err->node->getRowRight() << ":" << err->node->getColRight() << "   ";

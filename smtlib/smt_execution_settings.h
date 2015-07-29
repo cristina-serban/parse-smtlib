@@ -3,6 +3,7 @@
 
 #include "ast/ast_abstract.h"
 #include "parser/smt_symbol_stack.h"
+#include "visitor/ast_sortedness_checker.h"
 
 #include <memory>
 
@@ -14,7 +15,7 @@ namespace smtlib {
         bool coreTheoryEnabled;
         std::string filename;
         std::shared_ptr<smtlib::ast::AstNode> ast;
-        std::shared_ptr<smtlib::SymbolStack> stack;
+        std::shared_ptr<smtlib::ast::ISortCheckContext> sortCheckContext;
         InputMethod inputMethod;
     public:
         SmtExecutionSettings();
@@ -29,17 +30,21 @@ namespace smtlib {
 
         void setInputFromAst(std::shared_ptr<smtlib::ast::AstNode> ast);
 
-        void setStack(std::shared_ptr<smtlib::SymbolStack> stack) { this->stack = stack; }
+        inline void setSortCheckContext(std::shared_ptr<smtlib::ast::ISortCheckContext> ctx) {
+            this->sortCheckContext = ctx;
+        }
 
         inline std::string getFilename() { return filename; }
 
         inline std::shared_ptr<smtlib::ast::AstNode> getAst() { return ast; }
 
-        inline std::shared_ptr<smtlib::SymbolStack> getStack() { return stack; }
+        inline std::shared_ptr<smtlib::ast::ISortCheckContext> getSortCheckContext()
+        {
+            return sortCheckContext;
+        }
 
         inline InputMethod getInputMethod() { return inputMethod; }
     };
-
 }
 
 #endif //PARSE_SMTLIB_SMT_ENGINE_SETTINGS_H

@@ -12,24 +12,24 @@ namespace smtlib {
     namespace ast {
         class SyntaxChecker : public DummyVisitor0 {
         private:
-            struct SyntaxCheckError {
+            struct Error {
                 std::vector<std::string> messages;
                 std::shared_ptr<AstNode> node;
 
-                SyntaxCheckError() { }
+                Error() { }
 
-                SyntaxCheckError(std::string message,
+                Error(std::string message,
                                  std::shared_ptr<AstNode> node) : node(node) {
                     messages.push_back(message);
                 }
 
-                SyntaxCheckError(std::vector<std::string>& messages,
+                Error(std::vector<std::string>& messages,
                                  std::shared_ptr<AstNode> node) : node(node) {
                     this->messages.insert(this->messages.begin(), messages.begin(), messages.end());
                 }
             };
 
-            std::vector<std::shared_ptr<SyntaxCheckError>> errors;
+            std::vector<std::shared_ptr<Error>> errors;
 
             const std::regex regexSymbol = std::regex(
                     "^([a-zA-Z+\\-/*=%?!.$_~&^<>@][a-zA-Z0-9+\\-/*=%?!.$_~&^<>@]*)"
@@ -40,14 +40,14 @@ namespace smtlib {
                             "|(\\|[\\x20-\\x5B\\x5D-\\x7B\\x7D\\x7E\\xA0-\\xFF\\x09\\r\\n \\xA0]*\\|)$"
             );
 
-            std::shared_ptr<SyntaxCheckError> addError(std::string message, std::shared_ptr<AstNode> node,
-                                                       std::shared_ptr<SyntaxCheckError> err);
+            std::shared_ptr<Error> addError(std::string message, std::shared_ptr<AstNode> node,
+                                                       std::shared_ptr<Error> err);
 
-            std::shared_ptr<SyntaxCheckError> checkParamUsage(std::vector<std::shared_ptr<Symbol>>& params,
+            std::shared_ptr<Error> checkParamUsage(std::vector<std::shared_ptr<Symbol>>& params,
                                                               std::unordered_map<std::string, bool>& paramUsage,
                                                               std::shared_ptr<Sort> sort,
                                                               std::shared_ptr<AstNode> source,
-                                                              std::shared_ptr<SyntaxCheckError> err);
+                                                              std::shared_ptr<Error> err);
         public:
             virtual void visit(std::shared_ptr<Attribute> node);
 
@@ -189,10 +189,7 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<VarBinding> node);
 
-            bool check(std::shared_ptr<AstNode> node) {
-                visit0(node);
-                return errors.empty();
-            }
+            bool check(std::shared_ptr<AstNode> node);
 
             std::string getErrors();
         };

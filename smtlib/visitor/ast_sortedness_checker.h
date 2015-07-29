@@ -2,7 +2,7 @@
 #define PARSE_SMTLIB_AST_SORTEDNESS_CHECKER_H
 
 #include "ast_visitor_extra.h"
-#include "ast_syntax_checker.h"
+#include "ast_term_sorter.h"
 #include "../ast/ast_symbol_decl.h"
 #include "../ast/ast_command.h"
 #include "../parser/smt_symbol_stack.h"
@@ -12,71 +12,65 @@
 
 namespace smtlib {
     namespace ast {
-        class SortednessChecker : public DummyVisitor0 {
+        class ISortCheckContext {
+        public:
+            virtual std::shared_ptr<SymbolStack> getStack() = 0;
+            virtual std::vector<std::string>& getCurrentTheories() = 0;
+            virtual std::string getCurrentLogic() = 0;
+            virtual void setCurrentLogic(std::string logic) = 0;
+        };
+
+        class SortednessCheckerContext : public ISortCheckContext,
+                                         public std::enable_shared_from_this<SortednessCheckerContext> {
         private:
-            struct SortednessCheckErrorInfo {
+            std::shared_ptr<smtlib::SymbolStack> stack;
+            std::vector<std::string> currentTheories;
+            std::string currentLogic;
+        public:
+            SortednessCheckerContext();
+
+            SortednessCheckerContext(std::shared_ptr<smtlib::SymbolStack> stack);
+
+            virtual std::shared_ptr<SymbolStack> getStack();
+            virtual std::vector<std::string>& getCurrentTheories();
+            virtual std::string getCurrentLogic();
+            virtual void setCurrentLogic(std::string logic);
+        };
+
+        class SortednessChecker : public DummyVisitor0,
+                                  public ITermSorterContext,
+                                  public std::enable_shared_from_this<SortednessChecker>{
+        public:
+            struct Error {
                 std::string message;
                 std::shared_ptr<SymbolInfo> info;
 
-                SortednessCheckErrorInfo(std::string message) : message(message) { }
+                Error(std::string message) : message(message) { }
 
-                SortednessCheckErrorInfo(std::string message,
-                                         std::shared_ptr<SymbolInfo> info)
+                Error(std::string message, std::shared_ptr<SymbolInfo> info)
                         : message(message), info(info) { }
             };
 
-            struct SortednessCheckError {
-                std::vector<std::shared_ptr<SortednessCheckErrorInfo>> infos;
+            struct NodeError {
+                std::vector<std::shared_ptr<Error>> errs;
                 std::shared_ptr<AstNode> node;
 
-                SortednessCheckError() { }
+                NodeError() { }
 
-                SortednessCheckError(std::shared_ptr<SortednessCheckErrorInfo> info,
-                                     std::shared_ptr<AstNode> node) {
-                    infos.push_back(info);
+                NodeError(std::shared_ptr<Error> err, std::shared_ptr<AstNode> node) {
+                    errs.push_back(err);
                     this->node = node;
                 }
 
-                SortednessCheckError(std::vector<std::shared_ptr<SortednessCheckErrorInfo>>& infos,
-                                     std::shared_ptr<AstNode> node) {
-                    this->infos.insert(this->infos.begin(), infos.begin(), infos.end());
+                NodeError(std::vector<std::shared_ptr<Error>> &errs,
+                          std::shared_ptr<AstNode> node) {
+                    this->errs.insert(this->errs.begin(), errs.begin(), errs.end());
                     this->node = node;
                 }
             };
-
-            struct TermSorterInfo {
-                std::shared_ptr<SymbolStack> stack;
-                SortednessChecker* checker;
-                std::shared_ptr<AstNode> source;
-
-                TermSorterInfo(std::shared_ptr<SymbolStack> stack,
-                               SortednessChecker* checker,
-                               std::shared_ptr<AstNode> source)
-                        : stack(stack), checker(checker), source(source) { }
-            };
-
-            std::shared_ptr<SymbolStack> stack;
-
-            std::map<std::string, std::vector<std::shared_ptr<SortednessCheckError>>> errors;
-
-            std::unordered_map<std::string, bool> currentTheories; //fixme?
-            std::string currentLogic = "";
-
-            std::shared_ptr<SortednessCheckError> addError(std::string message,
-                                                           std::shared_ptr<AstNode> node,
-                                                           std::shared_ptr<SortednessCheckError> err);
-
-            std::shared_ptr<SortednessCheckError> addError(std::string message,
-                                                           std::shared_ptr<AstNode> node,
-                                                           std::shared_ptr<SymbolInfo> symbolInfo,
-                                                           std::shared_ptr<SortednessCheckError> err);
-
-            void addError(std::string message,
-                          std::shared_ptr<AstNode> node);
-
-            void addError(std::string message,
-                          std::shared_ptr<AstNode> node,
-                          std::shared_ptr<SymbolInfo> err);
+        private:
+            std::shared_ptr<ISortCheckContext> ctx;
+            std::map<std::string, std::vector<std::shared_ptr<NodeError>>> errors;
 
             std::shared_ptr<SortInfo> getInfo(std::shared_ptr<SortSymbolDeclaration> node);
 
@@ -108,71 +102,43 @@ namespace smtlib {
 
             void loadTheory(std::string theory,
                             std::shared_ptr<AstNode> node,
-                            std::shared_ptr<SortednessCheckError> err);
+                            std::shared_ptr<NodeError> err);
 
             void loadLogic(std::string logic,
                            std::shared_ptr<AstNode> node,
-                           std::shared_ptr<SortednessCheckError> err);
-
-            std::shared_ptr<SortednessCheckError> checkSort(std::shared_ptr<Sort> sort,
-                                                            std::shared_ptr<AstNode> source,
-                                                            std::shared_ptr<SortednessCheckError> err);
-
-            std::shared_ptr<SortednessCheckError> checkSort(std::vector<std::shared_ptr<Symbol>>& params,
-                                                            std::shared_ptr<Sort> sort,
-                                                            std::shared_ptr<AstNode> source,
-                                                            std::shared_ptr<SortednessCheckError> err);
-
-            class TermSorter : public DummyAstVisitor1<std::shared_ptr<Sort>> {
-            private:
-
-                std::shared_ptr<TermSorterInfo> termSorterInfo;
-
-                bool getParamMapping(std::vector<std::string>& params,
-                                     std::unordered_map<std::string, std::shared_ptr<Sort>>& mapping,
-                                     std::shared_ptr<Sort> sort1,
-                                     std::shared_ptr<Sort> sort2);
-
-            public:
-                inline TermSorter(std::shared_ptr<TermSorterInfo> info)
-                    : termSorterInfo(info) { }
-
-                virtual void visit(std::shared_ptr<SimpleIdentifier> node);
-
-                virtual void visit(std::shared_ptr<QualifiedIdentifier> node);
-
-                virtual void visit(std::shared_ptr<DecimalLiteral> node);
-
-                virtual void visit(std::shared_ptr<NumeralLiteral> node);
-
-                virtual void visit(std::shared_ptr<StringLiteral> node);
-
-                virtual void visit(std::shared_ptr<QualifiedTerm> node);
-
-                virtual void visit(std::shared_ptr<LetTerm> node);
-
-                virtual void visit(std::shared_ptr<ForallTerm> node);
-
-                virtual void visit(std::shared_ptr<ExistsTerm> node);
-
-                virtual void visit(std::shared_ptr<MatchTerm> node);
-
-                virtual void visit(std::shared_ptr<AnnotatedTerm> node);
-
-                std::shared_ptr<Sort> run(std::shared_ptr<AstNode> node) {
-                    return wrappedVisit(node);
-                }
-            };
+                           std::shared_ptr<NodeError> err);
 
         public:
-            inline SortednessChecker() {
-                stack = std::make_shared<SymbolStack>();
-            }
+            inline SortednessChecker() : ctx(std::make_shared<SortednessCheckerContext>()) { }
 
-            inline SortednessChecker(std::shared_ptr<SymbolStack> stack)
-                    : stack(stack) { }
+            inline SortednessChecker(std::shared_ptr<ISortCheckContext> ctx) : ctx(ctx) { }
+
+            std::shared_ptr<NodeError> addError(std::string message,
+                                                std::shared_ptr<AstNode> node,
+                                                std::shared_ptr<NodeError> err);
+
+            std::shared_ptr<NodeError> addError(std::string message,
+                                                std::shared_ptr<AstNode> node,
+                                                std::shared_ptr<SymbolInfo> symbolInfo,
+                                                std::shared_ptr<NodeError> err);
+
+            void addError(std::string message,
+                          std::shared_ptr<AstNode> node);
+
+            void addError(std::string message,
+                          std::shared_ptr<AstNode> node,
+                          std::shared_ptr<SymbolInfo> err);
 
             void loadTheory(std::string theory);
+
+            std::shared_ptr<NodeError> checkSort(std::shared_ptr<Sort> sort,
+                                                 std::shared_ptr<AstNode> source,
+                                                 std::shared_ptr<NodeError> err);
+
+            std::shared_ptr<NodeError> checkSort(std::vector<std::shared_ptr<Symbol>> &params,
+                                                 std::shared_ptr<Sort> sort,
+                                                 std::shared_ptr<AstNode> source,
+                                                 std::shared_ptr<NodeError> err);
 
             virtual void visit(std::shared_ptr<AssertCommand> node);
 
@@ -220,17 +186,14 @@ namespace smtlib {
 
             virtual void visit(std::shared_ptr<ParametricFunDeclaration> node);
 
-            bool check(std::shared_ptr<AstNode> node) {
-                if (node) {
-                    visit0(node);
-                } else {
-                    Logger::warning("SortednessChecker::run()", "Attempting to check an empty abstract syntax tree");
-                    return false;
-                }
-                return errors.empty();
-            }
+            bool check(std::shared_ptr<AstNode> node);
 
             std::string getErrors();
+
+            // ITermSorterContext implementation
+            virtual std::shared_ptr<SymbolStack> getStack();
+
+            virtual std::shared_ptr<SortednessChecker> getChecker();
         };
     }
 }

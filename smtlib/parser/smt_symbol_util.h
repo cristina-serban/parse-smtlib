@@ -8,8 +8,6 @@
 #include <string>
 
 namespace smtlib {
-
-
     class SymbolInfo {
     public:
         std::string name;
