@@ -11,9 +11,6 @@
 #include "../util/error_messages.h"
 
 #include <iostream>
-#include <memory>
-#include <regex>
-#include <vector>
 
 using namespace std;
 using namespace smtlib;

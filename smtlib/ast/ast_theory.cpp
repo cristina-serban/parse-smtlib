@@ -1,6 +1,5 @@
 #include "ast_theory.h"
 
-#include <memory>
 #include <sstream>
 
 using namespace smtlib::ast;

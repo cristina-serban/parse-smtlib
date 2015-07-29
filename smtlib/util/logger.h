@@ -4,7 +4,7 @@
 namespace smtlib {
     class Logger {
     public:
-        enum Errors {
+        enum ErrorCode {
             ERR_PARSE = 1
         };
 

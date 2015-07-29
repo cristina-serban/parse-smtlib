@@ -5,7 +5,6 @@
 #include "../../parser/smtlib-glue.h"
 
 #include <iostream>
-#include <sstream>
 
 extern "C" {
     extern FILE* yyin;

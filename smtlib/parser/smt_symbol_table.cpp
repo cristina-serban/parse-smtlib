@@ -2,8 +2,6 @@
 #include "../ast/ast_command.h"
 #include "../ast/ast_symbol_decl.h"
 
-#include <utility>
-
 using namespace std;
 using namespace smtlib;
 using namespace smtlib::ast;

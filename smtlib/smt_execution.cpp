@@ -1,5 +1,4 @@
 #include "smt_execution.h"
-#include "visitor/ast_sortedness_checker.h"
 #include "visitor/ast_syntax_checker.h"
 #include "util/global_settings.h"
 
@@ -8,7 +7,7 @@ using namespace smtlib;
 using namespace smtlib::ast;
 
 SmtExecution::SmtExecution()
-        : settings(make_shared<SmtExecutionSettings>()) {ast
+        : settings(make_shared<SmtExecutionSettings>()) {
     parseAttempted = false;
     parseSuccessful = false;
     syntaxCheckAttempted = false;

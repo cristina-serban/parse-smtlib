@@ -38,5 +38,5 @@ void Logger::parsingError(unsigned int rowLeft, unsigned int colLeft,
 
     fprintf(stderr, "In %s from %d:%d to %d:%d - %s\n",
             filename, rowLeft, colLeft, rowRight, colRight, msg);
-    exit(Logger::Errors::ERR_PARSE);
+    exit(Logger::ErrorCode::ERR_PARSE);
 }

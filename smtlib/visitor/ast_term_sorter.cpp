@@ -1,17 +1,11 @@
 #include "ast_term_sorter.h"
 #include "ast_sortedness_checker.h"
-#include "../ast/ast_command.h"
 #include "../ast/ast_logic.h"
 #include "../ast/ast_script.h"
-#include "../ast/ast_symbol_decl.h"
 #include "../ast/ast_theory.h"
 #include "../parser/smt_parser.h"
-#include "../util/logger.h"
 #include "../util/global_settings.h"
 #include "../util/error_messages.h"
-
-#include <memory>
-#include <sstream>
 
 using namespace std;
 using namespace smtlib;
