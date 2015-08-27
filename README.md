@@ -34,6 +34,9 @@ Small things that do not quite work yet (but will):
 
 **Note:** The whole project was created and tested by a single person. I would be pleasantly surprised if it works perfectly on all your inputs. But if it does not or if you encounter problems, do not hesitate to contact me so I can fix the issues.
 
+## Required files ##
+**Important**: The well-sortedness checker needs to be able to find the files containing the definitions of theories and logics. Their default locations are `input/Theories` and `input/Logics`, relative to the project path. If you want to use a different working directory or simply change the location for the theories and logics, change the values of the `LOC_THEORIES` and `LOC_LOGICS` constants in `smtlib/util/global_settings.cpp` and rebuild the project.
+
 ## Building the project ##
 (1) Before building the project, make sure the files `parser/smtlib-bison-parser.y.c`, `parser/smtlib-bison-parser.y.h` and `parser/smtlib-flex-lexer.l.c` have been generated.
 
