@@ -74,6 +74,12 @@ set(SOURCE_FILES
 	smtlib/smt_execution_settings.cpp
 	smtlib/util/error_messages.h
 	smtlib/util/error_messages.cpp
+	smtlib/visitor/ast_predicate_unfolder.h
+	smtlib/visitor/ast_predicate_unfolder.cpp
+	smtlib/visitor/ast_var_replacer.h
+	smtlib/visitor/ast_var_replacer.cpp
+	smtlib/visitor/ast_node_duplicator.h
+	smtlib/visitor/ast_node_duplicator.cpp
 )
 
 add_executable(parse-smtlib ${SOURCE_FILES})

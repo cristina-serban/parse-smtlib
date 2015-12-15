@@ -1,5 +1,9 @@
+#include <iostream>
 #include "smt_execution.h"
+#include "visitor/ast_node_duplicator.h"
 #include "visitor/ast_syntax_checker.h"
+#include "visitor/ast_var_replacer.h"
+#include "visitor/ast_predicate_unfolder.h"
 #include "util/global_settings.h"
 
 using namespace std;
@@ -115,4 +119,18 @@ bool SmtExecution::checkSortedness() {
     }
 
     return sortednessCheckSuccessful;
+}
+
+bool SmtExecution::unfoldPredicates() {
+    if (!checkSortedness()) {
+        return false;
+    }
+
+    shared_ptr<PredicateUnfolderContext> ctx = make_shared<PredicateUnfolderContext>(settings->getUnfoldLevel(),
+                                                                                     settings->isUnfoldExistential(),
+                                                                                     settings->getUnfoldOutputPath());
+    shared_ptr<PredicateUnfolder> unfolder = make_shared<PredicateUnfolder>(ctx);
+    unfolder->run(ast);
+
+    return true;
 }

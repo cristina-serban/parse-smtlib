@@ -13,6 +13,10 @@ SmtExecutionSettings::SmtExecutionSettings(shared_ptr<SmtExecutionSettings> sett
     this->filename = settings->filename;
     this->ast = settings->ast;
     this->sortCheckContext = settings->sortCheckContext;
+
+    this->unfoldLevel = settings->unfoldLevel;
+    this->unfoldExistential = settings->unfoldExistential;
+    this->unfoldOutputPath = settings->unfoldOutputPath;
 }
 
 void SmtExecutionSettings::setInputFromFile(std::string filename) {

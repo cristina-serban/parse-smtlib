@@ -32,10 +32,12 @@ namespace smtlib {
 
             RetT wrappedVisit(ArgT arg, std::shared_ptr<AstNode> node) {
                 RetT oldRet = ret;
+                ArgT oldArg = this->arg;
                 this->arg = arg;
                 visit0(node);
                 RetT newRet = ret;
                 ret = oldRet;
+                this->arg = oldArg;
                 return newRet;
             }
         public:

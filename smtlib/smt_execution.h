@@ -26,6 +26,8 @@ namespace smtlib {
         bool checkSyntax();
 
         bool checkSortedness();
+
+        bool unfoldPredicates();
     };
 }
 

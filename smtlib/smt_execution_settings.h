@@ -17,6 +17,9 @@ namespace smtlib {
         std::shared_ptr<smtlib::ast::AstNode> ast;
         std::shared_ptr<smtlib::ast::ISortCheckContext> sortCheckContext;
         InputMethod inputMethod;
+        bool unfoldExistential = true;
+        int unfoldLevel = 0;
+        std::string unfoldOutputPath = "unfolding";
     public:
         SmtExecutionSettings();
 
@@ -44,6 +47,20 @@ namespace smtlib {
         }
 
         inline InputMethod getInputMethod() { return inputMethod; }
+
+        inline bool isUnfoldExistential() { return unfoldExistential; }
+
+        inline void setUnfoldExistential(bool unfoldExistential) { this->unfoldExistential = unfoldExistential; };
+
+        inline int getUnfoldLevel() { return unfoldLevel; }
+
+        inline void setUnfoldLevel(int unfoldLevel) { this->unfoldLevel = unfoldLevel; }
+
+        inline std::string getUnfoldOutputPath() { return unfoldOutputPath; }
+
+        inline void setUnfoldOutputPath(std::string unfoldOutputPath) {
+            this->unfoldOutputPath = unfoldOutputPath;
+        }
     };
 }
 

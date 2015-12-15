@@ -105,7 +105,7 @@ namespace smtlib {
             virtual void visit(std::shared_ptr<VarBinding> node) = 0;
         };
 
-        class DummyVisitor0 : public virtual AstVisitor0{
+        class DummyVisitor0 : public virtual AstVisitor0 {
         public:
             virtual void visit(std::shared_ptr<Attribute> node);
             virtual void visit(std::shared_ptr<CompAttributeValue> node);
