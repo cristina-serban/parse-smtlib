@@ -71,7 +71,7 @@ There are three program arguments that you can specify in order to customize how
 * `--unfold-exist` - Whether the existential quantifier should be used in the unfolding or not. Accepted values are `y` (default) and `n`. If you specify a value of `n`, the existential quantifier will disappear from the definition and all existentially quantified variales will be declared as constants.
 * `--unfold-path` - File to which the results will be appended. Value defaults to a file name `unfolding` in the current working directory.
 
-**Note**: At least one of these arguments has to be specified for to take place.
+**Note**: At least one of these arguments has to be specified for the unfolding to take place.
 
 Some examples:
 ```
