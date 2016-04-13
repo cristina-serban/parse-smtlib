@@ -72,7 +72,7 @@ There are three program arguments that you can specify in order to customize how
 * `--unfold-path` - File to which the results will be appended. Value defaults to a file name `unfolding` in the current working directory.
 * `--cvc-emp` - Specifying this will make `emp` become `(emp 0)` in the output (for compatibility with CVC4).
 
-**Note**: At least one of these arguments has to be specified for the unfolding to take place.
+**Note**: At least one of the `--unfold` arguments has to be specified for the unfolding to take place.
 
 Some examples:
 ```
