@@ -70,14 +70,15 @@ There are three program arguments that you can specify in order to customize how
 * `--unfold-level` - How deep should the unfolding go. Accepted values are nonnegative integers. A value of 0 (default) means that the recursive call inside the definition will be replaced by the base case.
 * `--unfold-exist` - Whether the existential quantifier should be used in the unfolding or not. Accepted values are `y` (default) and `n`. If you specify a value of `n`, the existential quantifier will disappear from the definition and all existentially quantified variales will be declared as constants.
 * `--unfold-path` - File to which the results will be appended. Value defaults to a file name `unfolding` in the current working directory.
+* `--cvc-emp` - Specifying this will make `emp` become `(emp 0)` in the output (for compatibility with CVC4).
 
 **Note**: At least one of these arguments has to be specified for the unfolding to take place.
 
 Some examples:
 ```
-.../parse-smtlib> ./parse-smtlib --unfold-level=5 --unfold-exist=n --unfold-path=pred-unfoldings.smt2 pred.smt2
+.../parse-smtlib> ./parse-smtlib --unfold-level=5 --unfold-exist=n --unfold-path=pred-unfoldings.smt2 --cvc-emp pred.smt2
 .../parse-smtlib> ./parse-smtlib --unfold-exist=n --unfold-path=pred-unfoldings.smt2 pred.smt2
-.../parse-smtlib> ./parse-smtlib --unfold-level=3 --unfold-path=pred-unfoldings.smt2 pred.smt2
+.../parse-smtlib> ./parse-smtlib --unfold-level=3 --unfold-path=pred-unfoldings.smt2  --cvc-emp pred.smt2
 .../parse-smtlib> ./parse-smtlib --unfold-level=2 --unfold-exist=y --unfold-path=pred-unfoldings.smt2 pred.smt2
 ```
 
