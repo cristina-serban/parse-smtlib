@@ -58,6 +58,29 @@ Small things that do not quite work yet (but will):
 .../parse-smtlib> make clean
 ```
 
+## Unfolding inductive predicates ##
+If the input file (or files) contains definitions of inductive predicates, they can be unfolded for a specified number of times. The definitions have to respect the following format (you can find three examples in the file `/parse-smtlib/pred.smt2`):
+```
+(define-fun-rec predicate ((param_1 TypeP1) ... (paramn TypePn)) Bool
+	(or (...)                                              ;base case
+		(exists ((var1 TypeV1) ... (varn TypeVn)) (...)))  ;recursive case
+)
+```
+There are three program arguments that you can specify in order to customize how the unfolding is done:
+* `--unfold-level` - How deep should the unfolding go. Accepted values are nonnegative integers. A value of 0 (default) means that the recursive call inside the definition will be replaced by the base case.
+* `--unfold-exist` - Whether the existential quantifier should be used in the unfolding or not. Accepted values are `y` (default) and `n`. If you specify a value of `n`, the existential quantifier will disappear from the definition and all existentially quantified variales will be declared as constants.
+* `--unfold-path` - File to which the results will be appended. Value defaults to a file name `unfolding` in the current working directory.
+
+**Note**: At least one of these arguments has to be specified for the unfolding to take place.
+
+Some examples:
+```
+.../parse-smtlib> ./parse-smtlib --unfold-level=5 --unfold-exist=n --unfold-path=pred-unfoldings.smt2 pred.smt2
+.../parse-smtlib> ./parse-smtlib --unfold-exist=n --unfold-path=pred-unfoldings.smt2 pred.smt2
+.../parse-smtlib> ./parse-smtlib --unfold-level=3 --unfold-path=pred-unfoldings.smt2 pred.smt2
+.../parse-smtlib> ./parse-smtlib --unfold-level=2 --unfold-exist=y --unfold-path=pred-unfoldings.smt2 pred.smt2
+```
+
 ## Recompiling and building the generated parser ##
 If the files `parser/smtlib-bison-parser.y` and `parser/smtlib-flex-lexer.l` are changed, they need to be recompiled.
 ```
