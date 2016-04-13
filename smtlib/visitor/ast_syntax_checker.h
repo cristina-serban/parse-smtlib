@@ -10,7 +10,7 @@
 
 namespace smtlib {
     namespace ast {
-        class SyntaxChecker : public DummyVisitor0 {
+        class SyntaxChecker : public DummyAstVisitor0 {
         private:
             struct Error {
                 std::vector<std::string> messages;

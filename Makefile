@@ -32,6 +32,7 @@ parse-smtlib:
 	g++ -g -c -std=c++11 smtlib/visitor/ast_node_duplicator.cpp -o ast_node_duplicator.o
 	g++ -g -c -std=c++11 smtlib/visitor/ast_predicate_unfolder.cpp -o ast_predicate_unfolder.o
 	g++ -g -c -std=c++11 smtlib/visitor/ast_var_replacer.cpp -o ast_var_replacer.o
+	g++ -g -c -std=c++11 smtlib/visitor/ast_term_replacer.cpp -o ast_term_replacer.o
 	g++ -g -c -std=c++11 smtlib/smt_execution.cpp -o smt_execution.o
 	g++ -g -c -std=c++11 smtlib/smt_execution_settings.cpp -o smt_execution_settings.o
 	g++ -g -c -std=c++11 main.cpp -o main.o
@@ -42,7 +43,7 @@ parse-smtlib:
 	ast_var.o smt_parser.o smt_symbol_stack.o smt_symbol_table.o \
 	smt_symbol_util.o error_messages.o logger.o global_settings.o ast_visitor.o \
 	ast_syntax_checker.o ast_sortedness_checker.o ast_term_sorter.o \
-	ast_node_duplicator.o ast_predicate_unfolder.o ast_var_replacer.o \
+	ast_node_duplicator.o ast_predicate_unfolder.o ast_var_replacer.o ast_term_replacer.o \
 	smt_execution.o smt_execution_settings.o main.o -lfl
 	rm -f *.o
 clean:

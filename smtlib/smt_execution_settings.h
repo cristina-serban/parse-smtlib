@@ -20,13 +20,13 @@ namespace smtlib {
         bool unfoldExistential = true;
         int unfoldLevel = 0;
         std::string unfoldOutputPath = "unfolding";
+        bool cvcEmp = false;
     public:
         SmtExecutionSettings();
 
         SmtExecutionSettings(std::shared_ptr<SmtExecutionSettings> settings);
 
         inline bool isCoreTheoryEnabled() { return coreTheoryEnabled; }
-
         inline void setCoreTheoryEnabled(bool enabled) { coreTheoryEnabled = enabled; }
 
         void setInputFromFile(std::string filename);
@@ -49,18 +49,18 @@ namespace smtlib {
         inline InputMethod getInputMethod() { return inputMethod; }
 
         inline bool isUnfoldExistential() { return unfoldExistential; }
-
         inline void setUnfoldExistential(bool unfoldExistential) { this->unfoldExistential = unfoldExistential; };
 
         inline int getUnfoldLevel() { return unfoldLevel; }
-
         inline void setUnfoldLevel(int unfoldLevel) { this->unfoldLevel = unfoldLevel; }
 
         inline std::string getUnfoldOutputPath() { return unfoldOutputPath; }
-
         inline void setUnfoldOutputPath(std::string unfoldOutputPath) {
             this->unfoldOutputPath = unfoldOutputPath;
         }
+
+        inline bool isCvcEmp() { return  cvcEmp; }
+        inline void setCvcEmp(bool cvcEmp) { this->cvcEmp = cvcEmp; }
     };
 }
 

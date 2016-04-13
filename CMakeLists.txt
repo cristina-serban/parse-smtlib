@@ -80,6 +80,8 @@ set(SOURCE_FILES
 	smtlib/visitor/ast_var_replacer.cpp
 	smtlib/visitor/ast_node_duplicator.h
 	smtlib/visitor/ast_node_duplicator.cpp
+	smtlib/visitor/ast_term_replacer.h
+	smtlib/visitor/ast_term_replacer.cpp
 )
 
 add_executable(parse-smtlib ${SOURCE_FILES})

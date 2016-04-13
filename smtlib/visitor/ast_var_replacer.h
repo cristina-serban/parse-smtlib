@@ -21,7 +21,7 @@ namespace smtlib {
         };
 
         /* ================================= PredicateFinder ================================== */
-        class VariableReplacer : public DummyVisitor0,
+        class VariableReplacer : public DummyAstVisitor0,
                                  public std::enable_shared_from_this<VariableReplacer> {
         private:
             std::shared_ptr<IVariableReplacerContext> ctx;

@@ -30,6 +30,8 @@ int main(int argc, char **argv) {
         } else if (strcmp(argv[i], "--unfold-exist=n") == 0) {
             settings->setUnfoldExistential(false);
             unfold = true;
+        } else if (strcmp(argv[i], "--cvc-emp") == 0) {
+            settings->setCvcEmp(true);
         } else if (regex_match(string(argv[i]), sm, unfoldLevelRegex)) {
             if (sm.size() == 2) {
                 int level = stoi(sm[1].str().c_str());

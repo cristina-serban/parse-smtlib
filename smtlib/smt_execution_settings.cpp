@@ -17,6 +17,7 @@ SmtExecutionSettings::SmtExecutionSettings(shared_ptr<SmtExecutionSettings> sett
     this->unfoldLevel = settings->unfoldLevel;
     this->unfoldExistential = settings->unfoldExistential;
     this->unfoldOutputPath = settings->unfoldOutputPath;
+    this->cvcEmp = settings->cvcEmp;
 }
 
 void SmtExecutionSettings::setInputFromFile(std::string filename) {

@@ -62,12 +62,12 @@ bool SmtExecution::parse() {
 }
 
 bool SmtExecution::checkSyntax() {
-    if(syntaxCheckAttempted)
+    if (syntaxCheckAttempted)
         return syntaxCheckSuccessful;
 
     syntaxCheckAttempted = true;
 
-    if(!parse()) {
+    if (!parse()) {
         //Logger::error("SmtExecution::checkSyntax()", "Stopped due to previous errors");
         return false;
     }
@@ -75,7 +75,7 @@ bool SmtExecution::checkSyntax() {
     shared_ptr<SyntaxChecker> chk = make_shared<SyntaxChecker>();
     syntaxCheckSuccessful = chk->check(ast);
 
-    if(!syntaxCheckSuccessful) {
+    if (!syntaxCheckSuccessful) {
         if (settings->getInputMethod() == SmtExecutionSettings::InputMethod::INPUT_AST) {
             Logger::syntaxError("SmtExecution::checkSyntax()", chk->getErrors().c_str());
         } else {
@@ -100,16 +100,16 @@ bool SmtExecution::checkSortedness() {
 
     shared_ptr<SortednessChecker> chk;
 
-    if(settings->getSortCheckContext())
+    if (settings->getSortCheckContext())
         chk = make_shared<SortednessChecker>(settings->getSortCheckContext());
     else
         chk = make_shared<SortednessChecker>();
 
-    if(settings->isCoreTheoryEnabled())
+    if (settings->isCoreTheoryEnabled())
         chk->loadTheory(THEORY_CORE);
     sortednessCheckSuccessful = chk->check(ast);
 
-    if(!sortednessCheckSuccessful) {
+    if (!sortednessCheckSuccessful) {
         if (settings->getInputMethod() == SmtExecutionSettings::InputMethod::INPUT_AST) {
             Logger::sortednessError("SmtExecution::checkSortedness()", chk->getErrors().c_str());
         } else {
@@ -128,7 +128,8 @@ bool SmtExecution::unfoldPredicates() {
 
     shared_ptr<PredicateUnfolderContext> ctx = make_shared<PredicateUnfolderContext>(settings->getUnfoldLevel(),
                                                                                      settings->isUnfoldExistential(),
-                                                                                     settings->getUnfoldOutputPath());
+                                                                                     settings->getUnfoldOutputPath(),
+                                                                                     settings->isCvcEmp());
     shared_ptr<PredicateUnfolder> unfolder = make_shared<PredicateUnfolder>(ctx);
     unfolder->run(ast);
 

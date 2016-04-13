@@ -20,6 +20,9 @@ namespace smtlib {
 
             virtual std::string getOutputPath() = 0;
             virtual std::string setOutputPath(std::string output) = 0;
+
+            virtual bool isCvcEmp() = 0;
+            virtual void setCvcEmp(bool cvcEmp) = 0;
         };
 
         /* ============================= PredicateUnfolderContext ============================= */
@@ -28,10 +31,11 @@ namespace smtlib {
             int unfoldLevel;
             bool existential;
             std::string output;
+            bool cvcEmp;
 
         public:
-            inline PredicateUnfolderContext(int level, bool existential, std::string output)
-                    : unfoldLevel(level), existential(existential), output(output) {}
+            inline PredicateUnfolderContext(int level, bool existential, std::string output, bool cvcEmp)
+                    : unfoldLevel(level), existential(existential), output(output), cvcEmp(cvcEmp) {}
 
             virtual int getUnfoldLevel() { return unfoldLevel; }
             virtual void setUnfoldLevel(int level) { unfoldLevel = level; }
@@ -41,6 +45,9 @@ namespace smtlib {
 
             virtual std::string getOutputPath() { return output; }
             virtual std::string setOutputPath(std::string output) { this->output = output; }
+
+            virtual bool isCvcEmp() { return cvcEmp; }
+            virtual void setCvcEmp(bool cvcEmp) { this->cvcEmp = cvcEmp; }
         };
 
         /* ================================ PredicateUnfolder ================================= */

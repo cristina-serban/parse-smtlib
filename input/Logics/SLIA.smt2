@@ -1,5 +1,5 @@
 (logic SL
- :theories (SepLogic Ints)
+ :theories (SepLogic2 Ints)
 )
 
 

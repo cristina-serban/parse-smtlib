@@ -48,11 +48,11 @@ namespace smtlib {
 
         template<class RetT>
         class DummyAstVisitor1 : public AstVisitor1<RetT>,
-                                 public DummyVisitor0 { };
+                                 public DummyAstVisitor0 { };
 
         template<class RetT, class ArgT>
         class DummyAstVisitor2 : public AstVisitor2<RetT, ArgT>,
-                                 public DummyVisitor0 { };
+                                 public DummyAstVisitor0 { };
     }
 }
 
