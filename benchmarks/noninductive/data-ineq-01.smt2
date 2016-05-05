@@ -1,4 +1,4 @@
-(set-logic SLIA)
+(set-logic SEPLOGIA)
 
 (define-fun p ((x (Ref Int)) (a Int) (y (Ref Int)) (b Int)) Bool 
 	(and (sep (pto x a) (pto y b)) 

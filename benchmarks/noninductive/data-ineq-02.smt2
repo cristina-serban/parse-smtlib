@@ -1,4 +1,4 @@
-(set-logic SLIA)
+(set-logic SEPLOGIA)
 
 (declare-datatype Node ((empty) (node_cons (data Int) (ref (Ref Node)))))
 

@@ -1,4 +1,4 @@
-(set-logic SLIA)
+(set-logic SEPLOGIA)
 
 (declare-const x (Ref Int))
 
