@@ -1,11 +1,6 @@
-#include "global_settings.h"
+#include "global_values.h"
 
 namespace smtlib {
-    const std::string LOC_LOGICS = "input/Logics/";
-    const std::string LOC_THEORIES = "input/Theories/";
-    const std::string FILE_EXT_LOGIC = ".smt2";
-    const std::string FILE_EXT_THEORY = ".smt2";
-
     const std::string THEORY_CORE = "Core";
 
     const std::string SORT_BOOL = "Bool";

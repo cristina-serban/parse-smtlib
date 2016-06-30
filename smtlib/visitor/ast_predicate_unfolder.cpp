@@ -4,13 +4,13 @@
 #include "ast_predicate_unfolder.h"
 #include "ast_node_duplicator.h"
 #include "ast_var_replacer.h"
+#include "ast_term_replacer.h"
 #include "../ast/ast_command.h"
 #include "../ast/ast_logic.h"
 #include "../ast/ast_script.h"
 #include "../ast/ast_sexp.h"
 #include "../ast/ast_symbol_decl.h"
 #include "../ast/ast_theory.h"
-#include "ast_term_replacer.h"
 
 using namespace std;
 using namespace smtlib;
@@ -54,13 +54,12 @@ void PredicateUnfolder::visit(std::shared_ptr<DefineFunRecCommand> node) {
 
     stringstream ss;
     ss << cmd->getDefinition()->getSignature()->getSymbol()->getValue() << ctx->getUnfoldLevel();
-    if(ctx->isExistential())
+    if (ctx->isExistential())
         ss << "e";
     cmd->getDefinition()->getSignature()->getSymbol()->setValue(ss.str());
 
     shared_ptr<DefineFunCommand> res = make_shared<DefineFunCommand>(cmd->getDefinition());
-
-    if(ctx->isCvcEmp()) {
+    if (ctx->isCvcEmp()) {
         shared_ptr<SimpleIdentifier> emp = make_shared<SimpleIdentifier>(make_shared<Symbol>("emp"));
         shared_ptr<NumeralLiteral> zero = make_shared<NumeralLiteral>(0, 10);
 
@@ -68,8 +67,7 @@ void PredicateUnfolder::visit(std::shared_ptr<DefineFunRecCommand> node) {
         terms.push_back(zero);
         shared_ptr<QualifiedTerm> emp0 = make_shared<QualifiedTerm>(emp, terms);
 
-        shared_ptr<TermReplacerContext> ctx =
-                make_shared<TermReplacerContext>(emp, emp0);
+        shared_ptr<TermReplacerContext> ctx = make_shared<TermReplacerContext>(emp, emp0);
         shared_ptr<TermReplacer> repl = make_shared<TermReplacer>(ctx);
         res->getDefinition()->getBody()->accept(repl.get());
     }

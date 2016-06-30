@@ -66,8 +66,10 @@ set(SOURCE_FILES
 	smtlib/ast/ast_datatype.cpp
 	smtlib/ast/ast_match.h
 	smtlib/ast/ast_match.cpp
-	smtlib/util/global_settings.h
-	smtlib/util/global_settings.cpp
+	smtlib/util/global_values.h
+	smtlib/util/global_values.cpp
+	smtlib/util/configuration.h
+	smtlib/util/configuration.cpp
 	smtlib/smt_execution.h
 	smtlib/smt_execution.cpp
 	smtlib/smt_execution_settings.h

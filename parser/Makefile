@@ -31,12 +31,12 @@ parser:
 	g++ -g -c -std=c++11 ../smtlib/ast/ast_var.cpp -o ast_var.o
 	g++ -g -c -std=c++11 ../smtlib/parser/smt_parser.cpp -o smt_parser.o
 	g++ -g -c -std=c++11 ../smtlib/util/logger.cpp -o logger.o
-	g++ -g -c -std=c++11 ../smtlib/util/global_settings.cpp -o global_settings.o
+	g++ -g -c -std=c++11 ../smtlib/util/global_values.cpp -o global_values.o
 	g++ -g -o parser smtlib-flex-lexer.l.o smtlib-bison-parser.y.o \
 	smtlib-glue.o ast_attribute.o ast_basic.o ast_command.o ast_datatype.o \
 	ast_fun.o ast_identifier.o ast_literal.o ast_logic.o ast_match.o ast_sexp.o \
 	ast_sort.o ast_script.o ast_symbol_decl.o ast_term.o ast_theory.o ast_var.o \
-	smt_parser.o logger.o global_settings.o -lfl
+	smt_parser.o logger.o global_values.o -lfl
 	rm -f *.o
 clean:
 	rm -f smtlib-bison-parser.y.h

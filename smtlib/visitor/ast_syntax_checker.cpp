@@ -7,8 +7,8 @@
 #include "../ast/ast_symbol_decl.h"
 #include "../ast/ast_term.h"
 #include "../ast/ast_theory.h"
-#include "../util/global_settings.h"
 #include "../util/error_messages.h"
+#include "../util/global_values.h"
 
 #include <iostream>
 

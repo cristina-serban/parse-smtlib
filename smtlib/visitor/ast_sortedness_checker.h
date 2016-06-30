@@ -7,6 +7,7 @@
 #include "../ast/ast_command.h"
 #include "../parser/smt_symbol_stack.h"
 #include "../util/logger.h"
+#include "../util/configuration.h"
 
 #include <map>
 
@@ -19,6 +20,7 @@ namespace smtlib {
             virtual std::shared_ptr<SymbolStack> getStack() = 0;
             virtual std::vector<std::string>& getCurrentTheories() = 0;
             virtual std::string getCurrentLogic() = 0;
+            virtual std::shared_ptr<Configuration> getConfiguration() = 0;
             virtual void setCurrentLogic(std::string logic) = 0;
         };
 
@@ -28,6 +30,7 @@ namespace smtlib {
             std::shared_ptr<smtlib::SymbolStack> stack;
             std::vector<std::string> currentTheories;
             std::string currentLogic;
+            std::shared_ptr<Configuration> config;
         public:
             SortednessCheckerContext();
 
@@ -36,6 +39,7 @@ namespace smtlib {
             virtual std::shared_ptr<SymbolStack> getStack();
             virtual std::vector<std::string>& getCurrentTheories();
             virtual std::string getCurrentLogic();
+            virtual std::shared_ptr<Configuration> getConfiguration();
             virtual void setCurrentLogic(std::string logic);
         };
 
@@ -197,6 +201,8 @@ namespace smtlib {
             virtual std::shared_ptr<SymbolStack> getStack();
 
             virtual std::shared_ptr<SortednessChecker> getChecker();
+
+            virtual std::shared_ptr<Configuration> getConfiguration();
         };
     }
 }

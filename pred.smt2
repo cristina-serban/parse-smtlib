@@ -1,4 +1,4 @@
-(set-logic SL)
+(set-logic SEPLOGLIA)
 
 (declare-datatype dll_t ((empty) (dll_cons (next (Ref dll_t)) (prev (Ref dll_t)))))
 

@@ -1,5 +1,5 @@
 #include "ast_basic.h"
-#include "../util/global_settings.h"
+#include "../util/global_values.h"
 
 #include <sstream>
 

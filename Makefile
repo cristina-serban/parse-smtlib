@@ -24,7 +24,8 @@ parse-smtlib:
 	g++ -g -c -std=c++11 smtlib/parser/smt_symbol_util.cpp -o smt_symbol_util.o
 	g++ -g -c -std=c++11 smtlib/util/error_messages.cpp -o error_messages.o
 	g++ -g -c -std=c++11 smtlib/util/logger.cpp -o logger.o
-	g++ -g -c -std=c++11 smtlib/util/global_settings.cpp -o global_settings.o
+	g++ -g -c -std=c++11 smtlib/util/global_values.cpp -o global_values.o
+	g++ -g -c -std=c++11 smtlib/util/configuration.cpp -o configuration.o
 	g++ -g -c -std=c++11 smtlib/visitor/ast_visitor.cpp -o ast_visitor.o
 	g++ -g -c -std=c++11 smtlib/visitor/ast_syntax_checker.cpp -o ast_syntax_checker.o
 	g++ -g -c -std=c++11 smtlib/visitor/ast_sortedness_checker.cpp -o ast_sortedness_checker.o
@@ -41,10 +42,10 @@ parse-smtlib:
 	ast_identifier.o ast_literal.o ast_logic.o ast_match.o ast_script.o \
 	ast_sexp.o ast_sort.o ast_symbol_decl.o ast_term.o ast_theory.o \
 	ast_var.o smt_parser.o smt_symbol_stack.o smt_symbol_table.o \
-	smt_symbol_util.o error_messages.o logger.o global_settings.o ast_visitor.o \
+	smt_symbol_util.o error_messages.o logger.o global_values.o ast_visitor.o \
 	ast_syntax_checker.o ast_sortedness_checker.o ast_term_sorter.o \
 	ast_node_duplicator.o ast_predicate_unfolder.o ast_var_replacer.o ast_term_replacer.o \
-	smt_execution.o smt_execution_settings.o main.o -lfl
+	smt_execution.o smt_execution_settings.o configuration.o main.o -lfl
 	rm -f *.o
 clean:
 	rm -f *.o

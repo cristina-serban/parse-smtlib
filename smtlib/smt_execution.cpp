@@ -4,7 +4,7 @@
 #include "visitor/ast_syntax_checker.h"
 #include "visitor/ast_var_replacer.h"
 #include "visitor/ast_predicate_unfolder.h"
-#include "util/global_settings.h"
+#include "util/global_values.h"
 
 using namespace std;
 using namespace smtlib;

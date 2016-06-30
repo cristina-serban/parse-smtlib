@@ -4,8 +4,8 @@
 #include "../ast/ast_script.h"
 #include "../ast/ast_theory.h"
 #include "../parser/smt_parser.h"
-#include "../util/global_settings.h"
 #include "../util/error_messages.h"
+#include "../util/global_values.h"
 
 using namespace std;
 using namespace smtlib;

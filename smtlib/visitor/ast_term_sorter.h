@@ -3,6 +3,7 @@
 
 #include "ast_visitor_extra.h"
 #include "../parser/smt_symbol_stack.h"
+#include "../util/configuration.h"
 
 #include <algorithm>
 
@@ -14,6 +15,7 @@ namespace smtlib {
         public:
             virtual std::shared_ptr<SymbolStack> getStack() = 0;
             virtual std::shared_ptr<SortednessChecker> getChecker() = 0;
+            virtual std::shared_ptr<Configuration> getConfiguration() = 0;
         };
 
         class TermSorter : public DummyAstVisitor1<std::shared_ptr<Sort>> {

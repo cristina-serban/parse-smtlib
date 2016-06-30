@@ -44,7 +44,7 @@ SmtPtr smt_newAttribute1(SmtPtr keyword);
 SmtPtr smt_newAttribute2(SmtPtr keyword, SmtPtr attr_value);
 SmtPtr smt_newCompAttributeValue(SmtList values);
 
-// smt_basic.h
+// ast_basic.h
 SmtPtr smt_newSymbol(char const* value);
 SmtPtr smt_newKeyword(char const* value);
 SmtPtr smt_newMetaSpecConstant(int value);

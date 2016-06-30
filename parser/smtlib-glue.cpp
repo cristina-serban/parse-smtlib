@@ -513,7 +513,7 @@ SmtPtr smt_newCompAttributeValue(SmtList values) {
     return ptr.get();
 }
 
-// smt_basic.h
+// ast_basic.h
 SmtPtr smt_newSymbol(char const* value) {
     shared_ptr<Symbol> ptr = make_shared<Symbol>(value);
     nodemap[ptr.get()] = ptr;

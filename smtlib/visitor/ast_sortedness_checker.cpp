@@ -4,8 +4,8 @@
 #include "../ast/ast_script.h"
 #include "../ast/ast_theory.h"
 #include "../parser/smt_parser.h"
-#include "../util/global_settings.h"
 #include "../util/error_messages.h"
+#include "../util/global_values.h"
 #include "../smt_execution.h"
 
 using namespace std;
@@ -16,6 +16,7 @@ using namespace smtlib::ast;
 
 SortednessCheckerContext::SortednessCheckerContext() {
     stack = make_shared<SymbolStack>();
+    config = make_shared<Configuration>();
 }
 
 SortednessCheckerContext::SortednessCheckerContext(shared_ptr<SymbolStack> stack)
@@ -31,6 +32,10 @@ vector<string>& SortednessCheckerContext::getCurrentTheories() {
 
 string SortednessCheckerContext::getCurrentLogic() {
     return currentLogic;
+}
+
+shared_ptr<Configuration> SortednessCheckerContext::getConfiguration() {
+    return config;
 }
 
 void SortednessCheckerContext::setCurrentLogic(string logic) {
@@ -449,7 +454,8 @@ void SortednessChecker::loadTheory(string theory) {
 void SortednessChecker::loadTheory(string theory,
                                    shared_ptr<AstNode> node,
                                    shared_ptr<NodeError> err) {
-    string path = LOC_THEORIES + theory + FILE_EXT_THEORY;
+    string path = ctx->getConfiguration()->get(Configuration::Property::LOC_THEORIES) + theory
+                  + ctx->getConfiguration()->get(Configuration::Property::FILE_EXT_THEORY);
     FILE *f = fopen(path.c_str(), "r");
     if (f) {
         fclose(f);
@@ -475,7 +481,8 @@ void SortednessChecker::loadTheory(string theory,
 void SortednessChecker::loadLogic(string logic,
                                   shared_ptr<AstNode> node,
                                   shared_ptr<NodeError> err) {
-    string path = LOC_LOGICS + logic + FILE_EXT_LOGIC;
+    string path = ctx->getConfiguration()->get(Configuration::Property::LOC_LOGICS) + logic
+                  + ctx->getConfiguration()->get(Configuration::Property::FILE_EXT_LOGIC);
     FILE *f = fopen(path.c_str(), "r");
     if (f) {
         fclose(f);
@@ -1306,5 +1313,9 @@ shared_ptr<SymbolStack> SortednessChecker::getStack() {
 
 shared_ptr<SortednessChecker> SortednessChecker::getChecker() {
     return shared_from_this();
+}
+
+shared_ptr<Configuration> SortednessChecker::getConfiguration() {
+    return ctx->getConfiguration();
 }
 

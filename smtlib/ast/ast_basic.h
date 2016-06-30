@@ -1,5 +1,5 @@
 /**
- * \file smt_basic.h
+ * \file ast_basic.h
  * \brief Basic SMT-LIB concepts.
  */
 

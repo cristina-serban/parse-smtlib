@@ -1,13 +1,8 @@
-#ifndef PARSE_SMTLIB_GLOBAL_SETTINGS_H
-#define PARSE_SMTLIB_GLOBAL_SETTINGS_H
+#ifndef PARSE_SMTLIB_GLOBAL_VALUES_H
+#define PARSE_SMTLIB_GLOBAL_VALUES_H
 
 #include <string>
 namespace smtlib {
-    extern const std::string LOC_LOGICS;
-    extern const std::string LOC_THEORIES;
-    extern const std::string FILE_EXT_LOGIC;
-    extern const std::string FILE_EXT_THEORY;
-
     extern const std::string THEORY_CORE;
 
     extern const std::string SORT_BOOL;
@@ -57,4 +52,4 @@ namespace smtlib {
     extern const std::string MSCONST_DECIMAL_REF;
 }
 
-#endif //PARSE_SMTLIB_GLOBAL_SETTINGS_H
+#endif //PARSE_SMTLIB_GLOBAL_VALUES_H
