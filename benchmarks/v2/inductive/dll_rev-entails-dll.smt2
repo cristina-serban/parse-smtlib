@@ -1,4 +1,4 @@
-(set-logic SEPLOGLIA)
+(set-logic SEPLOG)
 
 (declare-sort Loc 0)
 
@@ -14,3 +14,11 @@
         (exists ((x Loc)) (sep (pto tl (node nx x)) (dllseg_rev hd pr x tl)))
     )
 )
+
+(declare-const x Loc)
+(declare-const y Loc)
+
+(assert (dllseg_rev x (as nil Loc) y (as nil Loc)))
+(assert (not (dllseg x (as nil Loc) y (as nil Loc))))
+
+(check-sat)
