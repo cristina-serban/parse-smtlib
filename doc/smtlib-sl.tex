@@ -76,8 +76,12 @@ assumptions:
 Let $\vars$ be a countable set of first-order variables, each
 $x^\sigma \in \vars$ having an associated sort $\sigma$. First-order
 terms and formulae over the signature $\Sigma$ (called $\Sigma$-terms
-and $\Sigma$-formulae) are defined as usual. A
-\emph{$\Sigma$-interpretation $\I$} maps:\begin{compactitem}
+and $\Sigma$-formulae) are defined as usual. A first-order variable is
+\emph{free} if it does not occur within the scope of a quantifier, and
+we write $\varphi(\vec{x})$ to denote that the free variables of the
+formula $\varphi$ belong to the set $\vec{x}$. 
+
+A \emph{$\Sigma$-interpretation $\I$} maps:\begin{compactitem}
 \item each sort symbol $\sigma \in \Sigma$ to a non-empty set $\sigma^\I$,
 \item each function symbol $f^{\sigma_1,\ldots,\sigma_n,\sigma} \in \Sigma$ to a
   total function $f^\I : \sigma^\I_1 \times \ldots \times \sigma^\I_n
@@ -366,28 +370,27 @@ Abduction and frame inference (or bi-abduction for both) are problems
 that occur in the context of program verification. In this case, the
 solver is not only required to give a yes/no answer to a
 satisfiability query, but to infer $\seplog$ formulae that ensure the
-validity of a given entailment. Given $\seplog$ formulae $\varphi$ and
-$\phi$, and second-order variables $X$ and $Y$, we consider the
+validity of a given entailment. Given $\seplog$ formulae
+$\varphi(\vec{x})$ and $\phi(\vec{y})$, and second-order variables
+$X(\vec{x},\vec{y})$ and $Y(\vec{x},\vec{y})$, we consider the
 following synthesis problems:
-
-\todo{TO BE REFINED: what are the first-order parameters of $X$ and
-  $Y$ ? It seems that $X$ is allowed to all free variables of
-  $\varphi$, but how about $Y$ ? Is it allowed to all free variables
-  of $\varphi$ and $\psi$, or just the ones of $\psi$ ?}
 
 \begin{compactenum}
 \item The \emph{abduction problem} asks for a satisfiable definition
-  of a $X$ such that $\varphi * X \models_{\tinyseplog}
-  \psi$. Sometimes $X$ is called an \emph{anti-frame}. Observe that $X
-  \leftarrow \bot$ is always a solution, but not a very interesting
-  one.
+  of a $X$ such that $\varphi(\vec{x}) * X(\vec{x},\vec{y})
+  \models_{\tinyseplog} \psi(\vec{y})$. Sometimes $X$ is called an
+  \emph{anti-frame}. Observe that $X \leftarrow \bot$ is always a
+  solution, but not a very interesting one.
 %
 \item The \emph{frame inference problem} asks for a definition of $Y$
-  such that $\varphi \models_{\tinyseplog} \psi * Y$.
+  such that $\varphi(\vec{x}) \models_{\tinyseplog} \exists \vec{z}
+  ~.~ \psi(\vec{y}) * Y(\vec{x},\vec{y})$, where $\vec{z} = \vec{y}
+  \setminus \vec{x}$.
 %
 \item The \emph{bi-abduction problem} asks for both a satisfiable
-  definition of $X$ and a definition of $Y$ such that $\varphi * X
-  \models_{\tinyseplog} \psi * Y$.
+  definition of $X$ and a definition of $Y$ such that
+  $\varphi(\vec{x}) * X(\vec{x},\vec{y}) \models_{\tinyseplog}
+  \psi(\vec{y}) * Y(\vec{x},\vec{y})$.
 \end{compactenum}
 The capability of solving the above problems is key to using a given
 $\seplog$ solver for practical program verification purposes. For this
@@ -400,7 +403,7 @@ The quest for a suitable format for $\seplog$ solvers started with
 SL-COMP'14 \cite{sl-comp14}, which adopted the {\tt QF\_S} format,
 described in \cite{qfs}. The current proposal is inspired by {\tt
   QF\_S}, and relies on the datatypes introduced SMT-LIB v2.5 for an
-elegant encoding of union and record types. The tools supporting
+elegant treatment of union and record types. The tools supporting
 SMT-LIB as a native language are: \begin{compactitem}
 \item CVC4 \cite{ReynoldsIosifKingSerban16} -- a description of the $\seplog$
   format of CVC4 is provided in \cite{cvc4-seplog} (a slightly
@@ -413,10 +416,10 @@ SMT-LIB as a native language are: \begin{compactitem}
 Other tools that participated to SL-COMP'14 have been adapted to {\tt
   QF\_S} by means of a specialized front-end \cite{qfs-frontend}. It
 is our goal to convince the developpers of $\seplog$ solvers to adopt
-SMT-LIB as the native input language of their tools. For this purpose,
-we provide a C++ front-end \cite{smtlib-frontend} that can be used to
-parse and type check $\seplog$ inputs encoded in SMT-LIB using the
-current specification.
+SMT-LIB as the native input language of their tools, rather than use a
+translator from SMT-LIB. For this purpose, we provide a C++ front-end
+\cite{smtlib-frontend} that can be used to parse and type check
+$\seplog$ inputs encoded in SMT-LIB using the current specification. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{plain} 
